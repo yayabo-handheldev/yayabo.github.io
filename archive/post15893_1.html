@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Lua学习笔记之 Getting Start</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">Lua学习笔记之 Getting Start</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-24 19:39:46</p>
+</div>
+<div class="col-10">
+<p>很多高深的人物都说过类似的话:"语言层面的东西, 都是表面的东西, 最核心的是设计模式, 是算法", 我完全赞同这句话, 但同时也完全赞同另一句话: "对于从事编码实践的我们, 还是应该踏实的多掌握一些编码层面的东西, 才更有利于理解核心的东西, 附带的, 也可以借以增加自信, 找回青春"...<br /><br />前面写过的孔乙己系列, 是以底层的眼光看阳春白雪的C++(当然,还没写完), 而在这个系列里, 则完全是以一个LUA新人的角度来记录和描述一个LUA新手对LUA学习和上手的全过程, 各位看官如若有空, 不妨茶余饭后翻着看看.<br /><br />集中时间的写lua, 还是近来的事, 我们的服务器, 在游戏逻辑上, 现在全交给了lua. 说实话, 起先还是挺抗拒的, 觉得Lua写起来太慢, 但现在, 似乎慢慢找到了感觉, 一些概念也跟以前自己沉淀的东西结合了起来, 有了参照的对象, 自然, 也就有了一些自然的推理, 而这些推理和理解又伴随着进一步指导自己的实践开发. 我们现在用的是Lunar封装, 写时的感觉, 就象在用C的东西, 在完成C++的那一套概念. 这个学习笔记, 是直接从pil([url]http://www.lua.org/pil/index.html[/url]) 文档里翻译过来的, 而我翻译时的方法, 也不是一字不差的照搬, 而是快速浏览文中的示例代码, 快速结合自己的开发体会, 尽可能简明扼要的总结我所感兴趣或我所不清楚的细节, 但这些内容可能是你早已经熟悉的, 特此提醒.<br /><br />以下是第一部分:<br /><br />1. 从lua交互状态退出的方法<br />^+D, ^+Z, os.exit()<br /><br />2.lua可连续运行两个文件, 如:<br />lua -la -lb<br />其中, l是连接符, 不可少. a,b是两个不同的文件, 这个对于测试和debug特别有效<br /><br />3.dofile 可用于立即执行文件<br /><br />4.全局变量不需要声明,赋值时即同时声明, 所以应该在初始化时进行赋值<br />如果要删除全局变量, 用nil删除; 而如果只是局部使用某变量,应该声明成局部量local<br /><br />5.lua中的关键字不能以数字开头, 只能以字母和下划线开头, 组成元素可以是字母, 数字和下划线<br /><br />6.保留字不能用作关键字(废话, 几乎所有语言皆如此),lua是严格区分大小写的<br /><br />7.块注释用--[[ 语句 ]], 行注释用-- , 无效的块注释:<br />----[[<br />--]]<br /><br />8.lua 的命令行用法:<br />lua [options] [script [args]]<br />如:<br />lua -e "print(math.sin(12))", -e选项表示直接执行后面的语句<br /><br />9.lua -i -l a.lua -e "x = 10"<br />含义:<br />-i表示进入交互式, -l表示装入a.lua文件, 而-e则表示执行其后的语句. 所以连起来就是执行a.lua, 执行x=10, 然后进入交互状态<br /><br />10.通过: lua -i -e "_PROMPT='lua>'"的方式可以改变lua交互状态下的提示符<br /><br />11.lua的命令行参数用法:<br /><br />prompt> lua -e "sin=math.sin" script a b<br /><br />lua collects the arguments as follows:<br />    arg[-3] = "lua"<br />    arg[-2] = "-e"<br />    arg[-1] = "sin=math.sin"<br />    arg[0] = "script"<br />    arg[1] = "a"<br />    arg[2] = "b"<br /><br />arg是它的命令行参数表</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15893_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

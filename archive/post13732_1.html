@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[转]NS入门教程，第七篇</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[转]NS入门教程，第七篇</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_14.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kiseeyou</b><br/>
+2010-05-26 11:45:14</p>
+</div>
+<div class="col-10">
+<p>LEVEL 6 LSP的混沌宇宙（2）显示数字，文字及简单按钮制作<br />相关指令：<br />lsp<br />btndef<br />spbtn<br />btnwait<br />itoa<br />mov<br />add<br />if<br />goto<br />等等等等……基本的多，讲过的多|||<br /><br />相关格式：<br />按钮定义相关格式<br /><br />先是最近MS很多人问到的，关于使用LSP命令显示多于三位数的数字。（当然前提是大家都已经知道显示三位及以下的数字可以使用命令prnum。）<br />实际上，只要会使用lsp命令显示文字的话，显示数字当然也不成问题。<br />但是，重点就变成了变量形式之间的互相转化，和LSP命令本身相关的只有一点而已。<br /><br />首先，放上LSP显示文字的格式。其实这个在系列范例里都有的。<br />lsp 11,":s/25,25,0;#ffffff显示文字",305,252<br /><br />:s，和a,l,r等一样是格式标记符，这里代表的是，接下来要显示的是文字。<br />25,25,0是文字参数。分别代表的是单个文字的长，宽及字间距。<br />;以后的颜色，代表的当然是文字的颜色。<br />最后的两个坐标，和显示图片一样，代表文字位置。<br /><br />记得加上print命令，丢到实际游戏里面看看哦。<br /><br />接着，一点前情提要：NS所有的指令的参数都可以用变数代替。<br />例如说，<br /><br />lsp 1,"cursor1.bmp",0,100<br /><br />等价于以下两条指令<br /><br />mov $132, "cursor1.bmp"<br />lsp 1,$132,0,100<br /><br />另外：<br />lsp 11,":s/25,25,0;#ffffff显示文字",305,252<br /><br />也可以等价于：<br /><br />mov $132,"显示文字"<br />lsp 11,":s/25,25,0;$132 ",305,252<br /><br />那么，要用LSP命令显示数字，虽然不能直接把数字变数放到参数里面（不信的人可以试看看，只会显示出%132之类的……），但是，NS也提供了把数字变数转成文字变数的命令。<br /><br />itoa 文字変数,数値<br />将数字变换成文字列。但是，只能转成半角文字。<br />例）<br />    itoa $0,120<br />    itoa $1,%2<br /><br />转换以后的数字会被记录在指定的文字变数里。以上两个例子分别是$0和$1。<br />所以，假如要显示%2里记录的数字的话，进行以下操作就可以了<br />itoa $0,%2<br />lsp 11,":s/25,25,0;$0",305,252<br /><br />请注意这里，当数字位数是双数时，正确显示是没有问题的，但是当显示位数是5位等等时，就有可能出现数字被吃掉，不能正确显示的情况，这是因为NS的设计，和在对话中一样，一般情况下LSP命令也只能显示全角文字造成的。解决方法当然是有，详细的请看这里：<br />[url]http://bbs.rpgchina.com/read-htm-tid-18363-fpage-0-toread--page-1.html[/url]<br />当然，对显示数字来说，在文字变数的最前面加零比在最后加空格好……并且，如果数字的位数已经是固定的话（例如金钱默认就是最高999999，最低000000）那么就直接使用len命令判断当前转换出来的变数长度，再酌量在变数前面加零吧。例如说：<br />len %100,$0<br />if %100==6 mov $1,$0<br />if %100==5 mov $1, "0": add $1,$0<br />if %100==4 mov $1, "00": add $1,$0<br />if %100==3 mov $1, "000": add $1,$0<br />if %100==2 mov $1, "0000": add $1,$0<br />if %100==1 mov $1, "00000": add $1,$0<br /><br />最后，再用LSP命令显示$1就可以了。（注意是显示$1，不是$0……）<br /><br />那么，综合起来，使用LSP命令显示六位数字的范例就像以下这样：<br /><br /><br />Copy code<br /><br /><br />*define<br /><br />game<br /><br />*start<br />mov %1,325<br />itoa $0,%1<br /><br />len %100,$0<br /><br />if %100==6 mov $1,$0<br />if %100==5 mov $1, "0": add $1,$0<br />if %100==4 mov $1, "00": add $1,$0<br />if %100==3 mov $1, "000": add $1,$0<br />if %100==2 mov $1, "0000": add $1,$0<br />if %100==1 mov $1, "00000": add $1,$0<br /><br />lsp 11,":s/25,25,0;#ffffff$1",305,252<br />print 1<br />click<br />end<br /><br /><br /><br />============我是没有爱的分隔线===========<br /><br />第二，使用lsp制作的按钮。<br />还是老话，所谓游戏，就是根据玩家的动作而做出反应的东西。在AVG里，最常见的就是选择支，还有就是按钮了。其原理也很简单，先定义屏幕上所有可以点选的地方，然后等待玩家的动作，再根据玩家的动作跳转到不同的分歧。<br />NS里制作按钮大概有两种方式。大略的介绍可以参考这里：<br />[url]http://bbs.rpgchina.com/read.php?tid=9057&fpage=1[/url]<br />这里只介绍第二种。（因为第二种是后来发展出来的，操作起来比较简单）<br /><br />废话不多说了，依然是基本介绍，先是文字按钮，也就是LSP显示文字的扩展。<br />例如说：<br />lsp 11,":s/25,25,0;#ffffff#ffff00开始游戏",305,252<br />和普通的LSP显示文字差别就在于多了一个颜色代码。第一个代表文字一般状况下的颜色，第二个则是代表当这个文字按钮被“选中”时候的颜色。<br /><br />接下来是，因为普通的SP图片/文字是不能点的，所以要把11号SP定义成一个按钮……=_=<br />定义的方法是：<br />spbtn 11,1<br /><br />11当然是代表SP文字编号，而1则代表这个按钮的编号。在NS里，就是根据按钮编号判断玩家做了什么反应的。0代表玩家点了不是任何按钮的地方，1以上是由你自己定义的编号，而小于0的部分，则代表玩家做了其他的操作，例如说：点了鼠标右键，ESC键，用了滚轮等等。<br />最后，则是根据玩家的动作，执行不同的脚本。<br /><br />丢个实例看看，就是那传说中的标题画面：<br /><br />Copy code<br /><br /><br />*define<br /><br />game<br /><br />*start<br /><br /><br />lsp 11,":s/25,25,0;#ffffff#ffff00开始游戏",305,252<br />lsp 12,":s/25,25,0;#ffffff#ffff00读取进度",305,282<br />lsp 13,":s/25,25,0;#ffffff#ffff00离开游戏",305,312<br />print 1<br /><br />btndef "" ;这里用btndef指令代表定义的开始，请记得不要漏掉这一行。<br /><br />;定义了三个按钮及其编号<br />spbtn 11,1<br />spbtn 12,2<br />spbtn 13,3<br /><br />btnwait %0<br />;等待玩家动作，玩家的动作对应编号（刚刚所说的1，2，3等等，会被记录在%0这个变数里（btnwait 之外，也可以使用btnwait2指令，其具体的差别请看本日小贴士）<br /><br /><br />;以下，将根据玩家的动作进行不同的跳转<br /><br />if %0<=0 goto *start ;当没有点按钮时，不做反应（也就是从*start重新开始执行）如果没有这一行的话，玩家点下右键等等的时候，会继续往下执行，也就是进行到*loadgame那里。<br />if %0==1 goto *newgame ;开始新游戏<br />if %0==2 goto *loadgame ;读取进度<br />if %0==3 goto *endgame ;结束游戏<br /><br />*loadgame<br />systemcall load ;呼叫NS的读档选单<br />goto *start ;当玩家没有读档，而是选择退出读档选单之后，要返回重头开始执行，如果没有这一行的话，会继续执行到*endgame那里。<br /><br />*endgame<br />end<br /><br />*newgame<br />csp -1<br />print 1<br />开始游戏<br />end<br /><br /><br />详细说起来，按钮与变量操作的结合，可以用于制作选择支，商店系统，标题画面，CG界面，存储界面等等等等。因此学会怎么使用是一回事，把按钮和其他简单指令显示组合起来，制作自己想要的系统就是另外一回事了。可能有很多新人喜欢上来就问“XX系统要怎么做啊”，这个……的确是很难以回答的问题。因为不知道你本身的水平如何，也不知道要怎么解释才能听懂。但是如果把问题拆成：怎么显示文字，怎么显示数字，怎么操作变量，怎么制作文字按钮，玩家点下以后进行什么操作——那基本上，就算是新人，自己也能解决了吧。= =b<br /><br />============我是没有爱的分隔线二===========<br /><br />写到这里忽然想起来……我忘记了，还有图片按钮……OTL<br />之前在LSP的混沌宇宙之一就有提到过，SP图片播放动画的时候，是使用：<br />lsp 1,":a/2,200,2;aaa.jpg",100,100<br />这样的格式。代表将图片分成两帧，每帧间隔时间200毫秒。<br />那么，当显示图片按钮的时候，图片也一样是分成两帧（普通的情况和被选中的情况），但是不需要时间间隔，所以就写成：<br />lsp 1,":a/2,0,3;aaa.jpg",100,100<br />（分号前的最后一个数字代表将SP图片用做什么用途，最后一个数字为2是动画，为3就是按钮了。）<br />接着，再和以上的文字按钮一样，使用spbtn指令定义按钮就行了。<br />一段范例，和上面的文字标题基本没有什么不同咯。（请记得自己准备一张叫btn.jpg的图片）<br /><br /><br />Copy code<br /><br />*define<br /><br />game<br /><br />*start<br /><br />lsp 11,":a/2,0,3;btn.jpg",305,252<br />lsp 12,":a/2,0,3;btn.jpg",305,302<br />lsp 13,":a/2,0,3;btn.jpg",305,352<br /><br />print 1<br /><br />btndef ""<br />spbtn 11,1<br />spbtn 12,2<br />spbtn 13,3<br /><br />btnwait %0<br /><br /><br /><br />if %0<=0 goto *start<br />if %0==1 goto *newgame ;开始新游戏<br />if %0==2 goto *loadgame ;读取进度<br />if %0==3 goto *endgame ;结束游戏<br /><br />*loadgame<br />systemcall load ;呼叫NS的读档选单<br />goto *start<br /><br />*endgame<br />end<br /><br />*newgame<br />csp -1<br />print 1<br />开始游戏<br />end<br /><br /><br /><br /><br />本日小帖士：<br /><br />1顺手也把文字列转数字的命令贴出来吧，至于有啥用大家看着办……XD<br />atoi 数字変数,文字列<br />例）<br />  atoi %0,"123"<br />    atoi %3,$0<br /><br />2 btnwait2与btnwait的功能是相同的，不同的是使用btnwait2的时候，即使玩家已经执行过动作，定义的按钮也不会被消除，这样，当玩家点了右键之类的情况下，可以在btnwait2前面直接设一个标签，然后跳转到那里，省得再从头执行一遍定义等等。<br />想要手动清除按钮定义的时候，请使用btndef clear指令。<br /><br />3关于有时间限制的按键反应，请参考这里……（感谢TOZ和KENDY SAN的贡献XD）<br />[url]http://bbs.rpgchina.com/read.php?tid=16456&fpage=1[/url]<br />[url]http://bbs.rpgchina.com/read.php?tid=12555&fpage=4[/url]<br /><br />4关于前文写到的：<br />if %100==5 mov $1, "0": add $1,$0<br /><br />类似这样，将指令用冒号分隔开，一行可以写好几个指令，并且只在符合该行的if条件时执行。比再跳转到某一标签继续执行要方便一些，对比较短的指令段，可以这么用。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post13732_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

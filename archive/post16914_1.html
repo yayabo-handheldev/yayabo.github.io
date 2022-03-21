@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>在Sony PSP上安装、创建和执行简单的”Hello World”程序</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">在Sony PSP上安装、创建和执行简单的”Hello World”程序</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-30 16:46:58</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://hi.baidu.com/nick6610[/url]<br /><br />创建你的第一个程序<br />在Sony PSP上安装、创建和执行简单的”Hello World”程序<br />   阅读课程01后，你已经有了一个创建程序的开发环境。我们现在开始学习PSP上的第一个程序。该教程将解释C程序语言基础和创建PSP程序的基础。<br />   创建一个目录来存放项目文件。打开CYGWIN命令行，输入mkdir projects。Mkdir表示创建目录该命令会在你当前的目录下创建一个目录或文件夹。这样我们就有一个存放项目文件的目录，输入cd projects进入该目录。现在将为指定的工程创建另一个目录。输入mkdir helloworld。输入cd helloword进入该目录。<br />   下一步打开文本编辑器，可以是记事本、写字板等。我更喜欢使用专门编辑C/C++代码的编辑器因为它内建了语法加亮的功能（我使用Dev-C++），使用哪个文本编辑器都无所谓（只要你知道如何使用它）。<br />   现在在你的helloworld目录中创建一个新文件main.c。这个文件中将包含程序代码。源代码就是人们能看懂的程序。大部分编程语言都叫作编译语言，C和C++都属于这一类（使用课程01讲的编译器转换源代码）。还有一些别的程序语言使用称作解释器的工具解释源代码并发送给运行中的电脑。这些语言称为脚本语言（例如PHP）。<br />   我们有一个保存源代码的文件。现在开始编程。首先程序代码中应该包含能向阅读该程序的人说明程序功能、编写时间和作者的注释。注释是一行不会被编译器编译的代码（或是被脚本语言中的解释器忽略的语句）。注释在你的源代码中是非常重要的一部分，因为当你（或某人）以后看源代码的时候，你很难再回忆起整个程序的意思。因此必须通过注释的形式做纪录。使用//或/*进行注释。任何时候看到//都说明该行其余部分被注释。/*的意思是编译器（或解释器）将忽略该符号直到遇到*/中间的源代码。/*…*/能跨越多行，但是//只能注释//所在的一行。<br />   好了，开始编写程序，我们将在开始部分输入一段能说明程序干什么、什么时候创建、谁写的注释。<br />[code=c]/*<br />     This program was created by (Your Name Here) on (Date Here)<br />     It is a simple "Hello World" Application.<br />*/[/code]<br />   程序的下一部分是告诉编译器程序中将用到哪些头文件（header files）和哪些包含文件（include files）。#include命令能将你在程序开始部分指定的文件内容复制进来。这能使你的程序变的简洁，当然你也可以使用前面写的代码。 Include命令也能包含编译所需的头文件（或者是你为编译增加的命令），或者是项目中指定的头文件。这些文件会出现在&lt;& gt;中或引号中。小于号和大于号表示该文件存在于编译器的include目录中，引号包含的是和包含它们的文件处于同一个目录的文件。我们将在程序中包含2个文件。第一个是pspkernel.h。任何一个PSP程序中都要包含它。它包含了所有PSP的特殊代码。如果没有包含它那程序将无法在PSP上运行。第二个文件是pspdebug.h，这个文件包含了几个有用的方法用来调试你的程序，特别是其中包括了我们用来在PSP输出文本时用到的函数。在你的程序中加入这些代码：<br />[code=c]<br />#include &lt;pspkernel.h&gt;<br />#include &lt;pspdebug.h&gt;[/code]<br /><br />下面我们告诉PSP一点关于该程序的信息。事实上这不太重要，你的程序不会编译它，但是通常加入它是个好注意。第一个属性是程序的名字，但事实上并不是发表的程序的名字（我们以后会更改）。别的值是另外的属性（让它们去），主要是版本，次要版本。维持默认的属性值。在程序中加入下面一行：<br />[code=c]<br />PSP_MODULE_INFO("Hello World", 0, 1, 1);<br />[/code]<br />   现在我们开始创建一个屏幕输出的函数。这个步骤是可选的，但是他能使程序输出文本变的容易些。行尾更改PSP内建的函数名（pspDebugScreenPrintf）为容易书写的函数名。这个函数用来将文本输出到屏幕上（以后会用到）。我们要做的就是将 pspDebugScreenPrintf改成printf。现在开始就可以使用printf了，编译器会象pspDebugScreenPrintf一样处理。按照如下所示来定义：<br />[code=c]<br />#define printf pspDebugScreenPrintf<br />[/code]<br />   有个坏消息和好消息，坏消息是，下个代码块相当复杂。好消息是，你不需要理解它。下面大致解释一下（我们会在以后用现行的语法一行一行解释）。这个代码块包含的内容基本上叫做程序。这些函数将在你的PSP上建立功能并允许你想要退出时停止或退出游戏。将如下代码块写入你的程序：<br />[code=c]<br />/* Exit callback */<br />int exit_callback(int arg1, int arg2, void *common) {<br />     sceKernelExitGame();<br />     return 0;<br />}<br /><br />/* Callback thread */<br />int CallbackThread(SceSize args, void *argp) {<br />     int cbid;<br />     cbid = sceKernelCreateCallback("Exit Callback", exit_callback, NULL);<br />     sceKernelRegisterExitCallback(cbid);<br /><br />     sceKernelSleepThreadCB();<br /><br />     return 0;<br />}<br /><br />/* Sets up the callback thread and returns its thread id */<br />int SetupCallbacks(void) {<br />     int thid = 0;<br /><br />     thid = sceKernelCreateThread("update_thread", CallbackThread, 0x11, 0xFA0, 0, 0);<br />     if(thid &gt;= 0) {<br />           sceKernelStartThread(thid, 0, 0);<br />     }<br /><br />     return thid;<br />}<br />[/code]<br />   接下来定义main函数。每个C或C++程序必须要有一个主函数。函数从这里开始执行。C（一些C++）函数就是很好的例子。这意味着代码会顺序执行。例如下面的代码：<br />[code=c]<br />//不要将下面的代码输入到你的程序中。<br />//这只是一个例子。<br />int myFunction() {<br />     //Print Out 'A'<br />     return 0;<br />}<br />int main() {<br />     //Print Out 'B'<br />     myFunction();<br />     //Print Out 'C'<br />     return 0;<br />}<br />[/code]<br />注释中的内容表达了他们的意思。程序会输出’B’然后再输出’A’因为程序是从main函数开始执行。输出’B’然后调用上面定义的myFunction 函数，到这里，发现程序需要打印’A’然后返回离开主线的地方并且输出’C’。所有的程序（直到你接触到高级的C++语言）都遵循这种线性结构。Main 函数对于你的程序是至关重要的。可以使用如下的结构定义一个函数：[return type] [function name](){。Return type是函数传递给主程序的值的类型。Main函数通常返回int类型（表示整数）。函数名是这个函数的名称，显而易见main就是main函数的名称。在你的代码中输入下面的内容来定义函数：<br />[code=c]<br />int main() {。<br />[/code]<br />现在需要添加2行内容来建立输出屏幕并用那些前面插入的函数（你不需要知道他们是怎么工作的）。即使你不需要知道这些函数如何工作，但是掌握他们为什么叫做函数的概念是很重要的。事实上很简单。你只要在最后把函数名和括号一起输入进去就可以了（如果函数带有一些参数，就将他们插入到括号中，以后会用到）。程序中的任何一行最后都要输入一个分号。因为编译器无法辨别任何空白。两行之间可以有100行空白行，编辑器不会理会。这非常有用因为可以按你自己的要求安排代码格式。你可以将几行并为一行，或者在空白区域输入内容。但每行结尾都要有一个分号。在你的程序中添加2行：<br />[code=c]<br />pspDebugScreenInit();<br />SetupCallbacks();<br />[/code]<br />   现在写一些能看到结果的代码。记得我们将pspDebugScreenPrintf定义成printf。通过调用含有一个参数的printf函数在屏幕上打印文本（前面说以后会用到）。参数是一个能传递给函数使用的变量。当书写函数时这些必须掌握。为了printf能输出到屏幕，必须将一个字符串传递给它。通过传递给这个函数一个字符串，就能输出Hello World了。我们也能传递别的参数值，但是时间关系，现在只要输出Hello World到屏幕上：<br />[code=c]<br />printf("Hello World");<br />[/code]<br />你已经告诉printf输出到屏幕。现在我们只要再做一些工作源代码就可以构建了。为了能看到输出结果需要暂停程序。如果不暂停，程序会冻结或返回 PSP的菜单那样便无法得到输出到屏幕上的单词因为输出结果被迅速清除。加入该行代码停止程序直到按下Home按钮回到PSP的操作系统中。<br />[code=c]<br />sceKernelSleepThread();<br />[/code]<br />接下来需要让程序返回一个值，当时定义过 int main()告诉编译器main函数将返回一个整数类型的值。因此就象如下所示返回一个0：<br />[code=c]<br />return 0;<br />[/code]<br />最后输入一个}结束函数。<br />这就是程序！现在我们只要通过创建一个makefile告诉编译器需要编译该工程。创建一个没有扩展名的名为makefile的文件。一旦创建好，用文本编辑器打开它。在文件中输入如下内容：<br />[code=c]<br />TARGET = hello<br />OBJS = main.o<br /><br />CFLAGS = -O2 -G0 -Wall<br />CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti<br />ASFLAGS = $(CFLAGS)<br /><br />EXTRA_TARGETS = EBOOT.PBP<br />PSP_EBOOT_TITLE = Hello World<br /><br />PSPSDK=$(shell psp-config --pspsdk-path)<br />include $(PSPSDK)/lib/build.mak<br />[/code]<br />你的所有的简单工程都能以该文件作为基础来创建。有时需要增加库或该makefile文件中没有的内容，但现在还相当简单。它告诉编译器取得 main.c并使用PSPSDK将该文件构建为一个PSP能读取的.pbp文件。如果在别的工程中使用这个makefile文件你需要更改 PSP_EBOOT_TITLE=Hello World。将Hello World改为你的程序的名称，当你选中该文件此名称会在你的PSP中的Game Menu中显示。<br />   打开CYGWIN命令行菜单进入projects/helloworld目录。输入make，CYGWIN会输出一些数据告诉你源代码是否包含错误导致无法编译。通常警告信息不必太留意，必须注意的是错误，警告只不过是会导致错误的地方。<br />   如果没有任何错误，恭喜！现在已经成功地创建并编译了你的第一个PSP程序。我打赌你现在很想测试它。那么，象存放别的一些自制程序一样将C: /cygwin/home/yourUserName/projects/helloworld/EBOOT.PBP存入你的PSP中自己测试！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>hikkibjz</b><br/>
+2008-06-30 17:32:20</p>
+</div>
+<div class="col-10">
+<p>支持团长~~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>泰坦巨人</b><br/>
+2008-06-30 17:40:50</p>
+</div>
+<div class="col-10">
+<p>吼吼,来支持鸟...<br />(分多加点,我刚注册)</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白热化</b><br/>
+2008-06-30 21:12:33</p>
+</div>
+<div class="col-10">
+<p>老大~(最近很忙,没照顾到RS的内测,抱歉)</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>xujianhui168</b><br/>
+2008-06-30 22:48:35</p>
+</div>
+<div class="col-10">
+<p>好，刚好学习中，谢谢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>龙仙亮</b><br/>
+2008-07-01 13:53:50</p>
+</div>
+<div class="col-10">
+<p>老大，来了！！！！！！！！！！！！！！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16914_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

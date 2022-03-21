@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>白枫手把手教你lua编程2(算法的概念)</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">白枫手把手教你lua编程2(算法的概念)</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_15.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-04-26 20:52:21</p>
+</div>
+<div class="col-10">
+<p>[color=Red]注[/color]:首先请确保您已经下载了[url=http://www.yayabo.cn/thread-3339-1-1.html]目录帖[/url]里面提供的lua脚本解释器程序.<br /><br />算法就是一个有穷的规则的集合，其中的规则确定了解决某一个特定类型问题的运算的序列。简单的说，算法就是为完成某个具体的问题而设计的有限的操作步骤。<br />-- 《摘自c语言程序设计》<br /><br />上面的内容看懂了吗?看不懂就对了,照抄书上的....<br /><br />进入正题,简单的说,算法就是一个解决某个问题的有限的操作步骤,比如我们每天都做着:刷牙->洗脸->吃早餐->上学这样的步骤,这就是一个简单的算法,如果这个例子还不足以让你理解算法是什么,我还有招,譬如温度的换算,摄氏和华氏之间的单位换算,看下面的代码<br /><br />[color=Red]--------------- 代码开始 ---------------[/color]<br /><br />-- 定义一个储存摄氏温度的变量C,这里我们顺便给它分配一个固定值<br />C = 30<br /><br />-- 接下来定义一个储存华氏温度的变量F,我们直接用一个算式把摄氏温度转换成华氏温度并赋值给变量F<br />F = (9/5)*C + 32<br /><br />-- 最后我们把代表华氏温度的变量F的值打印到屏幕以告诉我们结果<br />print(F)<br /><br />[color=Red]--------------- 代码结束 ---------------[/color]<br /><br />上面的代码完成了把摄氏温度转换成华氏温度并把结果打印到屏幕的这样一个过程,而这些步骤我们就称它为算法,没错,这时一个温度转换的小算法。<br /><br />我们可以尝试改变变量C的值，然后再查看屏幕输出,会发现结果依然如我们所期望的,是正确的华氏温度的值。<br /><br />到这里,你应该对算法有所了解了把,再看上面的c语言程序设计的语录,应该能大概理解它文字里的意思了,下面我简要的说明一下lua脚本语言里面的运算符和相关小知识:<br /><br />+-*/=       从左边开始是加减乘除赋值,＝号在程序设计里是赋值,把等号右边的值赋给左边,在数学里叫等号,概念不一样,在程序里,＝号左右两边不一定相等,而数学则要求相等<br /><br />()              括号可以在任何表达式(算式)里使用,它可以改变运算的执行顺序,比如(3+5)*12,先算是3+5,再乘以12,记住多使用()括号,可以让你不用记住那些烦人的运算优先级,因为很多时候,程序算法都不如上面的简短和直接<br /><br />然后要说的是lua的变量命名规则,就是我们刚才温度转换小算法里面使用的C和F,程序设计中,我们把C和F称为"变量",而在lua里,我们称它为"引用","变量"和"引用"的具体区别在什么地方呢?在于它们可以保存些什么内容。譬如在c语言中,我们要声明一个保存数值的变量,必须加入变量类型说明(int C),而要保存一段文字时,则要把变量声明为char[](char s[])，如果数据和变量的类型不匹配,则出现赋值不能的情况,但是在lua里,你只要声明一个名字(譬如C),就可以开始赋任何值给它了,"引用"的使用很方便也很灵活,这不得不说是一个成功,又或许是一个失败。lua的变量名命名规则:[color=Red]字母开头、不能数字开头、可以有数字、可以有下划线、不能有特殊字符、大小写敏感[/color]，下面列几个合法lua变量名:<br />合法的 a , bb , er98 , m_lj ,M_lj , afafaf , _hhh<br />不合法 9a , Ab-aa , 2a_cc , a-bbb<br />具体如何大家可以看看,至于m_lj和M_lj被lua判断为2个不同的名字,因为lua是大小写敏感的语言,不过这样命名变量名除了迷惑自己以外没有任何好处,所以变量名的命名要求好识别,易理解,比如boy,girl,score,看名字就知道大概的用处,当然,如何命名是个人习惯,实际上怎么命名都是不影响程序运行的,这里就不多说什么。<br /><br />到这里为止,这节的内容就结束了,总结一下上面说到的内容：[color=Red]算法概念,变量命名法,基本的运算符[/color]，希望大家花时间记忆一下，不要问这有什么用，这是基础，就和1＋1＝2一样，不懂算加减，就不会算乘除，也不会后面的代数，几何，高等数学，最后提供一个作业，就是写一个把华氏温度转换为摄氏温度的小算法，很炯，不过相信聪明的你应该很容易解决!下一节我们来学习下程序设计的3种结构！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>1239985932</b><br/>
+2010-04-26 20:52:28</p>
+</div>
+<div class="col-10">
+<p>偶说：第三章呢？<br />什么时候出啊？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>好评发售中</b><br/>
+2010-04-26 20:54:09</p>
+</div>
+<div class="col-10">
+<p>    恩恩~~等吧。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>1239985932</b><br/>
+2010-04-26 20:54:52</p>
+</div>
+<div class="col-10">
+<p>抗议啊……<br />偶不打算修车啊……<br />喵你不能怎样的玩啊……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>樱之雨</b><br/>
+2010-04-26 20:56:04</p>
+</div>
+<div class="col-10">
+<p>[quote]偶说：第三章呢？<br />什么时候出啊？<br />[size=2][color=#999999]1239985932 发表于 2010-4-26 20:52[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=23590&ptid=3349][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />    每周一篇……撑死……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>-白./音。</b><br/>
+2010-04-26 20:57:12</p>
+</div>
+<div class="col-10">
+<p>可以捉宠物什么的，最好有神兽，加个什么什么传说，深山闹鬼什么的就刺激了~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Reafves</b><br/>
+2010-04-26 20:57:58</p>
+</div>
+<div class="col-10">
+<p>[url]http://tora.to/blog/369951.htm[/url]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>guaiguai748</b><br/>
+2010-04-26 20:58:28</p>
+</div>
+<div class="col-10">
+<p>要等好久啊，真想快点看到结局</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post14560_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

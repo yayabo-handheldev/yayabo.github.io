@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>牛叔的lua研究报告——dofile和require</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">牛叔的lua研究报告——dofile和require</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_13.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2010-07-07 08:42:43</p>
+</div>
+<div class="col-10">
+<p>在lua中写个试验性质的小程序可能只要一个脚本文件就搞定了，不过一旦程序上了一定规模，为了方便阅读和维护，分开多个文件就很有必要了。那么如何才能在一个lua脚本文件中调用另一个文件呢？这个就是今天的研究课题。<br />	首先出场的就是dofile。我们知道一个lua文件是作为一个代码块（chunk）存在的，其实质就是一个函数，那么最简单的，我在一个外部lua文件中写一段代码，然后在主lua文件中用dofile调用，外部文件的代码块就会执行了。[code]<br />--outter.lua:<br />print("Hello world!")<br />--main.lua:<br />dofile("outer.lua")<br />[/code]那么执行结果显然就是输出“Hello world!”。<br />	当然有时候我们不想立即执行外部文件，而是想从外部文件中引入一个函数，在某个合适的时候执行。那么可以在外部文件中定义一个函数并返回，然后执行。[code]<br />--outter.lua:<br />function sayHello()<br />	print("Hello world!")<br />end<br />return sayHello<br />--main.lua:<br />func = dofile("outter.lua")<br />func()<br />[/code]于是，显然的也输出了想要的内容。啊，不过这样代码也太丑了，实话说这里用dofile纯粹多此一举。完全可以用loadfile改造一下。返回一个函数显然不能满足要求，于是就可以把函数组织到一个table中，然后返回这个table……<br />	这里注意到一件事，就是作用域，或者更专业一点称为“词法域”。试试下面这段代码：[code]<br />--outer.lua:<br />print(name .. "，你好！")<br />--main.lua:<br />name = "雷叔"<br />local name = "牛叔"<br />dofile("outer.lua")<br />[/code]运行结果是“雷叔，你好！”这里就奇怪了，按理说这里出现了一个局部变量会屏蔽掉全局变量，但是这里输出的却是全局变量的值。外部lua文件在编译时并没有涉及词法域。<br /><br />	前面提到了引入外部lua文件中所定义函数的问题，显然dofile不是一个好的解决方法。是时候请出专业方法require了。关于require的行为和路径搜索这些书上和网上都有很多资料，这里不是研究的重点，下面直接进入试验阶段。[code]<br />--outer.lua:<br />	function sayHello()<br />	print(name .. "，你好！")<br />end<br />--mian.lua:<br />require("outer")<br />name = "雷叔"<br />local name = "牛叔"<br />sayHello()<br />[/code]形式上很类似C语言的#include<...>，在其他地方定义的函数，经这么引入文件之后就可以调用了。不过lua并不是定义和实现分离的语言，这样是把整个定义部分都加载进来了哦。加载过程大致上是lua先加载这个外部文件，然后运行它。实际上这段外部代码是可以有返回值的，它的返回值就是require的返回值。这里我们什么返回值都没有，执行这个外部代码的结果就是定义了这么个全局函数。注意是全局函数，虽然通常我们直接定义的函数都是全局函数所以都没怎么注意过，要是非要定义个局部函数在主程序块里可就看不到了。另外和前面的情形一样，外部代码块只认识“雷叔”，“牛叔”是谁它根本不知道。<br />	可以在外部文件里定义一堆函数，然后全都加到全局环境下。不过全局的东西用起来要小心，有一个原则是对全局的“污染”越小越好。那么自然就引入了“模块”的概念。在lua中，模块由万能的table来充当。最自然的想法就是定义一个table，然后把要定义的函数放在这个table里，最后返回这个table就行了。<br />	当然这种没经过精雕细琢的方法还是有问题的，比如模块名应该和文件名一致而不应该和table的名字有什么联系。另外就是把公共函数放在table里，即使同一个模块里的函数相互调用的话也得带上table名的前缀。还有就是公共函数需要加前缀，局部函数不需要，这就导致在模块内部调用两类函数的方式也不一样，这样如果需要改动某个函数的访问类型需要修改的地方可能会很多……这些问题，留着在下次的研究报告里解决吧。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>killmexx</b><br/>
+2010-07-07 08:45:11</p>
+</div>
+<div class="col-10">
+<p>听着真蛋疼</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2010-07-07 08:45:26</p>
+</div>
+<div class="col-10">
+<p>突然发现lua版块被合并到psp 的lua player中去了……一种找不到归属的感觉油然而生。<br />罢了，发在自家版块吧。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>沁ぅ純の寳貝</b><br/>
+2010-07-07 08:50:30</p>
+</div>
+<div class="col-10">
+<p>当时由于崇拜221大人而想要自己做游戏，找ONS引擎的时候就发现了AMP，于是注册之。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>vwcp4119</b><br/>
+2010-08-03 19:30:21</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 vwcp4119 于 2010-8-3 19:36 编辑 [/i]<br /><br />请问,怎样搞没水印的?</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>GnNu</b><br/>
+2010-07-07 08:52:16</p>
+</div>
+<div class="col-10">
+<p>= =无聊非常</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Virtual_Lily</b><br/>
+2010-07-07 08:58:23</p>
+</div>
+<div class="col-10">
+<p>嘛...忘记顶起来了,给分~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ast</b><br/>
+2010-07-07 08:59:56</p>
+</div>
+<div class="col-10">
+<p>lua新人表示 支持个</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>GnNu</b><br/>
+2010-07-07 09:01:32</p>
+</div>
+<div class="col-10">
+<p>神隐这个游戏汉化了也没用，剧情不太好。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kc22954gp</b><br/>
+2010-07-07 09:14:47</p>
+</div>
+<div class="col-10">
+<p>來看看<br />謝謝分享</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>sugar1991</b><br/>
+2010-07-07 09:18:31</p>
+</div>
+<div class="col-10">
+<p>白色相簿2还没出完。。。。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-07-07 09:18:58</p>
+</div>
+<div class="col-10">
+<p>哦？东方区来了个专业的东方饭啊，不错，youyouzero同学加油！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>华丽的分割</b><br/>
+2010-07-07 09:19:08</p>
+</div>
+<div class="col-10">
+<p>我在宿舍就靠这玩意过了两个夏天。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>379851627</b><br/>
+2010-07-07 09:19:14</p>
+</div>
+<div class="col-10">
+<p>你们真行<br />考点给我啊口水啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>youyouzero</b><br/>
+2010-07-07 09:19:14</p>
+</div>
+<div class="col-10">
+<p>吐槽无力<br />刚入手的二次元狂热里有几个电磁炮的视频<br />咱要去安慰一下自己</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>379851627</b><br/>
+2010-07-07 09:23:29</p>
+</div>
+<div class="col-10">
+<p>慢慢找吧</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>guofanayu</b><br/>
+2010-07-07 09:39:53</p>
+</div>
+<div class="col-10">
+<p>后生可畏啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kelove</b><br/>
+2010-07-07 09:41:21</p>
+</div>
+<div class="col-10">
+<p>NDS上有这么神奇的软件？下来试试~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>guofanayu</b><br/>
+2010-07-07 09:42:28</p>
+</div>
+<div class="col-10">
+<p>千年一动啊 支持支持</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>GnNu</b><br/>
+2010-07-07 09:45:55</p>
+</div>
+<div class="col-10">
+<p>我一直都很喜欢我的朋友很少这本书<br />另外插图的风格也是我所向往的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zqyi520x</b><br/>
+2010-07-07 09:56:26</p>
+</div>
+<div class="col-10">
+<p>网名:夞丷性別:男性<br />居住地:广东韶关<br />星座:双鱼座<br />在做的事:米虫</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-07-07 09:59:12</p>
+</div>
+<div class="col-10">
+<p>哥去看看成果</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post12274_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

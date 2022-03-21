@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[2/6][模拟器on nds][MD][jEnesisDS][版本0.74]</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[2/6][模拟器on nds][MD][jEnesisDS][版本0.74]</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-02-06 18:17:04</p>
+</div>
+<div class="col-10">
+<p>[attach]2717[/attach]<br />软件名：jEnesisDS<br />作  者：Stephan Dittrich<br />官方网站：[url]http://www.workingdesign.de/[/url]<br />用  途：MD 模拟器 <br />[attach]2651[/attach][attach]2654[/attach]<br />更新历史：<br />[quote]********<br />v0.7.4 * <br />********<br />  - Changed scheduling of M68000 and Z80.<br />  - Some changes in M68000 internal memory handlers.<br />  - YM2612 FM core mostly rewritten in ASM.<br />  - Some bugs in FM core fixed (Operator 1 was sometimes not considered in certain cases).<br />  - Fixed reset bug for FM core resulting in unstable sound for every game loaded except the 1st one.<br />  - Raised sample rate for FM emulation from 16KHz to 28KHz (28, because a few games can't do 32KHz)<br />  - Sound is completely mixed in hardware now, meaning every FM channel, PSG and DAC have their own DS sound channels.<br /><br /><br />********<br />v0.7   * <br />********<br />  - Fixed bug in Z80 core, preventing some games from having sound (Wonderboy, etc.).<br />  - Fixed bug in 68000 optimization, that could make some games hang (Bonanza Brothers, etc.).<br />  - Changed sound handling and doubled sample rate for PCM sound, resulting in slightly better sound quality.<br />  - HW renderer partially rewritten, many glitches should be gone, some are still there (and will probably not be easy to fix ever)<br />  - Sprite rendering completely rewritten in ASM. Should be faster and fix most of the sprite issues.<br />  - Implemented mid frame palette updates (water effects in Sonic games, Castlevania, etc.). Note, that this just works, if a game is constantly fast enough, so slowdowns can still cause colors to flicker).<br />  - Many little optimizations in memory handling and the CPU cores. Should reduce slowdowns.<br />  - Added option for sprite masking (Landstalker etc.). It is not 100% emulated, just faked to be enough for most games using it (disable it, if sprites are missing, that should be there).<br />  - Added option to change between 3- and 6-Button pad (just works, if the option is applied BEFORE loading a game). When 6-Button pad is disabled, L+R can be used to move the visible screen area, X to center it.<br />  - Added sound state to the savestates, so that the correct tracks should play now when a state is loaded. Savestates are still not 100% reliable and loading old states can potentially cause problems.<br /><br /><br />********<br />v0.6   * <br />********<br />  - Custom Z80 ASM core implemented.<br />  - Custom YM2612 and PSG emulation, running on the ARM7. So there is sound now ;)<br />  - Many parts rewritten. Speed without Z80 core should be quite a bit faster for most games.<br />  - Idle-loop detection completely rewritten. Shouldn't break any games anymore. Therefore the option to<br />    disable it was taken out.<br />  - Some changes to HW renderer. Some glitches should be gone, others were probably introduced. Will be <br />    rewritten for the next version.<br />  - Tweaked H-Int auto detection, so less games should need the "ON" option to boot now.<br />  - Mode-Button added (L+R+Start)<br /><br /><br />********<br />v0.5   * <br />********<br />  - Implemented save-states (touch slot icons to load/save)<br />  - Extended SRAM compatibility. Story of Thor and Phantasy Star IV should work now.<br /><br />  - Extended "force update" of HW renderer. Fixes Sonic3 intro, Sonic Bonus stage and probably others.<br />  - Fixed sprites showing garbage if more than 64 sprites were displayed.<br />    (Comix Zone, Outrun, Sonic, well most games i guess).<br />  - Partial rewrite of sprite handling in the HW renderer.<br />    Less slowdowns when a lot of sprites are displayed.<br />  - Implemented better VSync. Fixes temporary speedups after slowdowns.<br />  - Implemented vertical scaling option into HW renderer (horizontal is NOT possible, dont ask!).<br />    Aspect ratio will be incorrect, but makes games more enjoyable (at least in my opinion).<br />  - Implemented screen positioning in HW renderer (touch screen to pause, then use [D-Pad] to scroll.<br />    Push [A] for faster scrolling)<br /><br />  - Rewrote DS interrupt system for HW renderer. Probably less slowdowns, surely safer.<br /><br />  - Added "Fake Z80" option. The faking code can mess up some games (Ghouls n' Ghosts, Aladdin, <br />    Cool Spot 2, and others), so it can be turned off now.<br />    Interestingly enough, if it is turned off, real Z80 emulation will be executed, BUT just under<br />    certain circumstances, to keep games working and not to slow things down.<br />    As with other options, some games might depend on a certain setting to boot <br />    (Gaiares just boots when this option is set to "off").<br /><br /><br />********<br />v0.4a   * Updated Release<br />********<br />  - Recompiled with current cpu core. v0.4 was "accidentially" compiled with an older version.<br />    This should raise compatibility quite a bit.<br />  - Separated HW and SW renderer versions.<br />  - Activated "Force Update" Option in the HW renderer version. If enabled, the chances of tile <br />    corruptions are minimized - it can lead to massive slowdowns though, if a game updates more than <br />    1024 unique tiles per frame (Turrican intro, Comix Zone intro).<br />    You can also temporarily change this option for a one-time update, if the tiles are corrupted<br />    (i.e Viewpoint).<br /><br />********<br />v0.4   * Initial Preview Release<br />********<br />  - Custom ARM asm Motorola68000 CPU core<br />  - Hardware and Software renderer (this release defaults to the HW renderer and the SW<br />    renderer can not yet been choosen through the settings.<br />  - VDP emulation with all DMA modes<br />  - Horizontal & Vertical Interrupts<br />  - Support for PAL/NTSC and all country codes (all games will run at 60Hz though)<br />  - .smd, .bin & .gen support<br />  - partial SRAM save/load support (doesnt work for all games yet)<br />  - Line based renderer<br />  - Scroll Layers A+B & Window rendering with priorities (horizontal Windows arenot emulated in the<br />    HW renderer yet)<br />[/quote]<br />[attach]2660[/attach][i=s] 本帖最后由 qxshark 于 2010-2-9 13:08 编辑 [/i]<br /><br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-02-06 18:23:25</p>
+</div>
+<div class="col-10">
+<p>[quote]当时记得看到过GG真机，和我手里的砖头GB比都要大好多。不过彩色的画面却是非常吸引人的～ <br />[/quote][quote]另外我还想吐个槽，wsc的屏幕真的是好暗好暗……如果能加个背光板就会是个不错的机子。[/quote]<br />真不愧是掌叔就是见多识广<br />真狠我生的晚啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>anli</b><br/>
+2010-02-06 19:14:22</p>
+</div>
+<div class="col-10">
+<p>还有20日便发售了,期待中</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-02-06 19:22:47</p>
+</div>
+<div class="col-10">
+<p>不知道会和谐到什么程度~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>235930481</b><br/>
+2010-02-06 21:40:44</p>
+</div>
+<div class="col-10">
+<p>tt进入后死机啊....怎么回事啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-02-06 21:45:36</p>
+</div>
+<div class="col-10">
+<p>好教程，研究研究</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wsxcrr</b><br/>
+2010-02-06 22:02:23</p>
+</div>
+<div class="col-10">
+<p>大侠啊~~欢天喜地的抱走。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wsxcrr</b><br/>
+2010-02-06 22:02:27</p>
+</div>
+<div class="col-10">
+<p>大侠啊~~欢天喜地的抱走。。。。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15725_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

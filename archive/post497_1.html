@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>1.2Cocos2d-x的几个基本概念</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">1.2Cocos2d-x的几个基本概念</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>龙舞奉天</b><br/>
+2014-03-23 21:08:32</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 龙舞奉天 于 2014-3-23 21:13 编辑 [/i]<br /><br />[align=left][color=#001000]苦逼学生党[/color]{:3_58:}，弄了一个周末的傅立叶分析和解跃变点，东西发晚了，{:3_60:}抱歉啦……以后一定加快进度{:3_52:}[/align]<br />[align=left][color=rgb(51, 51, 51)][font=Georgia,][b]1.场景[/b][/font][/color][/align][align=left][color=rgb(51, 51, 51)][font=Georgia,]我们把内容相对不变的游戏元素的集合称作场景(scene)，具体指的就是游戏过程中的开始界面，每一关的游戏界面等，它们的内容在一定时间范围内总体不会发生大的改变。而我们把游戏在场景之中切换的过程叫做流程控制。[/font][/color][/align][align=left][font=Georgia,][color=#333333]在Cocos2d-x里，处理场景的类是[/color][color=#ff0000]CCScene[/color][color=#333333]。[/color][/font][/align][align=left][color=rgb(51, 51, 51)][font=Georgia,][b]2.层[/b][/font][/color][/align][align=left][color=rgb(51, 51, 51)][font=Georgia,]隶属于场景之下的游戏元素就是层。通常，一个复杂场景会拥有很多层，一个层既可用来显示元素，也可用来接受用户输入，而最终在界面上就是以多个层的复合显示的。一般在一个游戏里，往往存在以下4层：[/font][/color][/align][color=#333333]（1）菜单层：用于显示各种菜单界面，更改游戏设置。<br />[/color][align=left][color=rgb(51, 51, 51)][font=Georgia,]（2）触摸层：处理在屏幕上的触摸时间。[/font][/color][/align][align=left][color=rgb(51, 51, 51)][font=Georgia,]（3）动作层：用于放置游戏的具体元素---精灵，并处理它们的动作。[/font][/color][/align][align=left][color=rgb(51, 51, 51)][font=Georgia,]（4）背景层：背景图片。[/font][/color][/align][align=left][font=Georgia,][color=#333333]在Cocos2d-x里，处理层的类是[/color][color=#ff0000]CCLayer[/color][color=#333333]。[/color][/font][/align][align=left][color=rgb(51, 51, 51)][font=Georgia,][b]3.精灵[/b][/font][/color][/align][align=left][color=rgb(51, 51, 51)][font=Georgia,]场景和层都是其它游戏元素的容器，他们需要被添加游戏元素才能发挥作用。而精灵则与它们不同，是游戏中最基本的游戏元素，它一定是层或场景中的可见图形。平常所玩的rpg中，npc，石头，树木，怪物乃至主菜单的背景图片，这些都是精灵。可以说玩家所看到的一切都是有精灵组成的。[/font][/color][/align][align=left][color=rgb(51, 51, 51)][font=Georgia,]精灵在一个游戏中十分灵活，它可以不断变化，设置动作（后面我们会讲解如何为精灵添加自定义动作）。在Cocos2d-x中，处理精灵的类是CCSprite。[/font][/color][/align][align=left][color=rgb(51, 51, 51)][font=Georgia,][b]4.节点与渲染树[/b][/font][/color][/align][align=left][font=Georgia,][color=#333333]对于一个游戏内所有的元素，总有一个相应的元素组织结构，这个结构（如图）就称为渲染树，其中每一个元素就称作节点（[/color][color=#ff0000]CCNode[/color][color=#333333]）。其实在Cocos2d-x中，场景（[/color][color=#ff0000]CCScene[/color][color=#333333]）、层（[/color][color=#ff0000]CCLayer[/color][color=#333333]）和精灵（[/color][color=#ff0000]CCSprite[/color][color=#333333]）都是普通的节点，每种节点都有各自的特点，使用时按需要组织合理的结构。[/color][/font][/align][align=center][attach]201[/attach][/align]<br />[align=left][color=rgb(51, 51, 51)][font=Georgia,][b]5.纹理[/b][/font][/color][/align][align=left][color=rgb(51, 51, 51)][font=Georgia,]纹理是表现游戏元素的基本单位，大致可以认为纹理就是一张图片。在3D游戏中，纹理主要指绘制到物体表面的图案。[/font][/color][/align]<br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白泽</b><br/>
+2014-03-23 23:45:41</p>
+</div>
+<div class="col-10">
+<p>ID:白泽<br />申请板块:ps综合区<br />联系方式: 企鹅号779364493 手机18580832412 <br />日常在线时间:大概是很多<br />规划是什么<br /></p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post497_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

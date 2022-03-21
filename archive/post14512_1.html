@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>AMP菜鸟制作GAL游戏教程3-加入背景和立绘</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">AMP菜鸟制作GAL游戏教程3-加入背景和立绘</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_15.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>万里无云</b><br/>
+2010-04-28 15:20:43</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 白枫 于 2010-9-6 19:12 编辑 [/i]<br /><br />加入背景和立绘 ·· 看到这里 不懂立绘和背景为何物的童鞋请回老家结婚 谢谢···<br /><br /><br />1 加入背景：<br /><br />下面是载入一个图片到序号里，以后用这个序号代表这个图片。<br />（序号1，2可用，序号大的在上面。）<br /><br />bg(序号,"图片名",效果号,效果时间);<br /><br /><br />bg是background  省略写法··  不要联想到gl bl什么的···  gl bl 什么的最讨厌了喵····(没有任何关系的喵··)<br /><br />例子:<br /><br />bg(1,"bg01.png",0,0);<br />   这句就是将图片bg01.png载入到序号1里，以后用序号1就代表这个图片<br /><br />bg显示是个开关（有bgon和bgoff），on就是开（显示），off就是关（不显示）··跟电灯一样···可以来回开关···众：地球人都知道···<br /><br /><br />例子：<br />bgon(1);--显示序号1代表的图片<br /><br />bgon(2);--显示序号2代表的图片<br /><br />bgoff(2);--不显示序号2代表的图片<br /><br /><br />下面的句子就显示了一张背景：<br /><br />bg(1,"bg01.png",0,0);---载入<br />bgon(1);---开<br /><br /><br />请将本节末的图片放入上一节建立的lessons目录里，并把myfirst.lua中语句改为上面的2句。<br />如图放置<br />[attach]4527[/attach]<br />依次运行pack.bat，run.bat看效果。<br /><br /><br />开始加入立绘和对话框··<br /><br /><br />立绘的单词用fg表示，代表前景（foreground），写法与bg相同。<br /><br /><br />例如：<br /><br />载入到1号<br />fg(1,"fg01.png",0,0);<br />或者用下面(这样图片的显示质量更好)<br />fg(1,"fg01.png",0,0,8888);<br /><br />载入到10号<br />fg(10,"frame.png",0,0);<br />或者用下面(这样图片的显示质量更好)<br />fg(10,"frame.png",0,0,8888);<br /><br /><br /><br />设置显示的位置：<br />fgxy(序号,x坐标,y坐标);<br />设置序号1代表图片的显示位置到（150,0）：<br />fgxy(1,150,0);<br /><br />一个画面的xy值如下图描述：（ps里截得图）<br />[attach]4528[/attach]<br />前面讲bg时提到了序号大的在上面，显示时上面的（序号大的）会盖住下面fg也一样的。同样的有fgon，fgoff。<br /><br /><br />问题下图中：<br />对话框和人物谁该是序号大的？<br />[attach]4529[/attach]<br />答案是：对话框···因为对话框盖住了人物··<br /><br /><br /><br />现在··将显示上面的画面···<br /><br /><br />fg(1,"fg01.png",0,0,8888);--载入人物到序号1<br />fg(10,"frame.png",0,0); --载入对话框序号10<br />bg(1,"bg01.png",0,0);   --载入背景图到背景序号1<br />fgxy(1,150,0);            --设置序号1的位置<br />fgxy(10,0,163);          --设置序号10的位置<br /><br />bgon(1);                  --显示背景序号1<br />fgon(1);                   --显示序号1的图片<br />fgon(10);                 --显示序号10的图片<br /><br /><br />将上面的句子复制到myfirst.lua，运行下看效果看效果  看看是不是和上面的一样<br />[attach]4530[/attach]<br />好了，最后以练习结束本节：<br />练习1：运用 上一节学到的，加入一句对话:"AMP已经被我推倒一半了~白叔你完了~"作为人物的说话。<br />提示：<br />再在末尾加上下面一句，作为人物的说话··<br />text("AMP已经被我推倒一半了~[n]白叔你完了~[!]");   <br /><br />此教程转载于：[url]http://www.iacger.com/bbs/[/url]<br />作者：索菲亚方杯<br />原文网址：[url]http://www.iacger.com/bbs/viewthread.php?tid=5447[/url]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post14512_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

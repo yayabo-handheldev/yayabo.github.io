@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Lua与C交互入门</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">Lua与C交互入门</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-13 12:30:10</p>
+</div>
+<div class="col-10">
+<p>1.简介<br /><br />Lua与C/C++结合是很紧密的, Lua与C++交互是建立在Lua与C的基础上的, 所<br />以偶先从Lua与C讲起.<br /><br />正如第一讲所说, 运行Lua程序或者说调用Lua主要有两种方式:<br />* 通过命令行执行"Lua"命令<br />* 通过Lua的C库<br />虽然此前偶们一直用第一种方式, 但偶要告诉你, 通过Lua的C库执行才是游戏中<br />常用的方式.<br /><br />2.Lua的C库<br /><br />Lua的C库可以做为Shared Library调用, 但一般开发游戏时会把Lua的所有源程序<br />都包含在内, 并不把Lua编译成共享库的形式. 因为Lua程序只有100多K, 而且几乎<br />可以在任何编译器下Clean Compile. 带Lua源程序的另一个好处时, 可以随时对Lua<br />本身进行扩充, 增加偶们所需的功能.<br /><br />Lua的C库提供一系列API:<br />* 管理全局变量<br />* 管理tables<br />* 调用函数<br />* 定义新函数, 这也可以完全由C实现<br />* 垃圾收集器Garbage collector, 虽然Lua可以自动进行, 但往往不是立即执行的,<br />所以对实时性要求比较高的程序, 会自己调用垃圾收集器<br />* 载入并执行Lua程序, 这也可以由Lua自身实现<br />* 任何Lua可以实现的功能, 都可以通过Lua的C API实现, 这对于优化程序的运行速度<br />有帮助. 经常调用的共用的Lua程序片断可以转成C程序, 以提高效率. 连Lua都是C写的<br />还有什么C不能实现呢?<br /><br />3.Lua与C集成的例子<br />例e10.c<br />/* A simple Lua interpreter. */<br />#include <stdio.h><br />#include <lua.h><br />int main(int argc, char *argv[]) {<br />char line[BUFSIZ];<br />lua_State *L = lua_open(0);<br />while (fgets(line, sizeof(line), stdin) != 0)<br />lua_dostring(L, line);<br />lua_close(L);<br />return 0;<br />}<br /><br />编译<br />Linux/Cygwin<br />* 先编译Lua, 并把头文件放入include路径<br />* gcc e10.c -llua -llualib -o e10<br /><br />VC6/VC2003<br />* 先编译Lua, 在Option中设置头文件和库文件路径<br />* 新建工程,在工程配置中加入附加库lua.lib和lualib.lib<br />* 编译成exe<br /><br />运行结果<br />本程序的功能是实现一个Lua解释器, 输入的每行字符都会被解释成Lua并执行.<br /><br />程序说明<br />* #include <lua.h> 包含lua头文件, 然后才可以使用API<br />* lua_State *L = lua_open(0) 打开一个Lua执行器<br />* fgets(line, sizeof(line), stdin) 从标准输入里读入一行<br />* lua_dostring(L, line) 执行此行<br />* lua_close(L) 关闭Lua执行器<br /><br /><br />例e11.c<br />/* Another simple Lua interpreter. */<br />#include <stdio.h><br />#include <lua.h><br />#include <lualib.h><br />int main(int argc, char *argv[]) {<br />char line[BUFSIZ];<br />lua_State *L = lua_open(0);<br />lua_baselibopen(L);<br />lua_iolibopen(L);<br />lua_strlibopen(L);<br />lua_mathlibopen(L);<br />while (fgets(line, sizeof(line), stdin) != 0)<br />lua_dostring(L, line);<br />lua_close(L);<br />return 0;<br />}<br /><br />运行结果<br />本程序的功能是实现一个Lua解释器, 输入的每行字符都会被解释成Lua并执行.<br />与上例不同的是, 本例调用了Lua的一些标准库.<br /><br />程序说明<br />* #include <lualib.h> 包含Lua的标准库<br />* 以下这几行是用来读入Lua的一些库, 这样偶们的Lua程序就可以有更多的功能.<br />lua_baselibopen(L);<br />lua_iolibopen(L);<br />lua_strlibopen(L);<br />lua_mathlibopen(L);<br /><br />4.试试看<br />把上面两个小例子在你熟悉的编译器中编译执行, 并试试能否与Lua源码树一起编译</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16026_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

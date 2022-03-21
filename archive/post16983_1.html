@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>SDL介绍,第一个程序</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">SDL介绍,第一个程序</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-10 09:17:02</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.sina.com.cn/vcbear[/url]<br />作者：vcbear<br /><br /> Simple DirectMedia Layer, 简称SDL，是一个自由的跨平台的多媒体开发包，主要通过OpenGL和2D视频帧缓冲(framebuffer)提供对音频、键盘、鼠标、游戏操纵杆 (joystick)和3D硬件的底层访问。它被广泛的应用于MPEG回放软件、模拟器和多个著名游戏中，如获得大奖的《文明：权倾天下》 (Civilization: Call To Power)的Linux移植版本。它的官方站点是：[url]http://www.libsdl.org/[/url] ，还有一个非常个性的LOGO。<br />[attach]83[/attach]<br /> 在Win32编程中，如果要操纵2D图像，可以选择使用GDI或者DirectDraw，前者速度较慢，而后者是特定针对Microsoft平台的，在非Win32平台上移植会带来很大的麻烦。这时，你可以选择使用SDL。SDL支持多种平台： Linux、Windows, BeOS, MacOS Classic, MacOS X, FreeBSD, OpenBSD, BSD/OS, Solaris, IRIX和QNX，同时也部分支持部分其他平台：Windows CE, AmigaOS, Dreamcast, Atari, NetBSD, AIX, OSF/Tru64, RISC OS和SymbianOS。当然SDL本身是针对2D图像编程的，如果使用到3D编程，那么需要将SDL和OpenGL结合使用。<br /><br /> <br /><br />  下面就开始我们的SDL学习之旅了。<br /><br />  SDL包含8个子系统--Audio, CDROM, Event Handling, File I/O, Joystick Handling, Threading, Timers and Video。在使用这些子系统之前，我们必须首先要调用函数SDL_Init(或SDL_InitSubSystem). SDL_Init必须在任何函数使用之前被调用，它将自动初始化Event Handling, File I/O 和 Threading，以及其他自系统所指定的参数。<br /><br />  所以，若要初始化默认子系统和 Video子系统，你需写如下的代码：<br /><br />    SDL_Init(SDL_INIT_VIDEO);<br /><br />  同理，若要初始化默认子系统，Video子系统和 Timers子系统，你需要写：<br /><br />    SDL_Init(SDL_INTI_VIDEO|SDL_INIT_TIMER);<br /><br /> SDL的初始化用到SDL_Init，那结束则要用到SDL_Quit(或SDL_QuitSubSystem), 函数SDL_Quit将会关闭所有的子系统，包括默认子系统，这里要注意，必须在SDL应用程序退出前调用SDL_Quit。<br /><br />   了解了SDL_Init和SDL_Quit之后，我们就可以完成一个最基本的SDL程序框架了，但在这之前，我们必须准备好处理错误。许多SDL函数都有返回值并且指出了调用成功或则是调用失败。举个例子，SDL_Init函数，如果初始化子系统失败，将会返回-1。SDL自身提供了一套非常有效的机制来提示究竟是什么地方出了问题，在SDL中，当任何错误发生时，SDL都会将其保存起来，然后我们可以利用SDL_GetError这个函数来获取该错误的详细信息。<br /><br />下面就是我们第一个超级简单的例子代码了，还是利用网友newcreat的NGE库:<br /><br />--------------------------------------------------------------<br /><br /> <br /><br />#include "libnge.h"<br /><br />#include "stdio.h"<br /><br />int main() <br /><br />{<br />    printf("Initializing SDL.<br />");<br />    <br />    /* Initialize defaults, Video and Audio */<br />    if((SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO)==-1)) { <br />        printf("Could not initialize SDL: %s.<br />", SDL_GetError());<br />        exit(-1);<br />    }<br /><br />    printf("SDL initialized.<br />");<br /><br />    printf("Quiting SDL.<br />");<br />    <br />    /* Shutdown all subsystems */<br />    SDL_Quit();<br />    <br />    printf("Quiting....<br />");<br /><br />    exit(0);<br />}<br /><br />程序截图：<br />[attach]84[/attach]<br />下一课，我们将学习video子系统的相关知识。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16983_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

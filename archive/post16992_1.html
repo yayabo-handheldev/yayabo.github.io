@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[JGE++教程] 第１篇: Hello World!</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[JGE++教程] 第１篇: Hello World!</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-09 09:00:37</p>
+</div>
+<div class="col-10">
+<p>摘自：bbs.khors.com<br />作者：Dr.Watson<br /><br />    像所有的编程教程一样, 第1篇, 先和大家利用JGE＋＋写个简单的HELLO WORLD吧!（也就是在代码包内的Demo）让我们先看一下 JGE++ 和 JGE++ 应用程序的目录结构: <br /><br />______JGE<br />  |___Demo<br />        |___bin<br />        |___Debug<br />        |___JGEFramework<br />        |___Release<br />        |___src<br />             |___GameApp.cpp<br />             |___GameApp.h <br /><br />其中　GameApp.cpp 和　GameApp.h　就是所有　JGE++　应用程序的主要部份．<br /><br />因为暂时还没有VC6.0 建立 JGE++程序的向导，当大家想写自己的游戏时，最方便的办法，就是拿Demo的　GameApp.cpp 和　GameApp.h　来作更改．<br /><br />看一下GameApp.h　就知道JGE++程序的结构很简单：<br /><br />    GameApp(JGE *engine);<br /><br />    virtual ~GameApp();<br /><br />    virtual void Create();    // 设定变数／载入图，音乐等<br /><br />    virtual void Destroy();　// 释放有关物件等<br /><br />    virtual void Update();　 // 更新有关变数／用户操控<br /><br />    virtual void Render();　 // 显示更新<br /><br />参考GameApp.cpp，我们就更可以进一步了解实际的情况：<br /><br />void GameApp::Create()<br />{<br />　　　// 载入贴图<br />    mTexture = mEngine->LoadTexture("Res/mario.png", true);       <br /><br />　　　// 设定卡通角色的贴图范围<br />    mMario = new JQuad(mTexture, 0.0f, 0.0f, 62.0f, 72.0f);       <br />　　　// 设定贴图范围的中心点<br />    mMario->SetHotSpot(31.0f, 36.0f);                           <br /><br />　　　// 设定"Hello World!"的贴图范围<br />    mHello = new JQuad(mTexture, 0.0f, 100.0f, 128.0f, 28.0f);<br />　　　// 设定贴图范围的中心点<br />    mHello->SetHotSpot(64.0f, 14.0f);<br /><br />　　　// 载入音乐和播放<br />    mMusic = mEngine->LoadMusic("Res/smarioa.mod");<br />    mEngine->PlayMusic(mMusic);<br /><br />　　　// 载入点阵字体<br />    mFont = new JLBFont("Res/f3", 16, true);<br />   <br />　　　// 设定有关变数<br />    mScale = 1.0f;<br />    mAngle = 0.0f;<br />    mDelta = 0.001f;<br />}<br /><br /><br />void GameApp::Destroy()<br />{<br />　　　// 释放有关物件<br />    if (mTexture)<br />        mEngine->FreeTexture(mTexture);<br /><br />    if (mMario)<br />        delete mMario;<br /><br />    if (mHello)<br />        delete mHello;<br /><br />    if (mMusic)<br />        mEngine->FreeMusic(mMusic);<br /><br />    if (mFont)<br />        delete mFont;<br />}<br /><br /><br />void GameApp::Update()<br />{<br /><br />　　　// 按三角截图<br />    if (mEngine->GetButtonClick(PSP_CTRL_TRIANGLE))<br />    {<br />        char s[80];<br />        sprintf(s, "ms0:/screenshot.png");<br />        mEngine->ScreenShot(s);<br />    }<br /><br />　　　// 按"X"退出<br />    if (mEngine->GetButtonClick(PSP_CTRL_CROSS))   <br />    {<br />        mEngine->End();<br />        return;<br />    }<br /><br />　　　// 拿出由上一次更新到现在相隔的时间<br />    float dt = mEngine->GetDelta();   <br /><br />　　　// 更新有关变数<br />    mAngle += 0.001f*dt;<br />    if (mAngle > M_PI*2.0f)<br />        mAngle = 0.0f;<br /><br />    mScale += mDelta*dt;<br />    if (mScale > 2.0f || mScale < 0.5f)<br />    {<br />        mDelta *= -1;<br />        mScale += mDelta*dt;<br />    }<br /><br />　　　// 下面只是除虫用，可以不用理会<br />    mEngine->printf("FPS:%6.2f", mEngine->GetFPS());<br />}<br /><br /><br />void GameApp::Render()<br />{<br /><br />　　　// 设定四个点的颜色<br />    PIXEL_TYPE colors[] =<br />    {<br />        ARGB(255,0,0,255),<br />        ARGB(255,62,114,189),<br />        ARGB(255,255,255,255),<br />        ARGB(255,255,255,255)<br />    };<br />   <br />　　　// 以渲染方式清除背景<br />    mEngine->FillRect(0.0f, 0.0f, SCREEN_WIDTH_F, SCREEN_HEIGHT_F, colors);   <br /><br />　　　// 贴上卡通角色<br />    mEngine->RenderQuad(mMario, 80.0f, 80.0f);   <br /><br />　　　// 贴上卡通角色同时改变它的角度和大小<br />    mEngine->RenderQuad(mMario, 400.0f, 80.0f, 1.0f, 1.2f, 1.2f);   <br /><br />　　　// 贴上卡通角色同时旋转角度<br />    mEngine->RenderQuad(mMario, 80.0f, 200.0f, mAngle, 1.0f, 1.0f);   <br /><br />    // 设定渲染颜色再贴图<br />    mMario->SetColor(ARGB(128,255,255,0));                       <br />    mEngine->RenderQuad(mMario, 380.0f, 150.0f, 0.0f, mScale, mScale);<br />    // 重设默认颜色<br />    mMario->SetColor(ARGB(255,255,255,255));<br /><br />    // Hello world!<br />    mEngine->RenderQuad(mHello, SCREEN_WIDTH_F/2.0f, SCREEN_HEIGHT_F/2.0f, 0.0f, mScale, mScale);<br /><br />    // 显示字串<br />    mFont->SetColor(ARGB(255,255,255,0));<br />    mFont->DrawString("JGE++ Demo", 240.0f, 20.0f, JGETEXT_CENTER);<br /><br />}<br /><br />利用JGE++写游戏的最大好处是我们可以利用VC6.0，在WINDOWS上测试和除虫，不用每个小更改，都要弄上去PSP去试，更不用担心把PSP锁死而要拆电池了！ 至于用VC6.0 Debugger来除虫的好处，在下更是不用多说了！<br /><br />相信大家现在都对JGE++ 有点初步了解了，一起用它来写游戏吧 [s:1]<br /><br />注意：代码在 JGE++ V0.1.0 的打包内．</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16992_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

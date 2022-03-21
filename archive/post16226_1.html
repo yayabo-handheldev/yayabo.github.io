@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NGE2中文输入法源代码(中'芯'输入法)联想词组版</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NGE2中文输入法源代码(中'芯'输入法)联想词组版</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-12-19 17:14:22</p>
+</div>
+<div class="col-10">
+<p>众所周知，PSP的输入本来就是一个鸡肋,许多人都尝试开发过不同操作方式的输入<br />例如<br />英文的摇杆 +O<br />双向控制<br />全键盘<br />全圈的摇杆输入<br /><br />都是基于英文的.<br /><br /><br />中"芯"输入法<br />基于本人最近一段时间学习统计回归曲线的启发下，产生了 "中心回归" 的最近距离思想<br />根据统计学和几何学原理可知，集合体的中心出现统计概率最大，也就是说集合体所有元素与某点的总长度要最短<br />这点根据概率算出就是集合中心点（包括几何 和 抽象中心）<br /><br />通俗一点就是<br />当你打完一个字符 然后接着再打一个字符 中间有一个转移距离<br />把所有字符间的距离加起来总和就是这些字符的集合总长度<br /><br />假设一点x<br />把所有的 字符和x的差 做加权平均，最小的就是 集合中心点<br /><br />废话多了。。。。。。<br /><br />主要是为了让你了解 为什么这种叫这种输入法的原因<br />其实这种操作方式还有很多的好处<br />比如 采用 全键盘的 记忆方式（就是输入一个字符后 键盘光标不回归），输入完毕后，<br />此时还要计算 当前输入后的 字符 跟下一个要输入字符的转移距离，每一次算的转移角度不同<br />但中心回归减轻了这种负担，只要熟练中心和下一个要输入字符的区域 手的移动就很自然了<br />申请专利去了。。。。(hehe:-))<br /><br /><br />还有就是 看到过一些 输入法设计<br />n多的记忆组合键，?+?=?<br />打字还要记忆按键或者每一次都需要重新观察按键方式<br />打的我手忙脚乱（其实只有手忙）<br />要想解决psp按键量少 操作方式多的矛盾<br />一个核心是:状态复合分层<br /><br /><br /><br /><br /><br />其实想想 英文摇杆输入 原理也是一样，但中文稍微复杂一点，<br /><br />抛砖引玉，希望其他玩家能创造更多更好的自制程序...............<br /><br /><br />//**********************这也是SVS中的一个模块***************************<br />将用于各种 输入场合<br /><br />--输入法 在开发过程中 始终保证：<br />绝不采用任何需要记忆的组合键来进行控制<br />绝不采用任何需要现查的组合键进行字符的选取<br />--总之一句.让输入如同形如流水<br /><br /><br />输入分为两个状态<br />1.输入状态--只负责键盘到文本框的输入<br />2.文本编辑--只负责文本框的编辑<br /><br /><br /><br />十字键 ---文本编辑--移动文本的光标（光标移到字符中间，就可以插入输入）<br />                输入状态--控制键盘上的光标<br /><br />L---------文本编辑--光标移到编辑字符的最左端<br />                输入状态--汉字上翻一页<br />                <br /><br />R---------文本编辑--光标移到编辑字符的最右端<br />                输入状态--汉字下翻一页<br /><br />△--------清空当前操作区域的字符<br />□---------backspace当前操作区域<br />○--------选择键盘的相应字符<br />×--------两种状态的切换<br /><br />select--键盘输入切换(拼音 小写 大写 符号)<br />start---输入完成(模块结束时 返回输入的字符串 与osk一样)<br /><br /><br /><br /><br />【输入小技巧】<br /><br />1.当出现 汉字 选择时，直接按 O键选择第一个汉字<br />--如果你在使用发明了更多的输入小技巧，分享一下呗!!!!<br />2.加了无聊的广告--呵呵:-)<br />       当你打topoc，就会出现topoc程序组<br />3.最大拼音字符暂设为6位--有超过六位的拼音吗？有的话topoc告诉我<br /><br />changelog<br />【跟新】<br />[09-12-6]<br />1.增加光标闪动--it's cool<br />2.只有打字时才有输出框<br />3.优化查找算法<br /><br />[09-12-8]<br />1.修复少量 汉字 光标移动 一格失误的bug<br />2.当文本编辑状态时，L R 左右字符端，便于快速移动,尽量在不违背两条基本定律的情况下挖掘更多快捷方式<br />3.全新的查找算法--分组+二分法，更快速<br /><br /><br />[09-12-10]<br />1.单字库增加到27901 ,几乎涵盖了所有常见汉字(包括简体 繁体)--关于词频 排序涉及到经常改动字库，以后考虑<br />2.增加输入单字显示联想词组,精选总共27851条词组</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuuhimesama</b><br/>
+2009-12-19 19:08:00</p>
+</div>
+<div class="col-10">
+<p>界面很漂亮哦</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuuhimesama</b><br/>
+2009-12-19 20:10:34</p>
+</div>
+<div class="col-10">
+<p>2009年12月19日，v0.51版补丁更新</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2009-12-19 20:14:47</p>
+</div>
+<div class="col-10">
+<p>前排支持，话说DS在家里，过年放假才有得玩</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>jesil</b><br/>
+2009-12-20 02:58:41</p>
+</div>
+<div class="col-10">
+<p>嗯，这是个好东西，不知道支不支持类似WINDOWS双键同时按下，可以探雷的功能。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>jesil</b><br/>
+2009-12-20 03:02:06</p>
+</div>
+<div class="col-10">
+<p>支持一个，等下下来研究下剧情。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>jesil</b><br/>
+2009-12-20 03:03:16</p>
+</div>
+<div class="col-10">
+<p>最近都在忙着G弦的发布工作，难为掌家在这帮我撑着。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16226_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

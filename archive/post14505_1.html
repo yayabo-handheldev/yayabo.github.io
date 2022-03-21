@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>AMP菜鸟制作GAL游戏教程8-标题画面设置</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">AMP菜鸟制作GAL游戏教程8-标题画面设置</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_15.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>万里无云</b><br/>
+2010-04-28 15:34:49</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 白枫 于 2010-9-6 19:14 编辑 [/i]<br /><br />本节来讲下标题画面的设置。<br />目标：设定一个标题画面，有新游戏，继续游戏，图片鉴赏。<br />看上去非常有难度的问题，还好枫叔给了一个模板，改改就行了。<br /><br />首先是看am_init.lua需要改的地方是<br />-- 简易标题设置<br />-- {<br />       titleinit();<br />       settitlexy(0,0);                     -- 设置标题文件坐标<br />       settitleiconxy(290,152);              -- 设置光标文件坐标<br />       settitleiconstep(0,22);              -- 设置光标移动长度<br />       settitleitem(3);                     -- 设置选项数量<br />       --settitlebg("");                     -- 设置标题文件<br />       settitleicon("title_icon.png",nil);       -- 设置光标文件<br />       settitlesound("sound_bi.wav");       -- 设置标题选项音效<br />-- }<br />其中<br />【设置光标文件】是图标的文件。<br />【设置选项数量】是设置选项的数量，这里是3项。即是新游戏，读取存档，图片鉴赏。<br />【设置光标文件坐标】是设置光标的坐标。<br />下面将settitleicon("title_icon.png",nil);       -- 设置光标文件<br />改为我们的图标：<br />settitleicon("my_title_icon.png",nil);       -- 设置光标文件<br />然后将：<br />jump("myfirst.lua");       -- 剧情脚本入口<br />改为<br />jump("my_title.lua");-- 剧情脚本入口<br /><br /><br />设置好了后：<br />下面有个模板：<br />[quote]-- 设置游戏名字和章节<br />GAMENAME("AMPv0.65");<br />CHAPTER("第0章");<br /><br />stageclear();<br /><br />valueinit();&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;-- 初始系统变量,128个可用,取值0 - 4294967295<br />eventflaginit();&nbsp; &nbsp; &nbsp; &nbsp;-- 初始事件标记,512个可用,取值0 - 255<br /><br />-- value[1] ～ value[128]<br />-- event[1] ～ event[512]<br /><br />pmplay("movie/game_logo.pmp");<br />pause(10);<br /><br /><br />bg(1,"my_title.png",1,500);<br />bgon(1);&nbsp; &nbsp; &nbsp; &nbsp;-- 开启1号背景显示<br />pause(30);<br /><br /><br />texfg(2,"[c=000000]新游戏[/c]",1,200);<br />texfg(3,"[c=000000]继续游戏[/c]",1,200);<br />texfg(4,"[c=000000]图片鉴赏[/c]",1,200);<br /><br /><br />texfgxy(2,216,190);<br />texfgxy(3,205,212);<br />texfgxy(4,205,234);<br /><br /> <br />texfgon(2); texfgon(3); texfgon(4);<br /><br />playfile("music/bgm01.mp3",1);<br /><br />*title_select<br />chose = titlechose();<br /><br />if chose==1 then goto(*newgame); end<br />if chose==2 then goto(*loadgame); end<br />if chose==3 then goto(*find); end<br /><br /><br />-- 新游戏<br />*newgame<br />fg(10,"scene_black.jpg",1,200);<br />fgon(10);<br /><br />texfgoff(2); texfgoff(3); texfgoff(4);<br />stopfile("mp3",1);<br />pause(10);<br />clearall();<br />jump("myfirst.lua");<br />goto(*end);&nbsp; &nbsp; &nbsp; &nbsp;-- 默认处理<br /><br /><br />-- 读取存档<br />*loadgame<br /><br />savinit(2);&nbsp; &nbsp; &nbsp; &nbsp;-- 1为存档,2为读档<br />SetGameMode(SAV_MODULE);<br />goto(*title_select);<br />goto(*end);<br /><br />*find<br />jump("demo_view.lua");<br /><br />*end<br />SetGameMode(QUIT_MODULE);[/quote]<br />[attach]4546[/attach]<br />会看到选项歪了，<br />再am_init.lua里设置选项的初始坐标即可<br /><br />settitleiconxy(290,152);              -- 设置光标文件坐标<br />改为<br />settitleiconxy(305,185);              -- 设置光标文件坐标<br />修改之后画面就正常了。<br />下面是例子打包<br /><br />此教程转载于：[url]http://www.iacger.com/bbs/[/url]<br />作者：索菲亚方杯<br />原文网址：[url]http://www.iacger.com/bbs/viewthread.php?tid=5447[/url]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post14505_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

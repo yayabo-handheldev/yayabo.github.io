@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>VC2005下使用PALib</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">VC2005下使用PALib</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-16 11:34:07</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.sina.com.cn/niuboDS[/url]<br />作者：niubo<br /><br />安装好DevkitPro和PALib后就可以用PALib自带的vham编写DS程序了，不过vham的自动完成貌似只在PA_之后出现，就是只显示PALib的库函数，这样不大爽，我可不满足与只用长长的带PA_头的PALib库函数。那篇非常全面的PALib教程的第一章就介绍了用 VC2005下使用PALib，研究了一番，小有心得。<br /><br />开始的步骤都是按照作者的说明一步步来的，不过在这里还是简单提一下，教程的作者实在太啰嗦了。<br /><br />    首先需要确认一下PALib和DevkitPro安装在同一目录下，然后设置DevkitPro的环境变量，前面设置过了，但那是Unix风格的（例如 /C/…），现在再添加一个Windows风格的（例如C:...），变量名为“DKP_HOME”值为DevkitPro的安装路径。不过我试过省掉这一步一样可以正常使用。<br /><br />    再到这里（[url]http://www.thechip.net/images/PALibAppWizard.zip[/url]）下载一个向导程序，解压后有两个js后缀的文件，一个对应VC2005，另一个对应VC2005 Express。双击安装即可，如果文件关联被修改导致安装失败，在开始-运行里输入“Script.exe <js文件的路径>”后运行就可以了。至于手动安装，有兴趣的自己看原文吧。<br /><br />    因为编译器不识别带空格的路径，默认的项目路径是不能用啦，推荐修改默认项目路径，具体做法是在“Tools →Options →Projects & Solutions →General”下把Visual Studio projects location给改到一个不含空格的目录下。<br /><br />如果安装正确，新建项目的话就会发现下面多了一个NintendoDS，里面有个PALib Application，选择后进入向导，可选择标准和最小两种类型的模板，差别就是标准的多了个“Hello World”的输出语句。<br /><br />    在左侧项目列表中的项目图标上右键选择build就可以进行编译了。这里我碰上问题了，在devkitARM r21 + PALib 080203（这是个可以和r21兼容的Beta版，最近不怎么有条件上网，也不知道正式版出来没有，这个问题还是否存在）环境下，编译一定会出错，错误提示是程序中使用了 void类型的指针，把出错地方的void改成u32就可以正常编译了。devkitARM r20 + PAlib070717倒可以正常编译模板程序，不过其他地方也有可能遇到类似情况，依样处理应该就OK了。<br /><br />    下面将要添加的代码提示和自动完成是我使用VC2005的最主要原因。在Tools → Options → Project & Solutions → VC++ Directories（如果中文版VC2005的请自行对应）。在Show Directories for 下选择“Include files”在最后一行下面双击，点最右侧的小按钮分别将<DevkitPro的安装路径>PAlibinclude<br />ds和<DevkitPro的安装路径>libndsinclude添加进去就行了。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>965883326</b><br/>
+2010-08-07 18:25:09</p>
+</div>
+<div class="col-10">
+<p>报到~~~~~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>vwcp4119</b><br/>
+2010-08-07 18:27:46</p>
+</div>
+<div class="col-10">
+<p>正版出线了...........</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gyyfifafans</b><br/>
+2010-08-07 18:28:16</p>
+</div>
+<div class="col-10">
+<p>    我就知道某人要兴奋……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>meni038</b><br/>
+2010-08-07 18:29:23</p>
+</div>
+<div class="col-10">
+<p>有几个都失效．</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-08-07 18:30:23</p>
+</div>
+<div class="col-10">
+<p>    没办法啊......太喜欢美妙了.....=-=</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>862768424</b><br/>
+2010-08-07 18:00:53</p>
+</div>
+<div class="col-10">
+<p>这次是真的啊，好，签到</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>灵潭</b><br/>
+2010-08-07 18:01:22</p>
+</div>
+<div class="col-10">
+<p>加我qq:1132259027</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>862768424</b><br/>
+2010-08-07 18:04:26</p>
+</div>
+<div class="col-10">
+<p>FF迷，我来露个脸，不过FF还是3D动画好啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>超人小金</b><br/>
+2010-08-07 18:04:34</p>
+</div>
+<div class="col-10">
+<p>一不小心来晚了...........</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yyeg</b><br/>
+2010-08-07 18:05:16</p>
+</div>
+<div class="col-10">
+<p> 期待的说 到时必定存起来</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yyeg</b><br/>
+2010-08-07 18:05:55</p>
+</div>
+<div class="col-10">
+<p>omg 又尺了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yalge</b><br/>
+2010-08-07 18:07:57</p>
+</div>
+<div class="col-10">
+<p>期待了很久了,谢谢分享</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>meni038</b><br/>
+2010-08-07 18:08:26</p>
+</div>
+<div class="col-10">
+<p>    哦．了解</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gyyfifafans</b><br/>
+2010-08-07 18:09:08</p>
+</div>
+<div class="col-10">
+<p>俺用正版r4+wood1.1,木有任何鸭梨……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>862768424</b><br/>
+2010-08-07 18:10:24</p>
+</div>
+<div class="col-10">
+<p>玩过，是部好作品<br />另外lz用户组倒是头一会见，谁知道的告诉我一下，在下表示有兴趣</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>魔王</b><br/>
+2010-08-07 18:10:29</p>
+</div>
+<div class="col-10">
+<p>................同样，给予ls厚望</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-08-07 18:10:43</p>
+</div>
+<div class="col-10">
+<p>    我有通关的系统存档，你要的话发你，可以用回想模式看剧情，目前我没发现1月2日的解决办法，有人说用日版也无法解决问题，如果你想试试日版的话，自己再试试<br />[url]http://sns.tgbus.com/pspdatareader/List.aspx?type=1&key=11[/url]<br />第三个</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Haimiku</b><br/>
+2010-08-07 18:13:03</p>
+</div>
+<div class="col-10">
+<p>真的到了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>meni038</b><br/>
+2010-08-07 18:13:47</p>
+</div>
+<div class="col-10">
+<p>聽标題好似戀愛類．</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>魔王</b><br/>
+2010-08-07 18:14:16</p>
+</div>
+<div class="col-10">
+<p>.........饭坏叔您是不可以欺负本人这样的新人的.........</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gyyfifafans</b><br/>
+2010-08-07 18:14:48</p>
+</div>
+<div class="col-10">
+<p>    俺比较关心你是如何破解的，期望能与你联系，俺正在学习</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wz20084596</b><br/>
+2010-08-07 18:18:49</p>
+</div>
+<div class="col-10">
+<p>这个是真的吧~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cilty</b><br/>
+2010-08-07 18:19:57</p>
+</div>
+<div class="col-10">
+<p>没想到签到贴也会有山寨~~~~~~~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gyyfifafans</b><br/>
+2010-08-07 18:20:53</p>
+</div>
+<div class="col-10">
+<p>还是直接咨询掌叔吧！！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cilty</b><br/>
+2010-08-07 18:21:57</p>
+</div>
+<div class="col-10">
+<p>沙耶之歌可以下JS盘的<br />115地址我也有</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16950_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

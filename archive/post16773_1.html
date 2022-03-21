@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>【教程09】有色有声</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">【教程09】有色有声</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yl_ls</b><br/>
+2009-03-19 21:32:25</p>
+</div>
+<div class="col-10">
+<p>[url=http://www.iacger.com/]http://www.iacger.com/[/url] 首发<br /><br />让人心动的游戏，当然要有声音嘛<br />本例子使用的是 MP3 ，当然 NGE2 还有 OGG,PCM 的播放支持，因为接口一样，大家可以自己去试试<br /><br />本例使用的音乐在 libnge2 的 win32buildsin 目录下，包括之前的教程都应该放在此目录中运行[code=c]#include "libnge2.h"<br /><br />// 退出标识<br />int game_quit = 0;<br /><br />// 音乐结构<br />music_ops mp3_play;<br /><br />// 表示音乐是否暂停了<br />int mp3_play_pause = 0;<br /><br />//初始音量为128音量范围为【0-128】<br />int volume = 128;<br /><br />// 按下键处理<br />void btn_down(int keycode)<br />{<br />    switch(keycode)<br />    {<br />    case PSP_BUTTON_UP: <br />        break;<br />    case PSP_BUTTON_DOWN:<br />        break;<br />    case PSP_BUTTON_LEFT:<br />        break;<br />    case PSP_BUTTON_RIGHT: <br />        break;<br />    case PSP_BUTTON_TRIANGLE:<br />        break;<br />    case PSP_BUTTON_CIRCLE:<br />        // 按下圆键时，在播放与暂停之间转换<br />        if(mp3_play.eos())<br />        {<br />            // 当音乐已经播放结束时，重新播放<br />            mp3_play.play();<br />            mp3_play_pause = 0;<br />            return;<br />        }<br />        else if(mp3_play_pause)<br />        {<br />            mp3_play.resume();<br />        }<br />        else<br />        {<br />            mp3_play.pause();<br />        }<br />        mp3_play_pause = 1 - mp3_play_pause;<br />        break;<br />    case PSP_BUTTON_CROSS:<br />        break;<br />    case PSP_BUTTON_SQUARE:<br />        break;<br />    case PSP_BUTTON_SELECT:<br />        game_quit = 1;<br />        break;<br />    case PSP_BUTTON_START:<br />        game_quit = 1;<br />        break;<br />    }<br />}<br /><br />// 释放键处理<br />void btn_up(int keycode)<br />{<br />    switch(keycode)<br />    {<br />    case PSP_BUTTON_UP:<br />        break;<br />    case PSP_BUTTON_DOWN: <br />        break;<br />    case PSP_BUTTON_LEFT:<br />        break;<br />    case PSP_BUTTON_RIGHT:<br />        break;<br />    case PSP_BUTTON_TRIANGLE:<br />        break;<br />    case PSP_BUTTON_CIRCLE:<br />        break;<br />    case PSP_BUTTON_CROSS:<br />        break;<br />    case PSP_BUTTON_SQUARE:<br />        break;<br />    case PSP_BUTTON_SELECT:<br />        game_quit = 1;<br />        break;<br />    case PSP_BUTTON_START:<br />        game_quit = 1;<br />        break;<br />    }<br />}<br /><br />// 用户绘图函数<br />void DrawScene()<br />{<br />    // 为开始绘图准备<br />    BeginScene(1);<br /><br />    // 音乐播放时显示白色背景，音乐暂停或结束时显示黑色背景<br />    if(mp3_play_pause)<br />    {<br />        FillRect(0,0,480,272,MAKE_RGBA_565(0,0,0,0), DISPLAY_PIXEL_FORMAT_565);<br />    }<br />    else<br />    {<br />        FillRect(0,0,480,272,MAKE_RGBA_565(255,255,255,255), DISPLAY_PIXEL_FORMAT_565);<br />    }<br /><br />    // 完成绘图并显示<br />    EndScene();<br />}<br /><br />extern "C"<br />int main(int argc, char* argv[])<br />{<br />    <br />    // nge 初始化<br />    NGE_Init(INIT_ALL);<br />    <br />    // 初始化音乐结构<br />    MP3PlayInit(&mp3_play);<br /><br />    // 设置音量<br />    mp3_play.volume(volume);<br /><br />    // 加载 mp3<br />    int res = mp3_play.load("music/simple1.mp3");<br /><br />    // 开始播放用play需要调用stop释放资源<br />    mp3_play.play();<br /><br />    // 设置自定义按钮处理函数<br />    InitInput(btn_down,btn_up,1);<br />    while ( !game_quit )<br />    {<br />        // 显示帧数显示<br />        ShowFps();<br /><br />        // 判断是否音乐已经播放完成，更新 mp3_play_pause 的状态<br />        if(!mp3_play_pause && mp3_play.eos())<br />        {<br />            mp3_play_pause = 1;<br />        }<br /><br />        // 要求 nge2 处理按键，它将使用 InitInput 定义的函数来处理<br />        InputProc();<br />        // 调用用户绘图函数<br />        DrawScene();<br />    }<br /><br />    // 释放音乐文件<br />    mp3_play.stop();<br /><br />    // 释放mp3相关内容<br />    MP3PlayFini();<br /><br />    // nge 退出处理<br />    NGE_Quit();<br />    return 0;<br />}[/code]效果图：<br />= = 就是黑白屏，你不会真想看吧~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>whm3d</b><br/>
+2009-03-19 21:47:53</p>
+</div>
+<div class="col-10">
+<p>雷叔来移植一个吧!</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>willreno</b><br/>
+2009-03-20 09:21:49</p>
+</div>
+<div class="col-10">
+<p>reno_memo 和.nds必须放在根目录下。<br /><br />最新的是2009</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16773_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

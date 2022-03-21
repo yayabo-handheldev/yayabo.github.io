@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[讲座]你所不知道的PSP【3.8，第五讲开始】</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[讲座]你所不知道的PSP【3.8，第五讲开始】</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>JoyJ</b><br/>
+2011-03-02 21:38:06</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 JoyJ 于 2011-3-8 14:08 编辑 [/i]<br /><br />说明：本讲座（预定）将详细说明PSP运行UMD的方式，并说明其各种乱七八糟的软件的使用方法神马的窍门神马的- =<br />暂定- =由以下十讲构成：<br />第一讲—EBOOT.BIN、BOOT.BIN和官方系统要想玩游戏也得爆菊花<br />第二讲—神电、刷机和存档崩坏的人都去求物吧<br />第三讲—80000148、80020321和傲娇的L大神<br />第四讲—普罗米修斯系统、OPNSSMP.BIN和索尼是烧饼<br />第五讲—插件、F0插件和你想把恢复菜单在3000里调出来？<br />第六讲—ISO TOOL、软刷机和你妹的压缩啊卧槽<br />第七讲—金手指、金手指和金手指自重= -<br />第八讲—CTF主题、CTF主题和CTF主题我不会做- =<br />第九讲—XReader、PPA和乱七八糟的坑爹插件<br />第十讲—补漏、补漏和鬼才知道有没有漏……<br />[hr][size=4][b][color=#0000ff][font=黑体]第一讲—EBOOT.BIN、BOOT.BIN和官方系统想玩游戏也得爆菊花<br />[/font][/color][/b][/size]<br />好了~讲座开始。<br />打开一个ISO的SYSDIR文件夹，我们可以看到两个文件——EBOOT.BIN和BOOT.BIN，而这就是我们今天讲座的主题了~<br />大家有没有想过为什么[color=#ff0000]每张UMD都写着“需要升级到X.XX才能运行”[/color]呢？……切，明明这个那个的系统看着都没啥区别……<br />当然有区别了orz否则索尼还升级个毛线啊……<br /><br />[i][color=#000000]“密钥”。[/color][/i]<br /><br />这词听上去挺神秘的，其实说白了也就是[color=#0000ff]“破解（或者叫做解密，再或者爆菊）游戏EBOOT的方法”[/color]。<br />我们使用的ISO就是UMD光碟的镜像~就是说，UMD光碟里也是有EBOOT和BOOT这两个文件的（废话）。[color=#ff0000]EBOOT.BIN算是PSP游戏的主程序，经过某种方法（由密钥决定）的加密。[/color][color=#ff0000]<br />[/color][color=#ff0000][/color][color=#ff0000][/color][color=#ff0000]<br />[/color][color=#000000][i]新版本的官方系统会存放着更多的密钥。[/i][/color]<br />[color=#000000][/color]<br />[color=#000000][/color][color=#000000][/color][color=#000000][/color]官方系统运行UMD的方法就是——[b]破解EBOOT，然后用破解后的EBOOT载入游戏。[/b]<br />[color=#ffff00]……卧槽你这和我们有啥两样啊= -[/color]<br />在早期的官方系统里，[color=#ff0000]BOOT.BIN就是解密以后的EBOOT[/color]，原意是用来验证EBOOT解密是否正确的。但是我们亲爱的DA大神发现了这一切，然后果断在M33系统里加了个选项——[color=#8b0000][b]直接读取BOOT.BIN而不是EBOOT.BIN[/b][/color]，这样就能绕过破解这一步，并直接运行游戏了。这个选项可以在恢复菜单的Advanced中找到。<br />大家找个新游戏，用记事本打开BOOT.BIN看看……咦？空的？没错，就是空的。<br />——哎，索尼不会面对这种渣到可以的BUG还放着不管的……<br /><br /><br />[i][color=#000000]DA：卧槽！索尼把爆完菊的EBOOT送出来教我们怎么爆菊！[/color][/i]<br />[i][color=#000000]索尼：卧槽！来人，通知所有游戏厂商，为了[b]天朝[/b]的[b]和谐社会[/b]，BOOT.BIN神马的全都用空白文件代替就好啦！让这群死宅都天然呆地死机去吧！[/color][/i]<br /><br /><br />……于是，这条路被封死了，BOOT.BIN也成为了一个彻底的废文件。阿门。<br />——这就是EBOOT和BOOT的故事。<br />判断EBOOT是否已经被破解很简单：用[color=#ff0000][u]记事本打开它。如果文件头是FLE（Executable and Linking Format，ELF……回文），说明它还没被破解；如果文件头是PSP……那么这货就已经被爆菊啦~[/u][/color]<br />顺便说一句，怪物猎人3、光明神话3经过了双重加密……就是说用两个密钥加过密，所以破解才出现了问题。<br />——当然，现在已经大丈夫萌大奶啦！<br /><br />FAQ<br />问：……话说EBOOT到底是个啥玩意？<br />答：它里面记载着“[color=#0000ff]你要运行这个游戏需要先读取什么东西[/color]”，还有“[color=#0000ff]你要运行这个游戏需要什么系统[/color]”等等——可以简单地理解成初始化和验证密码。<br />嘛= =以前的自制系统是可以玩UMD的。但是为什么现在我们没办法用版本足够高的自制系统玩UMD了呢？因为新游戏的EBOOT都会验证你的系统是不是正版……<br />所以[color=#ff0000][b]现在破解EBOOT还需要加一步：绕过是否是正版的验证。[/b][/color]<br /><br />问：……话说索尼为啥不直接把BOOT删了了事？<br />答：格式！<br /><br />[b][color=#ff0000]~~第一讲到此结束~~<br /><br />[hr][/color][/b][size=4][b][color=#0000ff][font=黑体]第二讲—神电、刷机和存档崩坏的人都去求物吧<br /><br />[/font][/color][/b][/size]PSP的电池分成三极。正极负极，还有一个极，我们姑且叫它数据极。<br /><br />[color=Black][i]PSP1000和PSP2000V2在启动的时候会检测电池的这个数据极[/i][/color]。<br /><br />如果这个数据极传回特殊的数据，那么PSP就会进入所谓的工厂模式——可以理解成从记忆棒里读取系统——并可以无视F0进行强制刷机。这也正是Sony修砖机的办法。然后索尼的这个后门（[color=White]也[/color]）被发现了，于是也就出现了著名的神奇电池。<br />也正是因为如此，神奇电池才可以修复F0被格式化的机器。因为启动系统所需的文件是从记忆棒里读取的，不关F0的事情。神奇电池需要配合神奇记忆棒使用，[color=#0000FF]它可以将你的机器无视原来的系统——甚至砖——刷成从1.50到5.50 GEN-B2的任何系统[/color]。——但是它并不是完美的，甚至有可能造成亮度调节和网卡出现问题。另外，也有神电同样无能为力的深度砖机= =这个我们有机会再说。另外，众所周知……由于主板线路被修改，因此2000V3和3000是用不了神电的。换句话说，它们砖后似乎只能换主板了……[color=#000000]但是……其实= =[/color][color=Red]不要把F0想象得太神圣：你觉得你家电脑装了个Windows系统的C盘有那么神圣吗？[/color]在我看来，神马砖机都能送到数据恢复公司解决，方法就是强制对芯片进行写入。<br />所以，在我定义下的所谓刷机就是：格式化F0——把新系统的所有文件扔进F0里，完毕。这都不用像Windows一样装完后还得调这调那的DA☆ZE<br />又所以……[color=Red]随便找一台电脑就可以软刷PSP[/color]，明白了吗？所以什么“刷F0可能会变砖”、“刷F0有风险，我PASS”……嘛，确实有风险，但是一般能够向F0动刀的软件都会经过严格测试，即使会出错一般也不会影响到整个系统的正常运行。所以——刷F0不必过于谨慎。<br />……其实最好的办法是找一台2000V2来做实验，运行没问题就用3000刷=。=<br />话说，经常刷机的同志也许会发现，自己的存档在刷机后往往会莫名其妙地坏掉……<br /><br />[i]每个自制系统都有自己对存档加密的方法。[/i]<br /><br />这也正是换自制系统有可能会让存档崩坏的原因：读档的时候需要解密，而各个系统加密的方法不一样，当然没办法解密其他系统的存档。……目前我见到过最离谱的是[color=Blue]5.50GEN-B2升到5.50GEN-D3崩档[/color]。你们本是同根生相煎何太急啊卧槽！<br />不过，这种崩坏也不难解决。<br /><br />[i]GEN-B2~GEN-D3崩档的简单解决办法：刷机前，备份你Flash0:kdpeagasus.prx这个文件。刷机后，将这个文件放回Flash0覆盖同名文件即可。[/i]<br /><br />[color=#FF0000][color=#444444]http://www.u2game.net/web/viewnews-2842.html[/color]<br />[/color][color=#FF0000]这里的软件也能解决问题……原理是一样的~[/color]<br />[color=#FF0000][/color]以上方法应该适用于所有5.50（含）以上的自制系统。所以下次刷机之前记得先备份一下吧……<br />[b][color=#4B0082]连接Flash0的方法：在XMB菜单（就是PSP的主菜单）里按SELECT，将第三项USB DEVICE用方向键设成Flash 0。这个时候连上USB线，那么连上的就是Flash0。想恢复时将USB DEVICE换回Memory Stick即可。少数情况下，可能会出现无论怎么调节都只能连上Flash0的问题，在这种情况下重启即可。[/color][/b]<br /><br />严正警告：由于5.00/5.03系统的存档加密并不依赖peagasus.prx（啊= =简单来说就是说从5.0X以后的加密方法完全改变了……），因此[color=#FF0000][b]从5.50或以上的自制系统降级回5.00/5.03时，存档必崩，且绝对无法用这种简单办法修复。[/b][/color]这个时候请自行用SED处理存档，教程见此：http://psp.tgbus.com/pspdg/jc/ISODIY/201006/20100625111938.shtml<br /><br />[b][color=#ff0000]~~第二讲到此结束~~[/color][/b][hr][b][color=#0000ff][font=黑体][size=4]第三讲—80000148、80020321和傲娇的L大神[/size][/font][/color][/b]<br /><br />和我一样在用5.00 M33的还有多少呢？还在用5.03/5.50GEN的还有多少呢？大家大概都跑去和普米系统搅基了吧。事实上，如果你试图用5.00M33直接启动新游戏的话，那么你就会发现那啥- =直接黑屏退出，然后[color=#FF0000]80000148[/color]……<br /><br />[i]错误80000148：系统找不到必需的prx文件。[/i]<br /><br />你冷笑一声：我有知识看蓝猫，我用普米我自豪！然后[color=#0000FF]你自豪地用ISO TOOL给ISO加上了普米补丁[/color]。…………………啊咧？持续悲剧？————呃，嘛= =这样的杯具在我身边越来越多（[color=#FFFF00]多半是我一直在推广5.XX系非普米系统造成的后果[/color]）。无数看完巴士或玩家网或多玩上ISO TOOL破解教程但破解后仍然运行失败的人找到我，指着屏幕破口大（问候）网络那头那个无辜小编的妹妹。那小编有妹妹么……<br />有句话说的好，[color=#FF0000]错的不是我，是世界！[/color]所以（？），80000148错误也不是我们的错误，而是我们在PSP世界里与它接触的方法不对（啥？）。大家明白的，傲娇双马尾就需要用自己的M让她逐渐娇起来，三无少女就需要多说话让她慢慢开朗起来，而[color=#FF0000]ISO酱就需要强势插入（喂），然后再让技术宅们送给我们的遗产来拯救世界[/color]。……对不起，我口胡了（跪<br />实际的情形是这样的- -0索尼在5.XX和6.XX系统对反破解下了大工夫，让整个系统（世界）都有了相当大的变化。呃……我想这种改变[color=#0000FF]可以简单理解成：5.XX系统相比6.XX系统缺少一些文件。[/color]这也正是普米补丁在5.XX系统中不能直接发挥作用的原因。<br /><br />[i]普米补丁作用：绕过游戏对于“你的系统是否是官方系统”的验证。并不影响之后游戏对系统文件的读取。[/i]<br /><br />所以说巧妇难为无米之炊：[color=#FF0000]你PSP的系统文件都已经缺斤少两了[/color]，一个普米补丁能改变啥啊……嘛，解决办法也很简单。[color=#FF0000][b]把5.XX系统和6.XX系统相比缺少的系统文件插入5.XX系统就行了[/b][/color]。这也正是所谓的“AutoCFW”。这个插件很有名哦=。=因为这个插件是ISO TOOL的同捆物，买一送一哦买一送一哦orz……所以我们在第六讲再详细讲这个。（PIA飞<br />接下来说说80020321错误吧~我们假设，某一天你下定决心升到了普米系统。就这样，[color=#00FFFF]一个又一个原装的ISO酱被你弄得一片红屏……红……血红，血，那啥……好吧我自重去= =[/color]但是某一天，你把PSP借给了别人，还回来的时候一看，嗯，很好，[color=#FFFF00]还是能让你玩遍万千处（哔－）ISO的[/color]普米！然后你自豪地打开了一个新的原装ISO——啊咧？黑屏退出了？难，难道出了神马差错？……大爷不开大招你不心服么，那么就[color=#FF0000]先破解再上阵[/color]…………啊咧？持续悲剧？<br />去问那个朋友，他用爽朗的笑容告诉你：[color=#0000FF]好像调了什么东西！~具体调了神马我忘记了，诶嘿嘿~~[/color]<br />[color=#0000FF][/color]…………仔细看一下错误代码，[color=#FF0000]80020321[/color]。<br /><br />[i]80020321：无法读取UMD。[/i]<br /><br />哎，既然错误代码是这个那就简单了……放片UMD试试——哦哦，成功启动。真是太……[size=3][color=#0000FF][b]去你妹！！老子总不能走到哪里都带着个UMD然后听着那刺耳的读盘声承受着双倍的耗电量用近乎自虐的方式就这么玩游戏吧混蛋！！[/b][/color][/size]<br />- =有多少人用过2.XX自制系统呢？那个时候你必须要用一张引导盘才能玩游戏。但是！[color=#0000FF]传奇的NP9660驱动和M33驱动改变了这一切[/color]！如果非要打个比方的话——原来的驱动都是烧录软件，“[color=#FF0000]将游戏内容烧录到UMD上再运行[/color]”；而NP9660和M33驱动则是虚拟光驱，“[color=#FF0000]从棒上直接运行ISO毫无压力[/color]”。孰轻孰重孰优孰劣一目了然。<br />80020321错误几乎都是不小心调出来的……解决方法是：[color=#FF0000][b]按SELECT打开VSH菜单，将UMD Mode用左右方向键改成M33 Driver（推荐）或Sony NP9660。[/b][/color]啊，对了= =虽然现在游戏一般不需要引导盘了，但引导盘还是有用的。比如，UMD ISO Mount……<br />接下来的这部分加点权限吧，woshenmedoubuzhidao……<br />[hide=10]<br />接下来要说的是liquidzigong。在怪物猎人事件后，L大宣布退出PSP破解界- =[color=#FF0000]我为中国的喷子们感到自豪，你们又一次超越了天地超越了神明超越了一切，让世界见识到了智商、理智和道德的同步下限[/color]。<br />不过大家也看到之后的事情了：某炎接班。这个家伙第一次出现在A9VG论坛的时候说了一句让人特别想把他/她带回家包养的话——<br />[quote]我不是L，但我是L的朋友，我认识L~你们不要误会了~[/quote]<br />啊= =具体的我也记不清了，总之意思差不多。随后，当PRO系统发布之后，[color=#0000FF]我怀着对新一代大神的期冀和对旧一代大神的敬仰登上了Twitter[/color]…………………………………………啊咧？为啥发布PRO系统信息的是liquidzigong呢？偶然？<br />我睁大我的狗眼看了看发布时间，然后不由自主地卧槽了。博客和Twitter近乎同时发布。<br />在那瞬间，我神马都明白了。<br /><br />[color=#FF0000][b][size=5]——傲娇！！马甲！！！[/size][/b][/color]<br /><br /><br />[color=#FFA500]PS：在光明神话破解之际，我把“马甲”的消息发到了玩家网上。接下来就精彩了——从此以后，Twitter上再也看不到liquidzigong这个ID了，取而代之的是Coldbird= =[/color]<br /><br /><br />L大太萌了……从各种意义上都是……<br />[/hide]<br /><br />[b][color=#ff0000]~~第三讲到此结束~~[/color][/b]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>JoyJ</b><br/>
+2011-03-02 21:39:21</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 JoyJ 于 2011-3-8 14:08 编辑 [/i]<br /><br />[b][font=黑体][size=4][color=#0000ff]第四讲—普罗米修斯系统、OPNSSMP.BIN和索尼是烧饼[/color][/size][/font][/b]<br />[b][font=黑体][size=4][color=#0000ff]<br />[/color][/size][/font][/b]一楼终于填满15000字节了，我们二楼继续。顺便说一句，我很肯定这四楼不够- =因为我估计六七两讲会很长。<br />今天我们的课题是普罗米修斯系统，简称普米系统。[color=yellow]由于这个系统以红色为破ch……呃，破解的颜色，所以我又叫它破（哔）系统。[/color]顾名思义，这个系统来源于普米补丁。上一讲说过，[color=red]普罗米修斯补丁的作用是“绕过游戏对于‘你的系统是否是官方系统’的验证”。[/color]所以，普罗米修斯系统就是其加强版——<br /><br />[i]普罗米修斯系统：liquidzigong作品。一个在F0补足了5.XX系统和6.XX系统相比缺少的文件，能够绕过游戏对于“你的系统是否是官方系统”的验证，从而让你的PSP可以在5.XX系统环境下运行6.XX系游戏的自制系统。[/i]<br /><br />换句话说，普米系统可以理解成一个“模拟6.XX官方系统”的系统。[color=blue]同时，这也成为了其对于老游戏支持不稳定的原因。[/color]老游戏无需模拟高版本系统即可运行新游戏，模拟高版本系统显然属于画蛇添足。另外，[color=red]普米系统对RIP也并不是很友好[/color]。……但这并不阻碍普米系统成为5.XX系最受欢迎的系统。<br /><br />[i]PS：6.XX系统增加的东西其实就是ME631补丁里那一票乱七八糟的视频支持文件。[/i]<br /><br />另外，6.XX系统还加入了[color=blue]对EBOOT爆菊的新阻碍[/color]：OPNSSMP.BIN。前面说过，不管是官方系统还是自制系统，要想玩ISO都得先爆菊。5.XX系的系统只需要将ISO解密一次就可以了，但6.XX系统却不止如此。6.XX系ISO在第一次解密后，还需要通过ISO里的OPNSSMP.BIN调用Flash 0的某个文件，生成一个[color=red]动态密钥[/color]，再解密一次，才能运行。这就是OPNSSMP.BIN的作用。如果做个类比的话，[color=blue]OPNSSMP.BIN就相当于我们玩网游或用网银的时候有时会用到的[/color][color=red][b]密保卡、将军令、U盾[/b][/color][color=blue]等物件。[/color]以前的自制系统没办法破解这个动态密钥，自然无法运行这样加密的ISO了。<br />破解这种加密方法的思路挺有意思的：[color=red]修改OPNSSMP.BIN，让它产生的密钥固定下来，然后再用这个固定的密钥去解密EBOOT……[/color]<br />[color=#444444][/color]<br />大概就这样了。再重新回到密钥吧。<br /><br />[i]PSP上存在官方发布的自制软件。[/i]<br /><br />PSP的EBOOT有密钥，这个我们之前讲过。另外- =其实还有个所谓的“主密钥”。[color=red]用主密钥加密的PSP程序可以在官方系统之下直接运行。[/color][color=#444444]这也就是前一阵子让索尼疯掉的“签名程序”的真相。但是[color=red]直接给ISO的EBOOT加上主密钥是不能在官方系统下运行的[/color]，因为官方系统里并没有什么M33驱动或是NP9660驱动，也就是说，你只有一个镜像文件，却没有运行它的方式。——当然，某些工具可以把ISO转换成EBOOT，这个另当别论。[/color]<br />但是！索尼是烧饼！如果这个主密钥是在某位达人破解PSP的过程中找到的，那么我还不会说什么；但是[color=blue]这个密钥居然是他喵的某外国黑客在破解PS3时无意中发现的！换句话说，这个密钥居然被索尼扔在了PS3系统里[/color]！索尼这一点做得实在是脑残至极——我从来没有见过哪一个公司让自己旗下各种产品的联系紧密到连核心部分都能联系起来，因为这样会导致[color=red][b]一个产品出现问题=全部产品出现问题[/b][/color][color=#444444]。两年前PSP在6.XX系统的破解上停滞了很长很长很长时间，但是现在这种情况不再有了——因为PSP的最核心部分已经被攻陷了。[/color]<br /><br />[color=red][i][b]索尼现在正在吃下自己将所有鸡蛋放在同一个篮子里所带来的苦果！[/b][/i][/color]<br />[b][i][color=#ff0000][/color][/i][/b]<br />证据就是，6.37系统出现当天即被破解。如果索尼没有更改主密钥，那么破解还将毫无阻碍地进行下去。[color=blue]但更改主密钥也意味着至今为止发行的所有官方自制程序将在违反用户协议的前提下失效！[/color][color=#444444]PSP现在就像一个开着门的屋子，任何软件——包括官方的和自制的——都能在上面毫无压力地执行。等将来ISO签名技术成熟（[color=red]通过修改EBOOT完全可以调用F0文件，而在F0放上几个ISO驱动非常简单……），[/color]3K机几乎将彻底告别刷机：因为在官方系统下虽然不能使用插件，但官方系统下完全可以玩ISO！[/color]<br />——嗯，骂完了，就到这里吧。再说一次——<br /><br />[b][size=4][color=red]索尼是烧饼！！！！[/color][/size][/b]<br /><br />[b][color=#ff0000]~~第四[/color][/b][b][color=#ff0000]讲到此结束~~[/color][/b]<br />[hr]<br />[b][font=黑体][size=4][color=#0000ff]第五讲—插件、F0插件和你想把恢复菜单在3000下调出来？[/color][/size][/font][/b]<br />[size=3][/size] <br />Windows有个特点——[color=red]“正在被读取的文件”不允许被写[/color]（包括修改内容、删除和移动）；[color=red]“正在被写入的文件”同样不允许被写[/color]（包括修改内容、删除和移动，还包括复制）。除非你用特别的软件对硬盘进行直接写入（顺便说一句，360会站出来阻止你这么做），否则你是不能删除一个正在被使用的文件的。<br />连上F0，右键，格式化——哦，F0被清了。可喜可贺可喜可贺。<br /><br />[quote]“我上次不知道调了什么，把PSP连上电脑的时候记忆棒里的文件全都消失了，而且还出现几个不知道是什么的文件夹，总空间也只剩下40M。我以为是棒子的问题，就格式化了一下，结果退出USB模式以后就死机了；重启的时候根本启动不了，我该怎么办啊？”[/quote]<br />这种人就是那种很杯具地连上F0然后顺手格掉F0的天然呆。<br /><br />[i]PSP的系统是高度模块化的。[/i]<br /><br />“模块化”的定义是什么呢？F0以后你会发现F0的文件都很小，大部分不到100K，甚至不到10K的文件成片成片地堆在那里。我们把每个文件叫做一个“模块”。PSP的系统就是这样，由很多很多模块构成。当你进入某个功能的时候，PSP会将对应的模块加载进内存，并让其产生作用。这也是为什么你在删除F0的所有文件的时候Windows完全不会报错说文件正在调用无法删除，因为提供“USB联机功能”的模块在你格式化F0的时候正在PSP的内存里。同样的原因，在你格式化完毕断掉连接线的时候，系统会去F0寻找“显示主菜单所需要的模块”——找不到，所以死机。重启的时候F0啥都没有，自然没有办法启动。<br /><br />[i]Flash0：PSP的系统文件。Flash1：PSP系统的配置文件。Flash2：PSN联机相关文件。Flash3：临时文件。[/i]<br /><br />以上分别可以用flash0:/，flash1:/……flash3:/实现调用。记忆棒是ms0:/，PSP GO的主内存是ef0:/。<br />看到ms0:/你想起什么没有？没错，就是插件（我说你这一讲切入正题也太慢了点吧喂！）。<br /><br />[i]插件，自制系统里方可使用的自制模块。一般可以辅助PSP系统的运作，达成一定的功能。[/i]<br /><br />[i]【未完待续】[/i]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>JoyJ</b><br/>
+2011-03-02 21:39:57</p>
+</div>
+<div class="col-10">
+<p>占楼3/3（字数你妹+233）</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>JoyJ</b><br/>
+2011-03-02 21:40:24</p>
+</div>
+<div class="col-10">
+<p>- =预备楼，习惯性地再占一楼</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>william6849</b><br/>
+2011-03-02 21:43:17</p>
+</div>
+<div class="col-10">
+<p>BLゲームとBLゲームとか　あるいはBLゲーム</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>william6849</b><br/>
+2011-03-02 21:43:43</p>
+</div>
+<div class="col-10">
+<p>UU姐威武</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>hewenxie</b><br/>
+2011-03-02 21:54:09</p>
+</div>
+<div class="col-10">
+<p>难道又是选择支文字长度问题，呃，我的FATE也遇到。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2011-03-02 21:51:47</p>
+</div>
+<div class="col-10">
+<p>我预感这帖水份很重。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ma8742044</b><br/>
+2011-03-02 21:54:20</p>
+</div>
+<div class="col-10">
+<p>万恶举报党~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>JoyJ</b><br/>
+2011-03-02 22:03:37</p>
+</div>
+<div class="col-10">
+<p>    其实……300M左右的话最好传Rayfile然后发fs2you链接，那个绝对永远不会被和谐……<br /><br /><br /><br /><br />啊，对了- =非常感谢您的补档</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ma8742044</b><br/>
+2011-03-02 22:05:31</p>
+</div>
+<div class="col-10">
+<p>~~~悲剧啊<br /><br />能看着日文玩推理游戏的~我早去考级，做汉化了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ma8742044</b><br/>
+2011-03-02 22:07:56</p>
+</div>
+<div class="col-10">
+<p>    本人对RF盘怨念<br /><br />不管上传下载~从来都是0kb</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>bench</b><br/>
+2011-03-02 22:11:55</p>
+</div>
+<div class="col-10">
+<p>亲爱的LZ 啊那个解压密码是怎么回事啊！是你搞的嘛！求解啊！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>伪·红莲</b><br/>
+2011-03-02 22:12:12</p>
+</div>
+<div class="col-10">
+<p>除了psp游戏的解包之外，其它都没啥兴趣的说</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mousegame168</b><br/>
+2011-03-02 22:17:10</p>
+</div>
+<div class="col-10">
+<p>恩支持下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mousegame168</b><br/>
+2011-03-02 22:17:28</p>
+</div>
+<div class="col-10">
+<p>恩支持下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2011-03-02 22:17:46</p>
+</div>
+<div class="col-10">
+<p>普米4的路过有些主题成功使用。。。有些主题无法使用。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mousegame168</b><br/>
+2011-03-02 22:17:52</p>
+</div>
+<div class="col-10">
+<p>恩支持下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mousegame168</b><br/>
+2011-03-02 22:18:26</p>
+</div>
+<div class="col-10">
+<p>恩支持下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mousegame168</b><br/>
+2011-03-02 22:18:47</p>
+</div>
+<div class="col-10">
+<p>恩支持下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2011-03-02 22:19:25</p>
+</div>
+<div class="col-10">
+<p>每日签到</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2011-03-02 22:22:02</p>
+</div>
+<div class="col-10">
+<p>Saber前来支持～～</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2011-03-02 22:26:24</p>
+</div>
+<div class="col-10">
+<p>下来听听的说</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mousegame168</b><br/>
+2011-03-02 22:26:53</p>
+</div>
+<div class="col-10">
+<p>恩支持下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mousegame168</b><br/>
+2011-03-02 22:27:16</p>
+</div>
+<div class="col-10">
+<p>恩支持下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mousegame168</b><br/>
+2011-03-02 22:28:00</p>
+</div>
+<div class="col-10">
+<p>恩支持下<br />接收下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mousegame168</b><br/>
+2011-03-02 22:28:33</p>
+</div>
+<div class="col-10">
+<p>恩支持下<br />接收下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mousegame168</b><br/>
+2011-03-02 22:29:27</p>
+</div>
+<div class="col-10">
+<p>恩支持下<br />接收下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2011-03-02 22:29:27</p>
+</div>
+<div class="col-10">
+<p>Fate的所有歌曲也是神曲</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2011-03-02 22:32:36</p>
+</div>
+<div class="col-10">
+<p>要学日文来推理。。。希望能尽快破解吧。。。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1736_1.html">1</a>
+</li>
+
+<li class="page-item">
+<a class="page-link" href="post1736_2.html">2</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

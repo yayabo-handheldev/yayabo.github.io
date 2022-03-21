@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Lua 5.1.2 + luabind 0.7 编译 luabind 0.7 时问题的解决</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">Lua 5.1.2 + luabind 0.7 编译 luabind 0.7 时问题的解决</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-18 20:57:24</p>
+</div>
+<div class="col-10">
+<p>会出现类似错误：<br />c:	empluabindsrcef.cpp(95) : error C2062: type 'void' unexpected<br />c:	empluabindsrcef.cpp(96) : error C2143: syntax error : missing ';' before '{'<br />c:	empluabindsrcef.cpp(96) : error C2447: '{' : missing function header (old-style formal list?)<br />c:	empluabindsrcef.cpp(113) : error C2062: type 'int' unexpected<br />c:	empluabindsrcef.cpp(114) : error C2143: syntax error : missing ';' before '{'<br />c:	empluabindsrcef.cpp(114) : error C2447: '{' : missing function header (old-style formal list?)<br />c:	empluabindsrcef.cpp(153) : error C2589: '(' : illegal token on right side of '::'<br />c:	empluabindsrcef.cpp(153) : error C2059: syntax error : '::'<br />c:	empluabindsrcef.cpp(157) : error C2589: '(' : illegal token on right side of '::'<br /><br />需要打开luaconf.h，找到322行：<br />#undef LUA_COMPAT_GETN<br />替换成：<br />#define LUA_COMPAT_GETN<br />即可解决。<br /><br />另外需要注意的是，编译时字符集选择不要选择Unicode，选择多字符集貌似是不错的。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-01-18 21:29:19</p>
+</div>
+<div class="col-10">
+<p>俺和四楼一样，但是我觉得我画出来的东西很美妙</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15938_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

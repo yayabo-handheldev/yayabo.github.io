@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[移植]去北方  游戏已补档  全游戏脚本送上</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[移植]去北方  游戏已补档  全游戏脚本送上</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_7.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-10-03 16:50:32</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 love_xiaolu 于 2010-10-8 00:30 编辑 [/i]<br /><br />没事练手的一个小游戏，还是很不错的。<br />这次移植的自己很满意！！<br />嘛！具体自己看！明天把脚本上传上来，让大家学习一下（自己就觉得很渣的说..........）<br /><br />[color=Red][size=6]游戏已补档[/size][/color]<br /><br /><br /><br /><br />敏娜桑！快来加分！！啊啊！没事移植个游戏来骗分，这就是掌家的魅力啊！<br /><br />[attach]15016[/attach]<br /><br />[attach]15017[/attach]<br /><br />[attach]15018[/attach]<br /><br />[attach]15019[/attach]<br /><br /><br /><br /><br /><br /><br /><br /><br />[hide]http://u.115.com/file/f0d5bb3dd3<br />qubeifan.iso[/hide]<br /><br /><br />[hide]http://www.rayfile.com/files/2049198f-d227-11df-8277-0015c55db73d/[/hide]<br /><br />[hide]http://u.115.com/file/f14eb1c690<br />去北方.rar[/hide]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-10-03 16:50:48</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 love_xiaolu 于 2010-10-7 23:26 编辑 [/i]<br /><br />[color=Red][size=5]二楼标题脚本送上，给小白看的！！坏书，背背书，浪叔等人速速离去！！[/size][/color][code]stageclear();		-- 清除场景数据<br /><br />*title_select--设置跳转标签<br /><br />pause(10);--等待10帧<br /><br />playfile("music/bgm1.mp3",1);--播放背景音乐<br /><br />pause(200);--等待200帧<br /><br />bg(1,"logo_psp.png",1,500);--显示掌家logo<br /><br />bgon(1);--打开BG1的显示<br /><br />pause(360);--等待360帧<br /><br />bgeff(1,2,500);--背景1效果（1号背景,2号效果淡出,500帧效果时间）；<br /><br />pause(60);--等待60帧<br /><br />bg(1,"love_xiaolu.png",1,500);--显示小路logo<br /><br />bgon(1);--打开BG1的显示<br /><br />pause(360);--等待360帧<br /><br />bgeff(1,2,500);--背景1效果（1号背景,2号效果淡出,500帧效果时间）；<br /><br />pause(60);--等待60帧<br /><br />bg(1,"Tit.jpg",1,500);--显示标题背景图片<br /><br />bgon(1);--打开BG1的显示<br /><br />chose = titlechose();--制造分支函数<br /><br />if chose==1 then goto(*newgame); end--如果选择第一个选项，则跳转到标签*newgame处继续执行<br /><br />if chose==2 then goto(*loadgame); end--如果选择第二个选项，则跳转到标签*loadgame处继续执行<br /><br />if chose==3 then goto(*end); end--如果选择第三个选项，则跳转到标签*end处继续执行<br /><br /><br />--=======================================================--<br />*newgame--设置标签<br /><br />mp3fadeout(1,128,4,20);--背景音乐淡出<br /><br />bgeff(1,2,500);--背景1效果（1号背景,2号效果淡出,500帧效果时间）；<br /><br />pause(60);--等待60帧<br /><br />jump("001.lua");--跳转到脚本001.lua继续执行<br /><br /><br />--=======================================================--<br />--*loadgame--设置标签<br /><br />--bgeff(1,2,500);--背景1效果（1号背景,2号效果淡出,500帧效果时间）；<br /><br />--pause(10);--等待10帧<br /><br />--fontwidth(18);--字体间距离的修正<br /><br />--pause(60);--等待60帧<br /><br />--drawload();--调用读档模块<br /><br />--mp3fadeout(1,128,4,20);--淡出MP3<br /><br />--pause(20);--等待20帧<br /><br />--goto(*title_select);--跳转到标签*title_select处继续执行<br /><br /><br />--========================================================--<br />*end--设置标签<br /><br />bgeff(1,2,500);--背景1效果（1号背景,2号效果淡出,500帧效果时间）；<br /><br />pause(60);--等待60帧<br /><br />bg(1,"tuichu.png",1,500);--显示标题背景图片<br /><br />bgon(1);--打开BG1的显示<br /><br />pause(400);--等待400帧<br /><br />mp3fadeout(1,128,4,20);--淡出背景音乐（MP3）<br /><br />pause(200);--等待200帧<br /><br />bgeff(1,2,500);--背景1效果（1号背景,2号效果淡出,500帧效果时间）；<br /><br />pause(60);--等待60帧<br /><br />SetGameMode(QUIT_MODULE);--无条件强制结束游戏并回到XMB界面<br /><br /><br />--=====================================================--[/code]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-10-03 16:50:58</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 love_xiaolu 于 2010-10-7 23:30 编辑 [/i]<br /><br />[color=Red][size=5]三楼剧情全脚本送上！！[/size][/color][code]stageclear();		-- 清除场景数据<br /><br />textxy(50,96);--设置字体坐标<br /><br />mp3load("soundS/LIECHE.mp3",2,1);                <br /><br />mp3play(2);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />fontwidth(18);--字体间距离的修正<br /><br />say("只要这样持续不断地向着北方前进");<br /><br />textclear();--清屏<br /><br />say("总有一天[n]我们能找到幸福的乐园；");<br /><br />textclear();--清屏<br /><br />say("总有一天[n]我能再次听到你的歌声吧。");<br /><br />textclear();--清屏<br /><br />say("我是这样相信着。");<br /><br />textclear();--清屏<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"bg_0001.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("我们坐在前往光之丘的列车上。也许有人要问，光之丘是个什么地方，我们为什么要去那里？");<br /><br />say("关于这一切，我只能告诉你，我们只是想找一个完全陌生的城市，一个……没有人认识我们的地方。");<br /><br />setfgA(0,0);<br /><br />drawfgA("sxyc2.png",AMFIN);<br /><br />say("她呆坐在窗边，任凭列车外的风景飞逝而过。午后的阳光照在脸上，越发显现出她肤色的苍白。");<br /><br />say("我犹豫了很久，终于说出了那句早该提醒她的话：");<br /><br />say("「打掉他吧，你的身体越来越虚弱了，怀着有妇之夫的孩子只会成为旅途的负累。」");<br /><br />say("她摇摇头，毫不犹豫。");<br /><br />say("「如果没有了鱼，水是什么；如果没有了繁星，夜是什么；如果没有了希望，明天又是什么？」");<br /><br />say("「所有人都在我的面前死去，妈妈、妹妹，还有所有的同伴……只有我和这个孩子活了下来。」");<br /><br />say("「他就是我活下去的勇气和希望。你懂吗，琉璃?」");<br /><br />say("琉璃：[n]   「我不懂。但是主人的愿望就是我的愿望。深雪决定的事，琉璃只能全力支持。」");<br /><br />drawfgA("sxwx2.png",AMNULL);<br /><br />say("深雪：[n]   「谢谢。」");<br /><br />say("她微笑着，充满母亲特有的温柔与圣洁。");<br /><br />say("世上最能温暖人心的，是微笑。在这冰冷而荒芜的世界，能跟随着深雪这样的主人，");<br /><br />say("能时时看到她的微笑，那就是我的“幸福”。");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("即使是这片刻的宁静也是难得的奢求。危机，已经杀到！");<br /><br />textclear();--清屏<br /><br />bgeff(1,2,300);<br /><br />pause(30);<br /><br />bg(1,"列车.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />say("一名陌生男子拨开人群，以我们为目标径直走来，显然已经注意我们很久了。");<br /><br />drawfgA("猎人1.png",AMFIN);<br /><br />say("陌生男子：[n]   「这位可爱的小姐，是一个人出来旅行吗？」");<br /><br />say("他装作友好地向深雪伸出手来。");<br /><br />say("我毫不客气地在那只脏手上抓了一下，意思很明确,就是：别来骚扰我们，滚开！");<br /><br />say("陌生男子：[n]「好凶悍的小猫啊。听说猫可是很温驯的动物，这么不听话的小猫真让我怀疑是——」");<br /><br />say("他一边故作轻松地说着，一边早有准备地拿出一瓶水向我泼来。");<br /><br />say("陌生男子：[n]   「这是从教堂里拿来，受过神的祝福的圣水，对普通人而言，可以净化身心——」");<br /><br />say("「但对于魔物而言，无异于硫酸。」");<br /><br />say("圣水虽然不能伤害我，但也足以把我身上的伪装洗去，在圣水的作用下，我身上的伪装开始褪色，渐渐露出皮毛的原本色泽来。");<br /><br />say("琉璃：[n]   「斩尽杀绝，这就是你们的神谕吗？神说，你们的罪孽永不可救赎。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("带着惊恐的尖叫声已经开始在身边响起。");<br /><br />say("「黑、黑猫?!」");<br /><br />say("车厢内众人都被这声尖叫惊动起来！");<br /><br />say("「这里有黑猫，来人啊！车上有魔女！！」");<br /><br />say("车厢立即骚动起来，男人们自告奋勇地闻声赶来，女人们尖叫着，在一旁给予声援。");<br /><br />say("「抓住她！烧死她！！」");<br /><br />drawfgA("深雪-啊.png",AMFIN);<br /><br />say("面对这种意外，她吓得手足无措。我一面阻挡汹涌而来的人群，一面对深雪大吼：");<br /><br />say("「还愣着干什么？快逃啊！」");<br /><br />mp3load("sounds/奔跑.mp3",2,1);  --音效<br />              <br />mp3play(2);   --音效开<br /><br />say("仿佛才听懂我说的话，她开始拔足奔跑。飘动的衣阙勾勒出她身躯单薄的线条，这是我们亡命天涯惯有的场景。只是这一次是否有幸逃脱？");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("我祭起火球，在人群中开出一条通道，阻挡在前的人流立即化为灰炭！待见识过如此强力的魔法后，车厢内便转眼间逃得空无一人。");<br /><br />say("空旷的车厢内，只留下我与那陌生男子对峙。");<br /><br />drawfgA("猎人1.png",AMFIN);<br /><br />say("魔女猎人：[n]   「把这些无聊闲人清掉也好。我目的不是狩猎魔女，我乃魔物学者，兴趣是科学研究而不是杀戮。」");<br /><br />say("「我们来做个交易如何？我放过你的主人，而你，将作为我的实验对象。我对你们不亚于人类的智慧和强大的魔力深感兴趣。」");<br /><br />say("琉璃：[n]   「即使人类能征服世上万物，甚至能生产出人造魔兽，但要妄想驯服我们猫妖，没有人能做得到！」");<br /><br />say("魔女猎人：[n]   「啧！没办法了——」");<br /><br />say("「以主之名召唤，出来吧，人面犬！」");<br /><br />textclear();--清屏<br /><br />mp3load("sounds/SAISEI.mp3",2,1);  --音效<br />              <br />mp3play(2);   --音效开<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("             夜凉如水，万籁俱寂。");<br /><br />textclear();--清屏<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"通缉的街道.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("「在通往光之丘的列车上发现最新的魔女行踪，年龄约17至18岁之间，短发……政府已于今日18：30分发出通缉令，赏金为100万……」");<br /><br />say("街边的电视不厌其烦地一遍遍报道着，在此巨额赏金之下，魔女猎人们大概已经开始行动了吧。");<br /><br />say("深雪一定还活着的。我深信。");<br /><br />say("我也从列车上跳下去了，可是我没有死，所以深雪也一定还活着。");<br /><br />say("当她从列车上消失之时，人们纷纷以为她已飞往天空，所以才没有沿路进行搜寻。");<br /><br />say("只有我知道，那是不可能的。");<br /><br />say("因为深雪是唯一一个不会飞的魔女，她早已失去了全部的魔力!");<br /><br />say("我在逃亡中中了一枪，每走一步，地上便留下了新鲜而温热的血滴，很快就被魔女猎人发现了行踪。");<br /><br />textclear();--清屏<br /><br />bgeff(1,2,300);<br /><br />pause(20);<br /><br />bg(1,"死巷2.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />say("前方是死巷，无路可逃，只有一位衣着暴露的少女在招揽顾客。");<br /><br />drawfgA("减减-卖春A.png",AMFIN);<br /><br />say("我向她走去，用哀怜的眼神向她求助：[n]「救我!」");<br /><br />say("她说：[n]   「好的。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("她打开背包，让我躲了进去。");<br /><br />drawfgA("猎人1.png",AMFIN);<br /><br />say("猎人随后就到，他拎着少女的衣领问：「刚才有见到过什么吗?」");<br /><br />say("「这位客人好性急哦。」卖春少女微笑道。「特惠价只要1000如何？」");<br /><br />say("魔女猎人：[n]   「我问你有没有见到一只黑猫?」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawfgA("减减-卖春B.png",AMFIN);<br /><br />say("卖春少女：[n]   「黑猫吗?」");<br /><br />say("她的语气闪烁着狡诈与邪恶。");<br /><br />say("「我们换种方式来谈判如何？一口价，一万！」");<br /><br />say("魔女猎人：[n]   「好，成交！」");<br /><br />say("她出卖了我!");<br /><br />say("我相信她眼中的诚实，而她竟然出卖了我！绝望感侵蚀了我的全身，不是为即将到来的厄运，而是为了少女的背叛。");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("琉璃：[n]   「我身为骄傲的猫妖一族，即使战死也决不投降！」");<br /><br />drawfgA("猎人1.png",AMFIN);<br /><br />say("魔女猎人：[n]   「哼，垂死挣扎。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("在我们互相缠斗之时，少女悄无声息地绕到猎人身后，骤然出手！");<br /><br />drawfgA("减减-卖春A.png",AMFIN);<br /><br />say("她甩出一束钢丝，猛力收紧，转眼偷袭得手。");<br /><br />mp3load("sounds/钢丝.mp3",2,1);  --音效<br />              <br />mp3play(2);   --音效开<br /><br />drawfgB("钢丝.png",AMFIN);<br /><br />say("猎人全身受缚，动弹不得，只能眼看着咽喉处的钢丝逐寸陷入。");<br /><br />say("魔女猎人：[n]   「可恶……为什么要杀我?」");<br /><br />say("少女依旧露出纯真无邪的微笑。[n]「钱是我的，猫也是我的。」");<br /><br />mp3load("sounds/被袭击.mp3",2,1);  --音效<br />              <br />mp3play(2);   --音效开<br /><br />drawfgC("钢丝2.png",AMFIN);<br /><br />turnfgB(AMFOUT,300);<br /><br />killfgB();<br /><br />say("她冷酷地把钢丝拉到极限，轻松的像勒死一只猫。");<br /><br />textclear();--清屏<br /><br />turnfgC(AMFOUT,300);<br /><br />killfgC();<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("......................................");<br /><br />textclear();--清屏<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"减减的房间.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("我来到了少女的住所。");<br /><br />say("少女的房间凌乱、简单，地上摆满了垃圾和零食。");<br /><br />say("但在这间糟糕的房间中，竟然就躲藏着我找寻己久的深雪!");<br /><br />drawfgA("sxyc.png",AMFIN);<br /><br />say("她就缩在凌乱的角落，裙子已经班驳，处处留有撕口，脚裸处也是无数条被刮伤的痕迹。");<br /><br />say("保护魔女历代以来就是我们猫妖族的使命，我不顾身上的伤口，拼死挡在深雪身前，准备着又一次的决一死战。");<br /><br />say("「你到底是什么人！」");<br /><br />say("这少女诡异莫测，不可信任。到底是敌是友？");<br /><br />say("深雪：[N]   「琉璃住手，是减减救了我。她，也是魔女——」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("琉璃：[n]   「你？！」");<br /><br />say("「不可能。我在她身上感觉不到任何魔力，而且，我从未见过不携带魔宠的魔女。」");<br /><br />drawfgA("减减-C-xi.png",AMFIN);<br /><br />say("减减：[n]   「我也是第一次见到有不会飞的魔女呢。」");<br /><br />say("她反唇相讥。显然已知道深雪失去魔力的事实。");<br /><br />say("的确，这世上没有什么事是一成不变的，也许这背后还隐藏了她的一段伤心往事。我这样想，不禁为刚才的无礼言行感到内疚。");<br /><br />say("琉璃:[n]   「感激您救了我的主人，我为适才的无礼道歉。」");<br /><br />say("减减:[n]   「嗯，难得见到同伴，我很高兴呢。这段时期里将会全城戒严，你们先在这儿避一段时间吧。」");<br /><br />textclear();--清屏<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("我们就这样闯入了魔女减减的生活。");<br /><br />textclear();--清屏<br /><br />say("对于她的身份，我始终觉得诡异，无论怎样也查看不出是她属于哪种魔力类型。");<br /><br />textclear();--清屏<br /><br />say("           减减，你真的是魔女吗？");<br /><br />textclear();--清屏<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"客厅.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("不管怎么说，我们之所以能在这过上一段安稳日子，全依赖减减的保护。");<br /><br />say("为了表示感谢，我还特意跑到古董店随手捞了件东西送她。");<br /><br />drawfgA("减减-C-wei.png",AMFIN);<br /><br />say("减减：[n]   「这串字怎么拼——F o r e v e r  B l u e……啊啊，这是一张CD！」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawfgA("深雪-哦.png",AMFIN);<br /><br />say("深雪：[n]   「C D 又是什么？」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawfgA("减减-C-xi.png",AMFIN);<br /><br />say("减减：[n]   「是 C D - R O M 呀，电子革命时代最初的信息载体，我也是第一见到实物呢。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("「接下来的信息载体是D V D - R O M 、B l u - r a y 和 U - B o x，最后才使用现在通用的 V R - R O M 。」");<br /><br />drawfgA("深雪-微笑.png",AMFIN);<br /><br />say("深雪：[n]   「好厉害，减减的近代史可以得A +。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("减减：[n]   「嘻嘻。」");<br /><br />say("减减把光盘放入C D 播放器。");<br /><br />say("优雅的音乐响起。");<br /><br />say("歌声飞越遥远的时空、飞越无数的动乱和战争，将历史和现在连接在一起.");<br /><br />say("我们仿佛又回到了过去的美好时代，每当想到这一点，我便感到十分奇妙。");<br /><br />say("我只是感慨而已，而减减却已经哭得稀哩哗啦了。");<br /><br />drawfgA("减减-C-wei.png",AMFIN);<br /><br />say("减减：[n]   「你们难道不感动吗?这些是自然的歌声啊，是发自灵魂深处的呐喊，是真正的天籁之音！」");<br /><br />say("「我们这个时代还找得出这么充满激情的歌声吗？它充满着热情，充满了生命力，充满了爱，充满了……」");<br /><br />say("正当减减慷慨激昂时，播放机「咔」的一声冒出白烟，C D 也随即报废。");<br /><br />say("琉璃：[n]   「真脆弱。到底只是百年前的古董呀……」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawfgA("深雪-微笑.png",AMFIN);<br /><br />say("深雪：[n]   「既然你喜欢听自然的歌声，那么等我恢复魔力后，我天天都唱歌给你听。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawfgA("减减-C-wei.png",AMFIN);<br /><br />say("减减：[n]   「真的？！你真的会唱歌？我是说，你真的可以用自己的声音唱歌？」");<br /><br />say("琉璃：[n]   「深雪是治疗魔法系，能力是‘痊愈之声’，可以用歌声治疗一切的创伤，无论是心灵还是身体。」");<br /><br />drawfgA("减减-C-heng.png",AMNULL);<br /><br />say("减减：[n]   「可以用自己的声音唱歌……真羡慕啊。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("她低下头，一副若有所思的样子。");<br /><br />textclear();--清屏<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />playfile("music/bgm2.mp3",1);--播放背景音乐<br /><br />say("          我想听温柔的歌，");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />say("          谁能给我认真地唱一曲吗?");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />say("          这个世界上所有生物中，");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />say("          能看着鲜花微笑的是人，");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />say("          能流眼泪的是人，");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />say("          软弱的你更像是人。");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />say("          有时会迷失方向不要紧，");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />say("          总有一天你会理解我们，");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />say("          因为你是人。");<br /><br />textclear();--清屏<br /><br />mp3fadeout(1,128,8,10);--音乐淡出<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"客厅.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />drawfgA("减减-C-heng.png",AMFIN);<br /><br />say("减减：[n]   「不行，我还是没有这种才能。我们的声带早已经退化，像机械一样冰冷而呆板。」");<br /><br />say("琉璃：[n]   「有必要自己作歌那么麻烦吗？只要把意念输入电脑，程序马上就可以编造出一首完美的歌——」");<br /><br />say("「无论什么声音什么风格都可以，歌手这一职业早已是历史名词了。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("她没有搭理我。像减减一贯的风格那样，继续我行我素地干自己爱干的事。");<br /><br />say("音响里传出一阵类似擦盘子刮玻璃的声音，她试了一会，也觉得没趣，终于是放弃了。");<br /><br />say("琉璃：[n]   「有必要自己作歌吗？」");<br /><br />drawfgA("减减-C-heng.png",AMFIN);<br /><br />say("减减：[n]   「闭嘴，琉璃！」");<br /><br />say("她抡起周围一切能扔的能砸的东西开始发泄她的失败，都被我熟能生巧地一一避开了。");<br /><br />say("减减：[n]   「那种电脑合成的东西也能叫做歌吗？只不过是一堆电子噪音而己！」");<br /><br />say("「没有灵魂没有感情也没有生命。正因为人类一直听这样的声音生活，才会日渐变得麻木与冷酷。」");<br /><br />say("琉璃：[n]   「说到底音乐也只是无聊的消遣而已，总有一天会被淘汰的。」");<br /><br />say("减减：[n]   「你说得对。音乐在这个时代已经死亡，在不久的将来，它将连尸体都不会剩下。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("琉璃：[n]   「那没有什么不妥啊。」");<br /><br />say("我不明白她为什么而伤感。");<br /><br />textclear();--清屏<br /><br />bgeff(1,2,300);<br /><br />bg(1,"CG_减减特写.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />say("减减：[n]   「是地狱！」");<br /><br />say("「这就是我们追求的未来吗？音乐没有了，艺术没有了，魔法文明没有了，一切都没有了，科学文明操纵了一切。」");<br /><br />say("「人们没有希望、梦想和爱，像行尸走肉般生活着，世界了无生机。」");<br /><br />say("人类的未来变得怎样与我毫无关系，反而减减的激烈反应令我觉得更为有趣。");<br /><br />say("减减：[n]   「好好珍惜这个时代吧。因为至少这个时代的人还会哭、会笑、会爱、会心疼。」");<br /><br />textclear();--清屏<br /><br />bgeff(1,2,300);<br /><br />pause(80);<br /><br />bg(1,"下雪.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />say("光之丘开始下雪了。");<br /><br />say("出门都要披上厚厚的防辐射服，很不方便，不过也因而使我避开被发现的危险，可以出外好好玩耍。");<br /><br />textclear();--清屏<br /><br />bgeff(1,2,300);<br /><br />pause(80);<br /><br />bg(1,"深雪的房间.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />say("当我和减减游玩回来时，深雪正在键盘前打字，还可以在屏幕上看到一句未来得及消去的话：");<br /><br />say("你那里下雪了吗?");<br /><br />say("我扯断电源，把笔记本电脑扔在地上砸烂，我很生气，我的情绪可以用「怒火中烧」来形容。");<br /><br />drawfgA("sxyc.png",AMFIN);<br /><br />say("深雪：[n]   「可是我很想他，我很想他啊！」");<br /><br />say("深雪哀哀欲哭。");<br /><br />say("琉璃：[n]   「你忘了我们为什么逃出来吗？你忘了人类怎样对待我们吗？我们逃出来并不是为了让你像普通女孩一样生活的啊！」");<br /><br />say("深雪：[n]   「他不在意我的魔女身份，他甚至已经和妻子离了婚，很快就会来这里。」");<br /><br />drawfgA("深雪-生气.png",AMNULL);<br /><br />say("深雪：[n]   「我会生下他的孩子，我们会结婚，像童话中的王子和公主一样幸福地生活。」");<br /><br />say("琉璃：[n]   「魔女深雪！你忘了你所肩负的使命吗！你忘了大家保护你逃出来是为什么吗！回答我！！」");<br /><br />drawfgA("深雪-啊.png",AMNULL);<br /><br />say("深雪：[n]   「我根本不想成为魔女！」");<br /><br />say("她发出了埋藏在心底的呐喊。");<br /><br />say("「我只想像普通女人一样结婚、生孩子、每天过安稳的生活。我不要过每天被人追杀的日子，我不要恢复魔力，我不要成为魔女！我不要——」");<br /><br />textclear();--清屏<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("...........................");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"下雪.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("我的身体出了问题，详细地说，是嗅觉。");<br /><br />say("四周仿佛都充斥着刺鼻的血腥味，饭桌上、空气中、浴室里……整座城市像一块吸足了血的巨大海绵，我的皮毛上沾满血腥。");<br /><br />say("我不担心身体出了问题，我的身体从来就没健康过。这座城市里，这个世界上，所有的人，从来就没健康过。");<br /><br />textclear();--清屏<br /><br />bgeff(1,2,500);<br /><br />bg(1,"减减的房间.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawfgA("减减-B-heng.png",AMFIN);<br /><br />say("减减：[n]   「那是濒死前的征兆。琉璃，你快要死了。」");<br /><br />say("琉璃：[n]   「呵，你说话仍旧是这样直率。」");<br /><br />say("减减：[n]   「主人的力量是魔宠的生命力来源。在深雪失去魔力后仍然撑到现在，你已经到极限了吧。」");<br /><br />say("「再怎么做也只是延缓死亡过程罢了。真正能救你的，只有深雪的‘痊愈之声’。她不恢复魔力，世上无人能救你。」");<br /><br />say("琉璃：[n]   「我早已有必死的觉悟，只是担心将来再没有人能保护深雪。」");<br /><br />say("琉璃：[n]   「带她走吧，减减。这是我的最后的愿望。」");<br /><br />drawfgA("减减-B-o.png",AMNULL);<br /><br />say("减减：[n]   「去哪里？」");<br /><br />say("琉璃：[n]   「去北方。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("北方啊，那是我们魂牵梦绕的地方，是永远向往的终点。");<br /><br />say("在那里，隐藏着所有的「可能性」和所有的「真实」，在那里，一切的「奇迹」都可能发生。");<br /><br />say("琉璃：[n]   「只要回到魔女的发源地——西伯利亚——就一定能找到恢复魔力的办法。」");<br /><br />drawfgA("减减-B-heng.png",AMFIN);<br /><br />say("减减：[n]   「你在说谎。」");<br /><br />say("减减：[n]   「我和你一样，我们都知道恢复魔力所需的‘仪式’。你只是在逃避现实。」");<br /><br />say("减减：[n]   「你不想深雪受伤，可是这样，她永远都不可能成长。」");<br /><br />say("我心头一震。她知道！减减早就知道所有的「真相」！");<br /><br />textclear();--清屏<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("‘在海的深处，水是那么的蓝，像最美的矢车菊花瓣，水又是那么的深，像最明亮的玻璃……’");<br /><br />textclear();--清屏<br /><br />say("这代代流传的古老传说，人类口中的童话，每一件实际上都是曾经发生过的「历史」！");<br /><br />textclear();--清屏<br /><br />say("她知道这是自己看到他的最后一晚——为了他，她离开了她的族人和家庭，她交出了美丽的声音。");<br /><br />textclear();--清屏<br /><br />say("她每天忍受着没有止境的苦痛，然而——");<br /><br />textclear();--清屏<br /><br />say("他却一点儿也不知道。");<br /><br />textclear();--清屏<br /><br />say("小人鱼看到她的姐姐们从波涛中涌现出来，把刀子递给她。");<br /><br />textclear();--清屏<br /><br />say("「拿去吧，你看，它是多么快！在太阳没有出来以前，你得把它插进那个王子的心里去。");<br /><br />textclear();--清屏<br /><br />say("当他的热血沾上你的嘴唇时，你会恢复以前的声音，如同夜莺的歌声一般美丽；");<br /><br />textclear();--清屏<br /><br />say("当他的热血流到你的脚上时，你的双脚将会又连到一起，变成一条鱼尾巴，你将恢复人鱼的原形，回到海里去享尽那三百年的岁月。");<br /><br />textclear();--清屏<br /><br />say("——刺死那个王子，赶快回来吧。」");<br /><br />textclear();--清屏<br /><br />say("她们发出了一个深沉的叹息声，然后便沉入波涛里去了。’");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"减减的房间.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />PAUSE(10);<br /><br />drawfgA("减减-B-heng.png",AMFIN);<br /><br />say("减减：[n]   「她怀了那个男人的孩子，她已经成为了‘人类’。");<br /><br />say("从‘人类’蜕变回‘魔女’的唯一办法，就如同三千年前的人鱼公主一样……」");<br /><br />say("琉璃：[n]   「别再说了！」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("我打断减减的话。");<br /><br />say("琉璃：[n]   「你根本不了解，那男人就是她的‘幸福’！要她亲手摧毁一切，这样残酷的话我怎能说出口！」");<br /><br />textclear();--清屏<br /><br />bgeff(1,2,500);<br /><br />bg(1,"门外.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawfgA("减减-B-o.png",AMFIN);<br /><br />say("减减：[n]   「这世上根本没有什么‘奇迹’，只有无法逃避的‘现实’。」");<br /><br />say("减减：[n]   「幸福是要付出代价的，你都听到了吧，深雪。在琉璃的命和那个男人的命之间，你任选其一吧。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />mp3load("sounds/门.mp3",2,1);  --音效<br />              <br />mp3play(2);   --音效开<br /><br />say("虚掩的门悄无声息地打开。");<br /><br />say("深雪站在门外，在绝望中泪流满面。");<br /><br />textclear();--清屏<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("今天是深雪和他的爱人见面的日子，也是我即将离开她的日子。");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"街.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("我知道，她是无法作出选择的。所以，我决定离开，找一个开满花的地方静静死去。");<br /><br />say("过普通人类女子的生活，是深雪所追求的幸福。猫妖的使命是辅助魔女，我不要成为她的负累。");<br /><br />textclear();--清屏<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("          再见，祝你幸福，我的主人。");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"咖啡厅.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("咖啡馆干净而明亮，桌布上印着些青色的小花，显得清新而雅致。");<br /><br />say("侍应生将咖啡、牛奶和糖都摆在桌上，微笑着道声「请慢用」，然后就礼貌地离开了。");<br /><br />say("他们两人对坐在窗边，沉醉在幸福的气氛里，时而低头细语，时而相视一笑。一切似乎都很正常，一切都很好。");<br /><br />say("在杯中的咖啡喝完时，她提出了那个犹豫已久的问题。");<br /><br />say("深雪：[n]   「如果，在最亲的人和最爱的人之间选择，你会选择哪一样呢？」");<br /><br />say("「最亲的人。」");<br /><br />say("男人喝完杯中的最后一口咖啡，悠闲的说。");<br /><br />say("「例如，在你和你的孩子之间，我会选择保留腹中的婴儿——它可以成为值钱的实验材料；而你——将会变成我钱包里的一百万现金。」");<br /><br />say("深雪的意识渐渐模糊，在男人说完最后一句话后，她便神志不清昏倒在地了。");<br /><br />textclear();--清屏<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("市中心的广场上开始祭起火把，狂热的信徒们聚集在四周，兴奋之情溢于言表。");<br /><br />textclear();--清屏<br /><br />say("火刑台已经搭起，深雪被钉在十字架上，只有一块已不成形的破布，裹着她的身体。");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"CG_十字架.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("行刑者拿着长矛刺穿她的身体，扩大她的伤口，在深雪痛苦的尖叫声中，迎来了人们情绪的高潮。");<br /><br />say("「烧死她！烧死她！烧死她！烧死她！！」");<br /><br />bgeff(1,2,500);<br /><br />bg(1,"CG_日食.png",1,500);<br /><br />bgon(1);<br /><br />pause(10);<br /><br />say("火焰燃起。");<br /><br />say("焚烧着纯洁无辜的躯体，焚烧着代替人类罪恶的祭品，焚烧着人类最后的良知与正义。");<br /><br />say("是非颠倒，黑白混淆。");<br /><br />textclear();--清屏<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("             在丑恶无耻的笑声中");<br /><br />textclear();--清屏<br /><br />say("            在绝望痛苦的呻吟声中");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"Stop.png",1,500);<br /><br />bgon(1);<br /><br />mp3load("music/如泣的呼唤.mp3",2,1);  --音效<br />              <br />mp3play(2);   --音效开<br /><br />pause(400);<br /><br />bgeff(1,2,500);<br /><br />bg(1,"咖啡厅.png",1,500);<br /><br />bgon(1);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("咖啡馆干净而明亮，桌布上印着些青色的小花，显得清新而雅致。");<br /><br />say("侍应生将咖啡、牛奶和糖都摆在桌上，微笑着道声「请慢用」，然后就礼貌地离开了。");<br /><br />say("他们两人对坐在窗边，沉醉在幸福的气氛里，时而低头细语，时而相视一笑。一切似乎都很正常，一切都很好。");<br /><br />say("在杯中的咖啡喝完时，她提出了那个犹豫已久的问题。");<br /><br />say("深雪：[n]   「如果，在最亲的人和最爱的人之间选择，你会选择哪一样呢？」");<br /><br />say("「最亲的人。」");<br /><br />say("男人喝完杯中的最后一口咖啡，悠闲的说。");<br /><br />say("「例如，在你和你的孩子之间，我会选择保留腹中的婴儿——它可以成为值钱的实验材料；");<br /><br />say("而你——将会变成我钱包里的一百万现金。」");<br /><br />say("深雪的意识渐渐模糊，在男人说完最后一句话后，她便神志不清昏倒在地了。");<br /><br />textclear();--清屏<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("世界变得如此荒诞，事件犹如舞台剧般再度上演，唯一不同的是，结尾部分更改了。");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"咖啡厅.png",1,500);<br /><br />bgon(1);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("倒在地上的女人开始站起来，而站着的男人却倒下去了。");<br /><br />say("「为什么？你会知道！」");<br /><br />say("深雪默默无语地凝视他倒下，眼神里只有失望，和无尽的悲哀。");<br /><br />say("「我只是……一时的鬼迷心窍。我是爱你的啊！原谅我……」");<br /><br />say("深雪：[n]   「想不到最后你还是这样做了。」");<br /><br />say("深雪微笑地哭泣着，把刀子刺进男人的心脏。");<br /><br />textclear();--清屏<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("...................................");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"门外.png",1,500);<br /><br />bgon(1);<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("深雪把自己关在房间里，没有哭。");<br /><br />say("她只是大瓶大瓶地喝着酒，不停地在唱歌、自言自语，准确地说，她在专心致志地和腹中的孩子交谈。");<br /><br />say("即使恢复了‘痊愈之声’，她也无法医治自己心中的创伤。");<br /><br />drawfgA("减减-B-xi.png",AMFIN);<br /><br />say("减减：[n]   「失恋中请勿打扰。」");<br /><br />say("减减在门外拦住了我。");<br /><br />say("减减：[n]   「这是她自己所选择的命运，她必须独立承受。别担心，她会坚强起来的。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("盯着这个熟悉而又陌生的女人，我终于开始明白过来。");<br /><br />say("减减的魔力类型是「时间」——是传说中的时空魔法！她的能力可以令时光倒流！！");<br /><br />say("琉璃：「减减，你到底是什么人？」");<br /><br />say("时空魔法只存在于创世之初。根据古老传说，只有当魔女一族灭绝之时，时空魔法才会重现。");<br /><br />drawfgA("减减-B-heng.png",AMFIN);<br /><br />say("减减：[n]   「20971120」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("「什么？」");<br /><br />say("我听不懂。");<br /><br />textclear();--清屏<br /><br />--pause(20);<br /><br />--drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />say("减减：[n]   「2097年11月20日——也就是18年后的今天。」");<br /><br />say("减减一字一句缓缓道出。");<br /><br />say("「我就是来自那个时空，是未来世界存活下来的唯一一个魔女。」");<br /><br />textclear();--清屏<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("在我还没来的及反应之前，变故发生了！");<br /><br />textclear();--清屏<br /><br />mp3load("sounds/被袭击.mp3",2,1);  --音效<br />              <br />mp3play(2);   --音效开<br /><br />say("一道光束毫无预兆地刺透减减的肩膀，减减倒在地上，惊愕地看着袭击她的少年。");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"客厅.png",1,500);<br /><br />bgon(1);<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("是敌人！");<br /><br />say("悄无声息间，敌人已经潜入了房间内。虽然看不出来历，但身上的杀气证明了对手的强大。");<br /><br />drawfgA("减减-B-o.png",AMFIN);<br /><br />say("减减：[n]   「即使我是你最爱的人，你也要毫不留情地杀掉我吗，哥哥？」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("减减伤心地哭泣着，丝毫没有反抗的意图。");<br /><br />drawfgA("减减大哥.png",AMFIN);<br /><br />say("「停止吧。」");<br /><br />say("少年的眼神冰冷而残酷。");<br /><br />say("少年：[n]   「随着科学文明的进化，魔法文明的灭亡是必然的事实。」");<br /><br />say("「即使被誉为最强的时空魔法，在20年后人类依靠航时机也同样可以做到，复兴魔法时代再也有任何意义了。」 ");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawfgA("减减-B-heng.png",AMFIN);<br /><br />say("减减：[n]   「什么复兴魔法时代，我根本没有兴趣！」");<br /><br />say("减减：[n]   「我只是想救她，我只是想保住她的生命！」");<br /><br />say("「我想听她唱歌，我想在她的怀中撒娇，我想在每晚临睡前，她能对我说‘晚安，我的乖女儿’。");<br /><br />say("这就是我生存下来的唯一愿望，我要救妈妈！」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawfgA("减减大哥.png",AMFIN);<br /><br />say("少年：[n]   「扰乱时空将会导致无法估计的后果，我不能允许你为了私欲而酿成大祸。」");<br /><br />say("少年：[n]   「在灾难还未形成前，我要杀掉深雪和琉璃，把未来导入到正常的轨道上去。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("少年对着我开枪了，我也在同一时间张开结界。但子弹毫无阻滞地穿破结界，向我直射而来。");<br /><br />say("在这场魔法文明和科学文明的较量中，我输了！");<br /><br />say("当我闭目等死的一刻，子弹……停下了！银色的金属在我眼前燃烧，瞬间蒸发于空气中。");<br /><br />say("是火焰魔法！猫妖族专属的攻击型魔法！");<br /><br />drawfgA("琥珀.png",AMFIN);<br /><br />say("我终于看到了减减的黑猫。高贵而不带一丝杂色的纯黑。那未来世界残存的唯一猫妖。");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawfgA("减减大哥.png",AMFIN);<br /><br />say("少年停止了攻击，怒喝道：「连你也想来阻止我吗，琥珀？你不是也同样反对改变历史吗？」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawfgA("琥珀.png",AMFIN);<br /><br />say("琥珀：[n]   「太迟了，历史已经改变。」");<br /><br />say("琥珀冰冷的语调，也压抑不住暗藏的狂热与兴奋。");<br /><br />say("琥珀：[n]   「‘蝴蝶效应’果真是存在的。以主人的身份，那微小的振翅，便足以彻底改变世界的面貌。」");<br /><br />say("「未来不再是我们所见的可怖死寂，人类也不再是冰冷的呆板模样，他们在欢歌笑语，脸上洋溢着幸福，我们从所未见过的‘幸福’。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawfgA("减减大哥.png",AMFIN);<br /><br />say("少年：[n]   「未来在改变……发生、什么事了？」");<br /><br />say("少年一脸的惊愕。");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />drawfgA("琥珀.png",AMFIN);<br /><br />say("琥珀：[n]   「深雪没有死，她成为了‘歌手’，成为了这个时代唯一的‘偶像’，她的歌声传遍了整个世界。");<br /><br />say("‘痊愈之声’医治着人们心中的创伤。");<br /><br />say("‘希望’、‘梦想’和‘爱’都在歌声中苏醒。人类终于清醒过来了，世界又变得像千年前那样纯洁。未来世界已成为‘乐园’！」");<br /><br />say("琥珀：[n]  「对不起，主人，你是对的。」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("琥珀走近减减，在她的伤口上舔舐。");<br /><br />say("「你那微小的爱拯救了这个世界。」");<br /><br />textclear();--清屏<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("她买了一张去杜王町的车票，然后上了火车。");<br /><br />textclear();--清屏<br /><br />say("也许有人要问，杜王町是个什么地方，她为什么要去那里？");<br /><br />textclear();--清屏<br /><br />say("关于这一切，我可以告诉你，杜王町是一个靠近北方的城市，她买这张车票，是为了去北方。");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"bg_0001.png",1,500);<br /><br />bgon(1);<br /><br />pause(20);<br /><br />playfile("music/bgm3.mp3",1);--播放背景音乐<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("深雪在窗边沉思。");<br /><br />drawfgA("sxyc2.png",AMFIN);<br /><br />say("深雪：[n]   「我想清楚了一件事，科学文明是错误的存在。」");<br /><br />say("深雪：[n]   「人类与冰冷的机械同化，他们脆弱的心灵互相隔离，所以，迷惑、愚昧、恐惧和绝望才会在黑暗中");<br /><br />say("不断滋长。他们只是一群寂寞的孩子，因为害怕受到伤害，所以选择了伤害别人。」");<br /><br />say("我伸了个懒腰，静静地听着她做出那个足以改变世界的决定。");<br /><br />drawfgA("sxwx2.png",AMNULL);<br /><br />say("深雪：[n]   「我决定了，我要在西伯利亚唱歌，我要让歌声传遍整个世界，用歌声去医治他们心中的创伤，唤醒灵魂的纯洁。");<br /><br />say("这就是我存在的‘使命’」");<br /><br />turnfgA(AMFOUT,300);<br /><br />killfgA();<br /><br />say("在这一刻里，世界偏离了轨道，向着我已知的未来迈进。");<br /><br />say("琉璃：[n]   「对了，小宝宝就快出世了，叫什么名字呢？」");<br /><br />say("深雪：[n]   「嗯，就叫做‘减减’好吗？」");<br /><br />say("她腼腆地微笑。");<br /><br />say("琉璃：[n]   「是为了纪念减减对我们的帮助吗？」");<br /><br />say("我点头赞成。");<br /><br />say("琉璃：[n]   「但如果是双胞胎怎么办，一男一女的话？」");<br /><br />say("深雪：[n]   「女孩子就叫‘减减’，男孩子嘛，嗯……我要再想想……」");<br /><br />textclear();--清屏<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFOUT);<br /><br />pause(10);<br /><br />bgeff(1,2,500);<br /><br />pause(30);<br /><br />textmode(TEXT_FULLSCENE);--设置文字的显示模式为全屏模式<br /><br />textxy(50,96);--设置字体坐标<br /><br />say("我们正在去北方的车上，列车一刻不停地向着前方驶进。");<br /><br />textclear();--清屏<br /><br />say("在列车还没有到达终点之前，一切都可能改变，一切都可能发生。");<br /><br />textclear();--清屏<br /><br />pause(40);<br /><br />textmode(TEXT_HALFSCENE);--设置文字的显示模式为半屏<br /><br />textxy(30,195);<br /><br />bg(1,"CG_尾声.png",1,500);<br /><br />bgon(1);<br /><br />pause(20);<br /><br />drawbox("msg_0000.png",AMFIN);<br /><br />say("                 【全剧终】");<br /><br />say("制作：洋娃娃");<br /><br />say("编剧：洋娃娃、瞳、婷婷、张永");<br /><br />say("程序设计：N A P O ");<br /><br />say("C G ：洋娃娃、T O P W A Y 、霏月");<br /><br />say("音乐提供：夜雨莹心");<br /><br />say("鸣谢：莫尼卡、柳柳、掌机开发者之家");<br /><br />say("出品：3 D M 工作室、6 6 R P G");<br /><br />say("移植：l o v e _ x i a o l u    小路");<br /><br />say("支持：掌机开发者之家");<br /><br />say("意见反馈：w w w . y a y a b o . c n ");<br /><br />mp3fadeout(1,128,8,10);--音乐淡出<br /><br />say("返回标题画面");<br /><br />pause(10);<br /><br />jump("title.lua");<br /><br /><br /><br /><br /><br /><br /><br /><br />[/code]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-10-03 16:51:49</p>
+</div>
+<div class="col-10">
+<p>    乃所谓的“重启”是指待机hold之后再开机就变回了破解前的系统么？<br />（另外请说出乃机子的系统）</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-10-03 16:52:27</p>
+</div>
+<div class="col-10">
+<p>前排支持</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-10-03 16:52:39</p>
+</div>
+<div class="col-10">
+<p>小早川死忠在此=   =....</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-10-03 16:52:54</p>
+</div>
+<div class="col-10">
+<p>俺的电脑刚刚卡住了，没赶上啊！！！！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuedutianxia</b><br/>
+2010-10-03 16:53:03</p>
+</div>
+<div class="col-10">
+<p>...田间乃好强啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ft5121875</b><br/>
+2010-10-03 16:53:15</p>
+</div>
+<div class="col-10">
+<p>我只想问……<br />楼主你说啥？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>soltyrevant</b><br/>
+2010-10-03 16:53:45</p>
+</div>
+<div class="col-10">
+<p>    好贵~~突然发现NDSI居然比NDSL贵了那么多~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>........</b><br/>
+2010-10-03 16:53:59</p>
+</div>
+<div class="col-10">
+<p>过来支持一下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-10-03 16:56:40</p>
+</div>
+<div class="col-10">
+<p>E叔，尝试将背景用ps做旧处理一下如何</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pa4319755</b><br/>
+2010-10-03 16:56:57</p>
+</div>
+<div class="col-10">
+<p>纳尼  居然是黑白的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>銀夜</b><br/>
+2010-10-03 16:57:17</p>
+</div>
+<div class="col-10">
+<p>這個有愛 , 動漫的集合強大啊~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>魔王</b><br/>
+2010-10-03 16:57:20</p>
+</div>
+<div class="col-10">
+<p>果断前来支持~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>SD_TT</b><br/>
+2010-10-03 16:57:30</p>
+</div>
+<div class="col-10">
+<p>偶喜欢的类型</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-10-03 16:57:57</p>
+</div>
+<div class="col-10">
+<p>    乃们太强大了，不解释，俺居然至今不知道有此等好物····</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>GnNu</b><br/>
+2010-10-03 16:58:45</p>
+</div>
+<div class="col-10">
+<p>乱码大作。。= =</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-10-03 17:00:36</p>
+</div>
+<div class="col-10">
+<p>小路叔V5！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post6022_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

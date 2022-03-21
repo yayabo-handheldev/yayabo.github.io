@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>lua 起点 启蒙 hello world</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">lua 起点 启蒙 hello world</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-18 20:53:21</p>
+</div>
+<div class="col-10">
+<p>写一个最最简单的程序——Hello World。<br />print("Hello World")<br />假定你把上面这句保存在hello.lua文件中，你在命令行只需要：<br />prompt> lua hello.lua<br />看到结果了吗?<br />让我们来看一个稍微复杂点的例子：<br />-- defines a factorial function<br />function fact (n)<br />    if n == 0 then<br />      return 1<br />    else<br />      return n * fact(n-1)<br />    end<br />end<br /><br />print("enter a number:")<br />a = io.read("*number")      -- read a number<br />print(fact(a))<br />这个例子定义了一个函数，计算输入参数n的阶乘；本例要求用户输入一个数字n，然后打印n的阶乘。<br />1.1 Chunks<br />Chunk是一系列语句，Lua执行的每一块语句，比如一个文件或者交互模式下的每一行都是一个Chunk。<br />每个语句结尾的分号（;）是可选的，但如果同一行有多个语句最好用；分开<br />a = 1  b = a*2    -- ugly, but valid<br />一个Chunk可以是一个语句，也可以是一系列语句的组合，还可以是函数，Chunk可以很大，在Lua中几个MByte的Chunk是很常见的。<br />你还可以以交互模式运行Lua，不带参数运行Lua:<br />Lua 5.0 Copyright &copy; 1994-2003 Tecgraf, PUC-Rio<br />><br />你键入的每个命令（比如："Hello World"）在你键入回车之后立即被执行，键入文件结束符可以退出交互模式（Ctrl-D in Unix, Ctrl-Z in DOS/Windows），或者调用OS库的os.exit()函数也可以退出。<br />在交互模式下，Lua通常把每一个行当作一个Chunk，但如果Lua一行不是一个完整的Chunk时，他会等待继续输入直到得到一个完整的Chunk.在Lua等待续行时，显示不同的提示符（一般是>>）.<br />可以通过指定参数让Lua执行一系列Chunk。例如：假定一个文件a内有单个语句x=1；另一个文件b有语句print(x)<br />prompt> lua -la -lb<br />命令首先在一个Chunk内先运行a然后运行b。（注意：-l选项会调用require，将会在指定的目录下搜索文件，如果环境变量没有设好，上面的命令可能不能正确运行。我们将在8.1节详细更详细的讨论the require function）<br />-i选项要求Lua运行指定Chunk后进入交互模式.<br />prompt> lua -i -la -lb<br />将在一个Chunk内先运行a然后运行b，最后直接进入交互模式。<br />另一个连接外部Chunk的方式是使用dofile函数，dofile函数加载文件并执行它.假设有一个文件:<br />-- file 'lib1.lua'<br /><br />function norm (x, y)<br />    local n2 = x^2 + y^2<br />    return math.sqrt(n2)<br />end<br /><br />function twice (x)<br />    return 2*x<br />end<br />在交互模式下：<br />> dofile("lib1.lua")    -- load your library<br />> n = norm(3.4, 1.0)<br />> print(twice(n))        --> 7.0880180586677<br />-i和dofile在调试或者测试Lua代码时是很方便的。<br />1.2 全局变量<br />全局变量不需要声明，给一个变量赋值后即创建了这个全局变量，访问一个没有初始化的全局变量也不会出错，只不过得到的结果是：nil.<br />print(b)      --> nil<br />b = 10<br />print(b)      --> 10<br />如果你想删除一个全局变量，只需要将变量负值为nil<br />b = nil<br />print(b)      --> nil<br />这样变量b就好像从没被使用过一样.换句话说, 当且仅当一个变量不等于nil时，这个变量存在。<br />1.3 词法约定<br />标示符：字母(letter)或者下划线开头的字母、下划线、数字序列.最好不要使用下划线加大写字母的标示符，因为Lua的保留字也是这样的。Lua中，letter的含义是依赖于本地环境的。<br />保留字：以下字符为Lua的保留字，不能当作标识符。<br />and        break      do        else      elseif<br />end        false      for        function  if<br />in        local      nil        not        or<br />repeat    return    then      true      until<br />while<br />注意：Lua是大小写敏感的.<br />注释：单行注释:--<br />多行注释：--[[    --]]<br />--[[<br />print(10)        -- no action (comment)<br />--]]<br />1.4 命令行方式<br />lua [options] [script [args]]<br />-e：直接将命令传入Lua<br />prompt> lua -e "print(math.sin(12))"  --> -0.53657291800043<br />-l：加载一个文件.<br />-i：进入交互模式.<br />_PROMPT内置变量作为交互模式的提示符<br />prompt> lua -i -e "_PROMPT=' lua> '"<br />lua><br />Lua 的运行过程，在运行参数之前，Lua会查找环境变量LUA_INIT的值，如果变量存在并且值为@filename，Lua将加载指定文件。如果变量存在但不是以@开头，Lua假定filename为Lua代码文件并且运行他。利用这个特性，我们可以通过配置，灵活的设置交互模式的环境。可以加载包，修改提示符和路径，定义自己的函数，修改或者重命名函数等。<br />全局变量arg存放Lua的命令行参数。<br />prompt> lua script a b c<br />在运行以前，Lua使用所有参数构造arg表。脚本名索引为0，脚本的参数从1开始增加。脚本前面的参数从-1开始减少。<br />prompt> lua -e "sin=math.sin" script a b<br />arg表如下：<br />arg[-3] = "lua"<br />arg[-2] = "-e"<br />arg[-1] = "sin=math.sin"<br />arg[0] = "script"<br />arg[1] = "a"<br />arg[2] = "b"</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15942_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

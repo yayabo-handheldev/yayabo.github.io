@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS(L)开发平台的搭建</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS(L)开发平台的搭建</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-22 09:18:03</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://sundyzlh.spaces.live.com[/url]<br />作者：张凌华<br /><br />我介绍两种主流平台的搭建 ：<br />1.DevkitPro + PALib<br />2.Codewarrior for NDS + LibNDS<br /> <br />1. DevkitPro ＋ PAlib 。 穷人的开发基地 。<br />没有办法 ，都是开源的 ， 因此是最容易搭建的开发平台 。 当然，随之而来的自然就是对大型商业游戏的开发劣势  。 可提供的类库也太少 ，还需要PaLib一点一滴的努力 。<br />首先下载devkitPro 和 PAlib<br />[url]http://sourceforge.net/project/showfiles.php?group_id=114505&package_id=160396[/url]<br />[url]http://sourceforge.net/project/showfiles.php?group_id=142901&sid=42c6645ba5e24a28f2393b65b09d287e[/url]<br /> <br />1）首先安装DevkitPro ，注意 ， 安装目录不能有空格 （真是变态），因此，我直接安装在了C:DevkitPro目录下面 。<br /> <br />2）其次，安装PALib（开源的开发库，方便开发） ， 安装到DevkitPro同级目录 。<br /> <br />如果你要用到命令行编译请执行3) ，也可暂时跳过 。<br />3)设置环境变量：在＂我的电脑＂右键－＞＂属性＂－＞＂高级＂－＞＂环境变量＂下边的＂系统变量＂下选择＂新建＂，在变量名内输入＂DEVKITARM＂(无引号，下同），变量值内输入＂/Ｘ /devkitpro/devkitARM＂（＂Ｘ＂为ＤＥＶＫＩＴ的安装盘，下同），再新建一个，变量名为＂DEVKITPRO"，变量值为"/Ｘ /devkitpro"．然后选中＂Path＂编辑，在后面加入＂Ｘ:devkitprodevkitarmin;Ｘ:devkitpro msysin＂与前面用分号隔开，然后确定．<br />安装完成了，我们编译测试一下 ：<br />4)编译例子：在ＤＯＳ下进入ｘ：＼ＤＥＶＫＩＴＰＲＯ＼nds- examples＼，里面有很多例子，键入"make"编译，如果前面设好了的话，就可以得到ＮＤＳ　ＲＯＭ了（后缀为＂.nds"的文件）．烧到烧录卡中，就可以运行了．我用的是ＳＣ－ＣＦ卡，不用转换，直接拷进去运行．<br /><br /> <br /><br />2.Codewarrior for NDS + LibNDS  。官方推荐 。<br /><br />Codewarrior  ， 做过掌上设备开发的都知道这个品牌 。 大名鼎鼎啊 。 当年开发Palm系统的时候我简直离不开CW9.0  。 而在各种掌上设备上的开发都是首推这款产品 。 OK，废话不多说了，我们先下一个泄漏出来的CW for NDS :<br /><br />哎呀，不好意思，地址忘了， 有兴趣的问我要吧 。<br /><br />下载来的只有一个CW IDE ， 没有关系，到处可以找到LibNDS SDK （在安装过程需要） 。 我们可以到这里去下载：<br /><br />[url]http://sourceforge.net/project/showfiles.php?group_id=114505&package_id=151608[/url]<br /><br />然后安装过程还需要提供任天堂官方模拟器Ensata安装地址 ，到网上自己去下吧 ， 推荐安装Ensata v1.4d版本 。<br /><br />然后安装过程完成 ， 可以开始开发了  。 王者的利器 ， 可惜这个泄漏出来的版本调试功能太弱 。 没有办法了。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>taida1981</b><br/>
+2009-02-22 22:16:43</p>
+</div>
+<div class="col-10">
+<p>网名:最终奥义<br />性別:男性<br />居住地:山东<br />星座:双鱼座<br />在做的事:刚刚开始学习程序<br />希望：<br />    能认识更多有相同爱好的朋友：）借用一下：）</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16811_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

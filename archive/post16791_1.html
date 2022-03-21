@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>初探Nintendo DS程式开发与设计（二）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">初探Nintendo DS程式开发与设计（二）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-03-12 07:41:45</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.monkeypotion.net/gameprog/note/nds-dev-part-two[/url]<br />作者：猴子灵药<br />[float=left][attach]1001[/attach][/float]<br />        自从年代久远的「初探Nintendo DS程式开发与设计（一）」问世以后，经过了漫长的两个月等待，新的续篇终于不负众望地（？）火热出炉啰！这篇文章将进入 Nintendo DS 的内心世界，深入探索它在朴实外表下所隐藏的强大能力。然后，同样地以一个简单的范例介绍基础的背景图件显示功能。<br /><br />        首先要瞭解的是 DS 的硬体架构。<br /><br />        DS 是一个拥有双中央处理器 (CPU) 的系统，两个处理器分别是 ARM 9 以及 ARM 7；ARM 9 是一个 32-bits 架构 66 MHhz 速度的处理器，而 ARM 7 是一个 32-bits 架构 33 MHhz 速度的处理器。DS 拥有 4 MB 的主记忆体容量，总计 656 KB 的显示记忆体容量，以及数个大小不等的快取记忆体；详细的内容配置，请参照这张 [url=http://www.dev-scene.com/images/3/3d/Dov_DS_MemoryMap.png]DS 的记忆体架构[/url]图。除了核心架构以外，当然还有音效硬体、麦克风、触控萤幕、主机按键、GBA 卡匣槽，以及 Wi-Fi 网路的支援能力。<br /><br />        不同于 PC 平台上动辄成千上百的记忆体容量，整个 DS 的主记忆体只有 4 MB 的大小，而相当重要的显示记忆体更是只有 656 KB 的容量；因此，在 DS 上对于任何资源的配置行为，都需要精打细算地评估考量。ARM 9 与 ARM 7 都能够自由存取主记忆体，而主记忆体通常会用来存放 ARM 9 所使用的游戏执行档，以及与游戏相关的实体档案。至于 ARM 7 的执行档，虽然也能够放在主记忆体中，但是为了效能上的考量，devkitPro 预设的行为会将执行档放在快取记忆体 IWRAM 之中。另外，DS 的触控萤幕输入功能，是交由 ARM 7 所处理的；在 libnds 的预设执行档中，ARM 7 会在每次主迴圈更新时，读取触控萤幕的相关资料，并且将这些资料存入 ARM 9 也能够读取的地方。<br /><br /><br />        正如 DS 拥有上下双萤幕的显示介面，所以 DS 中也存在着 2 个绘图核心引擎，能够分别操作上萤幕与下萤幕的绘图工作。这两个绘图核心引擎，一般分别称为 Main Engine 以及 Sub Engine。在预设的情况下，Main Engine 是用来操作上萤幕绘图，而 Sub Engine 则是用来操作下萤幕的绘图，不过也可以在程式中使用 lcdSwap() 函式，交换上下萤幕所使用的绘图引擎。而 Main Engine 与 Sub Engine 的不同点包括：<br /><br />[quote][list]<br />[*]Main Engine 拥有 8 种绘图模式 (Graphics Modes)，而 Sub Engine 拥有 6 种绘图模式；Main Engine 额外的 2 种绘图模式，能够用来绘制大型的 Bitmap。 <br />[*]Main Engine 可以使用其中一个背景图层做为 3D 的绘图模式。 <br />[*]Main Engine 可以直接使用记忆体中指定的数值绘制画面；也就是前篇文章中所使用的 Frame Buffer 模式。<br />[/list][/quote]<br /><br />        在 DS 的小小世界里，它总共只认得四种格式的绘图资料：Bitmap、Tiled Background、Sprite 以及 3D。Main Engine 以及 Sub Engine 都各能够使用至多 4 个背景图件 (Background) 与 128 个 2D 图件 (Sprite)。而背景图件有两种显示模式，其一是使用单张的 Bitmap 图档做为背景显示；另外一种方法，则是使用拼贴 (Tiled) 的方式，将数个小区块的图片组合成为一张完整的背景图片。在本文的范例程式中，将实作最简单的 Bitmap 显示模式。<br /><br />        为了使 Main Engine 与 Sub Engine 顺利进行绘图工作，在程式初始化时，必须先分别指定这两个引擎所使用的背景类型 (Background Type)，共有下列 6 种模式：<br /><br />[quote][list]<br />[*]Framebuffer：直接使用记忆体中的数值。 <br />[*]Text：使用拼贴的方式绘制背景图件。 <br />[*]Rotation：与 Text 相同，另外可对背景图件进行旋转与缩放操作。 <br />[*]Extended Rotation：如同 Framebuffer 模式，可直接使用记忆体中的数值，另外可对背景图件进行旋转与缩放操作。 <br />[*]3D：使用类似 OpenGL 的 API 绘制 3D 图形。 <br />[*]Large Bitmap：能够绘制 512 x 1024 或 1024 x 512 大小，8-bits 模式的巨大 Bitmap 图片。<br />[/list][/quote]<br /><br />        关于绘图模式与背景类型的详细列表，请参照 [url=http://www.dev-scene.com/NDS/DOCgraphicmodes#Graphic_Modes]Graphics Modes [/url]以及 [url=http://www.dev-scene.com/NDS/DOCgraphicmodes#Background_Types]Background Types [/url]中的表格说明。<br /><br />        举个例子说明，当在程式中使用 videoSetMode(MODE_5_2D) 时，就是指定了 Main Engine 将使用第 5 种绘图模式；而在这个绘图模式之下的 4 层背景，BG0（第 0 层背景）能够使用 Text 或 3D 背景，BG1 使用 Text 背景，而 BG2 与 BG3 都只能使用 Extended Rotation 背景类型。在一般的使用状况中，未必会需要同时开启 4 层背景图件，因此在程式中，需要程式设计者自行指定要启动的图层，例如 videoSetMode(MODE_5_2D | DISPLAY_BG3_ACTIVE) 就是指定 Main Engine 使用第 5 种绘图模式，并且开启 BG3 背景图层。<br /><br />        Video RAM（显示记忆体，常缩写为 VRAM），也就是用来处理图像显示用的记忆体，其中可以存放 3D 物件的贴图、2D 的 Sprite 物件，以及各种与绘图程序相关的资料。DS 中共有 A、B、C、D 至 I，总共 9 条 VRAM Bank，程式设计者必须将它们映射 (Mapping) 至适当的主记忆体位址中，使绘图引擎能够取得所需的图像资料。<br /><br />        这 9 条 VRAM Bank 各有不同的映射用途，例如在程式中使用 videoSetBankA(VRAM_A_MAIN_BG_0×6000000) 的意义，就是把 Bank A 映射至 0×6000000 的记忆体位址上，同时指定这个位址中的内容，是要拿来做为显示 Main Engine 的背景图件之用；接着，只要再把图片资料放进这个位址中，就能够顺利地显示图片内容了。搞懂记忆体映射的问题，会是一开始进入 NDS 程式设计时遇到的最大难题。详细的映射范围与用途，请参照 [url=http://www.dev-scene.com/NDS/NDS_Tutorials_VramTable]VRAM[/url] 中的表格内容。<br /><br />        Console 程式设计与 PC 程式设计最大的不同点，在于 Console 需要面对的是更低阶以及更底层的记忆体操作程序。而在进入 0 与 1 的微观操作世界之前，还有一项需要特别提出来解释的部分：DS 的硬体架构中，没有浮点数运算器 (Floating Point Unit，简称 FPU) 的存在。因此，如果在程式码中直接使用 float 资料型别的操作，会大幅地影响程式系统的效能。<br /><br />        为了达到浮点数运算的功能，在 DS 程式设计中有一个特殊的 Fixed Point Number 系统，能够使用 16-bits 或 32-bits 的整数型别来表示浮点数的资料型别。例如在一个 32-bits 的 Integer 中，可以将 32 个 bits 视为 1、15、16 三个部分；最前头的 1 bit 用来表示正数或负数，接着的 15 个 bit 表示数字的整数部分，而最末端的 16 bits 则当作数字的小数点部分。另外在转换矩阵 (Transformation Matrix) 的数值设定中，会需要使用 16-bits，视为 0、8、8 三个部分的 Integer；例如 myVariable = 1 << 8，就是将 myVariable 变数的值设为 1 的动作。<br /><br />        与 DS 相关的硬体架构以及准备知识已经介绍得差不多了，接下来终于能够正式进入程式设计的部分。这次，我们将抛弃亲爱的 Visual Studio、甩掉亲切的 PAlib，像个男子汉堂堂正正地面对 devkitPro 与 libnds！PAlib 本身相当地易学易用，但是也因为它的包装与易用性，会使程式设计者忽略了许多基础的知识以及重要的细节。为了能够更深入地学习 NDS 的程式设计，务必从最基础的 libnds 开始着手，才能够得到更深入的收穫。<br /><br />        在四月下旬时，已经释出了最新的 devkitPro Updater 1.4.6，如果之前有按照前篇文章的流程安装过 PAlib，建议先执行 Uninstall 程序移除原有的 devkitPro 以后（PAlib 也会一併被删除），再使用最新的 Updater 下载安装新版 devkitPro。而建置 NDS 程式用的 IDE，可以选择使用 devkitPro 内附的 Programmer’s Notepad。Programmer’s Notepad 所使用的专案附档名为 *.pnproj，直接点击就能够开启专案，然后按下 Alt+1 就能够开始建置专案，而 Alt+2 则是清除专案输出档。<br /><br />        OK！总算能够开始撰写程式了！在 NDS 的程式设计领域中，没有便利的 API 可以唿叫，没有妥善包装的物件可以使用，很多时候程式设计者都需要对硬体的记忆体位址，直接进行 bit 层级的操作。例如：<br /><br />[code=c]// 这是什么鬼？<br />((uint16*) 0x6800000)[1] = 31;<br />((uint16*) 0x6800000)[2] = ((31 << 5) | (31 << 10));<br />((uint16*) 0x6800000)[3] = ((1) | (1<< 5) | (1<< 10));[/code]<br />        安西教练说过：「能掌握记忆体位址的人，就能掌握 DS 程式！」但是对于程式设计者来说，很难有多余的脑容量能够去记忆这些莫名的记忆体位址与奇怪的数字组合。所以为了便利地操作这些记忆体位址，libnds 已经预先定义了非常多的 Preprocessor Macro 与 Global Variables。在 devkitPro 的安装目录下，打开 include<br />dsmemory.h 以及 include<br />dsarm9video.h 档案，就可以看到许多与记忆体位址相关的定义。<br /><br />        因此重新改写上述的程式码，可以转换成：<br /><br />[code=c]// 这样就清楚多了！<br />VRAM_A[1] = RGB15(31, 0, 0);<br />VRAM_A[2] = RGB15(0, 31, 31);<br />VRAM_A[3] = RGB15(1, 1, 1);[/code]<br />        为了使 NDS 能够读取图片资料，在启动专案编译程序时，devkitPro 会依照 Makefile 档案中的指令，将专案目录中的图片格式档案，编译转换成特殊的格式，然后产生出一个与档名相对应的表头档 (Header File)。例如一张名称为 image.png 的图片会产生出 image.h 表头档，而表头档的内容如下所示：<br /><br />[code=c]#ifndef __IMAGE__<br />#define __IMAGE__<br /><br />#define imageBitmapLen 49152<br />extern const unsigned int imageBitmap[12288];<br /><br />#define imagePalLen 512<br />extern const unsigned short imagePal[256];<br /><br />#endif // __IMAGE__[/code]<br />        档案中定义了 imageBitmap 以及 imagePal 两个变数，由 imageBitmap 可以存取到 image.png 的图片资料，而 imagePal 则是 image.png 所使用的调色盘 (Palette) 资料。然后程式设计者就可以利用这两个变数，将资料复制至合适的记忆体位址以显示图片。<br /><br />        为了正确地显示出 Bitmap 格式的背景图件，需要按照以下几个步骤设定：<br /><br />[quote][list]<br />[*]设定绘图模式，并且启动背景图层。 <br />[*]将 VRAM 映射至适当的记忆体位址中。 <br />[*]设定背景图层所使用的图片格式。 <br />[*]设定背景图层的转换矩阵数值。 <br />[*]将图片的资料复制至 VRAM 映射的记忆体位址中。<br />[/list][/quote]<br />        依序完成以上五项步骤之后，即可于 NDS 中顺利地显示出图片：<br /><br />[code=c]#include < nds.h ><br />#include "image01.h"<br /><br />void main()<br />{<br />    irqInit();<br />    irqSet(IRQ_VBLANK, 0);<br /><br />    // 1. 设定绘图模式，并且启动背景图层。<br />    videoSetMode(MODE_5_2D | DISPLAY_BG3_ACTIVE);<br /><br />    // 2. 将 VRAM 映射至适当的记忆体位址中。<br />    vramSetBankA(VRAM_A_MAIN_BG_0x06000000);<br /><br />    // 3. 设定背景图层所使用的图片格式。<br />    BG3_CR = BG_BMP8_256x256;<br /><br />    // 4. 设定背景图层的转换矩阵数值。<br />    // 此处是将 2x2 的转换矩阵设定为单位矩阵<br />    BG3_XDX = 1 << 8;<br />    BG3_XDY = 0;<br />    BG3_YDX = 0;<br />    BG3_YDY = 1 << 8;<br /><br />    // 5. 将图片的资料复制至 VRAM 映射的记忆体位址中。<br />    dmaCopy(image01Bitmap, BG_GFX, image01BitmapLen);<br />    dmaCopy(image01Pal, BG_PALETTE, image01PalLen);<br /><br />    // 完成图片载入及显示程序！<br /><br />    while (1)<br />    {<br />        swiWaitForVBlank();<br />    }<br />}[/code]范例程式中，我在上下萤幕各显示了一张图片，因此除了 Main Engine 以外，需要仿照上述的步骤设定 Sub Engine 的相关参数。在程式中，只要轻轻地点击触控萤幕，上下萤幕的图片就会互换位置，并且发出一个简短的音效声音。如果读者们恰巧拥有 NDS 能够使用的谜之备份卡，只要把档案中内附的 NDSDev_Bitmap.nds 拷贝进去，就可以在真正的 NDS 主机上看到程式的执行成果啰。<br /><br />更多更深入的 NDS 程式设计内容，咱们下次见！（谜之声：下次是何时啊？= =+）<br /><br />程式码范例下载：[attach]1002[/attach]<br />参考资料：<br /><br />[url=http://www.dev-scene.com/NDS/Tutorials_Day_2]NDS 硬体架构简介 [/url]<br />[url=http://www.dev-scene.com/NDS/NDS_Tutorials_VramTable]NDS VRAM 架构 [/url]<br />[url=http://www.dev-scene.com/NDS/DOCfixed_point]NDS 的 Fixed Point Number 系统[/url]<br />[url=http://www.dev-scene.com/NDS/DOCgraphicmodes]NDS 的绘图模式与背景模式 [/url]<br />[url=http://www.tvgame360.com.tw/viewthread.php?tid=18396&extra=page%3D1%26amp%3Bfilter%3Ddigest]TVGAME360 NDS 开发系列引索 [/url]<br /><br />[[i] 本帖最后由 niubo_ 于 2009-3-12 07:46 编辑 [/i]]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16791_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

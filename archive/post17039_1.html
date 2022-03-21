@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>［PSP教程03］移动的精灵</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">［PSP教程03］移动的精灵</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_18.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-05 16:59:36</p>
+</div>
+<div class="col-10">
+<p>摘自：TOPOC　studio<br />作者：newcreat<br />本节讲述以下几个问题（本教程并不是只针对nge，其他图形显示也同样适用）：<br /><br />１　精灵移动的动画显示．nge图片子图显示．<br /><br />２　SDL的输入控制，包括键盘处理（windows下）joystick（psp下）．<br /><br />３　fps如何限制．一般动作游戏fps限制在６０，其他３０即可．<br /><br />本节的程序显示截图：<br />[attach]14[/attach]<br />人物在画面上移动<br />[attach]15[/attach]<br />这里采用的是４个方向的精灵图（不少游戏也采用８个方向的精灵图）．<br />enum{<br />ANI_RIGHT = 0,<br />ANI_LEFT ,<br />ANI_UP,<br />ANI_DOWN<br />};<br />代表精灵的方向．<br />下面是精灵的图片：<br />[attach]16[/attach]<br />nge也是支持子图显示的．<br />RenderQuad的函数原形：<br />virtual void RenderQuad(CTexture* texture,float sx,float sy,float sw,float sh,float dx,float dy,<br />          float xscale = 1.0,float yscale = 1.0,float angle = 0.0,int color=0xffffffff)<br />sx,sy,sw,sh就是在图片的显示区域．对应要显示上图的哪个区域，直接设定即可．<br />所以用４个方向的rect来保存坐标和宽，高．每个方向有４个．<br />SDL_Rect clipsRight[ 4 ];<br />SDL_Rect clipsLeft[ 4 ];<br />SDL_Rect clipsUp[ 4 ];<br />SDL_Rect clipsDown[ 4 ];<br />设置坐标，宽，高：<br />set_clip();<br />//精灵的控制类<br />class CAnimation<br />{<br />public:<br />CAnimation(const char* filename);<br />~CAnimation();<br />//Handles input<br />void InputProc(SDL_Event event);<br /><br />       //Moves the stick figure<br />       void Update();    <br />    <br />       //Shows the stick figure<br />       void Show(IVideoDriver* sys);    <br />protected:<br />void set_clip();<br />void KeyPressedUpProc(SDL_keysym * keysym);<br />void KeyPressedDownProc(SDL_keysym * keysym);<br />void ButtonPressedDownProc(SDL_JoyButtonEvent * jbutton);<br />void ButtonPressedUpProc(SDL_JoyButtonEvent * jbutton);<br />private:<br />//Its rate of movement<br />       float velocity_x;<br />float velocity_y;<br />    <br />       //Its current frame<br />       int frame;<br />//screen position<br />float offset_x;<br />float offset_y;<br />//Its animation status<br />       int status;<br />//The areas of the sprite sheet<br />SDL_Rect clipsRight[ 4 ];<br />SDL_Rect clipsLeft[ 4 ];<br />SDL_Rect clipsUp[ 4 ];<br />SDL_Rect clipsDown[ 4 ];<br />CTexture* resouce;<br />};<br />然后是处理按键，这里按键处理采用的是最典型的办法，就是按着不放会有一个速率，就是通常说的加速．<br />包括键盘处理（windows下）joystick（psp下）．<br />键盘处理和手柄处理其实都是对等的．<br />详细请看代码，我都写了注释的．<br />最后说一下fps如何限制．一般游戏会有一个固定的fps,例如格斗动作６０fps，其他３０fps．不然如果fps不固定，游戏就会时而快，时而慢（注意这与跳祯的加速是不同的）．所以统一用一个固定的fps这样对于不同的电脑配置显示都是一样的．就不会造成在电脑上飞快，在其他上是慢动作的问题．<br />限制fps有多种方法：最简单的也是最常用就是delay剩下的时间．这种是用在系统fps高于实际需要的fps的情况下．（还有一种就是相反的情况，就要用到跳桢，某些图不画来提高fps）由于nge显示图片能力大大高于实际所需的fps，所以需要delay．<br />这里提一下，如果你作的游戏的系统fps大大超过了实际需要的fps，可以尝试降低psp的工作频率，这样可以省电，不然delay掉了也没啥价值的．<br />fps.start();<br />        ani->InputProc(event);<br />        ani->Update();<br />  <br />        sys->BeginScene();<br />         sys->RenderQuad(bg,0,0,0,0,0,0);<br />         ani->Show(sys);<br />        sys->EndScene();<br />  <br />        sys->ShowFps();<br />        //Cap the frame rate．sleep if need<br />            if( fps.get_ticks() < 1000 / FRAMES_PER_SECOND )<br />              {<br />                  　//sleep掉多余的时间<br />　　　　SDL_Delay( ( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks() );<br />              }<br />其他部分请看lesson３的代码，比较简单的．<br />下载地址：[url]http://topoc.googlecode.com/files/lesson3.rar[/url]<br />里面windows版和psp版的都可以直接编译．有问题请看教程００．<br />编译psp版的时候注意makefile路径的设置．<br />例如我psp版我的lesson３是这样放的：<br />libnge_pspdemolesson3<br />所以makefile里就写为<br />INCDIR = ../../include<br />LIBDIR =../../lib<br />不过应该写程序的人都知道的．<br />可能有的人用了本节的程序回发现只有一个画面，画面不能移动，而且可以有走到房子上，这个就是下一节要讨论的tilemap和scolling所要解决的问题．且听下回分解．</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post17039_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

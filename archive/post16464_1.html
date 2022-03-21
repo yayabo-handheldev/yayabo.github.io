@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>RMDS教程（六）——中央司令部</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">RMDS教程（六）——中央司令部</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2009-09-22 15:54:05</p>
+</div>
+<div class="col-10">
+<p>嗯……我已经听见某些少年的抱怨了。<br />——废话！再听不见就该去医院检查耳朵了！一般情况下，介绍完制作NPC之后，应该介绍制作地图了。不过上次的教程却并非制作地图，而是直接拿一个现成的地图来用，演示如何控制NPC。<br />你有意见么？<br />——没。无论如何将我们刚学会的方法付诸实践，并且真正看到效果，也是挺不错的。我不明白为什么这次还是不讲解地图制作。控制场景应该可以放到地图后面吧？<br />唉……这是有原因的。<br /><br />DEMO，也就是《逆转炼金术士》这个游戏，使用的是1.05版本的引擎。这个版本的引擎，地图是用2D实现的。我们需要在PS中画地图，然后导出为某种特殊格式，然后用某种软件进行转化格式，最后打包成.pak。<br />不过，现在引擎已经升级到2.00版本。这个版本的引擎做了一些极大的改进和修正，其中最大的就是添加了战斗模块，并且地图支持3D实现。<br />——啥？3D？<br />嗯。这个时候就不能在PS中画地图了。<br />——要在3DSMAX中建模么？我不懂3D建模啊！<br />不，目前还不需要建模。不过由于使用了3D引擎的缘故，以前画地图的方法将不再适用。所以我一拖再拖，就是为了能够尽快写出一个合适的地图编辑器，直接导出.pak，省去一切数据转换的步骤。<br />——原来如此。什么时候发布新版本引擎？<br />最近几天。到时候新引擎也将和某个DEMO一起捆绑发布。<br />——了解。那我们就耐心等待了。<br /><br />言归正传，我们准备操纵一下场景。<br /><br />上次的DEMO，使用的地图是普罗克斯。普罗克斯常年下雪，很少有风和日丽的晴天。我们现在就修改一下脚本，实现下雪的天气效果。<br />打开SceneProx.lua。<br />[code=rmds]<br />CreateMap("/world/Prox.pak")<br /><br />EnableSFX(BLEND_BG2,BLEND_BG0+BLEND_BG1+BLEND_BG3+BLEND_OBJ+BLEND_BACKDROP,SFX_BLENDING)<br />AlphaBlending(16,16)<br />SetWeatherFX(WEATHERFX_SNOW)<br /><br />CreateNPC(0,"/world/Jenna.pak")<br />SetCameraFollow(0)<br />SetNPCXY(0,128,64)<br />SetNPCAction(0,ACT_PLAYERCONTROL)<br /><br />CreateNPC(1,"/world/Alex.pak")<br />SetNPCXY(1,464,288)<br />SetNPCDirection(1,DIR_UP)<br />SetNPCMoveSpeed(1,-32767)<br />SetNPCAction(1,ACT_STAYSTILL)<br /><br />CreateNPC(2,"/world/Garet.pak")<br />SetNPCXY(2,64,328)<br />SetNPCMoveSpeed(2,-32767)<br />SetNPCAction(2,ACT_STANDRANDOM)<br /><br />CreateNPC(3,"/world/Isaac.pak")<br />SetNPCXY(3,80,144)<br />SetNPCAction(3,ACT_WALKAROUND)<br /><br />CreateTrigger(0,3,-9,-9,18,18,TRIGGER_EVENT,"/world/TalkWithIsaac.lua")<br />[/code]<br />加了3句话。<br />当创建完地图之后，激活特效。<br />根据API手册，BG2将和BG0、BG1、BG3、精灵、Backdrop进行半透明混合。<br />混合的参数为(16,16)。<br />然后开启雪天特效。<br /><br />这是效果：<br />[attach]1727[/attach]<br /><br />——为什么要激活特效？那些参数又是怎么得来的？<br />这涉及一些比较低层的东西，现在解释还为时过早。<br />——什么时候解释？<br />做地图的时候。在做地图的时候，有时也得使用半透明混合特效从而实现某些比较绚丽的效果。顺便一说，战斗特效就是半透明混合出来的。<br /><br />除了下雪之外，还有下雨、电闪雷鸣、雾气蒙蒙和烈日炎炎这几种天气特效。不过，目前引擎还没有完善，电闪雷鸣没有雷电声，烈日炎炎还没实现。2.00版本的引擎有可能能够支持这些尚未实现的特效。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuuhimesama</b><br/>
+2009-09-22 16:16:10</p>
+</div>
+<div class="col-10">
+<p>前排支持雷叔。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuuhimesama</b><br/>
+2009-09-22 16:20:30</p>
+</div>
+<div class="col-10">
+<p>[quote]这个游戏到底是什么啊？<br />[size=2][color=#999999]sangxin000 发表于 2009-9-22 13:24[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=3490&ptid=519][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br />简介：<br />　　中文名：120日元之冬<br />　　开发制作：NekoNeko Software<br />　　汉化发行：GalGameMix<br />　　上市时间：2006-01-28<br />　　DS版制作：hewenxie<br /><br />游戏介绍：<br />　　在120日元之夏大受好评后，120日元之冬也推出了。<br />　　这次舞台换成了电车，当片冈叙事的手法依然没变，围绕着60亿份之一的相遇，围绕着那60亿份之一缘分<br />　　120日元之冬开始了。<br />　　剧本依然不长，但我想，当从中想要表达的东西已经足够了。<br />　　饱经沧桑，已经被现实的社会同化得不再拥有童真的主角<br />　　在去往他方列车上遇到了一名少女<br />　　童年的梦，又再缓缓开始<br />　　以主角踩爆了她的隐形眼镜为契机，片冈使的这60亿份之一的缘分得以画上一个等号<br />　　游戏依然是分成了数段<br />　　在过幕时片冈总是有意无意地穿插着主角少年时的回忆，虽然手法不算得新鲜<br />　　但给人的感觉自然，并没有半点不合适之感。<br />　　列车员总是准时地来检票，他们总是准时地躲进厕所，避开一次次的检查——这要多得与主角儿时的经历<br />　　孩儿时代的他总是希望到远方去，是梦想？是好奇？我不知道<br />　　但一点可以肯定的是，能这样无忧无虑的去实行这想法的人，只有小孩<br />　　一旦长大，就得背负这这样那样的枷锁，即使你刻意地保留着少年时代的心，迟早也会被这残酷的社会所吞吃<br />　　在列车上，他遇到了她，一个抱着与他少年时代相同梦想的女孩<br />　　心中被尘封已久的想法再度苏醒<br />　　即使明天还要工作，不过，不管了。<br />　　就这样，在儿时残留记忆的推动下，他们在找车票与逃避检票的“轮回”中穿梭，与女孩想远方出发<br />　　有时小孩所相信得东西在我们眼里看起来就像那么幼稚。<br />　　也我们常说的无知与愚昧<br />　　就如失去隐形眼镜的她把霓虹灯当作天上的繁星<br />　　但心中总觉得有一早淡淡的感动和温暖<br />　　主角被没有矫正了她的想法<br />　　而是认同<br />　　嗯，这就是我们所不再拥有的童真<br />　　就如5岁那年我曾试图向爸妈证明雨后的彩虹下，一定有精灵存在<br />　　但父母却而这样那样的理由，否定了我的想法<br />　　“真的是有精灵，只是大人看不见而已”<br />　　孩子们所相信的东西就是那样的简单与单纯——即使不知道眼前的“星星”仅仅是路边一个不起眼的霓虹灯<br />　　短暂的旅途也到达了终点，在荒无人烟的地方吹奏一首“天上的繁星”，看看那颗“绿色”的星星<br />　　那感觉一定很棒，对吧，少女？<br /><br /><br />以上纯引，具体请见下面传送门<br />[url]http://www.yayabo.cn/thread-302-1-2.html[/url]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Senzo</b><br/>
+2009-09-22 16:44:18</p>
+</div>
+<div class="col-10">
+<p>等待中。。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2009-09-22 17:28:19</p>
+</div>
+<div class="col-10">
+<p>板凳围观</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>meni038</b><br/>
+2010-08-05 16:18:28</p>
+</div>
+<div class="col-10">
+<p>    忘記原帖地扯<br />我揾資料加進去</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gyyfifafans</b><br/>
+2009-09-22 22:00:43</p>
+</div>
+<div class="col-10">
+<p>难道掌家是迈克的粉丝吗？</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16464_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

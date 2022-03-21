@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>教程6-跟我一起从头学RFZ-吹响号笛，上战场去！</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">教程6-跟我一起从头学RFZ-吹响号笛，上战场去！</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_15.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>GnNu</b><br/>
+2010-05-09 09:13:53</p>
+</div>
+<div class="col-10">
+<p>[size=7][color=Red][b]本教程由GnNu制作，未经许可，禁止转载[/b][/color][/size]今天我们要讲的是标题画面，恩！<br />那么，诸君，打开text文件夹，准备最后的工作吧！<br />首先请拆开sdk教程6的system.rfz和log.rfz<br />拆开以后我们将会看到一堆图片= =（我【哔----】好多啊。。。）<br />看到这些图片。。我就有种杀人的冲动，恩。。。。太乱了。。<br />那么，开始教程<br /><br />这个呢，就跟一开始初始化那些rfz包是一样的东西[code]//初始化游戏菜单-开始{<br />#initgamemenu(gamemenu.png,13,255,102,204,255,170)<br />#initgamemenu_newgame_button(btn_back_off.png,btn_back_over.png,25,30)<br /><br />#initgamemenu_save_button(btn_save_off.png,btn_save_over.png,33,70)<br />#initgamemenu_save_bg(back_save.png)<br />#initgamemenu_save_menu_bg(save_off1.png,save1.png,save_off.png,save.png,20,52,95)<br />#initgamemenu_save_menu_text_value(160,90,100)<br /><br />#initgamemenu_load_button(btn_load_off.png,btn_load_over.png,81,107)<br />#initgamemenu_load_bg(back_load.png)<br />#initgamemenu_load_menu_bg(load_off1.png,load1.png,20,48,95)<br />#initgamemenu_load_menu_text_value(160,90,100)[/code]由于这个官方教程实在是太乱了，所以这次我将会一步一步讲给大家听<br />帮助文档的东西我就不复制了，有需要请自己看，我直接解释语句[code]#initgamemenu(gamemenu.png,13,255,102,204,255,170)[/code]这句是初始化游戏菜单的背景的，13是菜单那里的字体大小 255是字体alpha值（这啥= =）<br />然后接下来的102，204，255.3个是3原色的值，最后170是游戏菜单的透明度[code]#initgamemenu_newgame_button(btn_back_off.png,btn_back_over.png,25,30)[/code]这句是初始化back按键的。。虽然我不知道有啥用= =。。。括号第一个是正常状态下的图片，第2个是选中状态下，接下来的2个是坐标[code]#initgamemenu_save_button(btn_save_off.png,btn_save_over.png,33,70)<br />#initgamemenu_save_bg(back_save.png)<br />#initgamemenu_save_menu_bg(save_off1.png,save1.png,save_off.png,save.png,20,52,95)<br />#initgamemenu_save_menu_text_value(160,90,100)[/code]这句是初始化save菜单的，第一句不用，第一个是正常状态的图片，第2个是选中状态，然后是坐标<br />第2句是初始化save的菜单，也就是存档的时候的背景图片<br />第3句是初始化存档那个框框的，当有存档存在的时候使用前2个，第一个是正常，第2个是选中状态<br />后2个是没有存档时候调用的，详细同上然后2个是坐标，最后一个是存档的间隔[code]#initgamemenu_load_button(btn_load_off.png,btn_load_over.png,81,107)<br />#initgamemenu_load_bg(back_load.png)<br />#initgamemenu_load_menu_bg(load_off1.png,load1.png,20,48,95)<br />#initgamemenu_load_menu_text_value(160,90,100)[/code]这个是load菜单，同save[code]//自定义模式{<br />#initgamemenu_bgm_button(btn_option_off.png,btn_option_over.png,101,141)<br />#initgamemenu_bgm_bg(bgm.png)[/code]这个是自定义模式，对于自定义模式，怎么说好呢。。那个。。。其实应该是某人偷懒（- -+<br />简单来说，就是除了系统一开始自带给你的开始游戏，和读取游戏以外，再增加别的模式<br /><br />第一句的括号里面第一个是正常状态的图片，第2个选中状态的图片，然后是左边<br />第2句是自定义模式的背景图片[code]//自定义背景音乐模式{<br />#initgamemenu_bgm_bgm_mode_button(bgm_bgm_normal.png,bgm_bgm_active.png,0,70)<br />#initgamemenu_bgm_bgm_bg(bgm_bgm.png)<br />#initgamemenu_bgm_bgm_mode_selbgm_button(tip_select_off.png,tip_select_over.png,10,70,40)<br />#initgamemenu_bgm_bgm_mode_selbgm_text_val(120,80,40)<br />//自定义背景音乐模式}[/code]这段是用来自定义背景音乐模式的，<br />前2句音乐模式<br />第一句照样。。正常和选中（我已经说烦了。。<br />然后第2句是初始化背景<br />后2句是背景模式<br />照样，同上[code]<br />#initgamemenu_recollection_button(btn_select_off.png,btn_select_over.png,162,180)<br />#initgamemenu_recollection_bg(text.jpg)<br /><br />#initgamemenu_exit_button(btn_quit_off.png,btn_quit_over.png,273,221)[/code]这个是初始化对话回想系统的东西（干了这么多最有用觉得是这个了<br />第一句和往常一样，选中和正常。。<br />然后第2句是北京<br />然后是回想模式的推出建，照样，正常和选中<br /><br /><br />关于自定义模式呢，其实就是在菜单在菜单里面瞎搞，你自己可以看看。。其实前面很多东西都很没用= =[code]<br />*log<br />#logfadein(rfz.png,1000)<br />#logfadeout(rfz.png,1000)<br />#logchange(ef.png,sys_bg.jpg,1000,1)[/code]这个是logo。。是某人漏写了一个还是咋我不清楚，反正这4句话是一开始标题的使用<br />前2句调用的是同一张图片，出现1000毫秒<br />第3句是调用ef这个遮片，然后sys这个图片其实就是游戏标题背景 1代表的是该图片的层数[code]*system<br />#systemscale(1)<br />#systemalpha(170)<br />#systemnew(btn_title_off.png,btn_title_over.png,170,150)<br />#systemload(btn_load_off.png,btn_load_over.png,170,190)<br />#systemexit(btn_quit_off.png,btn_quit_over.png,170,230)<br />#systembg(sys_bg.jpg)<br />;#systembgm(00.ogg)<br />#systemload_menubg(back_load.png)<br />#systemload_menusavedatabg(load_off1.png,load1.png,60,40)<br />#systemload_menusavedatabgtext(195,70,13,0,0,0,0)<br />#systemload_menusavedatabggap(102)<br />#systemload_menusavedatabgtextgap(104)<br />[/code]这一堆东西其实就是在游戏标题画面那里瞎搞，<br />第一句是放大按键的倍数，1倍就是没放大= =。。<br />2句是按键的透明度<br />第3句是初始化游戏开始的按键，括号里面的我不说了= =（怎么会这么烦！<br />下面的2个分别是读档的按键和退出游戏的按键（但是我不知道为啥按了退出的那个会进入CG模式- -<br />;#systembgm(00.ogg)<br />BGm是调用00.ogg做游戏标题的音乐，但是这里没有所以某人加了个；上去，这样就不会用到这句了<br /><br />下面的是选中存档这个以后设定的东西，我不说了= =。详细请看帮助文档<br /><br />终于搞定了！<br /><br />啊对了对了，补上结束游戏[code]<br />#initgamemenu_recollection_button(btn_select_off.png,btn_select_over.png,162,180)<br />#initgamemenu_recollection_bg(text.jpg)<br /><br />#initgamemenu_exit_button(btn_quit_off.png,btn_quit_over.png,273,221)<br />//初始化游戏菜单-结束}[/code]这个我不解释，反正在自定义模式后面加上就可以了。用了这个以后就可以退出游戏了，<br /><br /><br /><br />那么教程到此完毕，假如我再想起什么的话会补上的了（明明还有CG系统= =<br />啥，我啥都不知道！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>星门十四</b><br/>
+2010-05-09 00:47:20</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 星门十四 于 2010-5-9 00:55 编辑 [/i]<br /><br />神马情况<br /><br />留个名<br />就算报名好了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>1239985932</b><br/>
+2010-06-04 23:18:24</p>
+</div>
+<div class="col-10">
+<p>    纳尼……我不知道……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>『兔寳貝』</b><br/>
+2010-05-09 21:41:05</p>
+</div>
+<div class="col-10">
+<p><br />山寨版初音吗..-0-</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>replaysss</b><br/>
+2010-05-09 00:59:24</p>
+</div>
+<div class="col-10">
+<p>这哥们头像真是经常能够看到</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mingcsun</b><br/>
+2010-05-09 01:19:41</p>
+</div>
+<div class="col-10">
+<p>支持---支持</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>z170555544</b><br/>
+2010-05-09 01:31:30</p>
+</div>
+<div class="col-10">
+<p>....<br />95M<br />内容会不会有点少？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>alin2523</b><br/>
+2010-05-09 01:34:02</p>
+</div>
+<div class="col-10">
+<p>我承认……我部分是冲着工口来的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>593881143</b><br/>
+2010-05-09 02:35:56</p>
+</div>
+<div class="col-10">
+<p>支持下~~~~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lza33seed</b><br/>
+2010-05-09 02:47:48</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=29579&ptid=3811]3#[/url] [i]gyyfifafans[/i] [/b]<br />没什么的``只是给大家看看而已```评论下..</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post14143_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

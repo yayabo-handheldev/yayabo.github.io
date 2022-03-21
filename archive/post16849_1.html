@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>制作自己的prx</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">制作自己的prx</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-12 09:46:12</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://www.iacger.com[/url]<br />作者：newcreat<br /><br />做prx的傻瓜流程<br />1. 写main.c,makefile,export.exp，这里用sdk自带的testprx <br /><br />[code=c]/*<br />* PSP Software Development Kit - [url]http://www.pspdev.org[/url]<br />* -----------------------------------------------------------------------<br />* Licensed under the BSD license, see LICENSE in PSPSDK root for details.<br />*<br />* main.c - Simple PRX example.<br />*<br />* Copyright &copy; 2005 James Forshaw <[email]tyranid@gmail.com[/email]><br />*<br />* : main.c 1531 2005-12-07 18:27:12Z tyranid $<br />*/<br />#include <pspkernel.h><br />#include <stdio.h><br /><br />PSP_MODULE_INFO("TESTPRX", 0x1000, 1, 1);<br /><br />#define WELCOME_MESSAGE "Hello from the PRXn"<br /><br />int main(int argc, char **argv)<br />{<br />        int i;<br />        <br />        printf(WELCOME_MESSAGE);<br /><br />        for(i = 0; i < argc; i++)<br />        {<br />                printf("Arg %d: %sn", i, argv);<br />        }<br /><br />        sceKernelSleepThread();<br /><br />        return 0;<br />}<br /><br />/* Exported function returns the address of module_info */<br />void* getModuleInfo(void)<br />{<br />        return (void *) &module_info;<br />}[/code]<br /><br />makefile： <br /><br />[code=c]TARGET = mymodule<br />OBJS = main.o<br /><br /># Define to build this as a prx (instead of a static elf)<br />BUILD_PRX=1<br /># Define the name of our custom exports (minus the .exp extension)<br />PRX_EXPORTS=exports.exp<br /><br />USE_PSPSDK_LIBC = 1<br /><br />INCDIR =<br />CFLAGS = -O2 -G0 -Wall<br />CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti<br />ASFLAGS = $(CFLAGS)<br /><br />LIBDIR =<br /><br />PSPSDK=$(shell psp-config --pspsdk-path)<br />include $(PSPSDK)/lib/build.mak[/code]<br /><br />写exports.exp，各项意义请看上面的原理红字就是需要改的部分，其他的不需要动． <br /><br />[code=c]# Define the exports for the prx<br />PSP_BEGIN_EXPORTS<br /><br /># These four lines are mandatory (although you can add other functions like module_stop)<br /># syslib is a psynonym for the single mandatory export.<br />PSP_EXPORT_START(syslib, 0, 0x8000)<br />PSP_EXPORT_FUNC_HASH(module_start)<br />PSP_EXPORT_VAR_HASH(module_info)<br />PSP_EXPORT_END<br /><br /># Export our function<br />PSP_EXPORT_START(MyLib, 0, 0x0001)<br />PSP_EXPORT_FUNC_HASH(getModuleInfo)<br />PSP_EXPORT_END<br /><br />PSP_END_EXPORTS[/code]<br /><br />2 输入make　回车，会看到生成一个prx<br />3 输入psp-build-exports -s exports.exp　回车，会看到生成一个MyLib.S备用．（文件名会是PSP_EXPORT_START(MyLib, 0, 0x0001)里定的那个）getModuleInfo()就是要导出的函数。<br />4 测试这个prx，另外建个目录　写main.c,makefile，并把MyLib.S烤进去．<br />main.c: <br /><br />[code=c]/*<br />* PSP Software Development Kit - [url]http://www.pspdev.org[/url]<br />* -----------------------------------------------------------------------<br />* Licensed under the BSD license, see LICENSE in PSPSDK root for details.<br />*<br />* main.c - Basic harness for loading prxes (for proving a point)<br />*<br />* Copyright &copy; 2005 Marcus R. Brown <[email]mrbrown@ocgnet.org[/email]><br />* Copyright &copy; 2005 James Forshaw <[email]tyranid@gmail.com[/email]><br />* Copyright &copy; 2005 John Kelley <[email]ps2dev@kelley.ca[/email]><br />*<br />* : main.c 1095 2005-09-27 21:02:16Z jim $<br />*/<br />#include <pspkernel.h><br />#include <pspdebug.h><br />#include <pspdisplay.h><br />#include <pspsdk.h><br />#include <string.h><br /><br />PSP_MODULE_INFO("PRXLOADER", 0x1000, 1, 1);<br />/* Define the main thread's attribute value (optional) */<br />PSP_MAIN_THREAD_ATTR(0);<br /><br />/* Define printf, just to make typing easier */<br />#define printf        pspDebugScreenPrintf<br /><br />/* Exit callback */<br />int exit_callback(int arg1, int arg2, void *arg)<br />{<br />        sceKernelExitGame();<br /><br />        return 0;<br />}<br /><br />/* Callback thread */<br />void CallbackThread(void *arg)<br />{<br />        int cbid;<br /><br />        cbid = sceKernelCreateCallback("Exit Callback", exit_callback, NULL);<br />        sceKernelRegisterExitCallback(cbid);<br /><br />        sceKernelSleepThreadCB();<br />}<br /><br />/* Sets up the callback thread and returns its thread id */<br />int SetupCallbacks(void)<br />{<br />        int thid = 0;<br /><br />        thid = sceKernelCreateThread("update_thread", (void*) CallbackThread, 0x11, 0xFA0, 0xa0000000, 0);<br />        if(thid >= 0)<br />        {<br />                sceKernelStartThread(thid, 0, 0);<br />        }<br /><br />        return thid;<br />}<br /><br />SceUID load_module(const char *path, int flags, int type)<br />{<br />        SceKernelLMOption option;<br />        SceUID mpid;<br /><br />        /* If the type is 0, then load the module in the kernel partition, otherwise load it<br />           in the user partition. */<br />        if (type == 0) {<br />                mpid = 1;<br />        } else {<br />                mpid = 2;<br />        }<br /><br />        memset(&option, 0, sizeof(option));<br />        option.size = sizeof(option);<br />        option.mpidtext = mpid;<br />        option.mpiddata = mpid;<br />        option.position = 0;<br />        option.access = 1;<br /><br />        return sceKernelLoadModule(path, flags, type > 0 ? &option : NULL);<br />}<br /><br />/* Imported function */<br />void *getModuleInfo(void);<br /><br />int main(void)<br />{<br />        SceUID modid;<br />        SceModule *mod;<br />        int i;<br />        int ret;<br />        int fd;<br /><br />        pspDebugScreenInit();<br /><br />        /* Install all our funky err thingamybobs */<br />        pspDebugInstallKprintfHandler(NULL);<br />        pspDebugInstallErrorHandler(NULL);<br />        pspDebugInstallStdoutHandler(pspDebugScreenPrintData);<br />        pspSdkInstallNoPlainModuleCheckPatch();<br />        SetupCallbacks();<br /><br />        /* Start mymodule.prx and dump its information */<br />        printf("nStart my modulen");<br />        modid = load_module("ms0:/mymodule.prx", 0, 0);<br />        printf("Module ID %08Xn", modid);<br />        mod = sceKernelFindModuleByUID(modid);<br />        printf("mod %pn", mod);<br />        if(mod != NULL)<br />        {<br />                printf("Attr %04X, Version %x.%xn", mod->attribute, mod->version[0], mod->version[1]);<br />                printf("Name %sn", mod->modname);<br />                printf("Text %08X, Size %08X, Data Size %08Xn", mod->text_addr, mod->text_size, mod->data_size);<br />                printf("Entry Addr %08Xn", mod->entry_addr);<br />                printf("Stub %p %08X, Ent %p %08Xn", mod->stub_top, mod->stub_size, mod->ent_top, mod->ent_size);<br />                for(i = 0; i < mod->nsegment; i++)<br />                {<br />                        printf("Segment[%d] %08X %08Xn", i, mod->segmentaddr, mod->segmentsize);<br />                }<br /><br />                ret = sceKernelStartModule(modid, 0, NULL, &fd, NULL);<br /><br />                /* Let's test the module's exports */<br />                printf("Module Info %pn", getModuleInfo());<br />        }<br /><br />        /* Let's bug out */<br />        sceKernelExitDeleteThread(0);<br /><br />        return 0;<br />}[/code]<br /><br />makefile <br /><br />[quote]TARGET = prxloader<br />OBJS = main.o MyLib.o<br /><br />USE_PSPSDK_LIBC = 1<br /><br />INCDIR =<br />CFLAGS = -O2 -G0 -Wall<br />CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti<br />ASFLAGS = $(CFLAGS)<br /><br />LIBDIR =<br />LDFLAGS =<br /><br />LIBS =<br /><br />EXTRA_TARGETS = EBOOT.PBP<br />PSP_EBOOT_TITLE = Sample PRX Loader<br /><br />PSPSDK=$(shell psp-config --pspsdk-path)<br />include $(PSPSDK)/lib/build.mak[/quote]<br /><br />5 make 生成.PBP，将xxx.PBP和xxx.prx考到小p．<br />6 gameover．</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16849_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

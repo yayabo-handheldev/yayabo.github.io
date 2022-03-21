@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>RMDS教程（二）——炼金术的源泉</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">RMDS教程（二）——炼金术的源泉</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2009-08-17 09:22:10</p>
+</div>
+<div class="col-10">
+<p>RMDS是脚本驱动的。<br />什么叫“脚本驱动”？你可以这样理解，游戏的一切剧情发展，都是写好的脚本。在必要的时刻，必要的地方，通过某种方式触发这些脚本并执行，进而推动剧情的发展。这种情节驱动方式就是脚本驱动。<br />那么，游戏的发展，说白了，就是一句话：“调用脚本”。那个著名的3W，还记得吗？在这里我借用并扩展一下，就可以描述RMDS的工作过程了：谁，什么时候，在什么地方，调用了哪个脚本。<br /><br />我们先拿一个DEMO，把它拆开看看，RMDS里面到底有啥。<br />用啥DEMO呢？就用RMDS的处女作《逆转炼金术士》吧。<br />[attach]1632[/attach]<br /><br />用CrystalTile2打开ROM，菜单 - 工具 - NDS文件系统信息。<br />[attach]1633[/attach]<br />这个列表就是DEMO中所有的文件。包括引擎的可执行代码，引擎附加数据，所有的资源和所有的脚本。<br /><br />我先大体讲解一下某些文件的用途。<br />注意看上面那张图，最上面的几个文件，图标是一个蓝色的正方形芯片，上面写着DS两个字母。这些文件全都是引擎的核心文件，一般情况下不得修改。<br />我们先把arm9.bin和arm7.bin提取出来备用。<br />然后我们看文件号为0000到0015的这些文件。<br /><br />在这里我要引入一个概念——“目录”。或者说“文件夹”。<br />DS的ROM中是有文件系统的。通过文件名我们可以知道，0000到0015这些文件是处于“根目录”下，下面的文件处于“__debug”子文件夹下，然后是“intro”子文件夹、“logo”子文件夹……<br /><br />当你打开DS主机，选中了RMDS并开始运行的那一瞬间，引擎开始工作了。<br /><br />首先引擎开始读取并分析EngineConfig.ini。这个文件是用来配置引擎的一些宏观参数。目前版本的引擎，这个文件里面只有一个可配置参数——“Save”。这个参数值指定了存档的名称。目前的参数值被设定为“rmds.sav”，也就是说，引擎将会自动生成这个文件作为存档。你可以随意修改这个值。<br /><br />然后引擎开始读取并分析SoundDriverConfig.ini和soundbank.bin。这两个文件是音乐引擎的配置和资源文件，你不要去修改它们，有专门的工具可以自动生成这两个文件。<br /><br />紧接着就是重头戏了！引擎开始读取[color=Red]crt0.o.lua[/color]。<br />这个脚本是一个极为重要的脚本。它负责启动整个游戏的脚本系统。因此被称为“引擎级启动脚本”。如果没有这个脚本，游戏根本无法运行。<br />这个脚本的名字也被引擎定死了，不得修改。<br /><br />现在我们打开这个启动脚本，看看里面到底是啥。<br />[code=rmds]<br />gBGM_BATTLE_AGAINST_THE_ELITE_FOUR=0<br />gBGM_CROSSING_THE_FIELDS_OF_ANGARA=1<br />gBGM_ENDING_FURTHER_ADVENTURE=2<br />gBGM_FROSEN_LAND_PROX=3<br />gBGM_HOPELESSNESS=4<br />gBGM_LUNPA=5<br />gBGM_ORIENTAL=6<br />gBGM_ROYAL_PALACE=7<br />gBGM_SATUROS_AND_MENARDI=8<br />gBGM_SOL_SANCTUM_ERUPTS=9<br />gBGM_SURFING=10<br />gBGM_THE_CITY_OF_KALAY=11<br />gBGM_THE_ELEMENTAL_STARS=12<br />gBGM_THE_FLAME_OF_WAR=13<br />gBGM_THE_VILLAGE_OF_ADEPTS=14<br />gBGM_TOLBI=15<br />gBGM_TUNEL_RUINS=16<br />gBGM_VENUS_LIGHTHOUSE=17<br />gBGM_WINTER_VILLAGE_EMIL=18<br /><br />SwitchModule(MODULE_LOGO,"/logo/LogoModuleStartUp.lua")<br />[/code]<br /><br />原来如此！首先定义了几个全局变量。根据变量名我们大概可以猜到，这些变量是背景音乐的ID号。为什么是全局变量？很简单，整个引擎都要用到这些变量……<br />紧接着就切换模块，进入了Logo模块，同时调用logo子文件夹下的LogoModuleStartUp.lua这个脚本。<br /><br />注意，这也是crt0.o.lua的要求，进入这个脚本后，要尽快切换到某个模块中。<br />因为，当引擎开始工作后，引擎处于“MODULE_NULL”模块。根据API文档，这是一个不存在的模块。也就是说，在这个模块中什么都没有，你什么都不能做。所以你要尽快脱离这个“虚无的空间”，进入一个拥有实质性内容的模块中。<br /><br />好，现在引擎进入logo模块了，并且调用了LogoModuleStartUp.lua脚本。我们去看看这个脚本里有啥。<br />[code=rmds]<br />FadeFX(0,-16,-16,0)<br />ClearScreen(0)<br /><br />DisplayImage("/logo/logo0.bin",1,0,0,true)<br />DisplayImage("/logo/logo1.bin",-1,0,0,true)<br /><br />FadeFX(0,-16,0,4)<br /><br />WaitForVBL(120)<br /><br />FadeFX(0,0,-16,4)<br /><br />DisplayImage("/logo/PresentedBy.bin",1,0,0,true)<br />DisplayImage("/logo/Haruka.bin",-1,0,0,true)<br /><br />FadeFX(0,-16,0,4)<br /><br />WaitForVBL(60)<br /><br />FadeFX(0,0,-16,4)<br /><br />DisplayImage("/logo/logoX.bin",1,0,0,true)<br />FadeFX(0,-16,0,4)<br />WaitForVBL(120)<br />FadeFX(0,0,-16,4)<br /><br />ClearScreen(0)<br /><br />FadeFX(0,0,0,0)<br /><br />SwitchModule(MODULE_MENU,"/menu/MenuModuleStartUp.lua")<br />[/code]<br />原来如此！<br />首先设置亮度特效，初始亮度和终止亮度都为-16，也就是全黑，瞬间完成。——嗯，一进入Logo模块就先把两个屏幕黑掉了。<br />然后清屏。——嗯，一会就要显示东西，所以先把两个屏幕擦干净。<br />然后两个屏幕分别显示logo子文件夹下的logo0.bin和logo1.bin这两张图。——嗯，现在两张logo图显示出来了。<br />（某人：等等，现在亮度不是最低吗？显示两张logo完全看不见啊！）<br />没错。我们接着看下面——<br />然后两个屏幕从最暗开始亮度逐渐提升直到正常为止。速度是4。——噢！原来是要logo图慢慢变亮显示出来啊！Good Job！<br />然后等待120帧。——嗯，60帧=1秒，所以这里相当于等待两秒钟。<br />然后两个屏幕再从正常逐渐变暗……啊！原来是这样！确实是很不错的效果。<br />下面的脚本大同小异，我就不解释了。<br />最后显示完所有logo图片之后，切换模块进入菜单模块，并且调用菜单模块的启动脚本。<br />（众人：Perfect！我明白了。原来这么简单啊！）<br />没错。logo模块就这么点东西。完全没有难度。<br />（众人：嘛……我也想显示我自己的试试看……）<br />好啊！我们实际操作一遍。<br /><br />首先准备好自己的logo图片。注意，图片是有严格要求的。由于DS的屏幕只有256*192这么大，因此logo图片绝不要大于这个范围。<br />这是我们的logo图。<br />[attach]1634[/attach]<br />保存成什么格式呢？我建议保存成bmp。<br /><br />然后打开“生成Logo图片”这个工具，点击按钮，载入你的那张logo图。<br />如果图片的大小是合法的，那么立刻在logo图所在的文件夹下生成一个同名的.bin文件。那就是我们需要的资源文件了！<br /><br />现在用CrystalTile2打开ROM，依然是菜单 - 工具 - NDS文件系统信息，把那些[color=Red]根目录[/color]的文件，也就是[color=Red]文件号为0000到0015[/color]的这些文件，全部提取出来到某个文件夹下。假设提取到[color=Red]efsroot[/color]文件夹下。<br />随便找个地方创建一个文件夹，随便取名。假设我在桌面上创建了一个叫做RMDS的文件夹。<br />把efsroot文件夹，连同里面的所有文件，全都复制到这个RMDS文件夹下。<br />刚才备份的arm7.bin和arm9.bin没忘记吧？复制到RMDS文件夹下。<br />再把创建ROM工具，也就是ndstool.exe、efs.exe和创建ROM.bat这3个文件也复制到RMDS文件夹下。<br />现在的RMDS文件夹就像这样：<br />[attach]1635[/attach]<br /><br />然后打开efsroot，新建logo文件夹，再在logo文件夹里面新建logoModuleStartup.lua脚本，写入如下内容：<br />[code=rmds]<br />FadeFX(0,-16,-16,0)<br /><br />ClearScreen(0)<br /><br />DisplayImage("/logo/logo.bin",1,0,0,true)<br /><br />FadeFX(0,-16,0,4)<br /><br />WaitForVBL(120)<br /><br />FadeFX(0,0,-16,4)<br />[/code]<br />最后再把刚才生成出来的.bin改名为logo.bin，放到logo文件夹下面。大功告成！<br /><br />返回RMDS文件夹，双击创建ROM.bat，看看是不是出现了一个test.nds？<br />用模拟器运行看看吧！<br />[attach]1636[/attach]<br /><br />logo模块非常简单，所以这次也没什么值得注意的。下一次我们继续向前研究菜单模块。大家做好准备啊！<br /><br />[color=Red]本篇教程用到的工具下载：[/color]<br />CrystalTile2：[url=http://www.google.cn]google[/url]<br />生成Logo图片：[attach]1637[/attach]<br />创建ROM工具：[attach]1638[/attach]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16512_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

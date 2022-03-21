@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[转]NS入门教程，第二篇</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[转]NS入门教程，第二篇</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_14.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kiseeyou</b><br/>
+2010-05-26 11:41:45</p>
+</div>
+<div class="col-10">
+<p>LEVEL 1 Hello World ! <br />相关指令：<br />*define<br />game<br />*start<br />end<br />reset<br /><br />@<br />br<br />clickstr<br />_<br />;<br />Hello World。也就是所谓的“自己动手制作的第一个程序”。<br />似乎，在看过的基本所有程序类“入门到精通”的书里，都有这东西的存在。虽然这个程序既没有乐趣也没多少成就感，而且还没创意，但是，……<br /><br />首先，打开我们已经建好的0.txt（其实叫2.txt或者99.txt或者别的什么也无所谓），在里面输入以下内容,然后保存。<br /><br /><br />Copy code<br />;-------------------我是分隔线-------------------<br /><br />*define<br /><br />game<br /><br />*start<br /><br />你好，世界。@<br /><br />这是我的第一个程序。<br /><br />end<br /><br />;-------------------我是分隔线-------------------<br /><br /><br /><br /><br />  [attachment=174]<br /><br />再补充说明一下：<br />一般来说，NScripter读取指令的时候，是依靠“分行”来辨认的，将每一行视为一条指令。如果有空行,就会被忽略。<br /><br />还要注意的是“文章(无论中文E文数字都一样)”及“标点符号”必须使用全角，而作为“显示文章”标志的@和，以及其他的英文部分的指令则是使用半角的。<br /><br />接下来，是每条指令详细的说明……<br /><br />*define “define”是E文“定义”的意思。<br />从*define到game之间的部分，被称为NS的定义区块。这部分的主要功能是对NS的内部设置做一些修改。假如里面什么都不写的话也没关系，NS会全部采用默认设置。（包括我们现在看到的那排写着“画面设定”“字体设定”的菜单栏，内建存档的个数等等，都是可以修改的。）而NS开始执行游戏，也就是从寻找TXT文件里的*define标志开始的。（现在知道一开始只有一个EXE文件的NS为什么会显示“标签*define不存在”这样的错误信息了吧？）<br />game 表示定义部分已经完成，可以开始正式的游戏了。<br /><br />*start ——当然就是开始游戏的意思。这部分以后，就是“游戏执行区块”了。<br />因为有定义部分和游戏部分的区别，NS本身的指令也分为三种：只能用在定义区块里的（F类指令），只能用在游戏执行区块里的（E类指令），和在两部分都可以通用的（FE类指令）。<br /><br />最后，当NS执行到end指令的时候，就会退出。<br /><br />中间的两行，刚刚已经看到了，就是显示出来的文章。<br />你好，世界。@<br />这是我的第一个程序。<br />@和这两个标志的意思都是“显示一段文字，并且等待玩家点鼠标（或者按下ENTER键）之后，才继续执行下一条指令”。如果不使用这两个标志来表示“等待”的话，这两句话会在屏幕上一闪而过，之后就退出了。<br />这两个标志的特殊还在于可以在同一行里多次出现。<br />类似这样的写法“你好，@世界。@这是我的第一个程序。”也是可以的。<br /><br />-------------------------------------------------<br /><br />问题一：既然同样都是作为“显示文章”的标志，@标志和标志有什么区别吗？<br /><br />那么，试看看把程序写成这样……<br /><br />Copy code<br />;-------------------我是分隔线-------------------<br />*define<br />game<br />*start<br />你好，世界。<br />这是我的第一个程序。<br />end<br />;-------------------我是分隔线-------------------<br /><br /><br /><br />这一次，在显示“这是我的第一个程序。”的同时，“你好，世界。”消失了。<br />标志比@标志多了一条功能，就是在显示它所在的这一行文章的同时，将之前显示的文章消除。在电子小说里，@是接着看下一行，而就是翻过一页，把之前的一页清掉了。<br />因为屏幕或者对话框的大小是有限的，如果已经显示的文章字数超过了屏幕可以容纳的范围，NS就会报错，因此在制作电子小说的时候，合理的使用这两个标志是很重要的基础哟。<br /><br />-------------------------------------------------<br /><br />问题二：我想在两行文字间空上一行，但是NS把所有空行都WS了？<br /><br />因为这样，NS也提供了另外一条指令。“br”其实是HTML语言里表示空行的命令，在NS里，也是同样的意思。<br /><br />Copy code<br />;-------------------我是分隔线-------------------<br />*define<br />game<br />*start<br />你好，世界。@<br />br<br />这是我的第一个程序。<br />end<br />;-------------------我是分隔线-------------------<br /><br /><br />不用说，自己看看效果吧。<br /><br />-------------------------------------------------<br /><br />问题三：每显示一段文章都一定要用@和吗？麻烦不说，要是忘了加还容易出错，没有其他办法？<br /><br />既然每句话结尾多少都有个感叹号句号问号之类的，在制作比较大型的游戏时，还要再为每行文字加一个标志确实很烦。因此，NS也提供了比较简单的方法：clickstr命令。<br />clickstr就是一个F类指令，也就是说，是只能用在NS的定义区块里的。<br /><br />Copy code<br />;-------------------我是分隔线-------------------<br />*define<br />clickstr "。",1<br />game<br />*start<br />你好，世界。<br />这是我的第一个程序。<br />end<br />;-------------------我是分隔线-------------------<br /><br /><br /><br />没有使用@和的情况下，效果和之前的完全一样。<br />并且，使用clickstr命令之后，NS会根据参数，在文字显示超过屏幕可容纳字数后自动翻页。<br /><br />Clickstr的格式为：<br />Clickstr "。！？（可以写一个，也可以写N个，必须要是全角）",2<br />Clickstr "等待标志",翻页参数<br /><br />翻页参数为0时候，不会自动翻页，超过字数会出错。<br />为1时，显示到屏幕（或对话框）满为止，自动翻页。<br />为2时，到离可容纳字数还有1行时翻页。<br />为3时，到离可容纳字数还有2行时翻页。<br />以下类推。<br /><br />而假如某一行里有句号或其他已经定义的等待符号，比如说问号，但是不想让这部分等待的时候，还有一个“等待失效”的标志“_”。<br />把“_”标志放在等待符号的前面，执行到这里的时候就不会等待，而会直接继续显示下一句了。<br />例如：<br />国家政策，小白要持证上岗_。<br /><br />补充，假如真的对以上都懒得使用，请在define区内加入linepage命令。<br />这条命令会把每一行视做一段对话。<br />缺点是，在使用这个命令之后/命令（换行失效命令）无法使用。<br /><br />-----------------------------------------------------<br /><br />问题四：执行完窗口关掉以后，怎么文件夹里多了一个叫“envdata”的文件？<br /><br />Envdata文件是设置文件，类似一般游戏里的ini文件。作用是记录一些玩家的操作和设定，比如上一次进行游戏时是全屏还是窗口模式，使用的是什么字体之类的信息，都会被记录下来。这当然是很贴心的功能了，对游戏制作者来说却有点头大，修改了一些设定之后再执行游戏，却无论如何都没效果，究其原因，都是这个envdata文件在作怪。因此，保险起见，修改一些设定之后，请记得删除envdata文件再做测试。<br /><br />------------------------------------------------------<br /><br />本日小贴士：<br />注释符号“;（半角分号）”的使用。<br />NScripter里，某一行里的“; ”符号后面的部分会被当作注释而不执行，因此无论是中文英文全角半角都可以用在注释里。<br />虽然似乎很多人（包括蓝蛇……= =）都没有使用注释的习惯，但是，其实，根据某D的经验，注释还是非常有用的。除了使用文字和分隔线，免得时间长了自己看不懂以外，加在某个命令前，使某一条命令暂时不起作用以测试它的功能，或者用来加入大量个人化的东西以恶搞，打上版权标记，或者甚至仅仅为了让文本看起来不那么单调，请大家把注释华丽的使用到底吧……[天音：你以为全世界的人都和你一样无聊吗……]<br />注释使用范例:<br /><br />Copy code<br />;------------------我是分隔线----------<<==这行就全是注释了<br /><br />*define;这里开始是定义区<<==可以这么用....<br /><br />game    ;定义结束...<br /><br />;^^前面多打几个空格(半角空格)也可以,半角空格和空行一样是会被自动忽略的<br /><br />;------------------我是分隔线----------<<==这行也是注释<br /><br /><br /><br /><br />------------------------------------------------------<br /><br /><br />作业（觉得太弱智的可以不做，反正没人检查……）：<br /><br />1随便找一段文字把它丢到NS里，小学课文也可以。试一下“ ，@，br，clickstr”的使用。<br /><br />2把程序末尾的end指令令换成reset指令，看看会有什么变化。<br /><br />3 DEBUG练习。<br />找出以下程序的错误。<br /><br />Copy code<br />*define<br />clickstr “.”<br />game*ＳＴＡＲＴ<br />ＨELLO ＷORLD!＠<br />re<br />set</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>-白./音。</b><br/>
+2010-05-26 11:42:09</p>
+</div>
+<div class="col-10">
+<p>表示比较想要一群loli~~~</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post13737_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

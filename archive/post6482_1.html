@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[脚本]复杂的物品分类RMXP用</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[脚本]复杂的物品分类RMXP用</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_7.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-09-22 20:34:42</p>
+</div>
+<div class="col-10">
+<p>[code]#==============================================================================<br /># 本脚本来自www.66RPG.com，使用和转载请保留此信息<br />#============================================================================== <br /><br /><br />#==============================================================================<br /># ■ Harts_Window_ItemTitle<br />#==============================================================================<br /><br />class Harts_Window_ItemTitle < Window_Base<br />  def initialize<br />    super(0, 0, 160, 64)<br />    self.contents = Bitmap.new(width - 32, height - 32)<br />    self.contents.clear<br />    self.contents.font.color = normal_color<br />    self.contents.draw_text(4, 0, 120, 32, .words.item, 1)<br />  end<br />end<br /><br />#==============================================================================<br /># ■ Harts_Window_ItemCommand<br />#==============================================================================<br /><br />class Harts_Window_ItemCommand < Window_Selectable<br />  attr_accessor :commands<br />  #--------------------------------------------------------------------------<br />  # ● 初始化，生成commands窗口<br />  #--------------------------------------------------------------------------<br />  def initialize<br />    super(0, 64, 160, 352)<br />    @commands = []<br />    #————————生成commands窗口<br />    for i in 1....size<br />      if .item_number(i) > 0 <br />        push = true<br />        for com in @commands<br />          if com == .desc<br />            push = false<br />          end<br />        end<br />        if push == true<br />          @commands.push(.desc)<br />        end<br />      end<br />    end<br />    for i in 1....size<br />      if .weapon_number(i) > 0 <br />        push = true<br />        for com in @commands<br />          if com == .desc<br />            push = false<br />          end<br />        end<br />        if push == true<br />          @commands.push(.desc)<br />        end<br />      end<br />    end<br />    for i in 1....size<br />      if .armor_number(i) > 0 <br />        push = true<br />        for com in @commands<br />          if com == .desc<br />            push = false<br />          end<br />        end<br />        if push == true<br />          @commands.push(.desc)<br />        end<br />      end<br />    end<br />    if @commands == []<br />      @commands.push("普通物品")<br />    end      <br />    @item_max = @commands.size<br />    self.contents = Bitmap.new(width - 32, @item_max * 32)<br />    refresh<br />    self.index = 0<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def refresh<br />    self.contents.clear<br />    for i in 0...@item_max<br />      draw_item(i, normal_color)<br />    end<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def draw_item(index, color)<br />    self.contents.font.color = color<br />    y = index * 32<br />    self.contents.draw_text(4, y, 128, 32, @commands[index])<br />  end<br />  #--------------------------------------------------------------------------<br />  # 只描绘原文字<br />  #--------------------------------------------------------------------------<br />  def update_help<br />    @help_window.set_text(@commands[self.index])<br />  end<br />end<br /><br />#==============================================================================<br /># ■ Window_Item<br />#==============================================================================<br /><br />class Harts_Window_ItemList < Window_Selectable<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def initialize<br />    super(160, 0, 480, 416)<br />    refresh<br />    self.index = 0<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def item<br />    return @data[self.index]<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def refresh<br />    if self.contents != nil<br />      self.contents.dispose<br />      self.contents = nil<br />    end<br />    @data = []<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def set_item(command)<br />    refresh<br />    for i in 1....size<br />      if .item_number(i) > 0 and .desc == command<br />        @data.push()<br />      end<br />    end<br />    for i in 1....size<br />      if .weapon_number(i) > 0 and .desc == command<br />        @data.push()<br />      end<br />    end<br />    for i in 1....size<br />      if .armor_number(i) > 0 and .desc == command<br />        @data.push()<br />      end<br />    end<br />    @item_max = @data.size<br />    if @item_max > 0<br />      self.contents = Bitmap.new(width - 32, row_max * 32)<br />      self.contents.clear<br />      for i in 0...@item_max<br />        draw_item(i)<br />      end<br />    end<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def item_number<br />    return @item_max<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def draw_item(index)<br />    item = @data[index]<br />    case item<br />    when RPG::Item<br />      number = .item_number(item.id)<br />    when RPG::Weapon<br />      number = .weapon_number(item.id)<br />    when RPG::Armor<br />      number = .armor_number(item.id)<br />    end<br />    if item.is_a?(RPG::Item) and<br />      .item_can_use?(item.id)<br />      self.contents.font.color = normal_color<br />    else<br />      self.contents.font.color = disabled_color<br />    end<br />    x = 4<br />    y = index * 32<br />    bitmap = RPG::Cache.icon(item.icon_name)<br />    opacity = self.contents.font.color == normal_color ? 255 : 128<br />    self.contents.blt(x, y + 4, bitmap, Rect.new(0, 0, 24, 24), opacity)<br />    self.contents.draw_text(x + 28, y, 212, 32, item.name, 0)<br />    self.contents.draw_text(x + 400, y, 16, 32, ":", 1)<br />    self.contents.draw_text(x + 416, y, 24, 32, number.to_s, 2)<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def update_help<br />    @help_window.set_text(self.item == nil ? "" : self.item.description)<br />  end<br />end<br /><br />#==============================================================================<br /># ■ Harts_Scene_Item<br />#==============================================================================<br /><br />class Scene_Item<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def main<br />    @itemtitle_window = Harts_Window_ItemTitle.new<br />    @itemcommand_window = Harts_Window_ItemCommand.new<br />    @command_index = @itemcommand_window.index<br />    @itemlist_window = Harts_Window_ItemList.new<br />    @itemlist_window.active = false<br />    @help_window = Window_Help.new<br />    @help_window.x = 0<br />    @help_window.y = 416<br />    @itemcommand_window.help_window = @help_window<br />    @itemlist_window.help_window = @help_window<br />    @target_window = Window_Target.new<br />    @target_window.visible = false<br />    @target_window.active = false<br />    @itemlist_window.set_item(@itemcommand_window.commands[@command_index])<br />    Graphics.transition<br />    loop do<br />      Graphics.update<br />      Input.update<br />      update<br />      if  != self<br />        break<br />      end<br />    end<br />    Graphics.freeze<br />    @itemtitle_window.dispose<br />    @itemcommand_window.dispose<br />    @itemlist_window.dispose<br />    @help_window.dispose<br />    @target_window.dispose<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def update<br />    @itemtitle_window.update<br />    @itemcommand_window.update<br />    @itemlist_window.update<br />    @help_window.update<br />    @target_window.update<br />    if @command_index != @itemcommand_window.index<br />      @command_index = @itemcommand_window.index<br />      @itemlist_window.set_item(@itemcommand_window.commands[@command_index])<br />    end<br />    if @itemcommand_window.active<br />      update_itemcommand<br />      return<br />    end<br />    if @itemlist_window.active<br />      update_itemlist<br />      return<br />    end<br />    if @target_window.active<br />      update_target<br />      return<br />    end<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def update_itemcommand<br />    if Input.trigger?(Input::B)<br />      .se_play(.cancel_se)<br />       = Scene_Menu.new(0)<br />      return<br />    end<br />    if Input.trigger?(Input::C)<br />      if @itemlist_window.item_number == 0<br />        .se_play(.buzzer_se)<br />        return<br />      end<br />      .se_play(.decision_se)<br />      @itemcommand_window.active = false<br />      @itemlist_window.active = true<br />      @itemlist_window.index = 0<br />      return<br />    end<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def update_itemlist<br />    if Input.trigger?(Input::B)<br />      .se_play(.cancel_se)<br />      @itemcommand_window.active = true<br />      @itemlist_window.active = false<br />      @itemlist_window.index = 0<br />      @itemcommand_window.index = @command_index<br />      return<br />    end<br />    if Input.trigger?(Input::C)<br />      @item = @itemlist_window.item<br />      unless @item.is_a?(RPG::Item)<br />        .se_play(.buzzer_se)<br />        return<br />      end<br />      unless .item_can_use?(@item.id)<br />        .se_play(.buzzer_se)<br />        return<br />      end<br />      .se_play(.decision_se)<br />      if @item.scope >= 3<br />        @itemlist_window.active = false<br />        @target_window.x = 304<br />        @target_window.visible = true<br />        @target_window.active = true<br />        if @item.scope == 4 || @item.scope == 6<br />          @target_window.index = -1<br />        else<br />          @target_window.index = 0<br />        end<br />      else<br />        if @item.common_event_id > 0<br />          .common_event_id = @item.common_event_id<br />          .se_play(@item.menu_se)<br />            if @item.consumable<br />              .lose_item(@item.id, 1)<br />              @itemlist_window.draw_item(@itemlist_window.index)<br />            end<br />           = Scene_Map.new<br />          return<br />        end<br />      end<br />      return<br />    end<br />  end<br />  #--------------------------------------------------------------------------<br />  #--------------------------------------------------------------------------<br />  def update_target<br />    if Input.trigger?(Input::B)<br />      .se_play(.cancel_se)<br />      unless .item_can_use?(@item.id)<br />        @itemlist_window.refresh<br />      end<br />      @itemlist_window.active = true<br />      @target_window.visible = false<br />      @target_window.active = false<br />      @itemlist_window.set_item(@itemcommand_window.commands[@command_index])<br />      return<br />    end<br />    if Input.trigger?(Input::C)<br />      if .item_number(@item.id) == 0<br />        .se_play(.buzzer_se)<br />        return<br />      end<br />      if @target_window.index == -1<br />        used = false<br />        for i in .actors<br />          used |= i.item_effect(@item)<br />        end<br />      end<br />      if @target_window.index >= 0<br />        target = .actors[@target_window.index]<br />        used = target.item_effect(@item)<br />      end<br />      if used<br />        .se_play(@item.menu_se)<br />        if @item.consumable<br />          .lose_item(@item.id, 1)<br />          @itemlist_window.draw_item(@itemlist_window.index)<br />          @itemlist_window.set_item(@itemcommand_window.commands[@command_index])<br />        end<br />        @target_window.refresh<br />        if .all_dead?<br />           = Scene_Gameover.new<br />          return<br />        end<br />        if @item.common_event_id > 0<br />          .common_event_id = @item.common_event_id<br />           = Scene_Map.new<br />          return<br />        end<br />      end<br />      unless used<br />        .se_play(.buzzer_se)<br />      end<br />    return<br />    end<br />  end<br />end<br /><br />#==============================================================================<br /># ■ RPG追加定义，使用@符号分类<br />#==============================================================================<br /><br />module RPG<br />  class Weapon<br />    def description<br />      description = @description.split(/@/)[0]<br />      return description != nil ? description : ''<br />    end<br />    def desc<br />      desc = @description.split(/@/)[1]<br />      return desc != nil ? desc : "普通物品"<br />    end<br />  end<br />  class Item<br />    def description<br />      description = @description.split(/@/)[0]<br />      return description != nil ? description : ''<br />    end<br />    def desc<br />      desc = @description.split(/@/)[1]<br />      return desc != nil ? desc : "普通物品"<br />    end<br />  end<br />  class Armor<br />    def description<br />      description = @description.split(/@/)[0]<br />      return description != nil ? description : ''<br />    end<br />    def desc<br />      desc = @description.split(/@/)[1]<br />      return desc != nil ? desc : "普通物品"<br />    end<br />  end<br />end<br /><br />#==============================================================================<br /># 本脚本来自www.66RPG.com，使用和转载请保留此信息<br />#============================================================================== <br />[/code]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>........</b><br/>
+2010-09-22 20:35:12</p>
+</div>
+<div class="col-10">
+<p>让我飞过算了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-09-22 20:36:34</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 kong 于 2010-10-7 13:57 编辑 [/i]<br /><br />沙发公布投票获奖名单（请获奖者到帖子里留言）<br /><br />1st  ZEROvsL、諾亞  13<br />2nd  S.L.T、牧濑红莉栖  11<br />3rd  龙er、proce  9<br />4th  ........、meni038  8<br />5th  jing41jing  7<br />6th  yyeg、w2jmoe  6<br />7th  azsx412509、晓月残风  5<br />8th  boy545003571、zaizei00、明日青蛙、a4381782、ComingGu、星梦落  3<br />[s]9th  sjy0079、relaxsoul、逆奏、fanhuai、悸樱奏、dbcliu、oldmamori、lakili、Lee、凋零的樱  1[/s]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>nickyren</b><br/>
+2010-09-22 20:37:43</p>
+</div>
+<div class="col-10">
+<p>中午还没楼，看完花火回来果然晚了么<br /><br />大家中秋快乐哦</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>a4381782</b><br/>
+2010-09-22 20:37:44</p>
+</div>
+<div class="col-10">
+<p>    小鸟  军训时候看到漂亮妹子没</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>........</b><br/>
+2010-09-22 20:40:24</p>
+</div>
+<div class="col-10">
+<p>    这种问题不要问我，小鸟我可是很认真地在军训的</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post6482_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

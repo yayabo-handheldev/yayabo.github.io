@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Python基础速成指南01 -&gt; 一些基础的数据类型</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">Python基础速成指南01 -&gt; 一些基础的数据类型</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lrb2010</b><br/>
+2014-03-18 18:45:35</p>
+</div>
+<div class="col-10">
+<p>教程尽可能精简,如遇不懂可以回帖评论或者去wiki上寻找资料.<br /><br />如今不管是什么领域的应用,它都要涉及到存储,变量就像是空杯子,它需要往里面倒入饮料(存储数据),并且为不同杯子贴上杯子名字(变量名),饮料品种(数据类型)等等的标签.<br /><br />简单来说,变量把空间分成许多存储块,在代码中给他们赋予名字,并且填上内容.<br />对于lua而说,Python是一个动态类型的语言,不过它却是强类型的,但它却是在运行时才进行数据类型的正误判断,也就是说,python是禁止不同类型之间不经过转化进行运算的.<br />这篇教程将会介绍三个数据类型,分别是整型(int),浮点型(float),布尔型(bool)<br /><br />首先是整型,一个通俗易懂的理解就是整数,以下代码是声明一个整型变量并且给这个变量取名为teach_int,并且为其赋值42[code]teach_int = 42[/code]浮点型,也就是有小数点的实数,以下代码是声明一个浮点型变量并且给这个变量取名为teach_float,并且赋值为18.32<br />[code]teach_float = 18.32[/code]<br />布尔型算是比较特别的类型,他对于数字更加注重于逻辑上的表达,为什么呢,布尔型只有两种常量值,分别是True(真)和False(假),它就像一个电灯的开关,不是开着就是关着.以下代码给这个变量取名为teach_bool,并且赋值为True.(务必请注意True和False的首字母大写)<br />[code]teach_bool = True[/code]以上就是使用变量存储值的方法,希望你已经掌握了,下面的代码将会试着输出它们:<br />[attach]175[/attach]<br />[code]#声明一个整型变量 <br />teach_int = 42<br />#声明一个浮点型变量<br />teach_float = 18.32<br />#声明一个布尔型变量<br />teach_bool = True<br /><br />#试着输出它们吧~<br />print teach_int<br />print teach_float<br />print teach_bool[/code]...学校电脑的python解释器真是让人怨念啊orz<br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>龙舞奉天</b><br/>
+2014-03-18 19:22:18</p>
+</div>
+<div class="col-10">
+<p>[quote][size=2][color=#999999]lrb2010 发表于 2014-3-18 17:40[/color] [url=forum.php?mod=redirect&goto=findpost&pid=342962&ptid=26196][img]static/image/common/back.gif[/img][/url][/size]<br />支持斑竹君...有时间可以修改一下排版[/quote]<br /><br />OK,等我把剩余的教程写完了发上来后，就来改这些排版{:21:}</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yinolang</b><br/>
+2014-03-18 20:37:35</p>
+</div>
+<div class="col-10">
+<p>看到了久违的签到～</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ProfaneAria</b><br/>
+2014-03-18 21:23:50</p>
+</div>
+<div class="col-10">
+<p>我是来帮奎姐姐水经验的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ProfaneAria</b><br/>
+2014-03-18 21:27:23</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 ProfaneAria 于 2014-3-18 21:37 编辑 [/i]<br /><br />201,202,203，204.。。看完就出来了。。<br />i += i++; 具体过程为 (100 + 100) + 1 = 201<br />i += ++i; 具体过程为 (100 + 1) + (100 + 1) = 202<br />++i += i++; 具体过程为 (100 + 1) + (100 + 1) + 1 = 203<br />++i += ++i; 具体过程为 (100 + 1 + 1) + (100 + 1 + 1) = 204<br />原因是优先级 ++i > += > i++<br />我是有多无聊。。。。<br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ProfaneAria</b><br/>
+2014-03-18 21:38:33</p>
+</div>
+<div class="col-10">
+<p>卧槽果然短</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>龙舞奉天</b><br/>
+2014-03-18 21:52:00</p>
+</div>
+<div class="col-10">
+<p>短小精悍，有随笔的风格{:3_45:}</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白泽</b><br/>
+2014-03-18 22:17:47</p>
+</div>
+<div class="col-10">
+<p>PlayStation综合讨论区我来！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>邮寄葵</b><br/>
+2014-03-18 22:33:33</p>
+</div>
+<div class="col-10">
+<p>[quote][size=2][color=#999999]ProfaneAria 发表于 2014-3-18 21:23[/color] [url=forum.php?mod=redirect&goto=findpost&pid=342972&ptid=26193][img]static/image/common/back.gif[/img][/url][/size]<br />我是来帮奎姐姐水经验的[/quote]<br /><br />巨然都二级了 </p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post520_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

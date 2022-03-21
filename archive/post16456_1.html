@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>中文显示问题……</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">中文显示问题……</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2009-10-01 04:56:25</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 幻の上帝 于 2009-10-1 06:07 编辑 [/i]<br /><br />NDS上显示中文等非ASCII字符，现在比较通用的解决方案是什么？<br />找了两星期，找到的资源几乎都下不了。<br />最后找到了这个：[url]http://bbs.tvgame360.com.tw/viewthread.php?tid=27925[/url]。不过只有Big5和Unicode。。<br />于是自制```<br />……先是编译错误，花了一天才弄明白是库的版本问题- -；<br />找C格式代码的GBK字符映射表花了半天；<br />又花了半天调试成功；<br />花了三天连带翘两节课才把简体中文的显示搞定（最后才发现是因为映射表中间少粘贴了几行所以后面全乱了，囧rz）；<br />不过字体看起来有点违和，所以要找字体生成软件，找了两天都没找到能弄出里面的bin字体文件的。。。<br />所以想问一下那个里面的字体文件是什么软件生成的——<br /><br />----------------<br />（29-30日通宵调程序，早上干掉14道电路分析题和4道物理题，17:21打的被堵了一个小时到车站退误点票不能、、买黄牛票23:59才到站，能清醒到现在——这不是杯具，是奇迹TAT。）</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>meng_aq</b><br/>
+2009-10-01 08:49:30</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 meng_aq 于 2009-10-2 14:36 编辑 [/i]<br /><br />自己手写，用多少写多少，小文本时经济适用<br />之前说的码表转换方法行不通，还是另外想法吧</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>dbcliu</b><br/>
+2009-10-02 21:31:24</p>
+</div>
+<div class="col-10">
+<p>0.0.6a升级补丁包：<br />纳米盘：[url]http://d.namipan.com/d/0.0.6a%e5%8d%87%e7%ba%a7%e8%a1%a5%e4%b8%81%e5%8c%85.rar/c820d8c12b6c7b87f65cc0958c023ee99af1dbc341119c04[/url]<br /><br />大幅度更新了进度，并且使用了音质较好的背景音乐。<br />接下来几天要出去，所以请大家耐心~<br />——小生20091002</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>novall</b><br/>
+2009-10-01 21:24:31</p>
+</div>
+<div class="col-10">
+<p>学习知识</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lipop</b><br/>
+2009-10-01 21:40:00</p>
+</div>
+<div class="col-10">
+<p>掌家给个截图么</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Isword</b><br/>
+2009-10-01 23:36:09</p>
+</div>
+<div class="col-10">
+<p>老实说，我这次是特意来顶雷叔的。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-10-02 11:40:36</p>
+</div>
+<div class="col-10">
+<p>LvmForDs主体基本已经完成，呃，还差几个文件操作函数。目前卡在系统指令执行代码那里了。测试《博士失踪记》，很多地方运行不正常……由于DS硬件的特殊性，比较底层的代码执行结果可能与预期不符，没有一个好的调试手段还真不好测试。<br />    至于汉字显示，如果用GBK字库的话用不着映射表，直接取汉字的高低字节带入寻址公式计算就得到该汉字的字模在字库文件中的位置了。涉及到Unicode麻烦些，fat文件系统的长文件名就是Unicode，所以要解决中文文件名问题不得不用映射表了。当时为了那几个没完工的文件函数曾研究了一下，把两个映射表优化了一下减减肥……不过这又搁下四五个月了。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16456_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

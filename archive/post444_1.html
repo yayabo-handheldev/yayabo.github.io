@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>2.1大总管(CCDirector)、场景(CCScene)与层(CCLayer)</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">2.1大总管(CCDirector)、场景(CCScene)与层(CCLayer)</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>龙舞奉天</b><br/>
+2014-04-07 18:00:56</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 龙舞奉天 于 2014-4-7 18:09 编辑 [/i]<br /><br />近日实在是太忙了，上周一周的任务超级繁重，好不容易结束了，清明节朋友又来玩儿，让我狠狠的陪了两天，还没反应过来，假期就这样结束了，让我这坑人的教程以龟速行进吧……<br /><br />[align=left][size=5][b]一.CCDirector：大总管/导演[/b][/size][/align][align=left][color=#ff0000]CCDirector[/color]就如字面意义所示，是一个“导演”类，它总控这游戏的主要流程。[/align][align=left]让我们返回HelloWorld项目，可以在其中看见这么一个方法：<br />bool AppDelegate::applicationDidFinishLaunching(){[/align][align=left]// 初始化游戏控制器[/align][align=left]CCDirectorCCDirector* pDirector = CCDirector::sharedDirector();[/align][align=left]CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();[/align][align=left]pDirector->setOpenGLView(pEGLView);[/align][align=left]// 开启FPS显示pDirector->setDisplayStats(true);[/align][align=left]// 设置FPS时间pDirector->setAnimationInterval(1.0 / 60);[/align][align=left]// 创建初始化的场景CCScene *pScene = HelloWorld::scene();[/align][align=left]// 运行这个场景pDirector->runWithScene(pScene);[/align][align=left]return true;}[/align][align=left]<br />其中，CCDirector就是这个导演类。因为CCDirector总控这全局游戏，因而采用了单例的设计模式，在程序的任何地方，你都可以通过如下方法获取到它：[/align][align=left]CCDirector  *pDirector = CCDirector::sharedDirector();[/align][align=left]<br />在CCDirector类中，我们定义了如下的管理场景的方法：[/align][align=left][color=#ff8c00]runWithScene(CCScene  *scene)[/color]：启动游戏，并运行scene场景。这在我们的上面的例子中可以看到。[/align][align=left][color=#ff8c00]replaceScene(CCScene  *scene)[/color]：用scene场景来替换当前场景，当前场景将被释放。[color=#ff0000]这是最常用的切换场景的方法。[/color][/align][align=left][color=#ff8c00]pushScene(CCScene  *scene)[/color]：将当前场景压入到场景栈中，再将传入的scene设置为当前场景。[/align][align=left][color=#ff0000]popScene[/color]：释放当前场景，再从场景栈中弹出栈顶的场景，并将其设为当前场景。如果栈为空，则直接结束应用。[/align][align=left][color=#0000ff]pause[/color]：暂停当前场景中的所有计时器和动作，场景仍然会先是在屏幕上。[/align][align=left][color=#0000ff]resume[/color]：恢复当前运行场景中的计时器和动作。[/align][align=left][color=#0000ff]end[/color]：结束场景，同时退出应用程序。 [/align][align=left][size=5][b]二.CCScene：场景[/b][/size][/align][align=left][color=#ff0000]CCScene[/color]定义了一个场景，它只是层的容器，包含了所有需要显示的游戏元素。我们通常会使用[color=#ff0000]CCDirector::replaceScene[/color]一类的方法，来切换不同的游戏场景。而我们通常要完成一个场景的时候，往往需要创建一个[color=#ff0000]CCScene[/color]的子类，并在子类中实现我们所需要的效果。我们可以在子类的初始化方法中载入游戏资源，为场景添加层，播放bgm等。[/align][align=left]往往场景在切换时，需要一定的过渡处理，我们这时候便可以利用[color=#ff0000]CCScene[/color]的[color=#ff0000]CCTransitionScene[/color]特效类来实现这样的过渡特效，这我们在后面的章节里会详细介绍。[/align]<br />[align=left][size=5][b]三.CCLayer：层[/b][/size][/align][align=left][color=#ff0000]CCLayer[/color]定义了一个层（这不是废话么......)，层也是一个容器，它被用来放入精灵，文本标签以及其它游戏元素。[/align][align=left]但是，层与场景不同的是，它直接表现了游戏的具体内容，游戏的逻辑，游戏元素的展现都会容纳在层里。[/align][align=left]与场景一样的是，我们写不同的层时，往往都要创建一个层的子类，来实现层的具体功能。一般，我们在编写好层后，只要把层按顺序添加到场景中就可以显示出来了，使用的方法如下：[/align][align=left]void addChild(CCNode* child);[/align][align=left]void addChild(CCNode* child, int zOrder);[/align][align=left]void addChild(CCNode* child, int zOrder, int tag);[/align][align=left]<br />child即为要添加的节点，这里代表我们的层。[/align][align=left]一般使用第一个方法是，先添加的层会被置于后添加的层之下。我们可以用不同的zOrder值，来控制层的先后顺序，值越大的层显示越在前。[/align][align=left]tag值是元素的标识号码，如果为子节点设置了tag值，那么便可以在它的父节点中利用tag值找到它了。[/align][align=left]<br />我们前面说过，一个游戏场景大致有背景层（[color=#ff0000]backgroundLayer[/color]）、动作层（[color=#ff0000]actionLayer[/color]）、触摸层（[color=#ff0000]touchLayer[/color]）和菜单层（[color=#ff0000]menuLayer[/color]）组成。[/align][align=left]我们一般会用以下方法把它们添加到场景中，[/align][align=left]this->addChild(backgroundLayer,0);[/align][align=left]this->addChild(actionLayer,100);[/align][align=left]this->addChild(touchLayer,200);[/align][align=left]this->addChild(menuLayer,300);[/align][align=left]尽量吧zOrder值设置范围大一些，以便会有层的改动。[/align]<br />[align=left]至此，我们关于大总管(CCDirector)、场景(CCScene)与层(CCLayer)的简述就结束了。<br />[/align]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>vip</b><br/>
+2014-04-07 21:28:09</p>
+</div>
+<div class="col-10">
+<p>签到了   </p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post444_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

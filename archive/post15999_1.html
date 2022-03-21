@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>lua 5.1 的 module</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">lua 5.1 的 module</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-15 08:39:30</p>
+</div>
+<div class="col-10">
+<p>摘自：云风的 BLOG<br />lua 从 5.1 开始终于官方提供统一的 module 实现标准了，这是个值得庆幸的事。今天读了下相关的源码和文档，把这套机制搞清楚了，还是很巧妙的。从简洁这个角度看，要比 python 强 :)<br /><br />有一点容易被忽略掉(我的同事在用的时候就忽略掉了)，module 指令运行完后，整个环境被压栈，所以前面全局的东西再看不见了。比如定义了一个 test 模块，使用<br /><br />module("test")<br /><br />后，下面不再看的见前面的全局环境。如果在这个模块里想调用 print 输出调试信息怎么办呢？一个简单的方法是<br /><br />local print=print<br />module("test")<br /><br />这样 print 是一个 local 变量，下面也是可见的。或者可以用<br /><br />local _G=_G<br />module("test")<br /><br />那么 _G.print 也是可以用的。<br /><br />当然还有一种巧妙的方式，lua 5.1 提供了一个 package.seeall 可以作为 module 的option 传入<br /><br />module("test",package.seeall)<br /><br />这样就 OK 了。至于它们是如何工作的，还是自己读源码会理解的清楚一些。<br /><br />在读源码时可以发现很多 lua 的技巧，还有一些 undocumented 的东西，比如 newproxy :) 它是一个 unsupported 且 undocumented 的东西，但是它希望实现的却是个巧妙的玩意。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>asxzl5945</b><br/>
+2010-01-15 09:46:30</p>
+</div>
+<div class="col-10">
+<p>回帖是美德</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15999_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

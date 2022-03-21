@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>将eclipse打造成DS的IDE</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">将eclipse打造成DS的IDE</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2009-05-14 09:22:54</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 雷精灵 于 2009-5-14 09:37 编辑 [/i]<br /><br />首先到[url=http://www.eclipse.org]eclipse的官方网站[/url]下载eclipse for C/C++。当然，如果你实在是闲得蛋疼，你也可以下载eclipse for Java，然后自己安装CDT插件。下载好之后是一个压缩包，无需安装，解压缩到任意文件夹即可直接使用。<br /><br />打开eclipse，新建一个C或者C++的工程。第一次打开eclipse的时候会要求你建立一个默认工程路径，这个就随便你设置了。<br />[attach]1182[/attach]<br /><br />给工程取名。因为我们现在没有安装适合DS的toolchain，因此toolchain里面什么都没有。<br />[attach]1183[/attach]<br /><br />选中新建立的工程，Alt+Enter打开工程属性。<br />首先在这里添加一个“PATH”环境变量，键值为你的devkitPro的bin文件夹路径。我将devkitPro安装到了D盘，因此键值为D:/devkitPro/devkitARM/arm-eabi/bin<br />[attach]1184[/attach]<br /><br />然后是这里：<br />[attach]1185[/attach]<br />注意，如果你建立的是C++的工程，那么还得在GNU C++那个分支中进行同样的设置。因此我建议，不管你建立的是什么工程，三个分支全部设置成相同的值即可。<br />然后是这里：<br />[attach]1186[/attach]<br />同样，为了以后的方便，三个分支也都设置成同样的值。<br /><br />如此就设置好工程属性了。<br /><br />然后把你的工程的所有需要的文件和文件夹全都复制到工程下面，包括makefile。<br /><br />然后在当前工程上单击右键，Index - Rebuild，重建Indexer。完成之后重新启动eclipse。<br />[attach]1187[/attach]<br /><br />直接在工程上单击右键，Build Project，看看工程是不是已经开始构建了！<br />控制台也会输出构建过程的信息。<br /><br />很快你的ROM就出来了~~~~<br /><br />如果提示“make: *** No rule to make target `all'.  Stop.”，则说明你的makefile中没有“make all”行为。解决方法有两种：第一是给makefile添加all行为。第二是改写eclipse的make行为，让它默认make，而不是make all。方法如下：<br />还是工程属性。把那个“all”删掉即可。<br />[attach]1188[/attach]<br /><br />以后再新建工程的时候，无需新建，直接复制这个配置好的工程，然后改成新工程的名字就行了。<br /><br />当然，我们或许还需要配置一下外部工具比如模拟器之类的。<br />菜单 - Run - External Tools - External Tools Configurations...。<br />新建一个“Program”，然后按照如下配置。当然，模拟器路径根据你自己的模拟器路径进行配置。<br />[attach]1189[/attach]<br /><br />对于PSP来说，由于NGE2的特异性，还需要一些额外的设置。请到PSP版块参阅详细设置。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>whm3d</b><br/>
+2009-05-14 09:42:06</p>
+</div>
+<div class="col-10">
+<p>支持雷叔！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-05-14 09:46:10</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 niubo_ 于 2009-5-17 07:42 编辑 [/i]<br /><br />eclipse很好很强大，代码提示和自动完成我就不说啥了，最最美好的是把鼠标移到一个标识符上面，就有相关提示。这一点对于阅读源代码来说简直太方便了。<br /><br />问题是，辛辛苦苦设置好了项目属性，再新建另外一个DS项目的时候又得重新设定……<br /><br />解决办法有两个，首先是新建一个项目设置好项目属性后，导出到一个地方作为模板项目，以后再想新建项目的时候再把那个模板项目导入就可以了。<br />选择 菜单->File->Export，<br />[attach]1190[/attach]<br />选择导出File system到一个地方。<br />导入的时候步骤基本类似，<br />选择 菜单->File->Import，把之前导出的项目文件夹导入到某个地方就OK了。<br />不过问题也来了，毕竟导入的项目，名字也是模板项目的名字，而且模板里面的东西也不一定都是你想要的，最重要的是，如果我想看某DS项目的源码怎么办？总不能每次导入完模板之后把那些源码再导入一遍吧。<br /><br />第二个方法，只导入导出项目属性。<br />其实前面辛辛苦苦设置好的只不过是项目属性而已，其实新建的项目只要把项目属性导入就可以了。<br />依然先配置好一个项目，选择Export<br />[attach]1191[/attach]<br />把项目的设置文件保存到一个地方。新建项目的时候再导入……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>hewenxie</b><br/>
+2009-05-14 10:43:57</p>
+</div>
+<div class="col-10">
+<p>雷叔，我泪流满面啊。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>youyoudl</b><br/>
+2009-05-14 11:50:45</p>
+</div>
+<div class="col-10">
+<p>这个是H游戏吗:o</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>xutianyang</b><br/>
+2009-05-14 17:38:13</p>
+</div>
+<div class="col-10">
+<p>网名:天蝎X<br />性別:男性<br />居住地:马来西亚PJ－江苏南京<br />星座:天蝎座<br />在做的事:留学<br />希望：<br />    开发NDS和PSP的语音识别软件</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>466260212</b><br/>
+2009-05-15 11:21:55</p>
+</div>
+<div class="col-10">
+<p>我也留，哈╰<br /><br />网名：灬 .☆无赖じe<br />性别：男<br />居住地：广州<br />爱好：编程<br />个性签名：╰ァ祏頭シ翦釖ぺ灬+.鈽、ゼ♂邺祢╰ァ瀭嘞Ｗǒ罸祢じ☆ve ωǒ╰軰吇シ^潴頭``╋`┏┅◇灬 .☆无赖じe</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16729_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

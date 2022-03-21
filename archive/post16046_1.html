@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>游戏中的文字处理</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">游戏中的文字处理</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>meng_aq</b><br/>
+2010-01-11 15:37:40</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 meng_aq 于 2010-1-11 16:47 编辑 [/i]<br /><br />难得今天有空，所以为大家介绍下游戏中文字的处理。<br /><br />首先我们得了解游戏中文本是如何处理的。<br /><br />游戏中发生对话－＞程序获取文本码表－＞用码表计算字在字库的位置－＞程序读取字的数据到显存－＞屏幕显示<br /><br />以上是常用的文本处理方式，今天为你们介绍另一种实用高效的方式<br /><br />游戏中发生对话－＞程序获取文本码表－＞码表就是字在字库的位置－＞程序读取字的数据到显存－＞屏幕显示<br /><br />是的，看到这大家可能就明白了，所谓高效就是不用计算字的位置。<br /><br />说了半天还是进入正题吧！工具如下：<br />1 Tc16.exe 文本转C源码<br />2 BC.exe 二进制转C源码<br />3 CrystalTile2.exe 天使汉化组的Tile编辑工具<br /><br />Tc16对文本是有要求的，它只支持GB编码和0xA1前的编码；‘’是控制符，它后面紧跟一个0xA1前的字符作指令用；如默认的“\”表示注释行，转换时它后边的文字跳过，直到换行符才停；注意 换行符也会跳过，所以游戏文本中的换行得写控制符如“<br />”；默认符“*”是数组名，可以理解为文本段。<br /><br />例如：mina.txt<br /><br />[color=DimGray]\弥娜与苍真的对话No.1<br /><br />M <br /><br />苍真君…<br /><br />我相信你！f<br /><br />C<br /><br />恩f<br /><br />e<br /><br />*MiNaStr00[/color]<br /><br />命令窗口：tc16 font mina xx -d<br />简单说下，首先是注释行，M是显示弥娜半身像，<br />是游戏中换行，f是翻页，C是显示苍真半身像，e是游戏文本结束，*MiNaStr00是该文本段转为C源码的数组名。<br />命令中font是读取或新建的码表文件名，mina是上边的文本文件名，xx是用于加密文本的二进制文件名默认没有，-d是指删除生成的二进制文件。<br /><br />OK! 剩下的就是写个读字函数，在函数中除了判断控制符就是直接写字。<br /><br />加密说明：<br />方法1：本工具用的是简单的加法，即 文字码表 ＋ xx文件中一个8位数据(循环读取)<br />方法2：将-d改为-d!，保留转换后的二进制文件，你自己对它进行加密或加压<br /><br />BC工具用于将二进制文件转为C源码<br /><br />CrystalTile2工具用于生成字库和加压，用CrystalTile2中的NFTR字库编辑器生成字库时要用到码表文件，即上边命令中的font文件<br /><br />汗！手机发贴子太累了，附件等会送上。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-01-11 16:06:52</p>
+</div>
+<div class="col-10">
+<p>此游戏的遇敌率超高，玩此游戏纯属自略，鉴定完毕（魔焕炉都还没有炸成功的某人飘过）</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2010-01-11 22:29:57</p>
+</div>
+<div class="col-10">
+<p>难道是120块钱之夏？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>坏坏的微笑</b><br/>
+2010-01-11 22:32:51</p>
+</div>
+<div class="col-10">
+<p>任饭表示无条件支持楼主</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2010-01-11 22:33:12</p>
+</div>
+<div class="col-10">
+<p>这事还没谱呢，掌叔乃让我进退两难啊……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuuhimesama</b><br/>
+2010-01-11 22:36:12</p>
+</div>
+<div class="col-10">
+<p>难道是loli的时间！应该不可能。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>口渴口樂</b><br/>
+2010-01-11 23:14:11</p>
+</div>
+<div class="col-10">
+<p>问个问题，这个东西和电脑上面的RM有关么？电脑的RM游戏能转换到这个上么？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>口渴口樂</b><br/>
+2010-01-11 23:16:26</p>
+</div>
+<div class="col-10">
+<p>网名:口渴口樂<br />性別:男性<br />居住地:广东<br />星座:水瓶座<br />在做的事:学生<br />希望：<br />    能变成某版版主一样牛逼的人<br />P。S。LZ是濑户一贵？<br />I''S真是经典啊…………</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16046_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

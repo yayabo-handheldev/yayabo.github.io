@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>自己写的BP神经网络（C语言），可以用于模式识别</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">自己写的BP神经网络（C语言），可以用于模式识别</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>1989lzhh</b><br/>
+2009-06-02 09:16:31</p>
+</div>
+<div class="col-10">
+<p>[code=c]<br />#include <stdio.h><br />#include <stdlib.h><br />#include <time.h><br />#include <math.h><br /><br />#define sample_n 10<br />#define in 64<br />#define in_net 64//输入层神经元<br />#define hide_net 128//中间层<br />#define out_net 4//输出层<br /><br /><br />double x[sample_n][in+1]={{0,0,0,0,0,0,1},{0,0,1,0,0,0,1},{0,0,0,1,0,0,1},{0,1,0,1,1,0,1},{0,0,1,1,0,0,1},{0,0,1,1,1,0,1},{0,0,0,1,1,0,1}};<br />double w1[in+1][in_net]={0.0};<br />double w1l[in+1][in_net]={0.0};<br />double dw1[in+1][in_net]={0.0};<br />double u1[in_net]={0.0};<br />double x1[in_net+1]={0.0};<br /><br />double w2[in_net+1][hide_net]={0.0};<br />double w2l[in_net+1][hide_net]={0.0};<br />double dw2[in_net+1][hide_net]={0.0};<br />double u2[hide_net]={0.0};<br />double x2[hide_net+1]={0.0};<br /><br />double w3[hide_net+1][out_net]={0.0};<br />double w3l[hide_net+1][out_net]={0.0};<br />double dw3[hide_net+1][out_net]={0.0};<br />double u3[out_net]={0.0};<br />double x3[out_net]={0.0};<br /><br />double y[sample_n][out_net]={{0,0,0,0},{0,0,0,1},{0,0,0,1},{0,0,1,1},{0,0,1,0},{0,0,1,1},{0,0,1,0}};<br />double d3[out_net]={0.0};<br />double d2[hide_net]={0.0};<br />double d1[in_net]={0.0};<br />double q2[hide_net]={0.0};<br />double q1[in_net]={0.0};<br />double e=0.0;<br />double rate_w1=0.6;<br />double rate_w2=0.6;<br />double rate_w3=0.6;<br />double alpha=0.7;<br /><br />double rand_num()<br />{<br />	double r;<br />	r=(double)(rand()%2000-1000)/1000;<br />	if(r==0.0)<br />		return 0.1;<br />	else<br />		return r;<br />}<br /><br /><br />void initial()<br />{<br />	int i=0,j=0,s=0;<br />	srand(time(NULL)); <br />	for(s=0;s<sample_n;s++)<br />	{<br />		x[s][in]=1.0;<br />	}<br />	x1[in_net]=1.0;<br />	x2[hide_net]=1.0;<br /><br />	for(i=0;i<in_net;i++)<br />	{<br />		for(j=0;j<in+1;j++)<br />		{<br />			w1[j][i]=rand_num();<br />		}<br />	}<br />	for(i=0;i<hide_net;i++)<br />	{<br />		for(j=0;j<in_net+1;j++)<br />		{<br />			w2[j][i]=rand_num();<br />		}<br />	}<br />	for(i=0;i<out_net;i++)<br />	{<br />		for(j=0;j<hide_net+1;j++)<br />		{<br />			w3[j][i]=rand_num();<br />		}<br />	}<br />}<br /><br />void train()<br />{<br /><br />	int i=0,j=0,k=0,s=0;<br />	<br />	for(s=0;s<sample_n;s++)<br />	{<br /><br /><br />	for(i=0;i<in_net;i++)<br />	{<br />		u1[i]=0.0;<br />		for(j=0;j<in+1;j++)<br />		{<br />			u1[i]+=x[s][j]*w1[j][i];<br />		}<br />		//printf("u1[%d]=%f ",i,u1[i]);<br />		x1[i]=1.0/(1+exp(-u1[i]));<br />		//printf("x1=%f ",x1[i]);<br />	}<br />	//putchar('<br />');<br />	for(i=0;i<hide_net;i++)<br />	{<br />		u2[i]=0.0;<br />		for(j=0;j<in_net+1;j++)<br />		{<br />			u2[i]+=x1[j]*w2[j][i];<br />		}<br />		//printf("u2[%d]=%f ",i,u2[i]);<br />		x2[i]=1.0/(1+exp(-u2[i]));<br />		//printf("x2=%f ",x2[i]);<br />	}<br />	//putchar('<br />');<br />	for(i=0;i<out_net;i++)<br />	{<br />		u3[i]=0.0;<br />		for(j=0;j<hide_net+1;j++)<br />		{<br />			u3[i]+=x2[j]*w3[j][i];<br />		}<br />		//printf("u3[%d]=%f ",i,u3[i]);<br />		x3[i]=1.0/(1+exp(-u3[i]));<br />		//printf("x3=%f ",x3[i]);<br />	}<br />	//putchar('<br />');<br /><br /><br /><br />	<br /><br /><br />	/*for(i=0;i<in_net;i++)<br />	{<br />		for(j=0;j<in+1;j++)<br />		{<br />			printf("w1[%d][%d]=%f ",j,i,w1[j][i]);<br />		}<br />		putchar('<br />');<br />	}<br />	putchar('<br />');<br />	for(i=0;i<hide_net;i++)<br />	{<br />		for(j=0;j<in_net+1;j++)<br />		{<br />			printf("w2[%d][%d]=%f ",j,i,w2[j][i]);<br />		}<br />		putchar('<br />');<br />	}<br />	putchar('<br />');<br />	for(i=0;i<out_net;i++)<br />	{<br />		for(j=0;j<hide_net+1;j++)<br />		{<br />			printf("w3[%d][%d]=%f ",j,i,w3[j][i]);<br />		}<br />		putchar('<br />');<br />	}<br />	putchar('<br />');*/<br /><br /><br />	for(i=0;i<in_net;i++)<br />	{<br />		for(j=0;j<in+1;j++)<br />		{<br />			w1l[j][i]=w1[j][i];<br />		}<br />	}<br />	for(i=0;i<hide_net;i++)<br />	{<br />		for(j=0;j<in_net+1;j++)<br />		{<br />			w2l[j][i]=w2[j][i];<br />		}<br />	}<br />	for(i=0;i<out_net;i++)<br />	{<br />		for(j=0;j<hide_net+1;j++)<br />		{<br />		    w3l[j][i]=w3[j][i];<br />		}<br />	}<br /><br /><br /><br /><br /><br /><br />	//反向<br />	e=0.0;<br />	for(i=0;i<out_net;i++)<br />	{<br />		e+=fabs(x3[i]-y[s][i]);<br /><br />		d3[i]=(x3[i]-y[s][i])*x3[i]*(1-x3[i]);<br />		for(j=0;j<hide_net+1;j++)<br />		{<br />			w3[j][i]+=d3[i]*x2[j]*rate_w3*(-1)+alpha*dw3[j][i];<br />		}<br />	}//输出层搞定<br />	printf("e=%f<br />",e);<br /><br />	for(i=0;i<hide_net;i++)<br />	{<br />		q2[i]=0.0;//<br />		for(k=0;k<out_net;k++)<br />		{<br />			q2[i]+=d3[k]*w3[i][k];<br />		}<br />		d2[i]=q2[i]*x2[i]*(1-x2[i]);<br />		for(j=0;j<in_net+1;j++)<br />		{<br />			w2[j][i]+=d2[i]*x1[j]*rate_w2*(-1)+alpha*dw2[j][i];<br />		}<br />	}//中间层搞定<br />	for(i=0;i<in_net;i++)<br />	{<br />		q1[i]=0.0;//<br />		for(k=0;k<hide_net;k++)<br />		{<br />			q1[i]+=d2[k]*w2[i][k];<br />		}<br />		d1[i]=q1[i]*x1[i]*(1-x1[i]);<br />		for(j=0;j<in+1;j++)<br />		{<br />			w1[j][i]+=d1[i]*x[s][j]*rate_w1*(-1)+alpha*dw1[j][i];<br />		}<br />	}//输入层搞定<br /><br />	for(i=0;i<in_net;i++)<br />	{<br />		for(j=0;j<in+1;j++)<br />		{<br />			dw1[j][i]=w1[j][i]-w1l[j][i];<br />		}<br />	}<br />	for(i=0;i<hide_net;i++)<br />	{<br />		for(j=0;j<in_net+1;j++)<br />		{<br />			dw2[j][i]=w2[j][i]-w2l[j][i];<br />		}<br />	}<br />	for(i=0;i<out_net;i++)<br />	{<br />		for(j=0;j<hide_net+1;j++)<br />		{<br />		    dw3[j][i]=w3[j][i]-w3l[j][i];<br />		}<br />	}<br /><br /><br /><br />	}<br />}<br />void sim()<br />{<br />	int i=0,j=0,s=0;<br />	for(s=0;s<sample_n;s++)<br />	{<br />		for(i=0;i<in_net;i++)<br />		{<br />			u1[i]=0.0;<br />		   for(j=0;j<in+1;j++)<br />		   {<br />			  u1[i]+=x[s][j]*w1[j][i];<br />		   }<br />		   x1[i]=1.0/(1+exp(-u1[i]));<br />		}<br />	   for(i=0;i<hide_net;i++)<br />	   {<br />		   u2[i]=0.0;<br />		  for(j=0;j<in_net+1;j++)<br />		  {<br />			 u2[i]+=x1[j]*w2[j][i];<br />		  }<br />		  x2[i]=1.0/(1+exp(-u2[i]));<br />	   }<br />	   for(i=0;i<out_net;i++)<br />	   {<br />		   u3[i]=0.0;<br />		  for(j=0;j<hide_net+1;j++)<br />		  {<br />			 u3[i]+=x2[j]*w3[j][i];<br />		  }<br />		  x3[i]=1.0/(1+exp(-u3[i]));<br />	   }<br /><br />	   for(i=0;i<out_net;i++)<br />	   {<br />		   printf("x3[%d]=%f  ",i,x3[i]);<br />	   }<br />	   putchar('<br />');<br /><br />	}<br />}<br /><br />void read_train_data()<br />{<br />	int s=0,j=0;<br />	FILE *fp_r=fopen(".\train_data.txt","rb");<br />	fseek(fp_r,0,SEEK_SET);<br />	for(s=0;s<sample_n;s++)<br />	{<br />		for(j=0;j<in+1;j++)<br />		{<br />			fread(&x[s][j],sizeof(double),1,fp_r);<br />			printf("x[%d][%d]=%f ",s,j,x[s][j]);<br />		}<br />		putchar('<br />');<br />	}<br />	for(s=0;s<sample_n;s++)<br />	{<br />		for(j=0;j<out_net;j++)<br />		{<br />			fread(&y[s][j],sizeof(double),1,fp_r);<br />			printf("y[%d][%d]=%f ",s,j,y[s][j]);<br />		}<br />		putchar('<br />');<br />	}<br />	x1[in_net]=1.0;<br />	x2[hide_net]=1.0;<br /><br />	fclose(fp_r);<br />}<br /><br />void save_train_data()<br />{<br />	int s=0,j=0;<br />	FILE *fp_w=fopen(".\train_data.txt","wb");<br />	fseek(fp_w,0,SEEK_SET);<br />	for(s=0;s<sample_n;s++)<br />	{<br />		for(j=0;j<in+1;j++)<br />		{<br />			fwrite(&x[s][j],sizeof(double),1,fp_w);<br />			printf("x[%d][%d]=%f ",s,j,x[s][j]);<br />		}<br />		putchar('<br />');<br />	}<br />	for(s=0;s<sample_n;s++)<br />	{<br />		for(j=0;j<out_net;j++)<br />		{<br />			fwrite(&y[s][j],sizeof(double),1,fp_w);<br />			printf("y[%d][%d]=%f ",s,j,y[s][j]);<br />		}<br />		putchar('<br />');<br />	}<br /><br />	fclose(fp_w);<br />}<br /><br /><br />void save_w_data()<br />{<br />	int i=0,j=0;<br />	FILE *fp_w=fopen(".\w_save.txt","wb");<br />	for(i=0;i<in_net;i++)<br />	{<br />		for(j=0;j<in+1;j++)<br />		{<br />			fwrite(&w1[j][i],sizeof(double),1,fp_w);<br />			printf("w1[%d][%d]=%f ",j,i,w1[j][i]);<br />		}<br />		putchar('<br />');<br />	}<br />	for(i=0;i<hide_net;i++)<br />	{<br />		for(j=0;j<in_net+1;j++)<br />		{<br />			fwrite(&w2[j][i],sizeof(double),1,fp_w);<br />			printf("w2[%d][%d]=%f ",j,i,w2[j][i]);<br />		}<br />		putchar('<br />');<br />	}<br />	for(i=0;i<out_net;i++)<br />	{<br />		for(j=0;j<hide_net+1;j++)<br />		{<br />			fwrite(&w3[j][i],sizeof(double),1,fp_w);<br />			printf("w3[%d][%d]=%f ",j,i,w3[j][i]);<br />		}<br />		putchar('<br />');<br />	}<br />	fclose(fp_w);<br />}<br /><br />void read_w_data()<br />{<br />	int i=0,j=0;<br />	FILE *fp_r=fopen(".\w_save.txt","rb");<br />	fseek(fp_r,0,SEEK_SET);<br />	for(i=0;i<in_net;i++)<br />	{<br />		for(j=0;j<in+1;j++)<br />		{<br />			fread(&w1[j][i],sizeof(double),1,fp_r);<br />			printf("w1[%d][%d]=%f ",j,i,w1[j][i]);<br />		}<br />		putchar('<br />');<br />	}<br />	for(i=0;i<hide_net;i++)<br />	{<br />		for(j=0;j<in_net+1;j++)<br />		{<br />			fread(&w2[j][i],sizeof(double),1,fp_r);<br />			printf("w2[%d][%d]=%f ",j,i,w2[j][i]);<br />		}<br />		putchar('<br />');<br />	}<br />	for(i=0;i<out_net;i++)<br />	{<br />		for(j=0;j<hide_net+1;j++)<br />		{<br />			fread(&w3[j][i],sizeof(double),1,fp_r);<br />			printf("w3[%d][%d]=%f ",j,i,w3[j][i]);<br />		}<br />		putchar('<br />');<br />	}<br />	fclose(fp_r);<br />}<br /><br /><br />		<br /><br /><br /><br /><br />void main()<br />{<br />	int t;<br />	initial();<br />	read_train_data();<br />	//save_train_data();<br />	for(t=0;t<20000;t++)<br />	{<br />		/*rate_w1=0.8-(double)t/30000;<br />        rate_w2=0.8-(double)t/30000;<br />        rate_w3=0.8-(double)t/30000;*/<br />	   train();<br />	}<br />    sim();<br />	save_w_data();<br />	//read_train_data();<br />	//read_w_data();<br />	//sim();<br />}<br />	<br /><br /><br />自己测试识别0-9的结果还不错，代码应该正确描述了BP神经网络的算法。<br /><br /><br />[/code]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mesher</b><br/>
+2009-06-02 09:48:26</p>
+</div>
+<div class="col-10">
+<p>我怎么装完一直是黑屏  在loading，进不去</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>willreno</b><br/>
+2009-06-02 09:54:43</p>
+</div>
+<div class="col-10">
+<p>[b] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=1452&ptid=241]27#[/url] [i]mesher[/i] [/b]<br /><br /><br />将.nds和reno_memo目录放在根目录下，不要放在类似【游戏】目录下等。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>炎羽</b><br/>
+2009-06-02 20:11:11</p>
+</div>
+<div class="col-10">
+<p>网名:炎羽<br /><br />大家好</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cherryzita</b><br/>
+2009-06-02 23:24:36</p>
+</div>
+<div class="col-10">
+<p>網名:cherryzita<br />      女性<br />居住: hong kong  香港<br />星座:水瓶<br />現在讀中4,宅女一名<br /><br />希望能創造出自己的game,對avg game 很熱衷,十分支持avg maker ds</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lipop</b><br/>
+2009-06-03 14:24:53</p>
+</div>
+<div class="col-10">
+<p>看着很神奇</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lipop</b><br/>
+2009-06-03 14:26:06</p>
+</div>
+<div class="col-10">
+<p>O(∩_∩)O~</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16667_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

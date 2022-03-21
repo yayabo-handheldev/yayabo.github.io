@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PSP编程概述</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">PSP编程概述</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-16 08:37:51</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://www.blogjava.net/liwei[/url]<br /><br />元旦准备买NDS，顺带关注了下PSP，其实是想，或许买PSP也不错~<br />PSP很像一个平台，提供了很多东西，譬如官方的PS模拟器~在上面编程也是个不错的想法。<br /><br />国外的一个网站提供了很多信息，PS2Dev Network ([url]http://www.ps2dev.org[/url])，有教程[url]http://ps2dev.org/psp/Tutorials[/url]，现在由于不久前的地震，基本无法登陆那个网站。更多的信息在[url]http://wiki.ps2dev.org/[/url]。<br />要想进行PSP编程，需要学习C或C++。在windows下，需要安装Cygwin [url]http://www.cygwin.com/[/url], 这其实是个模拟linux的环境。在Mac OS X或Linux下需要编译PSPSDK和PSP 工具。这些东西都可以在[url]http://ps2dev.org/psp/Projects[/url]找到。<br /><br />ScriptScribbler ([url]http://www.scriptscribbler.com[/url]) 这个网站现在提供3篇教程，是由Brad Dwyer写的。他也可能会增加教程。第一篇([url]http://www.scriptscribbler.com/psp/tutorials/lesson01.htm[/url]) 教你在windows上搭建开发环境。第二篇([url]http://www.scriptscribbler.com/psp/tutorials/lesson02.htm[/url])教你写一个简单的“HelloWorld”程序。第三篇([url]http://www.scriptscribbler.com/psp/tutorials/lesson03.htm[/url])最有用了，也就是“PSP编程速成”。<br /><br />如果你不想学C或C++，那你可以用LuaPlayer ([url]http://www.luaplayer.org/[/url])，它也有教程[url]http://www.luaplayer.org/tutorial/index.html[/url]教你编程。如果你想学这个，可以到[url]http://forums.ps2dev.org/viewforum.php?f=21[/url]多逛逛。使用Lua，你可以在Windows上测试调试，不需要每次修改后都要放到PSP上运行看效果。关于Windows版的LuaPlayer 你可以到[url]http://forums.ps2dev.org/viewtopic.php?p=22332#22332[/url]察看更多信息。<br />这里有一个例子。<br /><br /> <br />--  starting positions  for  the character<br /> x  =   200<br /> y  =   100<br /><br />  --  A nice color<br /> color  =  Color.new( 128 ,  255 , 0)<br /><br />  --  this flag tells whether the program needs to draw<br /> draw_character  =  true<br /><br />  --  loop forever<br />  while  true do<br /><br />    if  draw_character then<br />      --   print  a rogue at the x / y coordinates<br />     screen: print (x, y,  " @ " , color)<br />     screen.flip()<br />   end<br /><br />    --  check whether the user pressed the pad,  and  move accordingly<br />   pad  =  Controls.read()<br />   draw_character  =  true<br />    if  pad:left() then<br />     x  =  x  -   3<br />   elseif pad:right() then<br />     x  =  x  +   3<br />   elseif pad:up() then<br />     y  =  y  -   3<br />   elseif pad:down() then<br />     y  =  y  +   3<br />    else<br />     draw_character  =  false<br />   end<br /><br />    --  wait  for  the next vertical blank<br />   screen.waitVblankStart()<br /><br /> end</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16966_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

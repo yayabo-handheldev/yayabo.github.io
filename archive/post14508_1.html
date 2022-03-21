@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>AMP菜鸟制作GAL游戏教程6-分支选项</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">AMP菜鸟制作GAL游戏教程6-分支选项</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_15.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>万里无云</b><br/>
+2010-04-28 15:32:47</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 白枫 于 2010-9-6 19:11 编辑 [/i]<br /><br />本节来用游戏的分支选项喵...<br /><br />游戏的分支就是几个分支选项，游戏玩家选择不同的选项时，跳转到不同的剧情喵~。<br /><br />AMP中跳转是用goto和jump语句来实现喵~~。<br />文件内部跳转：<br />goto(*label);       --跳转到*label处开始执行，本个文件里的跳转。<br />注意上面的别掉了*号，杯叔我就是因为掉了*号，吃了很大的亏喵。<br />文件间跳转：<br />jump("xxx.lua"); --跳到xxx.lua开始执行。<br />还记得第二课我们改了跳转到myfirst.lua，就是用的这个。<br /><br />有了跳转，分支就可以用以下的方式：<br />如果选择1 跳转到剧情1，如果选择2，跳转到剧情2.<br /><br />现在介绍下分支语句：<br />ramus和selectchose();<br />1 ramus("选项1","选项2","选项3");<br />ramus后面接选项，可以任一项。<br />例如：<br />ramus("摸摸头","抱抱","哗~~~");<br />chose = selectchose();<br />将显示下图的画面：<br />[attach]4543[/attach]<br />2 得到选择的值<br /><br />chose = selectchose();<br /><br />3 根据值跳转到不同的剧情<br />如果选择了【值】就跳到*xx处执行<br />if chose==值 then goto(*xx);end;<br /><br />例子：杯叔的一天，用了教程5的资源，请将myfirst.lua用下面的语句覆盖<br />[quote]bg(1,"bg01.png",0,0);<br />fg(10,"frame.png",0,0);<br />fgxy(10,0,163);<br />bgon(1);<br />fgon(10);<br /><br />ramus("摸摸头","抱抱","哗~~~");<br />chose = selectchose();<br /><br />if chose == 1 then goto(*motou);end;<br />if chose == 2 then goto(*baobao);end;<br />if chose == 3 then goto(*hgame);end;<br /><br />*motou<br />text("杯叔摸了摸小萝莉的头，小萝莉很开心~[n][!]");<br />goto(*nextday);<br />*baobao<br />text("杯叔和小萝莉抱在了一起[n][!]");<br />goto(*nextday);<br />*hgame<br />text("杯叔和小萝莉开始【哗~~】[n]以下被绿坝娘屏蔽[n][!]");<br />goto(*nextday);<br /><br />--合流<br />*nextday<br />text("......[!]");<br />text("...[!]");<br />text("杯叔的一天过去了[n][!]");[/quote]<br />[attach]4544[/attach]<br /><br />此教程转载于：[url]http://www.iacger.com/bbs/[/url]<br />作者：索菲亚方杯<br />原文网址：[url]http://www.iacger.com/bbs/viewthread.php?tid=5447[/url]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post14508_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

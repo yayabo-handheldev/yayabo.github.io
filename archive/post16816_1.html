@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>如何在NDS上移植操作系统</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">如何在NDS上移植操作系统</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-22 08:46:23</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]www.fw211.com[/url]<br />作者：火精灵<br /><br />    我们知道NDS的向量表是保存在BISO中的，在NDS系统中ARM7的BISO从地址0x00000000开始，ARM9的BIOS地址从 0xFFFF0000开始。这是由ARM的IP配置所决定的。从网上下载到IQue的BIOS，找到biosnds9.rom，用UE打开一看全是指令，呵呵。功力不够深还真看不懂啊。赶紧写一个ARM的反汇编工具吧，于是ARMDASM诞生了(可以在附件中下载)，它只能反ARM指令的汇编，THUMB 不支持，因为我们知道<br />BIOS中的向量代码都是由ARM汇编的。运行反汇编工具，打开反汇编结果文件，找到IRQ的向量地址ffff0018  ea000095  B        0xffff0274，看是跳转到了0xffff0274，这里就是我们要的IRQ处理函数了：<br />ffff0274  e92d500f  STMDB    r13!,{r0-r3,r12,r14}<br /><br />ffff0278  ee190f11  MRC      p15,0x0,r0,c9,c1,#0<br /><br />ffff027c  e1a00620  MOV      r0,r0,LSR #12<br /><br />ffff0280  e1a00600  MOV      r0,r0,LSL #12<br /><br />ffff0284  e2800c40  ADD      r0,r0,#0x4000<br /><br />ffff0288  e28fe000  ADD      r14,pc,#0<br /><br />ffff028c  e510f004  LDR      pc,[r0,#-4]<br /><br />ffff0290  e8bd500f  LDMIA    r13!,{r0-r3,r12,r14}<br />很短，只有8条指令，主要是跳转到用户在(DTCM+0x3FFC)处设置的IRQ处理函数去执行。移植过嵌入式操作系统的朋友都知道，IRQ的处理与 OS的调度密切相关，只要我们接管了IRQ的处理，那么OS的移植就基本上搞定了。我们只要在(DTCM+0x3FFC)的第一条指令是LDMIA    r13!,{r0-r3,r12,r14}就可以恢复到刚进入IRQ时的状态了，那么接下来我们就完全接管了IRQ的处理了。好了，不多说了，有兴趣的朋友可以试试看，移植一个你所熟悉的OS。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16816_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

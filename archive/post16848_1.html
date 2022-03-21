@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>制作自己的prx进阶篇</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">制作自己的prx进阶篇</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-12 09:48:30</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://www.iacger.com[/url]<br />作者：newcreat<br /><br />上面介绍了如何导出函数和建立prx，那么prx这种设计有什么好处呢，我写一个函数是不是要一个一个的导出，当然这种一个一个导出很费时的，这就要用到C语言的函数指针了。定义一个结构，里面是一组函数指针，然后写一个外部函数GetStruct返回这个结构就行。<br /><br />例如：一组文件操作：<br />[code=c]<br />typedef int  (*stream_close_func)( stream* );<br />typedef long (*stream_read_func)( stream*, void*, unsigned long );<br />typedef long (*stream_write_func)( stream*, void*, unsigned long );<br />typedef long (*stream_seek_func)( stream*, long, unsigned int );<br />typedef long (*stream_tell_func)( stream* );<br />[/code]<br />然后定义一个结构：<br />[code=c]<br />typedef struct stream_base_struct {<br /> int     type;   // Stream type ID<br /> int     eos;   // EOS flag (0 for protocols)<br /> unsigned int  size;   // Stream size in bytes (0 for protocols)<br /> unsigned int  mode;   // Stream open mode (possible open modes for protocols)<br /> char    name[256];  // Stream name (filename/URL/memory address)<br /><br /> stream_open_func open;<br /> stream_close_func close;<br /> stream_read_func read;<br /> stream_write_func write;<br /> stream_seek_func seek;<br /> stream_tell_func tell;<br />} stream_base, stream_protocol;<br />[/code]<br />最后写一个函数GetStruct返回这个结构的实例，那么就有这组函数了，这就是c的面向对象的思想。<br /><br />当然可以用c++的类返回类的实例也行。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>........</b><br/>
+2010-08-07 19:08:20</p>
+</div>
+<div class="col-10">
+<p>我有用，不过对自制主题，内核的是完全的外行</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>a4381782</b><br/>
+2010-08-07 19:08:40</p>
+</div>
+<div class="col-10">
+<p>喜欢的话 聚钱然后一起购入</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16848_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS开发环境</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS开发环境</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-22 08:56:17</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]www.fw211.com[/url]<br />作者：火精灵<br /><br />要开发NDS程序首先要解决开发环境的问题，我们知道NDS有两颗ARM的CPU，其中一个是33M的ARM7TDMI用于音频处理，另外一个是 66M的ARM946E-S用于视频处理。这就决定了我们所使用的开发环境一定是ARM的开发环境。那么当前主流的ARM开发环境主要有免费的GNU工具链和商业的集成开发环境，比如SDT、ADS等等。有了开发环境，令一个非常重要的东东就是SDK了。下面我们就分别介绍一下：<br /><br />    devkitPro是著名的免费开发套件，它支持PSP，GBA，NDS，GP32等多个游戏平台的程序开发，这里我们只需要的是NDS的开发套件，所以下载安装的时候我们只选择msys和devkitARM就够了。安装完毕后我们可以用命令行进入到devkitProexamples<br />ds目录下运行make来编译示例程序了。针对免费开发套件的SDK有ndslib和palib，这连个都是开源项目在sourceforge上可以下载到源码。现在有人将免费开发套件集成到了vc2005中，我把他的配置和相关工具打包放到附件中，有兴趣的可以试试看。<br /><br />   再来说说商业的NDS开发环境，任天堂商业的开发环境只有得到授权的公司才能拿到，叫做nitroSDK。有兴趣的可以到[url]www.warioworld.com[/url]上看看究竟。想要nitroSDK朋友可google一下，有好多BT可以下载。这里我们主要介绍的是SDT和ADS这两个通用的ARM开发工具。国外有很多模拟器达人就是使用这两款集成开发环境的，至于为什么，我觉得可能一是比免费的好用，二是效率比免费高吧。我比较喜欢用的是ADSv1.2，网上有破解版可以供我们使用。但是使用ADS有一个问题，那就是SDK的问题，因为编译器的问题GNU arm汇编与ARM汇编格式不兼容，这就需要我们自己重新移植或者自己来写SDK了。这也有个好处，就是我们有理由更努力的去看文档了。说到文档我们不能不提到GBATEK，里面的东西很全，而且很多nds模拟器就是根据它来设计的。有兴趣的到附件中去下载吧！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16815_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>我也玩PSP开发！（2）—— PSPSDK示例 源码分析</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">我也玩PSP开发！（2）—— PSPSDK示例 源码分析</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-03-02 16:32:24</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.csdn.net/lee576/[/url]<br /><br />放假啊，这叫玩啊，天天不务正业，还玩些可能和未来工作无关的技术！内心充满了罪恶感啊<br /><br />    写HelloWorld太无聊了，转了一圈PSPSDK发现有自带sample，方便快速上手的好东西，位置在开发包/psp/sdk/samples下面，其中包括声音，控制器，红外，usb，wifi，电源等等。还真不少，先挑简单的看看。恩～～我看controller挺简单！就看这个！<br /><br /><br />     打开controller/base目录，只有一个main.c 和 Makefile。肯定不会很难，先make一个试试，还好很顺利，编译得到四个文件： main.o controller_basic.elf EBOOT.PBP PARAM.SFO。<br />    main.o 不用说肯定是main.c的生成的目标文件。<br />    controller_basic.elf 我知道ELF是linux下的二进制文件格式，可能PSP也是这个格式。<br />    EBOOT.PBP 这个就是最终的执行文件了，这个应该是包装过的，其中包含一些图标文件什么的。<br />    PARAM.SFO 这个我就不知道，有高手可以告诉我，（我怀疑！我猜测！是源码中定义的那些宏有关，是一些信息，最后打包到EBOOT.PBP。不要太相信，只是个思路）。<br /><br />    然后就是插上usb，靠到psp/game下，建个文件夹，叫什么名都可以！然后把EBOOT.PBP（不要改名字！）放进去，运行就可以了。<br /><br />    也看了运行后什么模样了！下面就是分析源码了，分析都写成注释了！<br /><br />    以下是源码 ：[code=c]/*<br /> * PSP Software Development Kit - [url]http://www.pspdev.org[/url]<br /> * -----------------------------------------------------------------------<br /> * Licensed under the BSD license, see LICENSE in PSPSDK root for details.<br /> *<br /> * main.c - Basic Input demo -- reads from control pad and indicates button<br /> *          presses.<br /> *<br /> * Copyright (c) 2005 Marcus R. Brown <[email]mrbrown@ocgnet.org[/email]><br /> * Copyright (c) 2005 James Forshaw <[email]tyranid@gmail.com[/email]><br /> * Copyright (c) 2005 John Kelley <[email]ps2dev@kelley.ca[/email]><br /> * Copyright (c) 2005 Donour Sizemore <[email]donour@uchicago.edu[/email]><br /> *<br /> * : main.c 1095 2005-09-27 21:02:16Z jim $<br /> */<br /><br />/**//* psp的一些头文件，从文件名应该能看出来时干嘛使得 */<br />#include <pspkernel.h><br />#include <pspdebug.h><br />#include <pspctrl.h><br /><br />/**//* psp sdk中自带标准c库和标准c++库   */<br />#include <stdlib.h><br />#include <string.h><br /><br /><br />/**//* 定义模块信息  包括版本 */<br />/**//* Define the module info section */<br />PSP_MODULE_INFO("CONTROLTEST", 0, 1, 1);<br /><br />/**//* 定义主线程属性 还没具体研究，有时间再改上*/<br />/**//* Define the main thread's attribute value (optional) */<br />PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU);<br /><br /><br />/**//* 这个纯属为了方便 pspDebugScreenPrintf 的用法和c库中的printf用法完全一样，不过pspDebugScreenPrintf只能用在初始化了DebugScreen以后*/<br />/**//* Define printf, just to make typing easier */<br />#define printf    pspDebugScreenPrintf<br /><br />void dump_threadstatus(void);<br /><br />/**//*下面的代码会看见，这是控制主循环推出的条件变量*/<br />int done = 0;<br /><br />/**//*当用户按下home键退出时的回调函数*/<br />/**//* Exit callback */<br />int exit_callback(int arg1, int arg2, void *common)<br />...{<br />                     /**//*让主循环推出*/<br />    done = 1;<br />    return 0;<br />}<br /><br />/**//* 这么看来需要一个专门的线程来监听用户的操作，建立这么一个线程监听用户来调用相应的回调函数*/<br />/**//* Callback thread */<br />int CallbackThread(SceSize args, void *argp)<br />...{<br />    int cbid;<br />                      /**//* 创建一个Exit Callback回调函数返回一个类似handle的东西*/<br />    cbid = sceKernelCreateCallback("Exit Callback", exit_callback, NULL);<br />                      /**//* 在把这个回调函数注册商 */<br />    sceKernelRegisterExitCallback(cbid);<br />                     /**//* 让他睡眠 当用户要退出的时候会唤醒*/<br />    sceKernelSleepThreadCB();<br /><br />    return 0;<br />}<br /><br />/**//* 这个纯粹是为了模块化了，把安装回调函数的代码都写着里了 */<br />/**//* Sets up the callback thread and returns its thread id */<br />int SetupCallbacks(void)<br />...{<br />    int thid = 0;<br />                  <br />                     /**//* 创建那个回调函数线程 */<br />    thid = sceKernelCreateThread("update_thread", CallbackThread,<br />                     0x11, 0xFA0, 0, 0);<br />    if(thid >= 0)<br />    ...{<br />                                          /**//* 开始执行 */<br />        sceKernelStartThread(thid, 0, 0);<br />    }<br /><br />    return thid;<br />}<br /><br />int main(void)<br />...{<br />    SceCtrlData pad;   /**//*控制器的结构体*/<br /> <br /><br />    pspDebugScreenInit(); /**//*初始化DebugScreen 这样可以用pspDebugScreenPrintf在上面输出了*/<br />                    <br />                     /**//*那个回调函数线程*/<br />    SetupCallbacks();<br />                     <br />                     /**//*好像是什么取样周期，莫非可以设置游戏时连发的速度， 默认是0*/<br />    sceCtrlSetSamplingCycle(0);<br /><br />                     /**//* 控制器的模式 有数字（PSP_CTRL_MODE_DIGITAL）和类比（PSP_CTRL_MODE_ANALOG）两个 这里用的是类比的 */<br />    sceCtrlSetSamplingMode(PSP_CTRL_MODE_ANALOG);<br /><br />                     /**//* done !那个主循环变量*/<br />    while(!done)...{<br />                                          /**//* 设置光标的位置*/<br />        pspDebugScreenSetXY(0, 2);<br /><br />                                           /**//* 读取用户的输入，psp没键盘，就是那些按键了*/<br />            sceCtrlReadBufferPositive(&pad, 1); <br />                                           <br />                                          /**//* 类比摇杆的坐标*/<br />        printf("Analog X = %d ", pad.Lx);<br />        printf("Analog Y = %d  ", pad.Ly);<br />                                          /**//* 其他按键的判断，按了哪个就输出相应的文字，用宏都表示出来了，看名字可以看出来*/<br />        if (pad.Buttons != 0)...{<br />            if (pad.Buttons & PSP_CTRL_SQUARE)...{<br />                printf("Square pressed  ");<br />            }<br />            if (pad.Buttons & PSP_CTRL_TRIANGLE)...{<br />                printf("Triangle pressed  ");<br />            } <br />            if (pad.Buttons & PSP_CTRL_CIRCLE)...{<br />                printf("Cicle pressed  ");<br />            } <br />            if (pad.Buttons & PSP_CTRL_CROSS)...{<br />                printf("Cross pressed  ");<br />            } <br /><br />            if (pad.Buttons & PSP_CTRL_UP)...{<br />                printf("Up pressed  ");<br />            } <br />            if (pad.Buttons & PSP_CTRL_DOWN)...{<br />                printf("Down pressed  ");<br />            } <br />            if (pad.Buttons & PSP_CTRL_LEFT)...{<br />                printf("Left pressed  ");<br />            } <br />            if (pad.Buttons & PSP_CTRL_RIGHT)...{<br />                printf("Right pressed  ");<br />            }      <br /><br />            if (pad.Buttons & PSP_CTRL_START)...{<br />                printf("Start pressed  ");<br />            }<br />            if (pad.Buttons & PSP_CTRL_SELECT)...{<br />                printf("Select pressed  ");<br />            }<br />            if (pad.Buttons & PSP_CTRL_LTRIGGER)...{<br />                printf("L-trigger pressed  ");<br />            }<br />            if (pad.Buttons & PSP_CTRL_RTRIGGER)...{<br />                printf("R-trigger pressed  ");<br />            }      <br />        }<br />    }<br /><br />                     /**//* 彻底退出了*/<br />    sceKernelExitGame();<br />    return 0;<br />}[/code]以上就是这个sample了，一点也不难！还算是再玩得程度，不过开发包公布出来的函数还真是少的可怜啊！要想写出更好的东西，那就要看对开源代码库的移植了！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16802_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

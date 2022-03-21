@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>GBA扩展卡软件GBAExpLoader最详尽使用教程</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">GBA扩展卡软件GBAExpLoader最详尽使用教程</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-03-13 17:04:27</p>
+</div>
+<div class="col-10">
+<p>文章来源：网络 作者：不详<br />[url=http://www.yayabo.cn/thread-2526-1-1.html][color=DarkOrchid]GBAExpLoader下载[/color][/url]<br />由于目前的主流S1端烧录卡都不支持玩GBA游戏，所以想玩GBA游戏的玩家除了可以购买S2端DS烧录卡以外，还可以选择配合S1端实现GBA游戏，震动以及扩展内存的扩展卡，购买这样的扩展卡，除了省去升级的烦恼以外，还可以实现和S1端烧录卡的联动，以及实现DS的某些特殊功能，比如：联动、上网浏览器内存等。<br />　　目前，比较流行的有EZ推出的三合一工具、EZ4L、EWIN扩展卡二合一以外，还有DSTT以及M3豪华版中推出的扩展卡，一般玩家可以根据自己的烧录需要合理选择。当然，如果你是早就拥有了S1端烧录卡，只要想添置一块S2扩展卡的话，那么EZ的三合一扩展卡是你比较合适的选择。<br />　　EZ官方本身只提供EZ5烧录卡和EZ三合一工具的联动。但是，日本DS自制软件作者Rudolph开发出一款工具GBA ExpLoader，使用本程序，你可以通过s2端的扩展卡来运行s1烧录卡中tf存储卡上的gba游戏。如果你的s1接口的烧录卡支持软复位，你也可以将其当作震动卡及内存扩展卡来使用。<br />　　<br />　　三合一扩展卡的规格 1.烧录模式 2.内存模式 3 sram存档区<br />　　1. 256Mbit(32MByte) NORfalsh page size is 1Mbits(128KB)<br />　　2. 128Mbit(16MByte) PSRAM page size is 1Mbits(128KB)<br />　　3. 4Mbit(512KByte) SRAM page size is 64Kbits(8KB)<br />　　<br />　　ez4 lite-delux的规格<br />　　1. 384Mbit(48MByte) NORfalsh page size is 1Mbits(128KB)<br />　　2. 256Mbit(32MByte) PSRAM page size is 1Mbits(128KB)<br />　　3. 8Mbit(1MByte) SRAM page size is 64Kbits(8KB)<br />　　<br />　　ewin扩展卡的规格 1.sdram内存 2.sram存档<br />　　1. 256Mbit(32MByte) SDRAM page size is 16Mbits(2MB)<br />　　2. 2Mbit(256KByte) SRAM page size is 256Kbits(64KB) OR<br />　　2. 1Mbit(128KByte) SRAM page size is 256Kbits(64KB)<br />　　＜DSTT GBA&EXPLORER 2IN1＞<br />　　DSTT扩展卡的规格 1.sdram内存 2.sram存档<br />　　1. 256Mbit(32MByte) SDRAM<br />　　2. 1Mbit(128KByte) SRAMpage size is 256Kbits(64KB)<br />　　＜GBA Expansion Pack＞<br />　　M3 gba扩展卡的规格 1.sdram内存 2.sram存档<br />　　1. 256Mbit(32MByte) SDRAM<br />　　2. 8Mbit(1MByte) SRAMpage size is 256Kbits(64KB)<br />目前，这款软件的最新版本是0.57（文章老了，最新版是[url=http://www.yayabo.cn/thread-2526-1-1.html]0.58b[/url]），以下是DSTT烧录卡使用该软件和三合一扩展卡联动的教程。<br />　　1.首先对GBA_ExpLoader.NDS打DLDI补丁，（如果你的烧录卡支持自动DLDI补丁，那么你就不必打了），比如DSTT就不必打补丁。<br />　　2.你可以手动在TF卡根目录下建立"GBA_SAVE" 和 "GBA_SIGN"文件夹，或者你可以在DS上运行主程序，会自动生成2个文件夹。<br /><br />[img=272,204]http://pic1.duowan.com/nds/0809/85593290602/85593396799.jpg[/img]<br /><br /><br />　　3.将gba文件（clean rom）拷贝到你的TF卡中。<br />　　4.将SAV存档文件拷到 "GBA_SAVE"文件夹下（如果没有SAV存档文件，程序会自动建立新存档文件）<br />　　*如果你想使用gba游戏时外框背景填充的话，将 "gbaframe.bmp 图片(24位 或 8位)"放在"GBA_SIGN"文件夹下。<br />　　关于GBA ExpLoader.ini文件的修改：<br />　　修改这个文件可以改动设置。用#或者！号加在一行的最前面可以添加一条注释行，你需要确定你将此文件放在了存储卡的根目录下<br />　　*SaveDir 可以改动存储SAV文件的目录（默认是/GBA_SAVE）<br />　　*SignDir 可以改动SGN文件以及header.dat（用处见下文）文件的存储目录（默认是/GBA_SIGN）<br />　　*No_MultiSave 禁用多存档功能。将其注释之后便可开启这功能。<br />　　5.在烧录卡界面运行 "GBA_ExpLoader.NDS"<br /><br />[img=272,204]http://pic5.duowan.com/nds/0809/85593290602/85593396800.jpg[/img]<br /><br /><br />　　你可以看到如下界面：<br /><br />[img=272,204]http://pic1.duowan.com/nds/0809/85593290602/85593396801.jpg[/img]<br /><br /><br />　　*在 "EZ三合一扩展卡"中, 通过L或者R键来改变模式(PSRAM模式, NOR模式或者扩展模式<br /><br />[img=272,204]http://pic1.duowan.com/nds/0809/85593290602/85593396802.jpg[/img]<br /><br /><br />[align=center]　　PSRAM/SDRAM 模式[b]按键说明：[/b][/align]<br />　　A：将gba文件写入psram内存并打入sram补丁<br />　　（从sav文件读取sram数据之后，然后从psram内存上运行gba游戏）<br />　　B：备份sram数据到sav文件中<br />　　X：备份所有的sram数据到sram.bin文件中<br />　　Y：恢复sram.bin数据到sram中<br />　　R：切换到其他模式<br />　　在三合一扩展卡上，你可以在psram模式下运行最大到16000KB（不到16MB）的游戏，而且如果在支持软复位的情况下按SELECT键可以返回你烧录卡菜单。你会一直在内存中运行gba游戏，直到DS关机或者拔出你的扩展卡。<br />　　当你想交换sav文件的时候，先按B键来备份sav数据（或者运行其他的gba游戏）然后就可以交换文件了。<br />　　sav文件将会在每次你运行gba游戏之前被写入sram，即使你每次运行是同一个文件。注意如果你的扩展卡只有128k的sram，你就不能玩存档格式为1Mb flash的游戏。<br /><br />[img=272,204]http://pic3.duowan.com/nds/0809/85593290602/85593396803.jpg[/img]<br /><br /><br />　　在上屏的菜单中，将广标移动到GBA游戏上，按A键将游戏读取进内存，等待几秒之后，就可以进入GBA游戏画面，<br /><br />[img=272,204]http://pic4.duowan.com/nds/0809/85593290602/85593396804.jpg[/img]<br /><br /><br />　　如果你在psram/sdram模式下运行gba游戏，下次再运行时存档文件将会自动存储，你可以选择存在哪里或者不存档，如下图：<br /><br />[img=272,204]http://pic1.duowan.com/nds/0809/85593290602/85593396805.jpg[/img]<br /><br /><br /><br />[img=272,204]http://pic1.duowan.com/nds/0809/85593290602/85593396806.jpg[/img]<br /><br /><br />[align=center]　　nor模式（仅在扩展卡是EZ三合一卡上开启）[/align]<br />[align=center][b]按键说明：[/b][/align]<br />　　A：拷贝游戏<br />　　（备份sram数据到sav文件中之后，将gba文件写入nor内存并打入sram补丁，然后从sav文件读取sram数据）<br />　　B：备份sram数据到sav文件中<br />　　X：运行烧录在nor内存中的gba游戏<br />　　Y：从sav文件读取sram数据<br />　　在该模式中，中间的方框显示目前Nor内存中已经存在的游戏，如果你要玩该游戏的话，不需要再次烧录，直接按X键进入游戏，如下图。此时，按A键读取存档，或者是不读取存档，全新游戏。<br /><br />[img=272,204]http://pic2.duowan.com/nds/0809/85593290602/85593396807.jpg[/img]<br /><br /><br />　　如果要重新烧录游戏的话，可以按A键。这时候，如果你是第一次运行该游戏的话，就会先对该游戏进行分析。然后先进行Nor内存的擦除，如下图：<br /><br />[img=272,204]http://pic2.duowan.com/nds/0809/85593290602/85593396808.jpg[/img]<br /><br /><br />　　之后，进入游戏的烧录过程，如下图：<br /><br />[img=272,204]http://pic3.duowan.com/nds/0809/85593290602/85593396809.jpg[/img]<br /><br /><br />　　当然，烧录完毕游戏之后，你可以像运行普通gba卡带一样在ds的菜单中运行nor内存中的游戏。<br /><br />[img=272,204]http://pic4.duowan.com/nds/0809/85593290602/85593396810.jpg[/img]<br /><br /><br /><br />[img=272,204]http://pic3.duowan.com/nds/0809/85593290602/85593396811.jpg[/img]<br /><br /><br />[align=center]　　扩展模式（仅在三合一卡中开启）[/align]<br />　　该菜单中可以改动震动等级（低、中、高），打ds浏览器内存补丁以及软复位[b]关于软复位：[/b]<br />　　支持软复位的s1烧录卡如下：<br />　　1. 本身支持的烧录卡有：R4/M3Simply、DSLink<br />　　2. 使用系统设置来支持软复位的有：SCDS(ONE)、N-Card（请拷贝udisk.nds到根目录下）、Acekard R.P.G（请拷贝akmenu4.nds到根目录下）、X9SD、DSTT(TTDS)<br />　　*如果gba游戏的存档类型不是sram，那么本软件会自动对gba游戏进打sram补丁，该软件支持的存档类型如下：<br />　　EEPROM_V111, EEPROM_V120, EEPROM_V121, EEPROM_V122, EEPROM_V124, EEPROM_V125, EEPROM_V126<br />　　FLASH_V120, FLASH_V121, FLASH_V123, FLASH_V124, FLASH_V125, FLASH_V126<br />　　FLASH512_V130, FLASH512_V131, FLASH512_V133<br />　　FLASH1M_V102, FLASH1M_V103<br />　　Special save type of Famicom Mini(Classic NES)EEPROM_V122, EEPROM_V124 and undefined type<br />　　[b]豆知识：[/b]<br />　　*存档文件被存在 "GBA_SAVE"。文件名和rom名相同；<br />　　*如果你第一次运行rom，分析数据(SGN file) 会存在 "GBA_SIGN"；<br />　　*如果文件的后缀是bin，那么本软件就不会补丁，而且sav文件大小将会设置为64kb（注意，需要联动的朋友请注意）；<br />　　*在文件选择窗口，最高的 "SAV"将会被存为".SAV"而<1> 到 <5> 会被存为".SV1"到 ".SV5"；<br />　　*你最好自己建立"GBA_SAVE" 和"/BA_SIGN"<br />　　（一些s1烧录卡不能正确的建立这些文件夹。n-card系列会花很长时间来建立文件夹）[i=s] 本帖最后由 qxshark 于 2010-3-13 17:08 编辑 [/i]<br /><br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pwlsysg</b><br/>
+2010-03-13 17:05:41</p>
+</div>
+<div class="col-10">
+<p>沙发是我的<br />又有新游戏可以玩了 感谢LZ</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-13 17:25:54</p>
+</div>
+<div class="col-10">
+<p>谢叔终于把1.5做出来了~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-03-13 17:27:10</p>
+</div>
+<div class="col-10">
+<p>先抢沙发！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-13 17:27:12</p>
+</div>
+<div class="col-10">
+<p>千叔把这个做完美了么？？？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-13 17:28:47</p>
+</div>
+<div class="col-10">
+<p>话说我倒是有一张GBA端的烧录卡~~~不过GBA游戏从来没烧录成功过就是了~~~不知道是什么原因~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2010-03-13 17:29:28</p>
+</div>
+<div class="col-10">
+<p>沙发没了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-13 17:29:40</p>
+</div>
+<div class="col-10">
+<p>嘎嘎嘎~~~掌叔杯具了~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuuhimesama</b><br/>
+2010-03-13 17:30:52</p>
+</div>
+<div class="col-10">
+<p>纳尼？赶紧试用。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-13 17:31:06</p>
+</div>
+<div class="col-10">
+<p>这个是干嘛的？？？补丁怎么得到~~~这个工具能自行解析反烧录rom然后制作出补丁么？？？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-13 17:37:39</p>
+</div>
+<div class="col-10">
+<p>又发现新问题了~~~有些游戏读取的时候进度条会卡在80%左右的位置~~~不管重启几次都是一样，TTmenu和YSmenu也都是一样~~~不能读取的游戏都是同一卡在80%左右的位置~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>everforever</b><br/>
+2010-03-13 17:40:35</p>
+</div>
+<div class="col-10">
+<p>- -报道——多多指教</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pwlsysg</b><br/>
+2010-03-13 17:41:42</p>
+</div>
+<div class="col-10">
+<p>我用的EZ5卡找了好久都没找到使用教程，感谢分享啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pwlsysg</b><br/>
+2010-03-13 17:45:35</p>
+</div>
+<div class="col-10">
+<p>虽然不会用，但我会凑热闹</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>asxzl5945</b><br/>
+2010-03-13 17:52:53</p>
+</div>
+<div class="col-10">
+<p>迅速占楼，强烈表示支持<br />那几个BUG...</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15316_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

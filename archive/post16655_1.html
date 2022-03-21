@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>MP3录音软件</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">MP3录音软件</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lipop</b><br/>
+2009-06-05 20:44:35</p>
+</div>
+<div class="col-10">
+<p>[url]http://www.fw211.com/article.asp?id=13[/url]<br />  最近写了一个NDS上的录音程序，基本原理就是使用ARM7的定时器来完成不同频率的采样，这里采的是8位无符号数，DS也可以采12位无符号数，然后转换成16位有符号的PCM，通过FIFO通知ARM9采样完成，利用共享地址机制将采好的数进行MP3编码，然后调用文件系统接口将录音文件写入R4TF卡。由于我的烧录卡是R4TF所以程序也仅支持R4TF，其他的无法支持（懒得用DLDI）。使用方法也非常简单，上下键来调整采样率，范围为16000HZ、22050HZ、24000HZ、32000HZ，左右键来调整位率，范围为32KBPS、64KBPS、96KBPS、128KBPS，L/R键调整麦克增益，范围为+20DB、+40DB、+80DB、+160DB，A键开始录音，B键停止录音，如果用触摸屏操作的话还有一个暂停的选项。录音文件最后被保存到根目录下的mp3enc目录下，<br /><br />昨天收到一个bug，录长时间可能会将tf卡的文件系统写乱，我晚上试了试，没发现问题，但是为了安全起见，建议录音的时候使用小容量的tf卡，并且备份你卡上的内容！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>longzusjl</b><br/>
+2009-06-06 15:51:28</p>
+</div>
+<div class="col-10">
+<p>支持啊，话说遇到一个问题，加载头像一直失败<br /><br />@bg(avgFiles/bg/bg2,1);<br />@head(avgFiles/chara/rw2);<br />@say(0,0,,"这是哪里？");<br />@say(0,0,,"该不会是迷路了吧......");<br />@head(avgFiles/chara/rw1);<br />@say(0,0,,"哎呀");<br />@head(avgFiles/chara/rw2);<br />@say(0,0,,"啊！");<br /><br />头像名称：rw1.bin  rw2.bin<br /><br />请教哪里出现的问题</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16655_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

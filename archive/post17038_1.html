@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>［PSP教程04］编外篇，psp开发整合包</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">［PSP教程04］编外篇，psp开发整合包</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_18.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-05 17:02:49</p>
+</div>
+<div class="col-10">
+<p>摘自：TOPOC　studio<br />作者：newcreat<br />在制作psp的程序过程中，发现在windows下编译程序是比较方便一些，但是devkitpro支持的库太少，不支持一些库的配置，例如 freetype，sdl，sdl_ttf,sdl_image，所以萌发了我整合所有psp开发库的想法，我把linux开发环境下的所有的psp库都提出来，修改了他们的配置，使他们能够顺利的编译．目前跟我linux的虚拟机的开发环境一样了．libnge库也是其中的一部分．<br /><br />本安装包可以取代devkitpro<br /><br />PSP开发整合包简介<br /><br />本整合包是为了更简单的进行软件开发而制作而成。目的是作到一键安装，省去编译与配置的麻烦。预装了以下的开发库：<br />1 PSPSDK,psp开发最基础的开发库，采用最新的版本(2007年7月的版本)。<br />2 SDL,跨平台的开发库,包括SDL,SDL_image(图象加载库),SDL_ttf(freetype处理),SDL_mixer(音频处理)，包含psp版和windows版。<br />3 libnge,跨平台的开发库，基于sdl，包含psp版和windows版，主要是为了弥补sdl在图象显示的不足，在psp上直接用gu做硬件加速，在windows下采用ogl做加速，达到很高的fps，中国象棋pspv1.2就是采用它制作完成，制作过程全部在windows下完成，没有用过 psp调试，真正做到在windows下写程序在psp上运行。详情请看在线文档。<br />4 PSPGL,psp用的opengl库，0703MOD版，支持displaylist的版本，需要原版的可以用_old后缀的库。<br />5 libjpeg,libz,libpng,jpeg，png图象处理库。<br />6 libmad，libogg，libvorbis，mp3，ogg解码库。<br />7 libfreetype，windows truetype字体支持库。<br />8 libmikmod，mod，wav等解码库。<br />9 libiconv，字符集转换库。<br /><br />下载地址(共4个压缩分卷）<br /><br />[url]http://code.google.com/p/topoc/downloads/list[/url]<br /><br />安装方式：<br /><br />一键安装，无需配置．<br /><br />解压之后有个setup.exe，运行即可，安装程序会做好psp版所有的配置．windows版的vc的配置请看［教程00］<br /><br />编译程序时，在　所有程序　启动psp开发环境即可.详细请看下面<br /><br />卸载方式：    <br /><br />控制面版选择卸载即可．<br /><br />使用教程：<br /><br />例如需要编译前几课libnge的demo的psp版，非常简单了．下面是图文说明<br /><br />１　程序中选择启动psp开发环境<br />[attach]17[/attach]<br />２　执行之后，会出现命令提示框：例如我要编译lesson1，进入lesson1目录，make即可<br />[attach]18[/attach]<br />３　编译windows版请看［教程００］，由于很简单也说明一下，按照［教程００］设置好include与lib以后，打开工程文件即可（libnge＿win或者libnge＿psp目录里的demo均可，二者是一样的,要去掉psp的debug信息请看教程００最后面）．  <br /><br />本安装包还有其他库例如sdl，freetype，使用也是同样方便．</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post17038_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

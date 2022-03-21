@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>lua 的变量环境</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">lua 的变量环境</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-18 20:44:19</p>
+</div>
+<div class="col-10">
+<p>Lua用一个名为environment普通的表来保存所有的全局变量。（更精确的说，Lua在一系列的environment中保存他的“global”变量，但是我们有时候可以忽略这种多样性）这种结果的优点之一是他简化了Lua的内部实现，因为对于所有的全局变量没有必要非要有不同的数据结构。另一个(主要的)优点是我们可以像其他表一样操作这个保存全局变量的表。为了简化操作，Lua将环境本身存储在一个全局变量_G中，（_G._G等于_G）。例如，下面代码打印在当前环境中所有的全局变量的名字：<br />for n in pairs(_G) do print(n) end<br />这一章我们将讨论一些如何操纵环境的有用的技术。<br />14.1 使用动态名字访问全局变量<br />通常，赋值操作对于访问和修改全局变量已经足够。然而，我们经常需要一些原编程（meta-programming）的方式，比如当我们需要操纵一个名字被存储在另一个变量中的全局变量，或者需要在运行时才能知道的全局变量。为了获取这种全局变量的值，有的程序员可能写出下面类似的代码：<br />    loadstring("value = " .. varname)()<br />or<br />    value = loadstring("return " .. varname)()<br />如果varname是x，上面连接操作的结果为："return x"（第一种形式为 "value = x"），当运行时才会产生最终的结果。然而这段代码涉及到一个新的chunk的创建和编译以及其他很多额外的问题。你可以换种方式更高效更简洁的完成同样的功能，代码如下：<br />value = _G[varname]<br />因为环境是一个普通的表，所以你可以使用你需要获取的变量（变量名）索引表即可。<br />也可以用相似的方式对一个全局变量赋值：_G[varname] = value。小心：一些程序员对这些函数很兴奋，并且可能写出这样的代码：_G["a"] = _G["var1"]，这只是a = var1的复杂的写法而已。<br />对前面的问题概括一下，表域可以是型如"io.read" or "a.b.c.d"的动态名字。我们用循环解决这个问题，从_G开始，一个域一个域的遍历：<br />function getfield (f)<br />    local v = _G      -- start with the table of globals<br />    for w in string.gfind(f, "[%w_]+") do<br />      v = v[w]<br />    end<br />    return v<br />end<br />我们使用string库的gfind函数来迭代f中的所有单词（单词指一个或多个子母下划线的序列）。相对应的，设置一个域的函数稍微复杂些。赋值如：<br />a.b.c.d.e = v<br />实际等价于：<br />local temp = a.b.c.d<br />temp.e = v<br />也就是说，我们必须记住最后一个名字，必须独立的处理最后一个域。新的setfield函数当其中的域（译者注：中间的域肯定是表）不存在的时候还需要创建中间表。<br />function setfield (f, v)<br />    local t = _G        -- start with the table of globals<br />    for w, d in string.gfind(f, "([%w_]+)(.?)") do<br />      if d == "." then -- not last field?<br />          t[w] = t[w] or {}    -- create table if absent<br />          t = t[w]          -- get the table<br />      else                -- last field<br />          t[w] = v          -- do the assignment<br />      end<br />    end<br />end<br />这个新的模式匹配以变量w加上一个可选的点（保存在变量d中）的域。如果一个域名后面不允许跟上点，表明它是最后一个名字。（我们将在第20章讨论模式匹配问题）。使用上面的函数<br />setfield("t.x.y", 10)<br />创建一个全局变量表t，另一个表t.x，并且对t.x.y赋值为10：<br />print(t.x.y)                --> 10<br />print(getfield("t.x.y"))    --> 10<br />14.2声明全局变量<br />全局变量不需要声明，虽然这对一些小程序来说很方便，但程序很大时，一个简单的拼写错误可能引起bug并且很难发现。然而，如果我们喜欢，我们可以改变这种行为。因为Lua所有的全局变量都保存在一个普通的表中，我们可以使用metatables来改变访问全局变量的行为。<br />第一个方法如下：<br />setmetatable(_G, {<br />    __newindex = function (_, n)<br />      error("attempt to write to undeclared variable "..n, 2)<br />    end,<br /> <br />    __index = function (_, n)<br />      error("attempt to read undeclared variable "..n, 2)<br />    end,<br />})<br />这样一来，任何企图访问一个不存在的全局变量的操作都会引起错误：<br />> a = 1<br />stdin:1: attempt to write to undeclared variable a<br />但是我们如何声明一个新的变量呢？使用rawset，可以绕过metamethod：<br />function declare (name, initval)<br />    rawset(_G, name, initval or false)<br />end<br />or 带有 false 是为了保证新的全局变量不会为 nil。注意：你应该在安装访问控制以前（before installing the access control）定义这个函数，否则将得到错误信息：毕竟你是在企图创建一个新的全局声明。只要刚才那个函数在正确的地方，你就可以控制你的全局变量了：<br />> a = 1<br />stdin:1: attempt to write to undeclared variable a<br />> declare "a"<br />> a = 1      -- OK<br />但是现在，为了测试一个变量是否存在，我们不能简单的比较他是否为nil。如果他是nil访问将抛出错误。所以，我们使用rawget绕过metamethod：<br />if rawget(_G, var) == nil then<br />    -- 'var' is undeclared<br />    ...<br />end<br />改变控制允许全局变量可以为nil也不难，所有我们需要的是创建一个辅助表用来保存所有已经声明的变量的名字。不管什么时候metamethod被调用的时候，他会检查这张辅助表看变量是否已经存在。代码如下：<br />local declaredNames = {}<br />function declare (name, initval)<br />    rawset(_G, name, initval)<br />    declaredNames[name] = true<br />end<br />setmetatable(_G, {<br />    __newindex = function (t, n, v)<br />    if not declaredNames[n] then<br />      error("attempt to write to undeclared var. "..n, 2)<br />    else<br />      rawset(t, n, v)  -- do the actual set<br />    end<br />end,<br />    __index = function (_, n)<br />    if not declaredNames[n] then<br />      error("attempt to read undeclared var. "..n, 2)<br />    else<br />      return nil<br />    end<br />end,<br />})<br />两种实现方式，代价都很小可以忽略不计的。第一种解决方法：metamethods在平常操作中不会被调用。第二种解决方法：他们可能被调用，不过当且仅当访问一个值为nil的变量时。<br />14.3 非全局的环境<br />全局环境的一个问题是，任何修改都会影响你的程序的所有部分。例如，当你安装一个metatable去控制全局访问时，你的整个程序都必须遵循同一个指导方针。如果你想使用标准库，标准库中可能使用到没有声明的全局变量，你将碰到坏运。<br />Lua 5.0允许每个函数可以有自己的环境来改善这个问题，听起来这很奇怪；毕竟，全局变量表的目的就是为了全局性使用。然而在Section 15.4我们将看到这个机制带来很多有趣的结构，全局的值依然是随处可以获取的。<br />可以使用setfenv函数来改变一个函数的环境。Setfenv接受函数和新的环境作为参数。除了使用函数本身，还可以指定一个数字表示栈顶的活动函数。数字1代表当前函数，数字2代表调用当前函数的函数（这对写一个辅助函数来改变他们调用者的环境是很方便的）依此类推。下面这段代码是企图应用 setfenv失败的例子：<br />a = 1    -- create a global variable<br />-- change current environment to a new empty table<br />setfenv(1, {})<br />print(a)<br />导致：<br />stdin:5: attempt to call global `print' (a nil value)<br />（你必须在单独的chunk内运行这段代码，如果你在交互模式逐行运行他，每一行都是一个不同的函数，调用setfenv只会影响他自己的那一行。）一旦你改变了你的环境，所有全局访问都使用这个新的表，如果她为空，你就丢失所有你的全局变量，甚至_G，所以，你应该首先使用一些有用的值封装（populate）她，比如老的环境：<br />a = 1 -- create a global variable<br />-- change current environment<br />setfenv(1, {_G = _G})<br />_G.print(a)      --> nil<br />_G.print(_G.a)    --> 1<br />现在，当你访问"global" _G，他的值为旧的环境，其中你可以使用print函数。<br />你也可以使用继承封装(populate)你的新的环境：<br />a = 1<br />local newgt = {}    -- create new environment<br />setmetatable(newgt, {__index = _G})<br />setfenv(1, newgt)    -- set it<br />print(a)            --> 1<br />在这段代码新的环境从旧的环境中继承了print和a；然而，任何赋值操作都对新表进行，不用担心误操作修改了全局变量表。另外，你仍然可以通过_G修改全局变量：<br />-- continuing previous code<br />a = 10<br />print(a)      --> 10<br />print(_G.a)  --> 1<br />_G.a = 20<br />print(_G.a)  --> 20<br />当你创建一个新的函数时，他从创建他的函数继承了环境变量。所以，如果一个chunk改变了他自己的环境，这个chunk所有在改变之后定义的函数都共享相同的环境，都会受到影响。这对创建命名空间是非常有用的机制，我们下一章将会看到。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15950_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

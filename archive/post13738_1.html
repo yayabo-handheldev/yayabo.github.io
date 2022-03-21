@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[转]NS入门教程，第一篇</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[转]NS入门教程，第一篇</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_14.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kiseeyou</b><br/>
+2010-05-26 11:41:11</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 kiseeyou 于 2010-5-26 11:52 编辑 [/i]<br /><br />[color=Red]  教程使用说明：这最初是d叔在幻想森林的教程。内容通俗易懂，实例分析透彻。<br /><br />ons和ns在脚本部分几乎完全相通，适合拿来上手。[/color]<br /><br /><br />LEVEL 0 NScripter讲习所初心者向 <br />题外话：<br />先扯几句，以免被人说我写下的都是中文但是没人看得懂。<br /><br />关于中文NScripter漫长的历史……<br />NScripter，作者高桥直树，略称NS，是一款游戏编辑器，换用通俗的语言来说，就是一个做游戏的软件。<br />早在N年以前，大明（sdlhm520）和小胜两位先行者就已经推出了NScripter的中文版。<br />不过，NScripter真正开始热门起来，应该是从黑影团制作出的《青鸟之虚象》宣传开始的时候吧？<br />当发现这世界上居然还存在着可以做游戏的好东西（并且是免费软件），大批人，包括某D，制作游戏的热血顿时就熊熊燃烧起来了。<br />然而总之但是，或许是出于“商业机密”的考虑，黑影团对于NS的制作方面的任何资料都守口如瓶。于是一帮BT在碰壁无数次之下，决定拿出菜鸟之终级法宝：GOOGLE和BAIDU，对找到的信息进行地毯式筛选。其中，小渡君率先完成了NScripter的新版本不完全汉化。之后，终于，在长久的寻找之后，某D和小渡君与AVC君，地下党一般的接上了头。之后的数月里，日文盲某D每天潜水于NS官方讨论版，希望从一堆日文里找到看起来亲切的代码……<br /><br />直到今天，得以和大家分享的这些NScripter资料，其实，是一群BT的汗水的结晶。<br /><br />上面提到的所有名字，请大家牢记……（不是默哀……= =）<br /><br />口号：同人精神永垂不朽！——支持原创！保护版权！技术共享！<br /><br />-------------------------------------------------------------------<br /><br />问题一：<br />NScripter能做什么样的游戏？我听说这是一款NVL（电子小说）专用的制作工具？<br /><br />咳咳，首先来看一下目前已经制作完成，或者正在制作的一部分NS游戏。<br /><br />商业游戏（日）：<br />月东日西（高桥直树）（恋爱冒险）<br />夢みてナイト（高桥直树）（恋爱冒险）<br /><br />同人游戏（中）：<br />Glassic（幻灯领域制作组）（电子小说）<br />青空之想试玩版II（S.F工作室）（恋爱养成+商店系统+物品合成+……）<br /><br />同人游戏（日）：<br />只推荐一个站点。看了他们的游戏介绍，就该知道这有多BT……<br />犬と猫<br />这个组的全部游戏都是用NS完成的……包括SLG等……<br />当然大家最好不要和他们拼BT，全日本也就这一家而已。<br /><br />范例游戏：<br />某D的伪圣书（恋爱冒险）<br />TOZ君的键控四方向行走范例（RPG行走）<br />水螅的范例小游戏合集（小游戏）<br /><br /><br />看了以上的列表就很容易了解，NScripter的制作游戏范围其实是非常广泛的，从最简单的电子小说，恋爱冒险游戏，到养成游戏及卡片战斗系统，都可以完成。所以各位大可不必一直忧心忡忡的询问，NScripter能否完成这样那样的功能。答案几乎永远是YES，其关键只在于制作者本身的水平。<br /><br />但是，NS主要应用范围，是集中在恋爱冒险游戏这一类型的。<br />从程序方面看，恋爱冒险类型的游戏不要求大量的循环（比如一张地图上七八个乱晃的NPC）或数据库处理（比如拥有300件武器的装备系统），结构比较清晰，制作难度比较低。<br /><br />所以假如要做RPG游戏，还是推荐使用RPG MAKER系列来制作比较合适。因为即使能如TOZ君一样，利用接近BT顶级的思路及耐心完成大部分的功能，也会导致在速度方面非常受限制，制作效率则几乎为零。<br /><br />-------------------------------------------------------------------<br /><br />问题二：<br />NScripter制作出来的游戏，在发布及出售方面有限制吗？<br /><br />NScripter为免费软件，因此使用NS制作的游戏，完全不用担心被指责为使用盗版。<br />打算贩卖的同人游戏也不需要征求作者的同意或者进贡什么的。<br />如果是商业游戏，才需要与作者联系并取得使用权。<br /><br />并且如果商业游戏的定价低于一定程度可以获得优惠甚至免费。<br />实际上中国的一般软件价格是远低于日本的，<br />因此就算你真打算卖几百RMB，估计玩家会比高桥氏先跳起来。<br />（回报是，作者可能会根据你的要求为NS增加新的功能，假如，他看得懂你在说什么的话……= =）<br /><br />使用规约原文：<br />[NScripterで作ったゲームを無料で配布する、あるいは値段をつけて売るとしても同人などの場合では、NScripterの使用料を高橋直樹氏に払う必要は無いということです。]<br /><br />----------------------------------------------------------------------<br /><br />问题三：<br />要使用NS，到底需要什么？<br /><br />以下是某D被问过的最哭笑不得的问题：<br />Q：我要的是NScripter完整版，为什么只看到汉化补丁？<br />A：NScripter的主程式仅仅是一个不到400K的exe文件。<br />因此，你看到的就是完整版，不是什么汉化补丁。<br /><br />Q：我下载了NS，为什么一执行就会出错？我什么都没看到啊？<br />A：NScripter并不像RM或者LM系列那样拥有图形界面（GUI）。<br />它的执行方法是读取与EXE文件同一文件夹内的TXT文件（一共可以创建0.txt~99.txt）或者代码压缩包内容，执行里面的命令。<br />简单的说，在你不写下任何命令之前，它什么也不会做，连脸都不会给你看一下。<br /><br />实际上，要让NScripter跑起来，只需要两个东西。<br /><br />1主程式（nscr.exe，名称可以修改/图标可以修改）<br />2 按照规则命名，并且写入正确内容的txt文件。（0.txt~99.txt均可）<br /><br />把这两样东西塞到同一个文件夹里，这样就准备完毕，可以开始制作了。<br /><br />而压缩包里的其他内容，就留待之后再说明吧。<br /><br />附图1：NScripter运行需要基本文件。<br />[attachment=171]<br /><br />附图2：NScripter脚本格式。（0.TXT文件内容）<br />[attachment=172]<br />（按照这样填写，闪一下关闭是正常现象哟，要让NS真正跑起来，请看下一讲内容。）<br /><br />好，现在课间休息，大家可以去吃饭了。[某D被听众暴打中……]<br /><br />本日小贴士：<br /><br />NScripter使用环境：<br />WIN95-XP，推荐DirectX 8.0以上。<br /><br />功能扩展性：<br />支持DLL插件。压缩包内附带有使用范例。<br />（由于这不是NS本身的功能，因此不多加说明。）<br /><br />画面分辨率：<br />320X240~800X600<br /><br />支持鼠标及键盘操作<br /><br />素材格式一览<br /><br />图片      BMP JPG<br />音乐音效      MIDI WAV MP3 OGG(OGG需要DLL插件支持，官方提供)<br />影片      AVI MPEG<br />其他      光标及动画光标 CUR ANI</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post13738_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

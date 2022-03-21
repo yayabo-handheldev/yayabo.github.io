@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[转]NS入门教程，第三篇</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[转]NS入门教程，第三篇</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_14.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kiseeyou</b><br/>
+2010-05-26 11:42:23</p>
+</div>
+<div class="col-10">
+<p>LEVEL 2 背景与人物的显示+音乐与音效的播放 <br />相关指令：<br />effect<br />bg<br />ld<br />cl<br />bgm<br />dwave<br />AND其他音乐音效相关播放指令参考<br />这次的相关指令虽然比较稀少，但是需要说明的地方却很多。<br /><br />--------------------------------------------------------------------------<br /><br />首先，来看effect指令。<br />一般的游戏里，在切换背景或者其他图片的时候，几乎都不会使用“瞬间消除”这样的方法。而是使用不同的画面切换效果。<br />如果有用过POWERPOINT，幻灯片之间的切换效果就是一个例子。有时候是从透明渐渐变成不透明，或者是从屏幕的侧边移动到中间，也有使用各种各样的遮片，从而使画面到画面的变换具有特色。<br />Effect的意思是“效果”，是用来设定在游戏里会用到的各种切换效果的。属于F类指令，只能使用在定义区块里。<br /><br />Effect指令格式：<br />effect 效果命名,内置效果编号,画面切换使用时间,（"遮片名称.bmp/.jpg"）<br />(注意effect和效果命名之间是有一个半角空格的)<br />范例<br />effect 2,4,1000<br />或者<br />effect 3,15,2000,"m3.bmp"<br /><br />所谓“效果命名”，就是自己给这个效果定下的一个数字。定义里设定好之后，在游戏里就可以用这个编号代表这个效果。<br /><br />“内置效果编号”就是NS本身所支持的效果类型。一共有以下18种。<br />1瞬间切换效果<br />2~5左右上下快门效果<br />6~9左右上下窗帘效果<br />10由透明状态显示效果（cross fade）<br />11~14左右上下卷动<br />15,遮片效果<br />16,17马塞克效果<br />18 ALPHA遮片效果<br /><br />因为这似乎无法做详细的描述，具体每一个效果会是什么样大家可以自己去试看看。<br /><br />画面切换使用的时间是以毫秒为单位的，就是说“1000”这个数字就代表一秒钟的时间。<br /><br />需要特别说明的是，由于1号是“瞬间切换效果”，完全不需要定义时间和遮片，因此为效果定义的时候，效果命名是从2号开始的。<br />另外，实际上NS还存在一个神秘的内置效果“0号”，具体功能留待以后再说吧。哼哼。[众人：你干吗特别加重零号这两个字……]<br /><br />而遮片，就是在画面切换的时候担任“幕布”角色的图片。使用内置效果15和18定义效果时，必须要指定遮片。规格大小一般和画面大小相等（640X480或者800X600）。基本都是黑白图片。遮片的制作非常简单，一般只要使用PS的渐变图层就能够自己制作了。至于喜欢复杂效果的，爱做成什么样，什么颜色，在上面打上你的名字，或者直接用一张CG代替都是没有限制的，请尽量发挥想象吧。<br /><br />（附图：一张正常的遮片大概长成什么样）<br /><br />[attachment=175]<br /><br />说了这么多，现在可以开始应用了吧。<br /><br />-----------------------------------------------------------<br />上一个LEVEL里只讲到了怎么显示文章，这一次，就来试试看显示背景和人物吧。<br />----------------------------------------------------------<br />先是显示背景的指令“bg”(E指令)。Bg是background的简称，总之就是背景的意思。（废话）<br /><br />指令格式：<br />bg "图片名称",效果命名<br />bg #RGB颜色,效果命名 ;不需图片，显示各种纯色背景<br />bg black,效果命名 ;专门用来显示纯黑背景<br />bg white,效果命名 ;专门用来显示纯白背景<br /><br />（BG和后面的东西之间也是有个半角空格把它们隔开的）<br /><br />另外，请注意图片名称一定要使用半角的双引号””括起来哦。双引号括起来的东西叫做“文字列”，由于有了双引号为标志，不会和NS的命令混起来，所以里面的内容也可以是半角英文或者数字。（上次的clickstr命令因为用法特殊所以有有限制。）<br /><br />范例：<br />bg "aaa.jpg",1 ;瞬间显示图片aaa.jpg作为背景<br />bg #FF0000,2 ;以自定义的2号效果显示红色背景<br />bg black,1 ;瞬间显示纯黑色背景<br />bg white,5 ; 以自定义的5号效果显示白色背景<br /><br />另外，如果事先并没有定义任何效果其实也是没关系的，因为bg指令还有另外一种格式。<br /><br />bg “图片名称”,内置效果编号,画面切换使用时间,（遮片名称.bmp/.jpg）<br />例如：<br />bg "aaa.jpg",10,1000<br />代表以NS内置的10号效果（淡入淡出效果），在1000毫秒的时间内显示图片aaa.jpg作为背景。<br />可以看到，后面的部分和effect的后半部分完全一样。这是一种临时的定义。<br />----------------------------------------------------<br />显示背景完成了，接下来就是显示人物或者其他图片了。（当然假如够BT直接把人物做进背景里也不错……）<br />由于在游戏里需要频繁的使用显示人物命令，为了每个人物专门设定坐标当然是非常麻烦的事。因此NS提供了简单的显示人物命令“ld”(E指令)，可以直接把人物图片显示在屏幕的左，中，右三个位置（图片底部贴着屏幕底线）。<br />指令格式：<br />ld l,图片名称,效果命名  ;在屏幕左边显示图片<br />ld c,图片名称,效果命名 ;在屏幕中间显示图片<br />ld r,图片名称,效果命名 ;在屏幕右边显示图片<br /><br />效果命名的用法和显示背景里的是一样的，也同样可以使用临时定义，例如：<br /><br />ld c,"chr.jpg",10,700 ;在0.7秒内让名为"chr.jpg"的图片以淡入方式显示在屏幕中央。<br /><br />当然，同一个位置是不能同时显示两张图片的。所以当这条命令第二次使用的时候，如果第二张图片同样是显示在中间，第一次显示的图片就会自动消失了。<br /><br />需要消除图片的时候，则是使用cl指令：<br />格式：<br />cl c,效果命名 ;消除显示在中间的图片<br />当然，有c，就有l和r，不用多说。<br /><br />另外，如果使用：<br />cl a,效果命名<br />还可以把左中右三张图片一次性的全部消除掉。<br /><br />使用范例：<br />cl l,2 ;以自定义2号效果消除显示在屏幕左边的图片<br /><br />一口气讲下来，到目前为止，一定有很多问题吧？<br /><br />-------------------------------------<br /><br />问题1：<br />附图1（梵尘梦 尘风游戏组/五分之庭早期人设 友情客串：克里斯 背景：实景PS）<br /><br />[attachment=176]<br /><br />我照着教程上说的做了，显示出来的人物图片为什么是这个样子呢？<br />这个就要从NS支持的两种图片格式说起了。同样一张图片，看起来几乎完全一样的情况下，BMP格式和JPG格式的大小是差很多的。实际上，JPG格式的图片已经经过了压缩。这种压缩会导致图片质量有一定的损失，尽管我们看不出来，但是JPG格式图片相比起BMP来说，一部分颜色会有变化。<br />在使用显示图片命令，不做任何特别定义的时候，NS会把图片左边最上面的一个象素格（0，0）的颜色作为透明色。<br />在的BMP图片里，除了人物以外的一整片黑色都是纯黑色（#000000），因此除了人物以外的部分都自动透明了。我们看到的就是人物周围非常干净的边缘。<br /><br />附图2（梵尘梦 尘风游戏组/五分之庭早期人设 友情客串：克里斯 背景：实景PS）<br />[attachment=177]<br /><br />而JPG图片，却并不是如此，图上的那些黑块就是因为压缩而改变了的颜色。也许只是变为#000001，但是在这里就成了全透明和不透明的差别。<br /><br />----------------------------------------------<br /><br />问题2：<br />难道这就意味着JPG图片不能用来显示人物吗？那做出来的游戏岂不是要大得可怕？<br /><br />当然不是了。实际上，因为JPG价格便宜量又足，还是很大家推荐使用的。至于具体要怎么让JPG的人物边缘也变得干净，就是下一讲的内容了。（爆~）<br /><br />----------------------------------------------<br /><br />问题3：<br />如果我就是想显示一整张图片，不想要透明色怎么办？还要特意把左上点做成不一样的颜色吗？<br />不需要，这个问题和问题2一样，也留待下一讲吧。<br /><br />大家还有什么问题？（众：问了你也只会说留待下一讲，还问什么……）<br />没问题我收拾东西走人啦……<br />------------------------------------------------<br />想起忘东西，CJ的跑回来：<br /><br />本日小贴士（意思就是不看也可以，但是看了有好处的）：<br />1<br />立ち絵，其实就是人物图片的意思。如果在日本的NS教程里看到“立ち絵”，就代表着用ld命令显示的图片。<br /><br />2默认的情况下NS图片显示层次（简）：<br />------------------------------------------------<br />文章<br />人物图片（右）<br />人物图片（中）<br />人物图片（左）<br />背景<br />------------------------------------------------<br /><br />3要把所选的背景等颜色写成#RRGGBB形式的颜色代码，可以使用PHOTOSHOP等作图工具查询，不过更简单的办法是推荐类似UltraEdit一类的文本编辑工具，可以直接挑选颜色并插入代码。<br /><br />这里提一下很多人问到的关于音乐播放的问题，其实没什么好说的。<br />NS默认的音乐播放指令就是<br /><br />bgm "音乐文件名"<br /><br />支持MIDI，MP3等格式。<br />音乐播放是默认自动循环的。<br />之后是音效的播放。<br /><br />dwave 0,"XX.wav"<br /><br />第一个数字代表声音的编号，可以同时播放多个音效，例如说：<br />如果人物语音播放编号为0，而嘈杂的环境音效编号为1，就可以同时播放。<br />想让音效循环播放的话，使用以下指令：<br /><br />dwaveloop 0,"XX.wav"<br /><br />下面再列出一些音乐音效播放相关的指令供参考。<br /><br /><br />Copy code<br />play "aa.mid" 用来播放MIDI<br />play "*1"  播放CD上的音轨<br />playonce "aa.mid"  和上面两个一样,不过不是循环而是放一次就停止<br />playstop  停止MIDI或者CD<br />wave "XX.wav" 当然是放WAV文件的命令<br />waveloop "XX.wav"  循环播放wav文件<br />wavestop  停止wav播放.很烦吧...><<br />mp3 "XX.mp3" 播放MP3的<br />mp3loop "XX.mp3" 循环播放MP3的<br /><br />chvol 0,100<br />调节音量的命令,把0号音乐音量调节为100。<br /><br />cdfadeout 1000<br />mp3fadeout 1000<br />音乐淡入淡出时间设定，这两条是用在*define里的定义，用来定义音乐切换时的渐出时间。<br /><br /><br /><br /><br /><br /><br />作业：<br />1为下面这段程序加入详细的注释<br />*define<br />effect 2,10,1000<br />effect 3,5,700<br />game<br /><br />*start<br />bg "a.bmp",2<br />ld c,"b.bmp",3<br />花的生命很短。<br />cl c,1<br />end<br /><br />2利用LEVEL 1和LEVEL 2的教程内容制作一个简单的电子小说。<br /><br />3试验effect命令的内置效果，其中有两个效果是很特殊的，如果有发现请指出来。<br />（和下一个LEVEL有关）</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post13736_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

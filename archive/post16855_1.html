@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>学习PSP游戏制作实况记录（三）用家操控和动画</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">学习PSP游戏制作实况记录（三）用家操控和动画</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-09 12:55:10</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://bbs.khors.com[/url]<br />作者：Dr.Watson<br /><br />到现在还没能写出一个游戏, 开始心急了... 其实是开个玩笑:) 在下觉得, 写游戏最主要的不是技术, 而是耐性! 技术不会, 还可以找到别人的借用(像在下, 嘿嘿...), 但没有耐性, 就很难可以把一个游戏写完. 在游戏界, 惯常的说法是: 制作游戏的最后20%是佔了整个过程的80%, 有些人甚至说是10% 与 90% 之比.<br /><br />好了, 閒话少说, 进入主题 :) 在这篇, 新加了读入用家控制和把大图部份画到萤幕的功能, 还有就是简单的动画, 有了这些新功能, 大家基本上可以制作一个简单的游戏了 ;)<br /><br />在psp上读入用家操控, 非常容易, 只要初始了控制器, 就可以直接读入相关资料: <br /><br />[code=c]SceCtrlData pad;<br />...<br />sceCtrlSetSamplingCycle(0);<br />sceCtrlSetSamplingMode(PSP_CTRL_MODE_ANALOG);<br />...<br />sceCtrlReadBufferPositive(&pad, 1); // read control pad[/code]<br /><br />我们在这里用pad 存着控制器的相关资料, pad.Lx 和 pad.Ly 分别是模拟控制的x, y 值, 观察所得, 它们的数值是0-255, 我们把它当joystick 来用, 再配合Plot, 就可以弄个简单的"小画家", 看附图:<br /><br />[attach]749[/attach]<br /><br /><br />不过大家不要误会, 用PSP的模拟控制只可画出那些乱七八糟的綫, 那隻可爱的老鼠, 不是在PSP上画出来的, 是我的好友Anjou兄的大作, 在此先要跟他说声多谢! ([url=http://spaces.msn.com/members/anjouhk/]Anjou的Blog[/url])<br /><br />[code=c]int x = SCREEN_WIDTH/2;<br />int y = SCREEN_HEIGHT/2;<br />...<br />// pad.Lx 和 pad.Ly 的数值是 0-255<br />// 但我们只想要知道它是向左右, 还是上下<br />if (pad.Lx<64)<br />{<br />if (x>0) x--;<br />}<br />else if (pad.Lx>196)<br />{<br />if (x<SCREEN_WIDTH-1)<br />x++;<br />}<br />if (pad.Ly<64)<br />{<br />if (y>0) y--;<br />}<br />else if (pad.Ly>196)<br />{<br />if (y<SCREEN_HEIGHT-1)<br />y++;<br />}<br /><br />// 画点<br />Plot(x, y, colors[currentColor]);[/code]<br /><br />至于pad.Buttons 则是所有按钮的bit mask, Buttons 里每一个位元, 代表了一个按钮, 当对应的位元是1, 即表示该按钮被按下了, 0 则相反.<br /><br />所以例如这句: "if (pad.Buttons&PSP_CTRL_TRIANGLE)" 就是测试三角按钮有没有被按下.<br /><br />注意: 本文程式, 用三角按钮转换画点的颜色, 用圆按钮截图到记忆棒的根目录!<br /><br />至于新加的函数DrawImageRect(), 把大图部份画到萤幕, 功能主要是用作动画. 一个游戏要是没有动画是很单调的, 所以我们要赶快加入这个功能:) 看下面的截图:<br /><br />[attach]750[/attach]<br /><br />对于动画, 我们可以把动画的每一格图分开存为一个个的档桉, 但制作游戏惯常的做法, 是把同一个动画甚至几个动画的图都放在同一个档内, 如下图:<br /><br />[attach]751[/attach]<br /><br />这样, 我们就要从大图中, 选出需要的部份, 画到萤幕, 根据时间, 画不同的分格, 达到动画的效果!<br /><br />[code=c]int frame = 0;<br />int timer = 0;<br />...<br />int xMan = 10; // 老鼠的初始位置<br />int yMan = 100;<br /><br />bool mirrored = false; // 向左就不用反转画<br />...<br />...<br />while (!done)<br />{<br />int timeNow = Sys_Milliseconds();<br />int delta = timeNow-lastTime; // 计算自从上次行经这里到现在,<br />lastTime = timeNow; // 过了多少时间<br /><br />timer += delta;<br />if (timer>100) // 每0.1秒换到下一格动画<br />{<br />timer = 0;<br />frame++;<br />if (frame>=3)<br />frame = 0;<br />}<br />...<br />}<br /><br />// 把现在的动画格画到萤幕<br />DrawImageRect(rat, xMan, yMan, frame*100, 0, 100, 100, mirrored);[/code]<br /><br />在这个函数中, 我也顺便加了把图像左右对调画的功能, 这样子, 一个游戏的角色, 就算有向左走同向右走的动画, 只要有一边的图, 另一边可以用函数对调画出, 很是方便: <br /><br />[attach]752[/attach]<br /><br />大家用PSP的左右按钮, 可以控制老鼠左右移动!<br /><br />附带的执行包是1.50的 :) 自行编译, 要把rat.png放在记忆棒game02的目录内!</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gengyanda</b><br/>
+2009-02-09 14:27:38</p>
+</div>
+<div class="col-10">
+<p>不会C<br />会VB成吗</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>chrisliu</b><br/>
+2009-02-09 14:29:47</p>
+</div>
+<div class="col-10">
+<p>软件名称：Dolphin Reader<br />    软件类型：文本阅读器<br />    二级域名：dr.yayabo.cn<br /><br />谢谢~</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16855_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>突然发现了一个PSP好东西</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">突然发现了一个PSP好东西</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_11.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>大傻2</b><br/>
+2010-07-26 08:19:17</p>
+</div>
+<div class="col-10">
+<p>我在找HOOK HOME KEY的资料时,突然被我发现了类似于WINDOWS发送消息的SENDMESSAGE函数<br />在这里与大家同乐一下<br />#include <pspctrl_kernel.h>//需要包含pspctrl_kernel.h<br />Set the controller button masks<br />*<br />* @param mask - The bits to setup<br />* @param type - The type of operation (0 clear, 1 set mask, 2 set button)<br />*<br />* @par Example:<br />* @code<br />* sceCtrl_driver_7CA723DC(0xFFFF, 1);  // Mask lower 16bits<br />* sceCtrl_driver_7CA723DC(0x10000, 2); // Always return HOME key<br />* // Do something<br />* sceCtrl_driver_7CA723DC(0x10000, 0); // Unset HOME key<br />* sceCtrl_driver_7CA723DC(0xFFFF, 0);  // Unset mask<br />* @endcode<br />*/<br />void sceCtrl_driver_7CA723DC(unsigned int mask, unsigned type);<br />/**<br />* Get button mask mode<br />*<br />* @mask - The bitmask to check<br />*<br />* @return 0 no setting, 1 set in button mask, 2 set in button set<br />*/<br />int sceCtrl_driver_5E77BC8A(unsigned int mask);<br />/**<br />* Setup a controller callback<br />*<br />* @param no - The number of the callback (0-3)<br />* @param mask - The bits to check for<br />* @param cb - The callback function (int curr_but, int last_but, void *arg)<br />* @param arg - User defined argument passed<br />*<br />* @return 0 on success, < 0 on error<br />*/<br />int sceCtrl_driver_5C56C779(int no, unsigned int mask, void (*cb)(int, int, void*), void *arg);<br />/* Just define some random names for the functions to make them easier to use */<br />#define sceCtrlSetButtonMasks sceCtrl_driver_7CA723DC<br />#define sceCtrlGetButtonMask sceCtrl_driver_5E77BC8A<br />#define sceCtrlRegisterButtonCallback sceCtrl_driver_5C56C779<br />会一点洋文的都知道大概的意思<br />这是按键资料<br />enum PspCtrlButtons<br />{<br />/** Select button. */<br />PSP_CTRL_SELECT     = 0x000001,<br />/** Start button. */<br />PSP_CTRL_START      = 0x000008,<br />/** Up D-Pad button. */<br />PSP_CTRL_UP         = 0x000010,<br />/** Right D-Pad button. */<br />PSP_CTRL_RIGHT      = 0x000020,<br />/** Down D-Pad button. */<br />PSP_CTRL_DOWN       = 0x000040,<br />/** Left D-Pad button. */<br />PSP_CTRL_LEFT       = 0x000080,<br />/** Left trigger. */<br />PSP_CTRL_LTRIGGER   = 0x000100,<br />/** Right trigger. */<br />PSP_CTRL_RTRIGGER   = 0x000200,<br />/** Triangle button. */<br />PSP_CTRL_TRIANGLE   = 0x001000,<br />/** Circle button. */<br />PSP_CTRL_CIRCLE     = 0x002000,<br />/** Cross button. */<br />PSP_CTRL_CROSS      = 0x004000,<br />/** Square button. */<br />PSP_CTRL_SQUARE     = 0x008000,<br />/** Home button. */<br />PSP_CTRL_HOME       = 0x010000,<br />/** Hold button. */<br />PSP_CTRL_HOLD       = 0x020000,<br />/** Music Note button. */<br />PSP_CTRL_NOTE       = 0x800000,<br />/** Screen button. */<br />PSP_CTRL_SCREEN     = 0x400000,<br />/** Volume up button. */<br />PSP_CTRL_VOLUP      = 0x100000,<br />/** Volume down button. */<br />PSP_CTRL_VOLDOWN    = 0x200000,<br />/** Wlan switch up. */<br />PSP_CTRL_WLAN_UP    = 0x040000,<br />/** Remote hold position. */<br />PSP_CTRL_REMOTE     = 0x080000, <br />/** Disc present. */<br />PSP_CTRL_DISC       = 0x1000000,<br />/** Memory stick present. */<br />PSP_CTRL_MS         = 0x2000000,<br />};<br />sceCtrl_driver_7CA723DC(0x10000, 2); //发送HOME键,哈哈~~~<br />对于会写插件映射按钮的人绝对有用!<br />这个本是我发在PSPChina的内容,但是那个论坛伸手党多过技术党,已经没落了.......想试下这里的技术人有没有</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zzytt2010</b><br/>
+2010-07-26 08:28:50</p>
+</div>
+<div class="col-10">
+<p>又换头像了。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-07-26 08:30:45</p>
+</div>
+<div class="col-10">
+<p>主题？？壁纸？？？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zzytt2010</b><br/>
+2010-07-26 08:31:21</p>
+</div>
+<div class="col-10">
+<p>百合么。。我更喜欢惊爆草莓。。。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post10713_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

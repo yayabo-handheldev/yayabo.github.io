@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>FreeBSD下配置PSP开发环境</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">FreeBSD下配置PSP开发环境</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-07 17:35:21</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.donews.com/Alleria[/url]<br /><br />安装FreeBSD<br /><br />因为FreeBSD 是免费的，可以从官网（[url]http://www.freebsd.org/[/url]）下载，我安装的是FreeBSD6.0，CD1是安装盘，CD2是工具盘，安装过程就不详细讲了，网上教程很多，但要注意磁盘分区时，/tmp要多分点，最好1G以上，低于512M编译会失败。<br /><br /> <br /><br />配置网络<br /><br />完成安装后，在FreeBSD里用sysinstall来配置网络，连接到Internet,也可以用ifconfig，或者修改/etc/rc.conf来完成这一步。完成后reboot生效。<br /><br /> <br /><br />安装工具<br /><br />编译PSP环境需要安装以下几个工具：<br /><br />make<br /><br />patch<br /><br />wget<br /><br />svn<br /><br />autoconf和automake<br /><br />在FreeBSD中可以用sysinstall来安装这些packages<br /><br />n          输入sysinstall ；<br /><br />n          在sysinstall菜单中选择Configure；<br /><br />n          在Configure菜单中选择Packages；<br /><br />n          选安装模式，选择FTP；<br /><br />n          选FTP站点，选择Main Site，会有提示，如果已经连到网络就选择Yes,重新配置网络就选No；<br /><br />n          在安装类别列表里选择下列Packages；<br /><br />u        devel类别下的gmake，m4，patch，subversion<br /><br />u        ftp类别下wget<br /><br />u        shells类别下的bash<br /><br />n          按空格键用[X]标记这段内容，在屏幕底选择install来安装这些Packages (这些也可以用ports来安装)，安装完成后Exit install退出安装；<br /><br />n          安装完成后输入chpass -s /usr/local/bin/bash root 修改shell；<br /><br />n          输入reboot重起。<br /><br /> <br /><br />单独安装autoconf和automake<br /><br />n          输入wget [url]ftp://ftp.gnu.org/gnu/automake/automake-1.9.6.tar.gz[/url] 下载automake安装包；<br /><br />n          输入wget [url]ftp://ftp.gnu.org/gnu/autoconf/autoconf-2.59.tar.gz[/url]  下载autoconf安装包, 也可以从CD2复制过来这两个安装包；<br /><br />n          输入tar xvfz autoconf-2.59.tar.gz 解压缩； <br /><br />n          cd autoconf-2.59到目录中，输入./configure;然后make,最后make install，完成autoconf的安装；<br /><br />n          automake用相同的办法安装；<br /><br />输入svn checkout svn://svn.pspdev.org/psp/trunk/psptoolchain，下载psp开发包；cd psptoolchain进入psptoolchain目录，输入./toolchain.sh执行编译脚本，整个编译过程时间大概几个小时左右，视机器配置和网络速度而定。<br /><br />编译完成后，输入下列命令设置环境变量<br /><br />export PSPDEV=/usr/local/pspdev<br /><br />export PSPSDK=/psp/sdk<br />export PATH=:/bin:/psp/bin<br /><br />最后，输入psp-gcc –v来测试，出现下列信息就是配置成功了<br /><br />Using built-in specs.<br />Target: psp<br />Configured with: ../configure --prefix=/usr/local/pspdev --target=psp --enable-l<br />anguages=c,c++ --with-newlib --enable-cxx-flags=-G0<br />Thread model: single<br />gcc version 4.0.2 (PSPDEV 20051022)<br /><br />因本人水平有限，如有错误，请批评指正。谢谢！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qnarutop</b><br/>
+2010-08-08 00:03:38</p>
+</div>
+<div class="col-10">
+<p>前来报到啊</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16994_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

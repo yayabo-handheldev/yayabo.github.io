@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>【P】寄生前夜3昨天晚上偷跑，全系统杯具！</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">【P】寄生前夜3昨天晚上偷跑，全系统杯具！</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_5.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2010-12-21 18:50:49</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 cshfelix 于 2010-12-22 01:01 编辑 [/i]<br /><br />来自日本最大的BSS社区2CH的一个玩家称，寄生前夜3无法在普米4上游戏，SE向来对游戏加密很在行，这次也不列外<br /><br />只好发下封面包装先吧。。。<br />[attach]17756[/attach]<br />[attach]17758[/attach]<br />[attach]17753[/attach]<br />游戏包装：中间的卡片是即将发售的《最终幻想》卡片游戏的宣传卡。还包括《纷争：最终幻想012》Lightning的Aya Brea服装下载码。<br />[attach]17754[/attach]<br />两个摄影机视角，第一个为一般，第二个为后方。<br />[attach]17755[/attach]<br />[attach]17757[/attach]<br /><br />━━━━━━━━━━━━━━━━━━━━━━<br /><br />香港的日版好像偷步了<br /><br />从umd提取的原版文件，自制系统普米4无法运行。。。<br />引导方式也换了，都不行。。。<br />SE采用新加密啊。。。<br /><br /><br />━━━━━━━━━━━━━━━━━━━━━━<br /><br />各个版本的系统悲剧，大家慢慢等待破解吧！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2010-12-21 18:52:30</p>
+</div>
+<div class="col-10">
+<p>希望是日本那边骗人吧。。。现在只好坐等破解了。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>沁ぅ純の寳貝</b><br/>
+2010-12-21 18:53:14</p>
+</div>
+<div class="col-10">
+<p>俺看看有啥好办法。。。<br /><br />_imagemovedx = {};<br />_imagemovedy = {}<br />_imagemovevx = {};<br />_imagemovevy = {};<br />_imagemovemode = {};<br />_imagemovecount = {};<br />_imagemovetime = {};<br />_imagemoveif = {};<br />_imagemoveend = 1;<br /><br />function imagexy(index,dx,dy)<br />	_imagemovedx[index] = dx;<br />	_imagemovedy[index] = dy;<br />	fgxy(index,dx,dy);<br />end<br /><br />function imagemove(index,vx,vy,time)<br />	_imagemovevx[index] = vx;<br />	_imagemovevy[index] = vy;<br />	_imagemovetime[index] = time/1000*60;<br />	_imagemoveif[index] = 1;<br />	_imagemovemode[index] = 0;<br />	_imagemovecount[index] = 0;<br />end<br /><br />function imagemovebegin()<br />if true then<br />	for index=1,16 do<br />		if _imagemoveif[index]==1 then<br />			_imagemovemode[index] = 1;<br />		end<br />	end<br />	for index=1,16 do<br />		if _imagemoveif[index]==1 then<br />			if _imagemovemode[index]==1 then<br />				_imagemovecount[index] = _imagemovecount[index] + 1;<br />				if _imagemovecount[index] == 0 then<br />					_imagemovedx[index] = _imagemovedx[index] + _imagemovevx[index]/20;<br />					_imagemovedy[index] = _imagemovedy[index] + _imagemovevy[index]/20;<br />				end<br />				fgxy(index,_imagemovedx[index],_imagemovedy[index]);<br />				if _imagemovecount[index] >= _imagemovetime[index] then<br />					_imagemovemode[index] = 2;<br />				end<br />			end<br />		end<br />	end<br />	_imagemoveend = 1;<br />	for index=1,16 do<br />		if _imagemoveif[index]==1 then<br />			if _imagemovemode[index]==2 then<br />				_imagemovemode[index] = 0;<br />				_imagemovecount[index] = 0;<br />				_imagemoveif[index] = 0;<br />			elseif _imagemovemode[index]==1 then <br />				_imagemoveend = 0;<br />			end<br />		end<br />	end<br />	if _imagemoveend == 1 then return;end<br />end<br />loop();<br />end<br /><br />上述的函数新开一个lua脚本然后粘贴进去 Include一下 用的时候这样子：<br /><br />fg(1,"demopic1.png",0,0);--载入fg1<br />fg(2,"demopic2.png",0,0);--载入fg2<br />imagexy(1,0,0); --fg1号初始坐标设定<br />imagexy(2,0,0); --fg2号初始坐标设定<br />imagemove(1,80,80,1000); --fg1号移动距离设定<br />imagemove(2,80,80,1000); --fg2号移动距离设定<br />imagemovebegin(); --开始移动fg<br /><br />移动的fg限定为1~16号 理应是足够的<br />这是前台移动 想要后台移动的话可以把loop去掉然后自己适当做一些修改 加入到switch里面即可<br />顺便一提俺只是搬运而已 想来说些啥的同学们可以回家喝茶去了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>强悍的葱头</b><br/>
+2010-12-21 18:54:12</p>
+</div>
+<div class="col-10">
+<p>看来不回不行了~很好奇想看看</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2010-12-21 18:55:17</p>
+</div>
+<div class="col-10">
+<p>不明真相群众围观+2。。。<br />兔子太强大了。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>悸樱奏</b><br/>
+2010-12-21 18:58:10</p>
+</div>
+<div class="col-10">
+<p>纳尼！？普米4无法运行！？OH NO</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>强悍的葱头</b><br/>
+2010-12-21 19:00:26</p>
+</div>
+<div class="col-10">
+<p>卧...........................糟...............................................咱一下就被这种精神震撼了..</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2010-12-21 19:01:46</p>
+</div>
+<div class="col-10">
+<p>非常好，让喷子体会到玩不了新游戏的痛苦。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>强悍的葱头</b><br/>
+2010-12-21 19:01:46</p>
+</div>
+<div class="col-10">
+<p>这衣服布料真多...残念.......这图片画质真渣....</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2010-12-21 19:04:36</p>
+</div>
+<div class="col-10">
+<p>其实兔子才是整个故事的幕后黑手…</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>boy545003571</b><br/>
+2010-12-21 19:05:47</p>
+</div>
+<div class="col-10">
+<p>恩。。。确实，很诡异。。。那兔子仿佛是穹妹的分身的说。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>boy545003571</b><br/>
+2010-12-21 19:06:20</p>
+</div>
+<div class="col-10">
+<p>啧啧。。。惨就一个字。。。等破解</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>boy545003571</b><br/>
+2010-12-21 19:06:40</p>
+</div>
+<div class="col-10">
+<p>剑心，怎一个帅字了得啊！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>boy545003571</b><br/>
+2010-12-21 19:07:01</p>
+</div>
+<div class="col-10">
+<p>LOLI美～～收藏了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>谭小培</b><br/>
+2010-12-21 19:14:31</p>
+</div>
+<div class="col-10">
+<p>支持~~~~~~~~~~~~，不过过期了吗？？？？？？？？？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kc22954gp</b><br/>
+2010-12-21 19:16:17</p>
+</div>
+<div class="col-10">
+<p>沒了53= =</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>谭小培</b><br/>
+2010-12-21 19:16:57</p>
+</div>
+<div class="col-10">
+<p>支持~~~~~~~~~~~~，过期了吗？？？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>悸樱奏</b><br/>
+2010-12-21 19:17:53</p>
+</div>
+<div class="col-10">
+<p>    偶只是来学习兼被调教滴</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuwei87277800</b><br/>
+2010-12-21 19:19:23</p>
+</div>
+<div class="col-10">
+<p>看看呢~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>諾亞</b><br/>
+2010-12-21 19:22:56</p>
+</div>
+<div class="col-10">
+<p>这个还没完结么... 全套，全套在哪？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuwei87277800</b><br/>
+2010-12-21 19:24:16</p>
+</div>
+<div class="col-10">
+<p>试试呢~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>abear</b><br/>
+2010-12-21 19:25:34</p>
+</div>
+<div class="col-10">
+<p>资源资源~找呀找</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>uyukm79</b><br/>
+2010-12-21 19:26:46</p>
+</div>
+<div class="col-10">
+<p>注意了，这只兔子是阿比斯产物—染血黑兔</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yyeg</b><br/>
+2010-12-21 19:27:03</p>
+</div>
+<div class="col-10">
+<p>单纯的备用货而已</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>大象甩甩</b><br/>
+2010-12-21 19:29:09</p>
+</div>
+<div class="col-10">
+<p>那个任务简单的 1星熟悉地图的时候就遍地欺负弱小了 胖虫子瘦虫子都蹂躏过 采集还是带回家玉方便</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>catingming</b><br/>
+2010-12-21 19:29:17</p>
+</div>
+<div class="col-10">
+<p>给力之作呐~顶了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>011hm274</b><br/>
+2010-12-21 19:31:22</p>
+</div>
+<div class="col-10">
+<p>不明真相群众围观..</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post4160_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

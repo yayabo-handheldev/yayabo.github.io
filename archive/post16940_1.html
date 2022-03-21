@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>指针数组队列</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">指针数组队列</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-17 09:43:19</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://etual.cublog.cn[/url]<br /><br />根普通的队列结构一样，不过数组的类型是指针数组<br />用来处理字符串用的。<br /><br />/*********************************************<br />Array Queue Exercises<br />Etual<br />2008-1-14<br />**********************************************/<br />#include <stdio.h><br />#define MAXSIZE 4<br />typedef struct Queue_tag{<br /> char *data[MAXSIZE];<br /> int front,rear;<br />}QUEUE;<br />//global var<br />QUEUE Queue;<br />// queue initialize<br />void InitQueue(QUEUE* Queue)<br />{<br /> int i;<br /> for (i=0;i<MAXSIZE;i++)<br /> {<br />  Queue->data[i]=NULL;<br /> }<br /> Queue->front=Queue->rear=0;<br />}<br /><br />// whether queue is empty<br />int EmptyQueue(QUEUE* Queue)<br />{<br /> return (Queue->front==Queue->rear);<br />}<br />int FullQueue(QUEUE* Queue)<br />{<br /> return (((Queue->front+1)%MAXSIZE)==Queue->rear);<br />}<br />void InQueue(QUEUE* Queue,char *str)<br />{<br /> if (!FullQueue(Queue))<br /> {<br />  Queue->data[Queue->front]=str;<br />  Queue->front=(Queue->front+1)%MAXSIZE;<br /> }else{<br />  printf("Queue is FULL ,can not input!<br />");<br /> }<br />}<br />char *OutQueue(QUEUE* Queue)<br />{<br /> char *temp;<br /> if (!EmptyQueue(Queue))<br /> {<br />  temp=Queue->data[Queue->rear];<br />  Queue->rear=(Queue->rear+1)%MAXSIZE;<br /> }else{<br />  temp=0;<br />  printf("Queue is empty");<br /> }<br /> return temp;<br />}<br />void PrintQueue(QUEUE* Queue)<br />{<br /> int front=Queue->front;<br /> int rear =Queue->rear;<br /> if (front == rear)<br /> {<br />  printf("Queue is empty!");<br /> }<br /> while(front != rear)<br /> {<br />  printf("%s",Queue->data[rear]);<br />  rear=(rear+1)%MAXSIZE;<br /> }<br /> printf("<br />");<br />}<br />int main(void)<br />{<br /> InitQueue(&Queue);<br /> InQueue(&Queue,"Hello World<br />");<br /> InQueue(&Queue,"I am Etual<br />");<br /> InQueue(&Queue,"This is my test program!");<br /> PrintQueue(&Queue);<br /> return 1;<br />}</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16940_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

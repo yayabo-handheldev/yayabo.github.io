@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS开发Wiki翻译：第五天：背景（1）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS开发Wiki翻译：第五天：背景（1）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_18.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-06 15:47:54</p>
+</div>
+<div class="col-10">
+<p>摘自：chenyi1976.spaces.live.com<br />翻译：陈轶<br /><br />这是一个使用PAlib显示背景的教程<br /><br /><br />DS背景说明<br /><br />以介绍精灵同样的方法，我们开始介绍背景相关知识。。。背景的变化太多了，晤，就算PALib也没有真正覆盖到背景相关的所有可能性，而只是选择比较有用和通用的部分。。。<br /><br />    * DS在一个屏幕上能够显示4个不同的背景，每个背景都有一个256色的调色板。每个背景都由两部分组成：<br />    *<br />          o 方块们，每个方块是8×8象素大小，他们共同组合成整个图片<br />          o 方块地图，一个范围为256×256或512×512的小地图，描述了方块是怎样对齐到屏幕上的。<br />    * 除了方块地图以外，你还可以直接使用8位色或16位色的位图，bmp，gif甚至jpeg，还可以在上面画线画点。。。但是，这种背景在一个屏幕上只能有一个，而且会占用很大的内存（8位色的会占用8分之3的内存，而16位色的占用8分之6的内存）<br /><br />DS能够在一个屏幕上显示最大2个选择或放大的背景。实际用的其实不多，提出来只是让你高兴一下。哈哈。<br /><br />第一个背景教程中，我们将看到如何使用方块背景，你将看到它已经够用了。。。<br /><br />下面是个关于DS屏幕的图解<br /><br />    DS屏幕大小<br /><br />    再一次介绍Bennyboo制作的DS屏幕图解，很有用。（译：罗嗦）<br /><br />    [attach]31[/attach]<br /><br />转换<br /><br /><br />（译：和精灵部分的转换相同，因此跳过）<br /><br />方块背景<br /><br />让我们开始使用方块背景吧，它将是你用的最多的。再次罗嗦一遍，每次可以装载4个方块背景，每个背景都有自己的调色板。<br /><br />请使用PAGfx转化背景。。。<br /><br />    装载<br /><br /><br />    有两种办法可以装载，最简单的和次简单的。。。当然选最简单的先介绍了！<br /><br />    PA_LoadTiledBg<br /><br />    这个函数非常容易使用，不过你必须用PAGfx转化你的背景。。。它的参数如下：PA_LoadTiledBg(screen, background number, background name);<br /><br />    DS每屏幕可以有4个背景，背景编号为0－3。。。最小的编号，最高的优先级（和精灵一摸一样）。。。背景0在背景1之前，依此类推。。。<br /><br />    既然这是第一篇背景的教程，我将粘贴PAlibExamples/backgrounds/LoadBg例子的完整代码如下。。。<br /><br />    // Load a simple background, very easy and simple...<br /><br />    // Includes<br />    #include <PA9.h> // Include for PA_Lib<br /><br />    // Converted using PAGfxConverter<br />    #include "gfx/all_gfx.c"<br />    #include "gfx/all_gfx.h"<br /><br />    // Function: main()<br />    int main(int argc, char ** argv)<br />    {<br />    PA_Init(); // Initializes PA_Lib<br />    PA_InitVBL(); // Initializes a standard VBL<br /><br />    // Load Backgrounds with their palettes !<br />    PA_LoadTiledBg(0, // screen<br />    3, // background number (0-3)<br />    bg0); // Background name, used by PAGfx...<br />    PA_LoadTiledBg(1, 0, bg0);<br /><br />    // Infinite loop to keep the program running<br />    while (1)<br />    {<br />    PA_WaitForVBL();<br />    }<br /><br />    return 0;<br />    } // End of main()<br /><br />    真的好简单，在两个屏幕上装载他们的背景和调色板。。。没什么可说的，我想。你也可以看看LoadBgs 例子，它在一个屏幕上装载了4个背景。。。<br /><br />    PA_LoadSimpleBg<br /><br />    此函数用于装载使用gfx2gba转化出来的背景。<br /><br />    PA_LoadSimpleBg(screen,bg_number,bg_Tiles,bg_Map,bg_Size,wraparound,color_mode);<br /><br />    要使用这个函数，我们要根据每个背景下列信息来创建3个文件。<br /><br />        * 方块<br />        * 图<br />        * 调色板<br /><br />    现在我解释一下如何使用gfx2gba转化4个背景，以及如何把他们放到你的代码中。<br /><br />        Gfx2GBA<br /><br /><br />        想象在源文件目录里面，你有另外4个256×256象素的背景文件：BG1.bmp BG2.bmp BG3.bmp BG4.bmp<br /><br />        好的，如果4个背景的颜色能够保存到一个单独的256色调色板里面，那么你必须敲入这个命令来转化他们：<br /><br />        gfx2gba -fsrc -m -pbg.pal -t8 *.bmp<br /><br />        解释一下：<br /><br />            *<br />              -fsrc → 保存文件到.c文件<br />            *<br />              -m → 保存图文件<br />            *<br />              -p*.pal → 保存调色板信息到你指定的文件中<br />            *<br />              -t8 → 方块尺寸信息<br />            *<br />              *.bmp → 要转化的bmp文件(* 是指改目录下所有的bmp文件)<br /><br /><br />        好了，这个命令将为每个背景创建2个文件，方块和图；除此以外，还有一个共用的调色板文件，bg.pal.c。现在我们已经有了我们代码中需要的背景文件。<br /><br />    Including<br /><br />    好了，背景都转好了，下面要include他们：<br /><br />    //Loadign simple BGs wich were no converted with PAGfx<br /><br />    #include <PA9.h><br />    //including all bgs<br />    #include "gfx/BG1.raw.c"<br />    #include "gfx/BG1.map.c"<br /><br />    #include "gfx/BG2.raw.c"<br />    #include "gfx/BG2.map.c"<br /><br />    #include "gfx/BG3.raw.c"<br />    #include "gfx/BG3.map.c"<br /><br />    #include "gfx/BG4.raw.c"<br />    #include "gfx/BG4.map.c"<br /><br />    // including palette<br /><br />    #include "gfx/bg.pal.c<br /><br />    //main function<br />    int main(int argc, char ** argv)<br />    {<br />    PA_Init();<br />    PA_InitVBL();<br /><br />    PA_LoadPal(PAL_BG0,bg_Palette); //for loading the palette in bg 0<br /><br />    PA_LoadSimpleBg(0,3,BG4_Tiles,BG4_Map,BG_256X256,0,1); // Load BG4 in bg 3<br />    PA_LoadSimpleBg(0,2,BG3_Tiles,BG3_Map,BG_256X256,0,1); // Load BG3 in bg 2<br />    PA_LoadSimpleBg(0,1,BG2_Tiles,BG2_Map,BG_256X256,0,1); // Load BG2 in bg 1<br />    PA_LoadSimpleBg(0,0,BG1_Tiles,BG1_Map,BG_256X256,0,1); // Load BG1 in bg 0<br /><br />    while(1){<br /><br />    PA_WaitForVBL();<br />    }<br />    return 0;<br />    }<br /><br />    这段代码实现了在下屏幕上装载4个背景图。<br /><br />    方块<br /><br />    使用PAlib，仅仅用一些方块你就能创建整个地形。我将演示如何创建一个对话泡泡。（译：漫画里面的人物说话的时候，一般都会有个泡泡，泡泡里面是人物说的话，这个泡泡就是对话泡泡）<br /><br />    假设你有一个背景，8×8方块。编号如下（我以后会加入一个图片）。。。<br /><br />        *<br />          0 = blank，空<br />        *<br />          1 = top，上<br />        *<br />          2 = left，左<br />        *<br />          3 = top-left，左上<br />        *<br />          4 = white square (middle)，白色方块（中）<br /><br />    装载它请使用PA_LoadSimpleBg(), 但是需要一点小技巧。<br /><br />    我们回顾一下这个函数的用法：PA_LoadSimpleBg(screen,bg_select,bg_tiles,bg_map,bg_size,wraparound,color_mode)<br /><br />    PA_LoadSimpleBg(1,1,tile_speech_Tiles,Blank,BG_256X256,0,1)<br /><br />    你可能已经注意到了我们没有使用用Blank替代了tile_speech_Map。Blank是个所有索引都为0的图。这样的话，如果你第一个方块是空，那么就不会显示任何东西。<br /><br />    注意：我们使用了1号背景，原因是我们希望能够在0号背景上显示我们的文本，这样组合起来，看上去就像一个对话泡泡了。<br /><br />    现在，使用下面的方法来装载你漂漂的方块。。。<br /><br />    PA_SetMapTileEx(screen, bg_select, x, y, tile_number, hflip, vflip, palette_number)<br /><br />    但是有一件事情你要注意，对于title_number，你不能直接把方块编号放进去。比如放在5号位置的方块可能是3号方块。我们可以通过一个数组来转化位置号和方块编号的对应关系。<br /><br />    tile_speech_Map[index]<br /><br />    这是因为PAGfx对方块坐了优化，这就是你必须使用图的原因，图能够把编号和顺序对应起来。<br /><br />    对于调色板编号赋值为0。hflip和vflip 参数是决定是否翻转图片。<br /><br />    这里是一段可以显示对话泡泡的例子（如果你发现Bug，自己修正吧）<br /><br />    void displaySpeechBubble(bool screen,u8 bg,s16 x1,s16 y1,s16 x2,s16 y2)<br />    {<br />    //load the tiles<br />    PA_LoadSimpleBg(screen,bg,tile_speech_Tiles,Blank,BG_256X256,0,1);<br /><br />    //Load the palette<br />    PA_LoadBgPal(screen,bg,tile_speech_Pal);<br /><br />    //load the corners<br />    PA_SetMapTileEx(screen,bg,x1,y1,tile_speech_Map[3],0,0,0);//top left<br />    PA_SetMapTileEx(screen,bg,x2,y1,tile_speech_Map[3],1,0,0);//top right<br />    PA_SetMapTileEx(screen,bg,x1,y2,tile_speech_Map[3],0,1,0);//bottom left<br />    PA_SetMapTileEx(screen,bg,x2,y2,tile_speech_Map[3],1,1,0);//bottom right<br /><br />    u8 height, length;<br /><br />    //load left and right side<br />    for(height = y1+1; height < y2; height++)<br />    {<br />    PA_SetMapTileEx(screen,bg,x1,height,tile_speech_Map[2],0,0,0);//left<br />    PA_SetMapTileEx(screen,bg,x2,height,tile_speech_Map[2],1,0,0);//right<br />    }<br /><br />    //load top, down, and middle<br />    for(length = x1+1; length < x2; length++)<br />    {<br />    PA_SetMapTileEx(screen,bg,length,y1,tile_speech_Map[1],0,0,0);//top<br />    PA_SetMapTileEx(screen,bg,length,y2,tile_speech_Map[1],0,1,0);//bottom<br /><br />    //load middle<br />    for(height = y1+1; height < y2; height++)<br />    {<br />    PA_SetMapTileEx(screen,bg,length,height,tile_speech_Map[4],0,0,0);//middle<br />    }<br />    }<br />    }<br /><br />    （译：翻译得结巴得很。说实话，自己理解了，但是不知道读者能不能看懂。这个例子对我正好有用。我想做大家来找X，显示结果的时候要在界面上画出方块。真犯愁这个方块如何画呢。补充，花了一点时间，把SpeechBubble的例子做了出来。需要的朋友可以发邮件问我要。）</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post17022_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[进阶教程]AVGMakerDS 1.3鉴赏模式中背景图的应用</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[进阶教程]AVGMakerDS 1.3鉴赏模式中背景图的应用</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuuhimesama</b><br/>
+2009-07-26 22:49:58</p>
+</div>
+<div class="col-10">
+<p>[quote]<br />图片模式下<br /><br />命令<br />picpage <页数>;   图片模式页数 页数为0的话，图片模式取消<br />picbg <页号>,<路径>; 用于图片模式某页的背景 <br />pic <序号>,<路径>; 图片 每页9张 3排×3列<br />[color=red]选择框大小为48×36 第一个左上角坐标为（20,10）左右间距10 上下间距10[/color]<br /><br />musicpage <页数>;  音乐模式页数 页数为0的话，音乐模式取消<br />musicbg <页号>,<路径>;   用于音乐模式某页的背景<br />music <序号>,<路径>;   音乐 每页8 4排×2列<br />[color=red]选择框大小为108×32 第一个左上角坐标为（10,10）左右间距20 上下间距10[/color]<br /><br />直接建立文本文件<br />如review.txt<br /><br />picpage 0;<br /><br />pic 0,"avgFiles/bg/bg.res","sora_ame01"<br />pic 1,"avgFiles/bg/bg.res","a005"<br />pic 2,"avgFiles/bg/bg.res","sora02"<br />pic 3,"avgFiles/bg/bg.res","b"<br />picbg 0,"avgFiles/bg/bg.res","b"<br /><br />musicpage 1;<br />musicbg 0,"avgFiles/bg/bg.res","w"<br />music 0,"avgFiles/bgm/2eb021.mp3","<br />    歌曲NO.1"<br />music 1,"avgFiles/bgm/2eb022.mp3","<br />    歌曲NO.2"<br />[/quote]<br /><br />上面是直接引用自hewenxie的说明，不过里面红字部分源文档中有错，这个已经修正<br />话说这是经过我实际的目测，得到具体像素的坐标，汗。。。<br /><br />加载背景时可以用到以下模板<br /><br /><br /><br />[IMG]http://i529.photobucket.com/albums/dd333/yh90219/AVGmakerDS/reviewpic.jpg[/IMG]<br />这个是picture模式的模板，具体坐标已经标出<br />大家可以在photoshop或者其他一些图片编辑软件中把cg图片缩小后放置相应位置，<br />图片序号从0开始，由左至右依次递增。<br /><br /><br />[IMG]http://i529.photobucket.com/albums/dd333/yh90219/AVGmakerDS/reviewmus.jpg[/IMG]<br />这是music模式的模板，具体坐标已经标出<br />这个同样可以在ps中把对应位置用歌曲名填上。<br />歌曲序号从0开始，由左至右依次递增。<br /><br />by 双马尾优优姬</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16581_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

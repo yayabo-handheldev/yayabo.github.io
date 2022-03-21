@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[yu-ris] 教程3：基本指令（声音、图片、文字）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[yu-ris] 教程3：基本指令（声音、图片、文字）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>静止系</b><br/>
+2014-10-21 01:02:14</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 静止系 于 2014-10-27 13:40 编辑 [/i]<br /><br />脚本是从data\script\UserScript\SCENARIO_START.txt开始的。<br /><br />那么先来简单的进行一些演出吧！~来适应一下基本指令的写法。<br />// 处于“//”后面的都作注释处理，运行时被忽略。对于指令不熟的同学多做注释可以加强记忆<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//第一句话<br />//----------------------------------------------------------[/color]<br />没错这里就是显示的第一句话，不需要任何指令。当然符号要使用全角的来写。<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//第一幕落下<br />//----------------------------------------------------------[/color]<br />\FOUT(0)<br />这里的FOUT指令是控制图层最方面幕布图像，显示幕布之后，幕布层以外的所有图层消去。<br />用于画面的淡出以及转场使用。<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//播放BGM<br />//----------------------------------------------------------[/color]<br />\BGM(bgm03) [color=#2e8b57]//愉悦的背景音乐[/color]<br />开始播放BGM了。<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//播放声音（单声）<br />//----------------------------------------------------------[/color]<br />\SE(d_chime01) [color=#2e8b57]//蝉鸣声[/color]<br />声音播放了一次。<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//声音停止<br />//----------------------------------------------------------[/color]<br />\SE(,1000) [color=#2e8b57]//文件名留空就是停止播放[/color]<br />声音１秒后停止播放了。<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//设置照相机XYZ=( 0，0，0）<br />//背景以 bg_030 来显示<br />//----------------------------------------------------------[/color]<br />\BG.CMXYZ(0, 0, 0)<br />\BG(bg_030, , 0, 0)<br />背景被加载了，但是最前面有幕布所以背景画像没有显示（一开始使用了FOUT）所以什么都看不到。<br />那么接下来拉开幕布吧~<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//幕布表现(完成)<br />//----------------------------------------------------------[/color]<br />\FIN(1000) [color=#2e8b57]//幕布以1000ms淡出了[/color]<br />最前面的幕布淡出了。之后第一次看到了ｓｐｒｉｔｅ。<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//立绘的表示<br />//----------------------------------------------------------[/color]<br />\SP.ST(fga, 500) [color=#2e8b57]//[/color]<br />\SP.GO(X) //开始<br />立绘ｆｇａ以５００ｍｓ淡入了。<br />接下来让立绘沿着Ｘ轴移动一下让演出更加精彩吧。<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//立绘的移动<br />//----------------------------------------------------------[/color]<br />\SP.SX(100, 2000)<br />\SP.GO(X)<br />立绘X轴移动了１００像素，耗时２秒<br /><br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//立绘一边移动一边进行图像转换<br />//  X-100像素移动<br />//  立绘fga以500ms的时间交叉淡出(画面切换)//<br />//----------------------------------------------------------[/color]<br />\SP.SX(-100, 2000)<br />\SP.ST(fgb, 500) [color=#2e8b57]//立绘在移动的过程中更换为立绘fgb，使用了0.5秒[/color]<br />\SP.GO(X)<br /><br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//立绘的消除<br />//----------------------------------------------------------[/color]<br /><br />\SP.DEL(Y) [color=#2e8b57]//立绘Y被消除了[/color]<br />纳尼，这样突然消除你在逗我？！<br />想要精彩一点？那就这样吧。<br />\SP.ST(fgb, 500) [color=#2e8b57]//目标fgb，0.5秒淡出[/color]<br />\SP.SX(100,1000) [color=#2e8b57]//x轴向右移动100像素，耗时1秒[/color]<br />\SP.GO(X) [color=#2e8b57]//演出X开始[/color]<br />\SP.WA(X) [color=#2e8b57]//等待演出X的动作完成[/color]<br />\SP.DEL(fgb) [color=#2e8b57]//fgb被消除了[/color]<br /><br />图例<br />[attach]278[/attach]<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//幕布(淡出)<br />//  <br />//  使用5号遮片过渡一下<br />//----------------------------------------------------------[/color]<br />\FOUT(1500, 5)<br />幕布使用５号遮片淡入了。<br />遮片的定义请在[color=#ff0000]data＼script＼UserDefine＼过渡定义.txt[/color]中进行定义。<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//停止播放ＢＧＭ<br />//----------------------------------------------------------[/color]<br />\BGM(,1000)<br />不填写文件名，只指定时间则为停止播放ＢＧＭ。<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//等待１秒<br />//----------------------------------------------------------[/color]<br />\WA(1000)<br />等待了一秒。<br /><br />[color=#2e8b57]//----------------------------------------------------------<br />//返回标题画面<br />//----------------------------------------------------------[/color]<br />\GO.TITLE<br /><br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wz20084596</b><br/>
+2014-10-21 01:10:20</p>
+</div>
+<div class="col-10">
+<p>...路过..最近晚上睡不着 撸不动 无奈啊~·</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>静止系</b><br/>
+2014-10-21 01:13:29</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 静止系 于 2014-10-27 13:43 编辑 [/i]<br /><br />//==============================================================<br />// [color=#9932cc]文字游戏的主力组成其一 —— [/color][color=#ff0000][b]文字[/b][/color]<br />// [font=Microsoft YaHei, Helvetica Neue, SimSun][color=#9932cc][size=14px]首先，关于文字的指令，我做了个表格。[/size][/color][/font]<br />//==============================================================[font=Microsoft YaHei, Helvetica Neue, SimSun][color=#fa78b2][size=14px]<br />[/size][/color][/font][table=551]<br />[tr][td]指令[/td][td]参数[/td][td]参数省略时[/td][td]说明[/td][td]例子[/td][/tr]<br />[tr][td]\C<br />(click)[/td][td]无[/td][td]无[/td][td]等待点击[/td][td]今天的风儿\C有些喧嚣。[/td][/tr]<br />[tr][td]\R<br />(return)[/td][td]无[/td][td]无[/td][td]用于文字换行[/td][td]真是的，\R 你这个笨蛋！[/td][/tr]<br />[tr][td]\P<br />(page)[/td][td]无[/td][td]无[/td][td]文本改页（现在显示的文字消失，再次从最初的位置显示）。[/td][td]第一页。\P现在是第二页了。[/td][/tr]<br />[tr][td]\AC(值)<br />(auto  click)[/td][td]\AC(值)[/td][td]\AC(Y)<br />Y=1[/td][td]行末自动点击等待是否设定的命令。游戏开始时默认进行设定(= 1）。[/td][td]\AC(0)→自动点击无效。[/td][/tr]<br />[tr][td]\AR(值)<br />(auto  return)[/td][td]\AR(值)[/td][td]\AR(Y)<br />Y=1[/td][td]行末自动换行是否设定的命令。游戏开始时默认进行设定(= 1）。[/td][td]\AR(0)→自动换行无效。[/td][/tr]<br />[tr][td]\AP(值)<br />(auto page)[/td][td]\AP(值)[/td][td]\AP(Y)<br />Y=1[/td][td]行末自动改页是否设定的命令。游戏开始时默认进行设定(= 1）。[/td][td]\AP(0)→自动改页无效。[/td][/tr]<br />[tr][td]\TC(色1,色2)<br />(text color)[/td][td](1)色1：指定颜色代码。(0x000000～0xFFFFFF)<br />省略时，使用文字定义文件中定义的颜色。<br />(2)色2：指定颜色代码。(0x000000～0xFFFFFF)<br />指定的颜色为色1~色2的颜色渐变文字，省略的话则指定单色。[/td][td](1)色1：(省略时，返回默认文字颜色）<br />(2)色2：( 与色相1同的颜色）[/td][td]文字颜色的变更。<br />文字颜色的变更只对记述了该命令行的行有效。[/td][td]目前该命令无效。(原因至今未找到)[/td][/tr]<br />[tr][td]\TS(sizeX,sizeY)<br />(text size)[/td][td]sizeX=文字宽指定。<br />sizeY=文字高指定。[/td][td]sizeX省略时，则返回文字原大小。sizeY省略时，则指定值与宽相等。[/td][td]文字大小的变更。文字大小的变更只对记述了该命令行的行有效。[/td][td]第一\TS(32,40)句话\TS()<br />参考图1。[/td][/tr]<br />[tr][td]\TX.ICON.XYAUTO(值)[/td][td]值：有效的情况下指定为1。无效的情况下则指定为0。[/td][td]参数省略时，默认指定值=0[/td][td]等待点击，等待改页的时候，自动显示文本的末尾是否显示图标设定的命令。无效时，图标的显示位置是“主画面设计. txt”内定义的坐标，就那样被显示。游戏开始时是默认无效的(= 0）。[/td][td]\TX.ICON.XYAUTO(1)<br />→自动末尾显示设定为有效。[/td][/tr]<br />[/table]<br /><br />图1.<br />[attach]282[/attach]<br /><br /><br />文字指令的常用功能以及事例都已经列入表格，就不多说了。<br /><br />基本常用的就是\C \R \P<br /><br /><br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>静止系</b><br/>
+2014-10-21 01:13:32</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 静止系 于 2014-10-27 14:25 编辑 [/i]<br /><br />[color=#444444]//==============================================================[/color]<br />[color=#444444]// [/color][color=#9932cc]文字游戏的主力组成其二 —— [/color][color=#ff0000][b]图片[/b][/color]<br />[color=#444444]// [/color][size=14px][font=Microsoft YaHei, Helvetica Neue, SimSun][color=#9932cc]作为游戏三个灵魂其二的图片说明[/color][/font][/size]<br />[color=#444444]//==============================================================[/color][color=#444444]<br />[/color]<br />[color=#444444]首先，先来了解一下图片使用的方面以及种类。[/color]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]一般情况下，UI图像以及立绘图像使用PNG格式，背景图像使用JPG或者PNG。[/size][/color][/font]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]当然这是我喜欢的一般情况下。[/size][/color][/font]<br /><br />[color=#444444]//[/color][color=#444444]那么先来了解一下可以使用的图片格式吧。[/color]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]·BMP形式[/size][/color][/font]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]（[/size][/color][/font][color=#444444]√[/color][img]file:///C:\Users\ADMINI~1\AppData\Local\Temp\SGTpbq\6756\005E5CA2.png[/img][color=rgb(68, 68, 68)][size=14px]1，2，4，8，24，32 bit BMP，×RLE bitmap[/size][/color][color=rgb(68, 68, 68)][size=14px]）（32位透明通道也可以）[/size][/color]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]·PNG形式[/size][/color][/font]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]（√8，24 bitPNG，各颜色的16 bitPNG，透明通道，灰度图像[/size][/color][/font][color=rgb(68, 68, 68)][size=14px]）[/size][/color]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]·JPEG形式[/size][/color][/font]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]·GIF形式[/size][/color][/font]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]（[/size][/color][/font][color=#444444]√[/color][color=rgb(68, 68, 68)][size=14px]透明通道，[/size][/color][color=#444444]×[/color][color=#444444]动画GIF（[/color][color=#444444]只表示[/color][color=#444444]最初的框架）[/color]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]因此，全部的图像素材（背景，CG，立绘，按钮等UI）可以使用自己喜欢的形式。[/size][/color][/font]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]一般情况下背景和CG图像使用BMP和PNG来表示(※JPG的画质多少有点弱）[/size][/color][/font]<br />[font=Microsoft yahei, Lucida Grande, Verdana, Helvetica, Arial, sans-serif][color=#444444][size=14px]另外，立绘和按钮，信息窗口框架等等，需要使用透明通道，这里请使用PNG和GIF。[/size][/color][/font][color=rgb(68, 68, 68)][size=14px](※当然32 bitBMP形式也可以）[/size][/color]<br />[color=rgb(68, 68, 68)][size=14px]图像尺寸的限制，最大8192×8192像素，因此只要小于这个尺寸的话都可以读取。[/size][/color]<br /><br /><br />[color=#444444]//接下来了解一下图层的构造，简单的图示↓[/color]<br />[color=#444444]<br />[/color]<br />[color=#444444][最后面]<br />      ↑<br />     ｜     \BG / \EV    … 背景图层(1张限定)   ※图层名="BG"<br />     ｜<br />     ｜     \SP              … 通用layer(最多100张)<br />     ｜<br />     ｜     \FIN/FOUT  … 整个画面淡入/淡出使用的图层(1张限定)<br />     ｜<br />     ｜     (UI图像)       … 信息窗口、按钮等等<br />     ｜                             ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ 因为这些是tiplayer显示出来的，所以距离不首影响，摄像机各种运动都不会改变其显示状态。<br />[/color][color=#444444]      ↓<br />[最前面]  \CM            … 摄像机(往↑↑↑↑这个方向射♂了出去，可以自由移动，想象一下对面的图像↑都是被自己扛着摄像机所拍摄出来的就很好理解了)<br /><br /><br />//然后就是图片的指令使用啦，※累了下次在写，逃<br />[/color][color=#444444]<br />[/color]<br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>静止系</b><br/>
+2014-10-21 01:13:34</p>
+</div>
+<div class="col-10">
+<p>备用</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>静止系</b><br/>
+2014-10-21 01:16:32</p>
+</div>
+<div class="col-10">
+<p>[quote][size=2][color=#999999]ProfaneAria 发表于 2014-10-20 23:15[/color] [url=forum.php?mod=redirect&goto=findpost&pid=345977&ptid=26556][img]static/image/common/back.gif[/img][/url][/size]<br />kong君不给力啊，怎么才lv4啊，我还以为你已经是lv？？？？了！[/quote]<br /><br />空聚聚对这个纯签到已经绝望了</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post167_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

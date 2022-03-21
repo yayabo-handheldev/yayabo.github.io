@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>解读NDS程序的编译参数</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">解读NDS程序的编译参数</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-05-16 10:18:57</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 niubo_ 于 2009-5-16 23:51 编辑 [/i]<br /><br />和雷叔讨论overlay的实现，一直没有进展，反倒找到编译器的手册，把编译参数研究了一下。<br />        nds程序的编译过程相对PC程序麻烦些，不但中间文件比较多，还因为涉及到两个CPU，又增添了一些步骤。<br />首先把源码编译成目标文件.o，然后链接得到一个后缀.elf的文件，这玩意儿个头比较大，据说含有调试信息，然后用objcopy把没用的东西去掉，变成一个cpu可以执行的二进制文件.arm9或者.arm7。最后用ndstool把他们连同图标，标题，包含的外部文件打包成一个.nds文件，这样就可以放到烧录卡或在模拟器上运行了。<br />        模板里提供的Makefile把很多命令都隐藏起来了，我们可以把命令前面的@去掉，就可以看到完整的编译输出了。<br />        参数很长很长，我把它们断开，一个一个解读其作用。<br /><br />[quote]编译：<br /><br />    实际这个编译过程包含了预处理和编译两步，预处理产生的文件是以.i做后缀的。<br />    若不删除中间文件，会看到即使一个简单的Hello World经预处理后的篇幅也是相当壮观的。<br />arm-eabi-gcc <br /><br />-MMD<br />        控制在编译的过程中生成依赖文件，以写入到.d文件中<br />-MP<br />        给除主文件外的所有源文件设置一个空依赖，可以解决某些因移除文件而又没更新Makefile产生的make错误<br />-MF<br />        当用了上面的-MMD后，指定依赖文件输出到后面路径所示的位置<br />/m/make_test/build/main.d <br /><br />-save-temps<br />        保留编译过程中产生的中间文件<br />-g<br />        生成调试信息<br />-Wall<br />        开启所有waring<br />-O2<br />        设置优化级别为2<br />-fomit-frame-pointer<br />        优化，尽可能不产生栈框架(Frame) <br />-ffast-math<br />        优化，加快运算，不过不保证正确性<br />-mthumb<br />        产生Thumb编码<br />-mthumb-interwork<br />        产生支持ARM和Thumb指令集一起使用的编码<br />-march=armv5te<br />        指定目标码是何种ARM体系<br />-mtune=arm946e-s<br />        调整产生的编码适合特定的ARM型号<br />-I/m/make_test/include <br />-I/d/devkitPro/libnds/include <br />        以-I开头后跟路径的参数，指定#include <FILE>的搜索路径<br />-DARM9<br />        预先定义ARM9这个宏<br />-c<br />        控制编译器只编译到生成目标文件.o，不进行链接                <br />/m/make_test/source/main.c <br />        指定输入文件的路径<br />-o main.o<br />        指定输出文件为后面的文件名 <br /><br />链接：<br /><br />    可以看到，链接这一步也是用gcc来完成的<br />arm-eabi-gcc  <br /><br />-specs=ds_arm9.specs<br />        指定一个储存器配置表，或者说一个Linker script指令文件<br />-g<br />-mthumb<br />-mthumb-interwork<br />-march=armv5te <br />-mtune=arm946e-s<br />        和编译时的参数相同<br />-Wl,-Map,make_test.map<br />        给链接器传递参数，生成链接映射表文件<br />main.o <br />sh.o<br />        输入文件<br />-L/d/devkitPro/libnds/lib<br />        -L开头的参数指定后面外部库文件的路径<br />-lnds9<br />        -lXXX，需要链接的库。库文件名应该是libnds9.a<br />-o<br />         指定输出文件为后面的文件名 <br />/m/make_test/make_test.elf<br /><br />objcopy 减肥：<br /><br />arm-eabi-objcopy -O binary /m/make_test/make_test.elf /m/make_test/make_test.arm9<br />        这个比较简单，-O binary 以binary的格式把elf文件输出到arm9文件。<br />                <br />ndstools 打包：<br /><br />ndstool -c /m/make_test/make_test.nds<br />-9 /m/make_test/make_test.arm9<br />-b /d/devkitPro/libnds/icon.bmp "make_test;[url]www.devkitpro.org[/url];[url]www.drunkencoders.com[/url]" <br /><br />      -9 + 路径 包含进一个arm9二进制文件。<br />    另外也可以用-7 + 路径包含进一个arm7二进制文件，如果不指定的话ndstool会自动到libnds下寻找Default包含进来。<br />    -b + 后面那一串 分别把图标，标题，副标题1和副标题2包含进来。<br />    另外还有 -d + 路径 可以把一个文件夹也打包进来。使用EFSlib的时候会要用到这个参数。[/quote]<br /><br />可以看出很多参数都是优化或者修饰性的，或者在编译的时候输出些副产物。<br />当然不同的Makefile模板提供的编译参数也不完全相同，不过读懂这些这样的话其实可以根据自己的需要定制一下了，比如加上不删除中间文件的参数，连生成的汇编码都保留下来了，嗯，以后学汇编的话倒是可以对照C源码来看看。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16728_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

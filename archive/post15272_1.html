@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ActionGameMaker的父子对象、连接点与应用</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">ActionGameMaker的父子对象、连接点与应用</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>不是企鹅君</b><br/>
+2010-03-18 15:29:47</p>
+</div>
+<div class="col-10">
+<p>[b][size=4]原帖地址：[url=http://hi.baidu.com/v2sam/blog/item/6ae5000f6b2ef3e1aa64574f.html]http://hi.baidu.com/v2sam/blog/item/6ae5000f6b2ef3e1aa64574f.html[/url][/size][/b]<br />[b][size=4][/size][/b] <br />[b][size=4]本文面向刚接触AGM的使用者，认识父对象与子对象是什么。<br />【转载请注明出处】[/size][/b]<br /><br />[size=3][color=#ffffff]注意！本文图文教程使用[color=#810081][url=http://www.myotherdrive.com/dyn/file/227.025823.22022010.51849.6a65fi/ActionGameMaker.htm]自用简体汉化[/url][/color][color=#ffffff]的AGM，概不负责原版与此版本以外用户的提问。[/color][/color][/size]<br />[size=4]对象类的应用：父对象与子对象的连接和应用[/size]<br />[size=3][b]    我们先来搞清楚这对父与子——所谓父对象就是一个主体，而子对象就是挂在这个主体上的独立零件。<br />而连接点就是用来指定这个零件挂什么地方。[/b][/size]<br />[size=3][i][size=4]规则：<br /><br />[/size][/i]【关于子对象】<br />1、某个对象在“发生时”模块里指定了父对象文件，这个对象就变成了子对象。<br />2、可以指定子对象的伤害为父对象的伤害，即打中子就是打中父。<br />3、子对象可以拥有自己的HP和独立伤害。<br />4、子对象可以有自己的动画动作，但无法脱离父对象的连接点进行自由移动。<br />5、子对象可以继承父对象的角度、比例和亮度。<br />6、子对象的动画数量及名字必须和父对象一致。[/size]<br />[size=3]【关于连接点】<br />1、连接点在一个元件里最多4个。<br />2、连接点除了是连接子对象，还可以是子弹发射点。<br />3、黏着在连接点上的必定是子对象元件的中心点。<br />4、连接点可随意拖放在任何坐标，即使它是远离父对象的，但正负最多32767（%）。<br />5、连接点可以定义是在父对象前面或后面显示。[/size]<br />[size=3][/size] <br /><br />[size=3][i][size=4]实际应用：[/size][/i]<br />1、首先在【动画】模块建立一个父对象动画动作。为了方便演示，这里只建立3个动画。<br /><br />[/size]<br /><br />[size=3][img]http://www.yayabo.cn/sns/attachment/201003/18/6997_12688970572c73.jpg[/img] [/size]<br />[size=3]<br />[/size] <br />[size=3]<br />[/size] <br />[size=3]2、然后建立子对象动画动作，数量和名字与父对象对应<br />[img]http://www.yayabo.cn/sns/attachment/201003/18/6997_1268897058hGYK.jpg[/img] [/size]<br />[size=3]<br />[/size] <br />[size=3]<br />[/size] <br /><br />[size=3]3、编辑父对象的连接点到你需要的位置。<br /><br />[/size]<br /><br />[size=3][img]http://www.yayabo.cn/sns/attachment/201003/18/6997_1268897064Jzfi.jpg[/img] [/size]<br />[size=3]<br />[/size] <br />[size=3]<br />[/size] <br />[size=3]4、在【对象】模块中打开子对象组件的【发生时】，指定父对象及连接点编号，这里我选择连接点1。<br />[img]http://www.yayabo.cn/sns/attachment/201003/18/6997_12688970621XuR.jpg[/img] [/size]<br />[size=3]<br />[/size] <br />[size=3]<br /><br />在动作的设置中只需一个随意动作就可以了，无需条件判定。<br />[img]http://www.yayabo.cn/sns/attachment/201003/18/6997_12688970616TX9.jpg[/img] [/size]<br />[size=3]<br />[/size] <br />[size=3]<br />[/size] <br /><br />[size=3]5、设置好父对象的动作，测试——<br />[img]http://www.yayabo.cn/sns/attachment/201003/18/6997_12688970654G6k.jpg[/img] [img]http://www.yayabo.cn/sns/attachment/201003/18/6997_1268897066v07Y.jpg[/img] [img]http://www.yayabo.cn/sns/attachment/201003/18/6997_12688970678XrF.jpg[/img] <br /><br /><br />如你所见，无论父对象做任何动作，子对象都会跟着显示对应的动画动作。[/size]<br />[size=3]--------------------------------------------------------------------------------------------------------------------------[/size]<br />[size=3]==================拓展========================================[/size]<br />[size=3][size=4]接下来再测试在后面显示的连接点。<br />[/size]<br />新建一个动画组。<br />[/size]<br />[size=3][img]http://www.yayabo.cn/sns/attachment/201003/18/6997_1268897056z8r0.jpg[/img] [/size]<br />[size=3]<br />[/size] <br />[size=3]<br />[/size] <br />[size=3]设置父对象的连接点2，勾上显示在背面<br />[img]http://www.yayabo.cn/sns/attachment/201003/18/6997_1268897068Wzm2.jpg[/img] [/size]<br />[size=3]<br />[/size] <br />[size=3]<br />[/size] <br />[size=3]指定同样的父对象<br />[img]http://www.yayabo.cn/sns/attachment/201003/18/6997_12688970690EGa.jpg[/img] [/size]<br />[size=3]<br />[/size] <br />[size=3]<br />[/size] <br />[size=3]看，对应的动作被显示在后面。<br /><br />[/size]<br />[size=3][img]http://www.yayabo.cn/sns/attachment/201003/18/6997_1268897070x7sS.jpg[/img] [/size]<br />[size=3]=====================================================[/size]<br />[size=3][size=4][b]合理利用父子对象可以做出相当棒的效果，这次的教学就到此结束，下期再会。[/b][/size][/size]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-18 15:30:27</p>
+</div>
+<div class="col-10">
+<p>汗~~~3G~~~老任想搞手机么……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-18 15:30:50</p>
+</div>
+<div class="col-10">
+<p>看不懂~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-18 15:31:33</p>
+</div>
+<div class="col-10">
+<p>板凳~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-18 15:32:56</p>
+</div>
+<div class="col-10">
+<p>图挂了好多~~~不过看着真眼热啊~~~</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15272_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

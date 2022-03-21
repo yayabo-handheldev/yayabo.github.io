@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>lua 的 table 处理</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">lua 的 table 处理</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-15 08:38:25</p>
+</div>
+<div class="col-10">
+<p>摘自：云风的 BLOG<br />lua 的整体效率是很高的，其中，它的 table 实现的很巧妙为这个效率贡献很大。<br /><br />lua 的 table 充当了数组和映射表的双重功能，所以在实现时就考虑了这些，让 table 在做数组使用时尽量少效率惩罚。<br /><br />lua 是这样做的。它把一个 table 分成数组段和 hash 段两个部分。数字 key 一般放在数组段中，没有初始化过的 key 值全部设置为 nil 。当数字 key 过于离散的时候，部分较大的数字 key 会被移到 hash段中去。这个分割线是以数组段的利用率不低于 50% 为准。 0 和 负数做 key 时是肯定放在 hash 段中的。<br /><br />string 和 number 都放在一起做 hash ，分别有各自的算法，但是 hash 的结果都在一个数值段中。hash 段采用闭散列方法，即，所有的值都存在于表中。如果hash 发生碰撞，额外的数据记在空闲槽位里，而不额外分配空间存放。当整个个表放满后，hash 段会扩大，所有段内的数据将被重新 hash ，重新 hash 后，冲突将大大减少。<br /><br />这种 table 的实现策略，首先保证的是查找效率。对于把 table 当数组使用时将和 C 数组一样高效。对于 hash 段的值，查找几乎就是计算 hash 值的过程（其中string 的 hash 值是事先计算好保存的），只有在碰撞的时候才会有少许的额外查找时间，而空间也不至于过于浪费。在 hash 表比较满时，插入较容易发生碰撞，这个时候，则需要在表中找到空的插槽。lua 在table 的结构中记录了一个指针顺次从一头向另一头循序插入来解决空槽的检索。每个槽点在记录 next 指针保存被碰撞的 key 的关联性。<br /><br />整个来说，这种解决方法是非常不错的。<br /><br />关于映射表的实现，我前段时间也做过一个别的研究。贴在留言本上：<br />树表结合的一种映射表实现<br />在 vector , map , list 间取得平衡</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16001_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

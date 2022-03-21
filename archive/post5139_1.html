@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[引擎]PSP平台强大引擎ZEngine强势发布 更新教程传送门！</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[引擎]PSP平台强大引擎ZEngine强势发布 更新教程传送门！</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_6.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-11-08 21:53:27</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 love_xiaolu 于 2010-11-10 19:23 编辑 [/i]<br /><br />日前，由掌家的会员：[color=Red]easycker[/color]  开发的PSP平台基于NGE2制作的引擎ZEngine正式发布了测试版，<br /><br />所有源代码开源，欢迎一同探讨！<br /><br />以下是使用方法：<br />[color=Red]作者：Zeus.<br />感谢：Eric及PSP游戏开发讨论群的支持<br />PSP游戏开发讨论群：致力于国人PSP游戏及软件开发 群号：9470122<br /><br />零.安装路径<br />将psp_development解压到C:根目录下<br />C:psp_developmentNGE2libnge2NGE2 ZeusEngineproject 1<br /><br />之后的ZEngine路径为<br /> <br />一。说明<br />  本包包含了JGE LUA NGE2 和TOPOC的PSPDEV 4个开发环境<br /><br />二。ZENGINE说明<br />  ZEngine是我开发的便于程序员开发用的高层开发引擎。<br />  包含ZEngine和ZWindow两部分<br />  程序员需要VC6.0开发环境<br /><br />三。ZEngine使用方法<br />  进入NGE2 bnge2/目录下 按照“配置说明.txt”来配置VC6.0<br />  然后用VC6.0打开NGE2 ZeusEngine/project 1/目录下的project.dsw 或project.dsp 工程文件。进行编译，编译通过后运行能够看到黑色背景的测试程序<br /><br />四。新建ZEngine的方法。<br />  将NGE2 PROJECT TEMP目录下的project 1复制到 NGE2 ZeusEngine目录下，如果NGE2 ZeusEngine目录已有project 1，那么将project 1改为其他名称（最好备份一下）然后再复制.<br />  然后按照“三”所说的启动并打开项目编译<br /><br />五。查看ZEngine的使用。<br />  VC6.0打开project 1的项目后，里面的ZEngine文件夹及ZWindow文件夹下所有的.h文件均有所有函数使用的说明<br /><br />六。程序入口<br />  已改为Game.cpp和Game.h ，游戏就在这两个文件中写，不用去管其他ZEngine文件.<br /><br />七。添加对象。<br />  以在游戏中显示一个图片为例<br />  1.在Game.h中新建一个ZImage对象：ZImage m_img;也可以用指针，最好用指针(ZImage *m_img;然后再构造函数中添加m_img = new ZImage.）<br />  2.在Game.cpp的GameCircle中写m_img.Load("./1.png");<br />  3.在GameDrawScene中写m_img.Show();就可以在屏幕上看到图片了。<br />  4.其他各类的使用方法和这个的大体相同<br /><br />八。WIN32的版本<br />  NGE2 ZeusEngineinproject.exe 和其资源文件，还有win32_dll/下的所有.dll文件 都复制到一个文件夹下，运行project.exe就可以启动ZEngine写的Windows版的游戏了。<br /><br />九。PSP版本 NGE2 ZeusEngineproject 1<br />  1.在Makefile中添加类。用记事本打开Makefile文件，OBJS += $(ZWINDOWOBJS) Game.o 后面写你自己添加到程序中的类，如果写了个类的CPP文件叫Marrio.cpp,那么就添加Marrio.o ，注意.o文件之间用空格隔开 .保存文件，退出。<br />  2.运行start.bat 执行make,运行无误将会看到EBOOT.PBP文件。<br />  3.把EBOOT.PBP还有所有资源文件(资源文件就是NGE2 ZeusEngineproject 1下的那写图片声音等文件的文件夹或文件) 复制到PSP的PSPGAME的新建的文件夹下（一定要放在同一文件夹下）<br />  4.启动PSP运行<br /><br />十。以后版本我会加强说明<br />我QQ:305694086,非ZEngine游戏开发者及ZEngine引擎开发者勿扰。[/color]<br /><br />教程入口：<br />[url=http://www.yayabo.cn/thread-13382-1-1.html]ZEngine Demo 1 - ZImage 初级使用 (更新版本v101109)[/url]<br />[url=http://www.yayabo.cn/thread-13395-1-1.html]ZEngine Demo 2 - ZAudio 初级使用[/url]<br />[url=http://www.yayabo.cn/thread-13396-1-1.html]ZEngine Demo 3 - ZFont 初级使用[/url]<br />[url=http://www.yayabo.cn/thread-13407-1-1.html]ZEngine Demo 4 - ZGif 初级使用[/url]<br />[url=http://www.yayabo.cn/thread-13408-1-1.html]ZEngine Demo 5 - ZTimer 初级使用[/url]<br />[url=http://www.yayabo.cn/thread-13411-1-1.html]ZEngine Demo 6 - ZSprite 初级使用[/url]<br />[url=http://www.yayabo.cn/thread-13413-1-1.html]ZEngine Demo 7 - 按键的使用 初级[/url]<br /><br /><br /><br />[attach]16668[/attach]<br />[attach]16667[/attach]<br />[attach]16666[/attach]<br />[attach]16665[/attach]<br />[attach]16664[/attach]<br />[attach]16663[/attach]<br />[attach]16662[/attach]<br /><br /><br />下载地址：<br />[url]http://u.115.com/file/f1b076802[/url]<br />ZEngine游戏开发引擎PSP及WIN32平台.rar<br /><br />[url]http://u.115.com/file/f14447cc2f[/url]<br />ZeusEngine所有版本及示例.rar<br /><br />[url]http://u.115.com/file/f1f690f7ef[/url]<br />NGE2_ZeusEngine_v0_20101017_11_Drum.rar<br /><br />[url]http://u.115.com/file/f1dcb7e3c4[/url]<br />ZEngine示例.rar<br /><br />[url]http://u.115.com/file/f1e0bd912a[/url]<br />ZDrum_Win32.rar<br /><br />[url]http://u.115.com/file/f1f7fe07f8[/url]<br />GAME.rar</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zaizei00</b><br/>
+2010-11-08 21:55:14</p>
+</div>
+<div class="col-10">
+<p>来看lz签名的..</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>hitler1017</b><br/>
+2010-11-08 21:55:27</p>
+</div>
+<div class="col-10">
+<p>克羅艾!!!!<br />(興奮中)</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>linguoping</b><br/>
+2010-11-08 21:55:38</p>
+</div>
+<div class="col-10">
+<p>辛苦了~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>hitler1017</b><br/>
+2010-11-08 21:55:50</p>
+</div>
+<div class="col-10">
+<p>MISS~~~~~~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-08 21:57:10</p>
+</div>
+<div class="col-10">
+<p>           <br />耀西、</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>1239985932</b><br/>
+2010-11-08 21:57:58</p>
+</div>
+<div class="col-10">
+<p>oh！no！这个太高级了！速度支持！<br />置顶！牛啊！<br />期待完成版的运行=w=</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>『兔寳貝』</b><br/>
+2010-11-08 22:00:05</p>
+</div>
+<div class="col-10">
+<p><br />以后用psp上掌家了...<br />不过用自带浏览器都可以..</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-11-08 22:02:26</p>
+</div>
+<div class="col-10">
+<p>战斗力小于5的人用不了这个,而战斗力高于5的人不会用这个。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Ansa翼</b><br/>
+2010-11-08 22:03:12</p>
+</div>
+<div class="col-10">
+<p>今天又遲了~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-11-08 22:03:34</p>
+</div>
+<div class="col-10">
+<p>[quote]战斗力小于5的人用不了这个,而战斗力高于5的人不会用这个。<br />[size=2][color=#999999]白枫 发表于 2010-11-8 22:02[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=150344&ptid=13379][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />     ohno！！枫大人一语道破...............</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-08 22:13:35</p>
+</div>
+<div class="col-10">
+<p><br />呵呵。<br />我会加油嘚</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post5139_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

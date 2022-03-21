@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS硬件研究-MCU读写DS卡EEPROM芯片2</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS硬件研究-MCU读写DS卡EEPROM芯片2</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_18.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-07 10:23:16</p>
+</div>
+<div class="col-10">
+<p>摘自：ndsbbs<br />作者：nashi1987<br /><br />上一篇介绍了DS卡EEPROM的一部分信息，这次讲解指令的主要使用规则。指令描述请参考上一教程。<br /><br />这篇我们分别详细讲解一下每一条指令：<br /><br />1.写启用（WREN）<br />[attach]39[/attach]<br />写使能位必须在每一个写内或写寄存器指令前设置，写启用（WREN）就是用来设置使能位的指令，使写使能启动。<br />如上图所示，向设备传送这条指令，片选（S）置为低电位，然后指令一位一位输入到数据输入线，传送完成之后设备进入等待状态，等待片选信号置为高电位。<br /><br />2.写禁止（WRDI）<br />[attach]40[/attach]<br />另一个改变写使能位的就是写禁止指令。与写启用起相反作用。<br />如上图所示，片选置为低电位后，指令数据输入。之后进入等待状态，等待片选信号置为高电位。<br /><br />3.读状态寄存器（RDSR）<br />[attach]41[/attach]<br />顾名思义，读状态寄存器指令是用来读取状态寄存器状态的。状态寄存器可以在任何时候读取，即使当写内存或写寄存器操作进行时，所以它可以用来在下一个指令传输前检测芯片是否正在进行操作，即检测寄存器的WIP（write in progress)位。也可以按常规操作，如上图所示。<br /><br />寄存器的状态位如下：<br />WIP 位：写进行位显示内存是否在进行写内存或写寄存器操作，当为1时，表明正在进行操作。为0时，表明没有进行操作。<br /><br />WEL 位：写使能位控制内部写使能锁，当置1时内部写使能锁开启，写操作禁用。当置0时，则允许写操作。<br /><br />4.写寄存器（WRSR）<br />[attach]42[/attach]<br />写寄存器指令用来将新的值写入寄存器，操作前，必须先执行写使能指令。<br /><br />写寄存器指令代码和操作数据在片选信号置为低电位后由数据输入线输入设备。<br />时序图如上所示，在指令数据传送完后片选信号置为高电位。写寄存器时，读寄存器指令依然可以执行。<br /><br />5.读内存（READ）<br />[attach]43[/attach]<br />地址格式定义：<br /><br />设备：         M95640<br />地址：         A12---A0<br /><br />内存读取指令用来读取指定地址的数据。如上图所示，首先传输指令代码，然后是地址数据。地址数据保存在内部地址寄存器。如果片选信号持续为低电位，则地址寄存器自动进位，等待下一位地址数据。当最高位地址输入后，地址计数器清零，开始指定位置的数据读取操作。<br /><br />读取操作会一直进行直到片选信号变为高电位。片选信号的改变可以在任何时候。所在的地址可能是任何地方。<br /><br />此指令在设备忙时不被接受。<br /><br />6.写数据（WRITE）<br />[attach]44[/attach]<br />写数据指令用于向指定内存地址写入指定数据。如上图所示，片选置为低电位后，指令代码，地址和欲写入的数据顺序输入到数据输入线。<br />当片选信号置为高电位时指令结束，一般片选信号在1字节数据后改变。但如果在多个字节数据输入后改变，则从输入地址开始写入输入的数据。既可以一次写入多字节数据。由片选信号控制。一次最多可以输入32字节数据。<br />此指令在以下状态时不被接受：<br /><br />A.WEL置1   B.设备忙   C.片选线为高电位   D.该地址属于写保护区域<br /><br />以上就是DS卡存档EEPROM芯片指令得详细解释和时序图，了解这些后，就可以对其进行读写操作了。本教程只涉本实验及所须的指令，有少部分指令及资料未列出。<br />下一篇我们将讲解51单片机读写此EEPROM的原理及实现代码。<br /><br /><br />如有疏漏错误之处，还望大家多多指正！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post17007_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

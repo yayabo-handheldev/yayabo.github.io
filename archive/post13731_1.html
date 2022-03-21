@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[转]NS入门教程，第八篇</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[转]NS入门教程，第八篇</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_14.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kiseeyou</b><br/>
+2010-05-26 11:45:59</p>
+</div>
+<div class="col-10">
+<p>Level 7 LSP的混沌宇宙（3） 用EXBTN升级你的系统画面<br />相关指令：<br />exbtn<br />相关格式：<br />exbtn的参数格式<br /><br />嗯，这次大概就只能讲exbtn指令了吧。<br />在游戏中，涉及按钮悬停效果的，除了上一讲说过的使用lsp显示图片并用spbtn定义按钮外，当鼠标移动到某按钮上时，一般还有以下两种效果。<br />1、播放音效<br />2、在某个位置显示图片，并当鼠标从按钮上移开时图片消失。<br /><br />熟悉了按钮的使用以后，以普通的悬停效果，加上以上两种效果，就可以制作出相当复杂的系统了。当然，单纯做个华丽点的标题画面更没有问题。<br />这种情况下不附上范例真是不行咧，所以大家就暂时参考《青空之想试玩II》的游戏系统吧（顺便打个广告）。游戏中的option系统和物品系统就大量应用了exbtn制作的效果。当然青空是不能给你拆的（=_=b），但是看完这讲之后，你也可以试试制作类似的系统了。<br /><br />首先是使用exbtn达成和spbtn一样的悬停效果，这是为了可以在这个基础上进行扩展。<br /><br /><br />Copy code<br />*define<br /><br />game<br /><br />*start<br /><br />lsp 11,":a/2,0,3;btn.jpg",305,252<br />lsp 12,":a/2,0,3;btn.jpg",305,302<br />lsp 13,":a/2,0,3;btn.jpg",305,352<br /><br />print 1<br /><br />btndef ""<br />exbtn 11,1,"P11,1"<br />exbtn 12,2,"P12,1"<br />exbtn 13,3,"P13,1"<br /><br />btnwait %0<br /><br /><br /><br />if %0<=0 goto *start<br />if %0==1 goto *newgame ;开始新游戏<br />if %0==2 goto *loadgame ;读取进度<br />if %0==3 goto *endgame ;结束游戏<br /><br />*loadgame<br />systemcall load ;呼叫NS的读档选单<br />goto *start<br /><br />*endgame<br />end<br /><br />*newgame<br />csp -1<br />print 1<br />开始游戏<br />end<br /><br /><br />参考下上次的代码，就可以看出，只是把<br />spbtn 11,1这样的指令，改成了exbtn 11,1,"P11,1"而已。<br />前面的11,1依然代表一样的意思，而后面的第三个参数，使用""括起来的部分，就是exbtn的追加效果参数。<br />P11,1代表，当鼠标移动到图片lsp11上时，将显示图片lsp 11的第1格。<br />注意，由于我们之前的设定，lsp11的图片是被分成了两格，而格数是从零起算的，平时显示的就是第0格，因此这里第1格就是特殊效果了。（如果是文字的话，自然就代表选中的文字颜色了）<br />显示多格的图片时，需要指定图片编号和格数，两者之间用逗号隔开。但当图片没有分格，或是单色文字的时候，就只需要指定编号了。<br /><br />那么，再试试加上音效播放效果吧。<br /><br />找一个wav文件（这里起名叫xd.wav）放到文件夹里，然后把<br />exbtn 11,1,"P11,1"<br />修改成<br />exbtn 11,1,"P11,1S1,(xd.wav)"<br /><br />运行游戏，是不是当鼠标移动上去的时候，可以听到音效呢？<br /><br />然后，加上其他图片的显示及消失效果。<br />范例：当鼠标移动到图片lsp12 上时，将会在画面的左边显示lsp文字“读取游戏”。<br />加上在lsp11按钮添加音效的修改，代码变成如下这样：<br /><br />Copy code<br /><br />*define<br /><br />game<br /><br />*start<br /><br />lsp 11,":a/2,0,3;btn.jpg",305,252<br />lsp 12,":a/2,0,3;btn.jpg",305,302<br />lsp 13,":a/2,0,3;btn.jpg",305,352<br />lsph 14,":s/25,25,0;#ffffff读取游戏 ",205,302<br /><br />print 1<br /><br />btndef ""<br />exbtn 11,1,"P11,1S1,(xd.wav)"<br />exbtn 12,2,"P12,1P14"<br />exbtn 13,3,"P13,1"<br /><br />btnwait %0<br /><br /><br /><br />if %0<=0 goto *start<br />if %0==1 goto *newgame ;开始新游戏<br />if %0==2 goto *loadgame ;读取进度<br />if %0==3 goto *endgame ;结束游戏<br /><br />*loadgame<br />systemcall load ;呼叫NS的读档选单<br />goto *start<br /><br />*endgame<br />end<br /><br />*newgame<br />csp -1<br />print 1<br />开始游戏<br />end<br /><br /><br /><br />注意，这里增加了一个默认不显示的精灵，lsp 14。<br /><br />实际测试，效果是出现了，问题也来了。<br />虽然当移动上去时，文字显示了，但是当鼠标从按钮上移动开之后，文字还留在那……<br />那是因为，虽然设定了“鼠标在按钮上时执行的效果”，却没有定义“鼠标不在任何按钮上时的效果”。<br />Ns为此提供了exbtn_d这一指令，用来定义当鼠标不在任何按钮上时，画面的显示。<br />由于我们需要的是鼠标移开之后14号精灵消失，因此改写成这样：<br /><br />Copy code<br />*define<br /><br />game<br /><br />*start<br /><br />lsp 11,":a/2,0,3;btn.jpg",305,252<br />lsp 12,":a/2,0,3;btn.jpg",305,302<br />lsp 13,":a/2,0,3;btn.jpg",305,352<br />lsph 14,":s/25,25,0;#ffffff读取游戏 ",205,302<br /><br />print 1<br /><br />btndef ""<br />exbtn 11,1,"P11,1S1,(xd.wav)"<br />exbtn 12,2,"P12,1P14"<br />exbtn 13,3,"P13,1"<br /><br />exbtn_d "C14"<br /><br />btnwait %0<br /><br /><br /><br />if %0<=0 goto *start<br />if %0==1 goto *newgame ;开始新游戏<br />if %0==2 goto *loadgame ;读取进度<br />if %0==3 goto *endgame ;结束游戏<br /><br />*loadgame<br />systemcall load ;呼叫NS的读档选单<br />goto *start<br /><br />*endgame<br />end<br /><br />*newgame<br />csp -1<br />print 1<br />开始游戏<br />end<br /><br /><br /><br />可以看出来，<br />exbtn_d "C14"是唯一增加的部分。<br />也就是说，字母P代表显示，而C则代表消失，S则代表播放音效。<br />以上这三个参数是可以不断叠加的，例如说，要为所有按钮增加播放音效和文字注释效果。可以写成以下这样：<br /><br />Copy code<br /><br />*define<br /><br />game<br /><br />*start<br /><br />lsp 11,":a/2,0,3;btn.jpg",305,252<br />lsp 12,":a/2,0,3;btn.jpg",305,302<br />lsp 13,":a/2,0,3;btn.jpg",305,352<br /><br />lsph 14,":s/25,25,0;#ffffff开始游戏 ",205,252<br />lsph 15,":s/25,25,0;#ffffff读取游戏 ",205,302<br />lsph 16,":s/25,25,0;#ffffff离开游戏 ",205,352<br /><br />print 1<br /><br />btndef ""<br />exbtn 11,1,"P11,1P14S1,(xd.wav)"<br />exbtn 12,2,"P12,1P15S1,(xd.wav)"<br />exbtn 13,3,"P13,1P16S1,(xd.wav)"<br /><br />exbtn_d "C14C15C16"<br /><br />btnwait %0<br /><br /><br /><br />if %0<=0 goto *start<br />if %0==1 goto *newgame ;开始新游戏<br />if %0==2 goto *loadgame ;读取进度<br />if %0==3 goto *endgame ;结束游戏<br /><br />*loadgame<br />systemcall load ;呼叫NS的读档选单<br />goto *start<br /><br />*endgame<br />end<br /><br />*newgame<br />csp -1<br />print 1<br />开始游戏<br />end<br /><br /><br /><br /><br />注意这里P/C/S之前反而不用逗号分隔。<br /><br />嗯，有些BT人可能会想到，当游戏的一个画面里涉及到数十张图片的显示和消除的时候，这么写一定很容易让人想死……<br /><br />幸好NS还提供了简写功能：<br />exbtn_d "C14-16"和exbtn_d "C14C15C16"是等效的。<br /><br />另外，由于exbtn所带的参数自然可以用文字变数代替，可以考虑先把这些P啊C啊S的全部加到一个变数（例如 11,1,<br />如果你擅长使用循环和条件的话，简化过程就更容易了。（啥？循环和条件是啥？……这不是今天的内容！）<br /><br />本日小贴士：<br />那么让我们来YY吧。<br />Q：lsp的应用范围？<br />A：标题，选项，系统设定，系统按钮，右键菜单，存储读取，地图，小游戏……<br />显示图片、显示按钮、根据玩家选择进行操作，这是所有游戏系统的基础~<br />与其询问别人怎么做，不如自己思考一下。<br />当然，如果是自制右键菜单、对话系统按钮和存取，这还要配合NS提供的一些系统类指令进行，这不是今天的内容……（跑……）<br /><br />Q：动画按钮怎么做？按钮都是静态的吧？<br />A：用exbtn制作透明按钮，当不在按钮上时显示普通的lsp动画一张，在按钮上时显示选中的lsp动画一张。^^<br /><br />Q：我要怎么移动、放大、缩小、旋转图片？<br />A：虽然实际效果不太理想，但Drawsp 系列指令可以制作简单的动态效果，那啥，下，下，下一讲……（已经不知道下几讲才能讲完了OTL）</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post13731_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

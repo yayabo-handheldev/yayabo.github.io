@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>雷叔的诅咒 - 关于DS固件中用户信息的修改</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">雷叔的诅咒 - 关于DS固件中用户信息的修改</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2009-04-13 11:51:23</p>
+</div>
+<div class="col-10">
+<p>人类企图将世间的所有事物，都印证上自己的标记，以显示自己的存在。此外，不甘心千篇一律毫无特征的量产型，人类还企图显示出自己的与众不同。于是，无论从软件上还是从硬件上，各种各样的MOD就出现了。修改PC BIOS或开机画面，修改PSP开机画面和用户名称，最终，人类的魔掌伸到了DS的领域。<br />然而，任地狱已经预见到了这种邪恶的行为，从GB到GBA再到DS，对于主机固件的加密措施，可谓越来越严密。神圣的任地狱，花费了巨大的精力为DS的固件进行数据校验光环加持，而芯片写保护防御结界，更是不要钱似的拼命施加。更有甚者，伟大、神圣且高尚的任地狱居然舍得使用神器SL1，将部分固件数据进行硬件写保护防御……不过这些措施并没有阻挡到邪恶的人类，一个叫做雷叔的堕落者，终于禁不住恶魔的诱惑，将他那猥琐的视线和肮脏的双手，触摸到了DS的禁区……这个故事，就从这里开始~~~<br /><br />[color=red]资本主义来到世间，从头到脚，每个毛孔都滴着血和肮脏的东西。——卡尔·马克思《资本论》[/color]<br /><br />“[color=blue]なにぃぃぃぃぃぃぃぃぃ？！[/color]”哪怕听到诸神之黄昏的消息，也不会发出比这更惊讶的惊呼了。众人看着那个若无其事，翘着二郎腿宣布这个消息的雷叔，个个脸上大惊失色。“[color=blue]你要修改DS的固件？[/color]”<br />“[color=darkorchid]精确地说，应该是修改固件中的用户信息那一部分数据。[/color]”雷叔把整个身体陷在柔软的椅子中，懒洋洋地拿出一幅图。<br />[attach]1096[/attach]<br />“[color=dimgray]那东西搞不好会让DS变砖的吧？[/color]”牛叔怯生生地说，唯恐那个恐怖的词语会把众人吓住。<br />说的也是，“DS变砖”！多么恐怖且危险的词语！这意味着什么？这意味着DS的死亡~<br />“[color=green]你想把原来的系统改了？[/color]”w叔问道。不知这个家伙安的什么心，听到这种消息居然还能这么冷静。<br />“[color=darkorchid]先不管iQueDS，咱们就先看普通的DS。[/color]”雷叔没有回答牛叔和w叔的疑问，径自说道。<br />“[color=darkorchid]据我所知，固件里面有个字库，是SJIS字库。但是DS的固件设置里面，用户名和用户信息是无法输入日文汉字的。而用户名和用户信息在固件里面是以UTF16编码保存的。也就是说，我们可以设法修改固件里面的用户信息等资料，直接修改数据，使得固件可以显示“日文汉字”的用户名和用户信息！[/color]”雷叔一口气把整个计划说了出来，脸上掩饰不住的跃跃欲试。<br />“[color=green]关键一点，固件写入不是这么简单的吧？[/color]”w叔一阵见血地指出整个计划的薄弱点。<br />“[color=darkorchid]不，固件的写入确实不难。[/color]”雷叔突然正容，严肃的说。“[color=darkorchid]只有SPI才可以访问固件。但是由于只有arm7才可以操纵SPI，所以我必须修改default arm7的代码模版。[/color]”说完之后，雷叔又看了看周围已经被镇住的众人，吐了吐舌头，露出一个顽皮的笑容：“[color=darkorchid]default这个单词我是不是写错了？[/color]”<br />“[color=blue]……[/color]”众人已经不知道说什么好了。<br />“[color=darkorchid]事实上，我在用PALIB的时候，就曾经修改过arm7的代码，加入了对固件进行写操作的函数。并且有严密的数据校验以保证不会变砖。[/color]”雷叔的脸上充满自信，然后立刻扭成苦瓜脸：“[color=darkorchid]但是，我不会从arm9向arm7发送命令，因此也无法启动那个邪恶的函数~~~~[/color]”<br />“[color=blue]你确定要做？[/color]”众人问。虽然明知结果，但依然抱着不切实际的幻想，希望雷叔能够悬崖勒马。<br />“[color=darkorchid]嗯。[/color]”确定无误的答复。众人最后的希望终于破灭。<br />“[color=blue]好きにするがいい～[/color]”“[color=blue]为你和你的DS默哀……[/color]”明白事情已经无法挽回，众人逐渐散去，留下了不管是安慰还是放纵的话。<br /><br />[color=red]信義のため、起たねばならぬ！——浅井长政《无双切菜》[/color]<br /><br />[code]<br />#ifdef ARM7<br /><br />typedef void(*call3)(u32,void*,u32);<br /><br />void read_nvram(u32 src,void *dst,u32 size){<br />   ((call3)0x2437)(src,dst,size);<br />}<br /><br />u8 writeread(u8 data){<br />   while(REG_SPICNT & SPI_BUSY);<br />   REG_SPIDATA=data;<br />   while(REG_SPICNT & SPI_BUSY);<br />   return REG_SPIDATA;<br />}<br /><br />int flash_verify(u8 *src,u32 dst){<br />   int i;<br />   u8 tmp[256];<br />   //write enable<br />   REG_SPICNT=SPI_ENABLE|SPI_CONTINUOUS|SPI_DEVICE_NVRAM;<br />   writeread(6);<br />   REG_SPICNT=0;<br />   //Wait for Write Enable Latch to be set<br />   REG_SPICNT=SPI_ENABLE|SPI_CONTINUOUS|SPI_DEVICE_NVRAM;<br />   writeread(5);<br />   while((writeread(0)&0x02)==0);//Write Enable Latch<br />   REG_SPICNT=0;<br /><br /><br />   //page write<br />   REG_SPICNT=SPI_ENABLE|SPI_CONTINUOUS|SPI_DEVICE_NVRAM;<br />   writeread(0x0A);<br />   writeread((dst&0xff0000)>>16);<br />   writeread((dst&0xff00)>>8);<br />   writeread(0);<br />   for(i=0;i<256;i++) {<br />      writeread(src);<br />   }<br />   REG_SPICNT=0;<br />   // wait programming to finish<br />   REG_SPICNT=SPI_ENABLE|SPI_CONTINUOUS|SPI_DEVICE_NVRAM;<br />   writeread(0x05);<br />   while(writeread(0)&0x01);//Write In Progress<br />   REG_SPICNT=0;<br />   //read back & compare<br />   read_nvram(dst,tmp,256);<br />   for(i=0;i<256;i++){<br />      if(tmp!=src)return 0;<br />   }<br />   return 1;<br />}<br /><br />#endif<br />[/code]<br />雷叔从垃圾堆一般的PALIB中，终于翻出来当年添加进去的关于写DS固件的函数。整理了一下，添加到了default arm7的代码模版中。<br />“[color=darkorchid]但是，我怎么才能启动这部分代码，并且让它们按照我的要求修改指定地址的数据呢？嗯……还需要一个接口~~~[/color]”雷叔如是说。<br />于是雷叔又修改了主循环的代码：<br />[code]<br />int isModify=0;<br />// Keep the ARM7 mostly idle<br />while (1){<br />  swiWaitForVBlank();<br />  if(isModify==0){<br />   u16 ver1,ver2;<br />   u8 fw_data[0x100];<br />   //Code here to put the users settings into the fw_data area.<br />   memcpy(fw_data,PersonalData,sizeof(PERSONAL_DATA));<br />   fw_data[0x06]=0x96;<br />   fw_data[0x07]=0xF7;<br />   fw_data[0x08]=0x7C;<br />   fw_data[0x09]=0xBE;<br />   fw_data[0x0A]=0x97;<br />   fw_data[0x0B]=0x0A;<br />   // crc<br />   short calcCRC=swiCRC16(0xffff,fw_data,sizeof(PERSONAL_DATA));<br />   fw_data[0x72]=calcCRC&0xFF;<br />   fw_data[0x73]=(calcCRC>>8)&0xFF;<br />   read_nvram(0x3FE70,&ver1,2);<br />   read_nvram(0x3FF70,&ver2,2);//Check to see which setting area is older.<br />   if(ver1<ver2)flash_verify(fw_data,0x3FE00);<br />   else flash_verify(fw_data,0x3FF00);<br />   isModify=-1;<br />  }<br />}<br />[/code]<br /><br />添加完上面的代码之后，雷叔一脸得意：“[color=darkorchid]DS的固件很有趣：固件中一共有两块区域用于保存用户信息。这两块区域中都有一个特定地址用于保存当前区域数据的校验。<br />DS靠如下机制进行校验：BIOS本身自动对两块区域分别进行数据校验。校验结果如果和那个特定地址相符，则两块区域谁比较新以谁为准。如果两块区域有一块校验失败另一块校验成功则以成功那块为准。如果两次校验都失败则显示上图要求用户重新设置。<br />现在，我首先从固件中读出原本的数据，然后将其复制到指定区域。然后修改这块区域中的数据。嗯……现在则是直接修改用户名。从0x06到0x0B，是“雷精霊”这三个字的UTF16编码数据。考虑到DS的CPU是ARM，因此先假设UTF16是LE。将数据修改之后，紧接着对这块区域进行crc校验。校验数据直接写入校验地址即0x72和0x73。最后将新数据写入固件。[/color]”<br />“[color=blue]那就上真机测试吧！不晓得模拟器怎么测试arm7的固件，是死是活就看这一步了。[/color]”既然生米已经煮成熟饭，众人也不再坚持，反而开始催促雷叔抓紧时间测试。<br />雷叔颤抖的双手，启动了ROM。在点下ROM图标的那一瞬间，雷叔明白，DS至少有50%的可能，再也无法启动起来了。<br />估摸着时间差不多了，雷叔关闭了主机，拔下烧录卡，再次启动了主机。所有人的脑袋都凑了过来。<br />DS的BIOS界面！启动成功了！DS没有变砖！<br />雷叔清楚的听到了心脏从喉咙回到胸腔的声音。然后雷叔点击了进入固件设置的图标。<br />[attach]1097[/attach]<br />“[color=blue]哎？[/color]”用户名赫然显示成三个“@”符号！<br />“[color=darkorchid]不是LE，是BE吧？[/color]”雷叔首先反应过来，提出了猜测。然后，不等众人回答，立刻修改了代码然后重新测试。<br />但是换成BE之后，依然还是三个@符号……<br />“[color=blue]……[/color]”周围瞬间寂静了。<br />“[color=blue]これはどういうことだ？[/color]”终于有人打破了沉默。<br />“[color=blue]……[/color]”没人回答。不过，所有人的视线，都聚集到了雷叔的脸上。<br />“[color=darkorchid]这让我想起来官方游戏在DS里面显示出来的标题和描述那三行文字，都没有汉字。”雷叔又开始顾左右而言他。“根据GBATEK的描述，这三行文字也是UTF16编码的。而且，对于正版游戏来说，是通过BIOS界面引导，因此我猜测也是使用固件中的字库进行显示。<br />但是我没有见到哪个官方游戏在这里显示出日文汉字名称的游戏标题，因此我猜测固件里面恐怕根本就没有日文汉字字库……就像恶魔城一样，游戏从不显示为“恶魔城 - 蒼月の十字架”，而非得显示成“あくまじょドラキュラー　そうげつのじゅうじか”……这恐怕就是证据~~~~[/color]”<br />“[color=olive]不能显示汉字的原因呢？bios界面中文字输出没有考虑汉字？[/color]”刘叔问道。<br />“[color=darkorchid]我猜测是普通DS里面没有日文汉字字库。[/color]”雷叔似乎是在斟酌词句，慢慢地说道。<br />“[color=olive]不是说有字库吗？[/color]”刘叔不死心。<br />“[color=darkorchid]纵观整个BIOS界面，没有什么地方要求进行日文汉字显示输出。至于那些说明文字，我猜测，恐怕全都是现成的图片。哪怕就是PicoChat，也只能用里面内置的模拟键盘进行输入。也就是只能输入那些特定的字符。[/color]”雷叔似乎想起新的证据。<br />“[color=olive]没戏了……下班。[/color]”刘叔终于放弃继续询问。众人也开始逐渐散去。<br />“[color=darkorchid]不过，这就出现了一个值得深究的问题：话说iQueDS比普通DS的固件大了一倍，据说就是容纳汉字字库。也就是说，可以证实iQueDS中是存在汉字字库的。那么，如果使用iQueDS进行测试，那么结果将会是什么样子呢？[/color]”雷叔却还在自言自语，然后，又突然间想起什么似的，一扫刚才实验失败的沮丧，整个人都兴奋了起来：“[color=darkorchid]那啥，为什么iQueDS的游戏不能在普通DS上玩呢？恐怕这也和字库有关~~~~我记得，iQueDS的游戏是可以在iQueDS主机上的BIOS界面显示中文游戏名称的。[/color]”<br />“[color=olive]iqueds游戏不能在普通ds上玩么？[/color]”刘叔停下脚步，扭头问道。<br />“[color=darkorchid]正版卡确实是无法玩的。[/color]”雷叔说。“[color=darkorchid]至于通过烧录卡引导的iQueDS游戏的ROM，由于直接跳过了BIOS界面，因此就避免了这个问题。看来，我拥有两台普通DS，真是个错误~~~~[/color]”雷叔摸了摸自己那没长胡子的下巴，悻悻的说。<br />“[color=blue]坏了……我看不妙……[/color]”“[color=blue]趁现在快溜！[/color]”众人像是突然意识到什么似的，一个个全都拔腿就跑。<br />紧接着，众人身后传来雷叔的嚎叫：“[color=darkorchid]那啥，群里面的弟兄们，谁拥有iQueDS主机，且愿意当小白鼠的，请PM我~~~~哎——你们别跑啊~~~~[/color]”<br /><br />[color=red]人は何かを犠牲なしに、何も得ることはできない。何かを得るためには、同等の代価を必要になる。それが錬金術における等価交换の原則だ。そのころ僕らはそれが世界の真実だと信じていた。——阿尔方斯·艾尔力克《钢之炼金术师》[/color]<br /><br />被众人抛弃的雷叔没有放弃他那邪恶的念头，跑去游说六面叔。因为六面叔刚好有一台IDSL。<br />“[color=darkorchid]六面叔~愿意当小白鼠吗？[/color]”<br />六面叔立刻吓出一身的冷汗。<br />“[color=darkred]能变砖吗？[/color]”六面叔明白雷叔看中的是他的IDSL，不是他的身体。<br />“[color=darkorchid]能。至少，有50%的可能会变砖。[/color]”雷叔毫不迟疑地说。<br />顿时又把六面叔吓出一身冷汗。<br />“[color=olive]还好，不是100%……[/color]”刘叔满脸邪恶的笑容，似乎很期待IDSL的尸体。<br />“[color=darkorchid]不过，根据在普通DSL上的实验，代码还是很安全的。考虑到NDSL和IDSL的不同，我无法保证100%不会变砖，但至少可以保证不会变成彻头彻尾的砖。[/color]”雷叔终于说了句人话，从而不会让别人认为他是存心开砖窑的。<br />“[color=olive]还是要先研究个恢复的办法。[/color]”刘叔也终于说了句人话，从而不会让别人认为他是存心开火葬场的。<br />“[color=darkorchid]对。就算是真变成了砖，肯定还有救。[/color]”雷叔抛出了定心丸！<br />“[color=sienna]噢！那我就放心了！别变不回来就麻烦了！[/color]”六面叔吃下了定心丸！HP全恢复！<br />“[color=darkorchid]我手里有别人dump出来的固件。就算是变成了砖，只要有备份固件就还有救。[/color]”雷叔说道。“[color=darkorchid]而且，就算是固件信息被破坏，根据我在普通DSL上测试的结果，烧录卡可以把DS强制引导起来。嗯。我当时对这个现象颇为惊异。[/color]”雷叔又抛出了一颗定心丸。<br />“[color=sienna]把你那个变砖的程序发过来吧！[/color]”One little step for Uncle whm3d, one giant step for all DS users! 六面叔终于迈出了伟大的一步。（这句话怎么这么熟悉？我确认是亚历山大·洛马诺夫总理的名言……）<br /><br />[color=red]我ら浅井の真の盟友は朝倉なり！義の名のお伴に信長を、織田信長を、打つ！——浅井长政《战国无双2》[/color]<br /><br />雷叔把代码整理了一番。IDSL的固件中，用户数据保存在0x7FE00和0x7FF00这两块区域，而不是像NDSL一样保存在0x3FE00和0x3FF00。于是针对这两种固件，雷叔把代码修改为如下：<br />[code]<br /> int isModify=0;<br /> // Keep the ARM7 mostly idle<br /> while (1){<br />  swiWaitForVBlank();<br />  if(isModify==0){<br />   u16 ver1,ver2;<br />   u8 fw_data[0x100];<br />   //Code here to put the users settings into the fw_data area.<br />   memcpy(fw_data,PersonalData,sizeof(PERSONAL_DATA));<br />#ifdef LITTLE_ENDIAN<br />   fw_data[0x06]=0xF7;<br />   fw_data[0x07]=0x96;<br />   fw_data[0x08]=0xBE;<br />   fw_data[0x09]=0x7C;<br />   fw_data[0x0A]=0x75;<br />   fw_data[0x0B]=0x70;<br />#else<br />   fw_data[0x06]=0x96;<br />   fw_data[0x07]=0xF7;<br />   fw_data[0x08]=0x7C;<br />   fw_data[0x09]=0xBE;<br />   fw_data[0x0A]=0x70;<br />   fw_data[0x0B]=0x75;<br />#endif<br />   // crc<br />   short calcCRC=swiCRC16(0xffff,fw_data,sizeof(PERSONAL_DATA));<br />   fw_data[0x72]=calcCRC&0xFF;<br />   fw_data[0x73]=(calcCRC>>8)&0xFF;<br />#ifdef IQUEDS<br />   //Check to see which setting area is older.<br />   read_nvram(0x7FE70,&ver1,2);<br />   read_nvram(0x7FF70,&ver2,2);<br />//   if(ver1<ver2)flash_verify(fw_data,0x7FE00);<br />//   else flash_verify(fw_data,0x7FF00);<br />   flash_verify(fw_data,0x7FE00);<br />   flash_verify(fw_data,0x7FF00);<br />#else<br />   read_nvram(0x3FE70,&ver1,2);<br />   read_nvram(0x3FF70,&ver2,2);//Check to see which setting area is older.<br />//   if(ver1<ver2)flash_verify(fw_data,0x3FE00);<br />//   else flash_verify(fw_data,0x3FF00);<br />   flash_verify(fw_data,0x3FE00);<br />   flash_verify(fw_data,0x3FF00);<br />#endif<br />   isModify=-1;<br />  }<br /> }<br />[/code]<br />六面叔战战兢兢地运行了代码。<br />[attach]1098[/attach]<br />这个画面又把六面叔吓出一身冷汗。<br />“[color=darkorchid]嗯……是crc校验错误……奇怪……crc没错啊！我刚才用NDSL测试过没有出错……看来IDSL在其他地方还有另外的数据校验……[/color]”雷叔看到这个熟悉的画面，自言自语。旁边六面叔哭天抢地“[color=sienna]我的IDSL啊~~~~[/color]”<br />终于，六面叔的救命稻草来了。<br />“[color=darkorchid]找到原因了。IDSL确实有额外的数据。[/color]”雷叔拿着GBATEK文档，一边仔细地看一边说。<br />根据GBATEK，IDSL果然在NDSL的无用数据区域还存在有用数据，并且，有用数据还存在crc校验。也正是因为这块数据没有被考虑进去，导致了上面那个画面的出现。<br />于是雷叔将代码修改为如下：<br />[code]<br /> int isModify=0;<br /> // Keep the ARM7 mostly idle<br /> while (1){<br />  swiWaitForVBlank();<br />  if(isModify==0){<br />   u16 ver1,ver2;<br />   u8 fw_data[0x100];<br />   //Code here to put the users settings into the fw_data area.<br />   memcpy(fw_data,PersonalData,sizeof(PERSONAL_DATA));<br />#ifdef LITTLE_ENDIAN<br />   fw_data[0x06]=0xF7;<br />   fw_data[0x07]=0x96;<br />   fw_data[0x08]=0xBE;<br />   fw_data[0x09]=0x7C;<br />   fw_data[0x0A]=0x75;<br />   fw_data[0x0B]=0x70;<br />#else<br />   fw_data[0x06]=0x96;<br />   fw_data[0x07]=0xF7;<br />   fw_data[0x08]=0x7C;<br />   fw_data[0x09]=0xBE;<br />   fw_data[0x0A]=0x70;<br />   fw_data[0x0B]=0x75;<br />#endif<br />   // crc<br />   short calcCRC=swiCRC16(0xffff,fw_data,sizeof(PERSONAL_DATA));<br />   fw_data[0x72]=calcCRC&0xFF;<br />   fw_data[0x73]=(calcCRC>>8)&0xFF;<br />#ifdef IQUEDS<br />   // Get the extra data of the iQueDS<br />   read_nvram(0x7FE74,(void*)(fw_data+0x74),0x100-0x74);<br />   calcCRC=swiCRC16(0xffff,(void*)(fw_data+0x74),0x8A);<br />   fw_data[0xFE]=calcCRC&0xFF;<br />   fw_data[0xFF]=(calcCRC>>8)&0xFF;<br />   //Check to see which setting area is older.<br />   read_nvram(0x7FE70,&ver1,2);<br />   read_nvram(0x7FF70,&ver2,2);<br />//   if(ver1<ver2)flash_verify(fw_data,0x7FE00);<br />//   else flash_verify(fw_data,0x7FF00);<br />   flash_verify(fw_data,0x7FE00);<br />   flash_verify(fw_data,0x7FF00);<br />#else<br />   read_nvram(0x3FE70,&ver1,2);<br />   read_nvram(0x3FF70,&ver2,2);//Check to see which setting area is older.<br />//   if(ver1<ver2)flash_verify(fw_data,0x3FE00);<br />//   else flash_verify(fw_data,0x3FF00);<br />   flash_verify(fw_data,0x3FE00);<br />   flash_verify(fw_data,0x3FF00);<br />#endif<br />   isModify=-1;<br />  }<br /> }<br />[/code]<br />[attach]1099[/attach]<br />“[color=sienna]你成功了！[/color]”六面叔的这句话，整个世界都美丽了。<br /><br />不过，依然还有一点问题。用户名写的是“雷精灵”，显示出来却是“雷精灵3d”。<br />“[color=darkorchid]那个“3D”……六面叔，你以前叫啥名？[/color]”雷叔想到了问题的原因。<br />“[color=sienna]whm3d。[/color]”<br />“[color=darkorchid]果然……[/color]”<br />“[color=lime]unicode？[/color]”nc叔也看出苗头了。<br />“[color=darkorchid]对。UTF16 LE。[/color]”雷叔以专家的口气说道。<br />至于造成这个问题的原因，很简单。六面叔原来的设定为whm3d，5个字。后来改成“雷精灵”，3个字，于是只覆盖了前3个字，后两个字自然保留了下来。<br />“[color=darkorchid]OK……再修改一下关于用户名长度的数据，这个诅咒终于就要结束了~~~[/color]”雷叔伸了伸懒腰，一脸的幸福。<br />[code]<br /> int isModify=0;<br /> // Keep the ARM7 mostly idle<br /> while (1){<br />  swiWaitForVBlank();<br />  if(isModify==0){<br />   u16 ver1,ver2;<br />   u8 fw_data[0x100];<br />   //Code here to put the users settings into the fw_data area.<br />   memcpy(fw_data,PersonalData,sizeof(PERSONAL_DATA));<br />   int i=0;<br />   // Clear the Name area<br />   for(i=0;i<0x20;i++)fw_data[0x06+i]=0;<br />#ifdef LITTLE_ENDIAN<br />   fw_data[0x06]=0xF7;<br />   fw_data[0x07]=0x96;<br />   fw_data[0x08]=0xBE;<br />   fw_data[0x09]=0x7C;<br />   fw_data[0x0A]=0x75;<br />   fw_data[0x0B]=0x70;<br />#else<br />   fw_data[0x06]=0x96;<br />   fw_data[0x07]=0xF7;<br />   fw_data[0x08]=0x7C;<br />   fw_data[0x09]=0xBE;<br />   fw_data[0x0A]=0x70;<br />   fw_data[0x0B]=0x75;<br />#endif<br />   // Name length<br />   fw_data[0x1A]=3;<br />   // crc<br />   short calcCRC=swiCRC16(0xffff,fw_data,sizeof(PERSONAL_DATA));<br />   fw_data[0x72]=calcCRC&0xFF;<br />   fw_data[0x73]=(calcCRC>>8)&0xFF;<br />#ifdef IQUEDS<br />   // Get the extra data of the iQueDS<br />   read_nvram(0x7FE74,(void*)(fw_data+0x74),0x100-0x74);<br />   calcCRC=swiCRC16(0xffff,(void*)(fw_data+0x74),0x8A);<br />   fw_data[0xFE]=calcCRC&0xFF;<br />   fw_data[0xFF]=(calcCRC>>8)&0xFF;<br />   //Check to see which setting area is older.<br />   read_nvram(0x7FE70,&ver1,2);<br />   read_nvram(0x7FF70,&ver2,2);<br />//   if(ver1<ver2)flash_verify(fw_data,0x7FE00);<br />//   else flash_verify(fw_data,0x7FF00);<br />   flash_verify(fw_data,0x7FE00);<br />   flash_verify(fw_data,0x7FF00);<br />#else<br />   read_nvram(0x3FE70,&ver1,2);<br />   read_nvram(0x3FF70,&ver2,2);//Check to see which setting area is older.<br />//   if(ver1<ver2)flash_verify(fw_data,0x3FE00);<br />//   else flash_verify(fw_data,0x3FF00);<br />   flash_verify(fw_data,0x3FE00);<br />   flash_verify(fw_data,0x3FF00);<br />#endif<br />   isModify=-1;<br />  }<br /> }<br />[/code]<br /><br />后记：<br />“对了，雷叔六叔你们搞的这个可以改用户名的有什么用吗？”sweet叔问道。<br />“[color=darkorchid]没什么用。不仅没什么用，反而有害。像《马里奥赛车》、《口袋妖怪》之类的可以WIFI对战甚至可以上任天堂战网的游戏，像这样修改过用户名的玩家，在别人的主机上和服务器上，用户名都显示乱码。[/color][color=darkorchid]我之所以做这个实验，主要还是想“个性化”自己的主机。[/color]”雷叔若无其事的说。“[color=darkorchid]这个实验还仅仅是个实验。现在证实这个实验成功。我也公布了源代码。有兴趣并且有能力的人可以将代码完善，加入CPU通信，编码转换和输入法，就可以实现软件修改用户信息了。[/color][color=darkorchid]可惜啊可惜，NDSL的用户只能眼红了。[/color]”雷叔一脸遗憾，然后看着六面叔的IDSL，口水哗啦哗啦流了下来。<br />“啊啊~idsl美啊！”哪壶不开提哪壶的六面叔看到雷叔垂涎三尺的模样，故意说道。<br />于是众人都233了。<br /><br />[[i] 本帖最后由 雷精灵 于 2009-4-13 19:04 编辑 [/i]]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>liutao</b><br/>
+2009-04-13 13:05:32</p>
+</div>
+<div class="col-10">
+<p>感动得眼泪哗哗的～～～～</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>whm3d</b><br/>
+2009-04-13 13:07:25</p>
+</div>
+<div class="col-10">
+<p>我有神游的机器！但我不想它变砖，我还要玩呢！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-04-13 13:11:16</p>
+</div>
+<div class="col-10">
+<p>争取下次在雷叔的教程中露露脸!</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>1989lzhh</b><br/>
+2009-04-13 13:31:06</p>
+</div>
+<div class="col-10">
+<p>很逗！很有趣！服了雷叔了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>z494307908</b><br/>
+2009-04-13 16:52:14</p>
+</div>
+<div class="col-10">
+<p>新人报道<br />网名:銤<br />性別:男性<br />居住地:无锡<br />星座:双子座<br />在做的事:上学<br />希望：<br />    做一个成功的动漫人</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>z494307908</b><br/>
+2009-04-13 17:04:26</p>
+</div>
+<div class="col-10">
+<p>好东西  支持！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>z494307908</b><br/>
+2009-04-13 17:10:29</p>
+</div>
+<div class="col-10">
+<p>支持一下楼主。多谢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-04-13 20:47:21</p>
+</div>
+<div class="col-10">
+<p>再次感谢雷叔的精彩而又邪恶的自杀式研究（哦？拿六面叔的IDSL做试验，算是谋杀式？）……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>forgetmenot48</b><br/>
+2009-04-13 22:35:27</p>
+</div>
+<div class="col-10">
+<p>网名：城市君<br />居住地：江门<br />在做的事：上学，野外露营，玩PSP，学英语，学日语<br />希望：快快过四级，快快过二级日语</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>a4381782</b><br/>
+2010-08-05 11:20:24</p>
+</div>
+<div class="col-10">
+<p>没看到啊 <br />电玩巴士的新闻就是慢啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-08-05 11:20:58</p>
+</div>
+<div class="col-10">
+<p>选第二种，就是麻烦了点</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>e258691823</b><br/>
+2009-04-14 14:14:13</p>
+</div>
+<div class="col-10">
+<p>哈哈  楼主幸苦了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>e258691823</b><br/>
+2009-04-14 14:17:30</p>
+</div>
+<div class="col-10">
+<p>呵呵  我装好了  就是不会用  恩  受教了  <br />谢谢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-04-14 14:49:40</p>
+</div>
+<div class="col-10">
+<p>[quote]原帖由 [i]e258691823[/i] 于 2009-4-14 14:17 发表 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=1176&ptid=572][img]http://www.yayabo.cn/images/common/back.gif[/img][/url]<br />呵呵  我装好了  就是不会用  恩  受教了  <br />谢谢 [/quote]<br />慢慢来，咱们网站的资料你先看看。有不明白的可以发帖子，多多交流。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>whm3d</b><br/>
+2009-04-14 15:59:47</p>
+</div>
+<div class="col-10">
+<p>说实话，当时我想要是ds要变砖了，我就拿着尸体去找雷叔去，他要不给修好我就赖他家不走。。   <br /><br />或者。。他不是说他有两台ds么。。。。！<br /><br /><br /><br />不过，成功的那一刻，真为雷叔感到高兴！  “努力总会有回报的。。。”嗯！我相信！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>e258691823</b><br/>
+2009-04-14 19:52:16</p>
+</div>
+<div class="col-10">
+<p>版主  希望能给个图示  像我这种不是很了解的但很想学习的人   还希望版主多多海涵啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>r88</b><br/>
+2009-04-14 22:14:36</p>
+</div>
+<div class="col-10">
+<p>收下，谢谢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>djygyh</b><br/>
+2010-08-05 11:19:33</p>
+</div>
+<div class="col-10">
+<p>勇者好玩。。期待。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>djygyh</b><br/>
+2010-08-05 11:20:14</p>
+</div>
+<div class="col-10">
+<p>老大，这个今天上午有人发过。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2009-07-30 19:43:56</p>
+</div>
+<div class="col-10">
+<p>很强大,很适合我这种火星来的小白</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>4417123</b><br/>
+2010-08-04 08:02:19</p>
+</div>
+<div class="col-10">
+<p>偷跑好像成惯例了。。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>whm3d</b><br/>
+2009-04-19 10:22:34</p>
+</div>
+<div class="col-10">
+<p>iDSl 就是神游出的那款有！ndsl没有！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>linoul</b><br/>
+2009-04-19 13:35:56</p>
+</div>
+<div class="col-10">
+<p>用fwunpack可以将固件拆包 然后用16进制编辑器在UTF8编码下可以看到 系统设置的那些内容...证明不是图片而有字库<br /><br />[attach]1111[/attach]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>djygyh</b><br/>
+2010-08-05 11:28:16</p>
+</div>
+<div class="col-10">
+<p>看的懂日文的飘过。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>a4381782</b><br/>
+2010-08-05 11:28:22</p>
+</div>
+<div class="col-10">
+<p>你发的难道是哪个  除了标题就只剩4个叉叉的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>a4381782</b><br/>
+2010-08-05 11:21:07</p>
+</div>
+<div class="col-10">
+<p>貌似偶一天只能发5张图片</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>djygyh</b><br/>
+2010-08-05 11:21:08</p>
+</div>
+<div class="col-10">
+<p>昨天有人发过。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>追月貓</b><br/>
+2010-08-05 11:21:15</p>
+</div>
+<div class="col-10">
+<p>嗚咿~有出DS版耶<br />謝謝分享^^</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16747_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

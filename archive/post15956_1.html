@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>lua的Table库</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">lua的Table库</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-18 20:38:18</p>
+</div>
+<div class="col-10">
+<p>table库由一些操作table的辅助函数组成。他的主要作用之一是对Lua中array的大小给出一个合理的解释。另外还提供了一些从list中插入删除元素的函数，以及对array元素排序函数。<br />19.1数组大小<br />Lua 中我们经常假定array在最后一个非nil元素处结束。这个传统的约定有一个弊端：我们的array中不能拥有nil元素。对大部分应用来说这个限制不是什么问题，比如当所有的array有固定的类型的时候。但有些时候我们的array需要拥有nil元素，这种情况下，我们需要一种方法来明确的表明 array的大小。<br />Table库定义了两个函数操纵array的大小：getn，返回array的大小；setn，设置array的大小。如前面我们所见到的，这两个方法和table的一个属性相关：要么我们在table的一个域中保存这个属性，要么我们使用一个独立的（weak）table来关联table和这个属性。两种方法各有利弊，所以table库使用了这两个方法。<br />通常，调用table.setn(t, n)使得t和n在内部（weak）table关联，调用table.getn(t)将得到内部table中和t关联的那个值。然而，如果表t有一个带有数字值n的域，setn将修改这个值，而getn返回这个值。Getn函数还有一个选择：如果他不能使用上述方法返回array的大小，就会使用原始的方法：遍历array直到找到第一个nil元素。因此，你可以在array中一直使用table.getn(t)获得正确的结果。看例子：<br />print(table.getn{10,2,4})          --> 3<br />print(table.getn{10,2,nil})        --> 2<br />print(table.getn{10,2,nil; n=3})  --> 3<br />print(table.getn{n=1000})          --> 1000<br /><br />a = {}<br />print(table.getn(a))              --> 0<br />table.setn(a, 10000)<br />print(table.getn(a))              --> 10000<br /><br />a = {n=10}<br />print(table.getn(a))              --> 10<br />table.setn(a, 10000)<br />print(table.getn(a))              --> 10000<br />默认的，setn和getn使用内部表存储表的大小。这是最干净的选择，因为它不会使用额外的元素污染array。然而，使用n域的方法也有一些优点。在带有可变参数的函数种，Lua内核使用这种方法设置arg数组的大小，因为内核不依赖于库，他不能使用setn。另外一个好处在于：我们可以在array创建的时候直接初始化他的大小，如我们在上面例子中看到的。<br />使用setn和getn操纵array的大小是个好的习惯，即使你知道大小在域n中。 table库中的所有函数（sort、concat、insert等等）都遵循这个习惯。实际上，提供setn用来改变域n的值可能只是为了与旧的lua 版本兼容，这个特性可能在将来的版本中改变，为了安全起见，不要假定依赖于这个特性。请一直使用getn获取数组大小，使用setn设置数组大小。<br />19.2 插入/删除<br />table 库提供了从一个list的任意位置插入和删除元素的函数。table.insert函数在array指定位置插入一个元素，并将后面所有其他的元素后移。另外，insert改变array的大小（using setn）。例如，如果a是一个数组{10,20,30}，调用table.insert(a,1,15)后，a变为{15,10,20,30}。经常使用的一个特殊情况是，我们不带位置参数调用insert，将会在array最后位置插入元素（所以不需要元素移动）。下面的代码逐行独入程序，并将所有行保存在一个array内：<br />a = {}<br />for line in io.lines() do<br />    table.insert(a, line)<br />end<br />print(table.getn(a))        --> (number of lines read)<br />table.remove函数删除数组中指定位置的元素，并返回这个元素，所有后面的元素前移，并且数组的大小改变。不带位置参数调用的时候，他删除array的最后一个元素。<br />使用这两个函数，很容易实现栈、队列和双端队列。我们可以初始化结构为a={}。一个push操作等价于table.insert(a,x)；一个pop操作等价于table.remove(a)。要在结构的另一端结尾插入元素我们使用table.insert(a,1,x)；删除元素用 table.remove(a,1)。最后两个操作不是特别有效的，因为他们必须来回移动元素。然而，因为table库这些函数使用C实现，对于小的数组 (几百个元素)来说效率都不会有什么问题。<br />19.3 排序<br />另一个有用的函数是table.sort。他有两个参数：存放元素的array和排序函数。排序函数有两个参数，并且如果在array中排序后第一个参数在第二个参数前面，排序函数必须返回true。如果未提供排序函数，sort使用默认的小于操作符进行比较。<br />一个常见的错误是企图对表的下标域进行排序。在一个表中，所有下标组成一个集合，但是无序的。如果你想对他们排序，必须将他们复制到一个array然后对这个array排序。我们看个例子，假定上面的读取源文件并创建了一个表，这个表给出了源文件中每一个函数被定义的地方的行号：<br />lines = {<br />    luaH_set = 10,<br />    luaH_get = 24,<br />    luaH_present = 48,<br />}<br />现在你想以字母顺序打印出这些函数名，如果你使用pairs遍历这个表，函数名出现的顺序将是随机的。然而，你不能直接排序他们，因为这些名字是表的 key。当你将这些函数名放到一个数组内，就可以对这个数组进行排序。首先，必须创建一个数组来保存这些函数名，然后排序他们，最后打印出结果：<br />a = {}<br />for n in pairs(lines) do table.insert(a, n) end<br />table.sort(a)<br />for i,n in ipairs(a) do print(n) end<br />注意，对于Lua来说，数组也是无序的。但是我们知道怎样去计数，因此只要我们使用排序好的下标访问数组就可以得到排好序的函数名。这就是为什么我们一直使用ipairs而不是pairs遍历数组的原因。前者使用key的顺序1、2、……，后者表的自然存储顺序。<br />有一个更好的解决方法，我们可以写一个迭代子来根据key值遍历这个表。一个可选的参数f可以指定排序的方式。首先，将排序的keys放到数组内，然后遍历这个数组，每一步从原始表中返回key和value：<br />function pairsByKeys (t, f)<br />    local a = {}<br />    for n in pairs(t) do table.insert(a, n) end<br />    table.sort(a, f)<br />    local i = 0                -- iterator variable<br />    local iter = function ()    -- iterator function<br />      i = i + 1<br />      if a == nil then return nil<br />      else return a, t[a]<br />      end<br />    end<br />    return iter<br />end<br />有了这个函数，很容易以字母顺序打印这些函数名，循环：<br />for name, line in pairsByKeys(lines) do<br />    print(name, line)<br />end<br />打印结果：<br />luaH_get          24<br />luaH_present      48<br />luaH_set          10</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15956_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

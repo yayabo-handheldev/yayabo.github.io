@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>RMDS教程（一）——RMDS简介</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">RMDS教程（一）——RMDS简介</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2009-08-16 15:28:52</p>
+</div>
+<div class="col-10">
+<p>RMDS，全称RPG Maker DS，是一个基于NDSLIB的正统RPG引擎。这个引擎采用lua作为脚本，玩家通过脚本对所有的资源进行控制，最终按照玩家的意图，生成一个NDS的ROM。这个ROM就是玩家制作的RPG。<br /><br />RMDS是一个正统RPG引擎，作者在开发这个引擎的时候，以《黄金太阳》为目标，无论是从引擎的结构还是效果，都极力模仿《黄金太阳》。因此玩家做出来的RPG，将会呈现出黄金太阳的风格。如果玩家直接使用黄金太阳的资源的话，那么完全可以做出黄金太阳的同人游戏。<br /><br />RMDS的优点：<br />1.你所能看到/听到的一切，都能自定义。地图、NPC、对话文本、对话框、角色头像、物品/技能图标、战斗场景、战斗角色、技能特效、背景音乐、音效……全都是资源。你只需要替换这些资源，就可以改变在游戏中的效果。<br />2.引擎是脚本驱动的。游戏的情节发展，完全由脚本控制。这个世界是你的，你让这个世界怎么发展，就能怎么发展。只要遵守一定的规则，只要有相应的资源，你就可以通过脚本进行调用。<br />3.脚本语法简单。引擎采用lua作为脚本。随便找个编辑器都能写脚本……<br />4.调试简单。如果脚本出现错误，断言机制会有简单提示。<br /><br />RMDS的缺点：<br />1.对资源的要求非常严格。资源必须由专门的编辑器生成，而且必须遵守一定的规则。这是因为DS是资源极度受限的平台，你不能指望像在RM里面做RPG一样那么轻松。<br />2.对烧录卡的支持不太好。很多烧录卡无法正确运行RMDS。不过，后续版本的RMDS会尝试着解决这些问题。<br />3.玩家需要较强的逻辑思维能力。你毕竟需要给RMDS写脚本才能做出游戏。RPG的脚本可不是像AVG那么简单~~~<br />4.无法向下兼容。引擎更新有可能会破坏以前版本的引擎的部分功能，因此玩家在遇到引擎版本升级的时候比较麻烦。<br /><br />做游戏是一项极为艰苦的工作。做好游戏更是难上加难。所以，在使用RMDS之前，请一定要记清楚——虽然在那欲望的世界里面，一个庞大的二进制帝国正在向你招手，但是，通向那个邪恶帝国的道路，却是荆棘满地困难重重。<br /><br />紧紧握住手里的剑，披荆斩棘踏上通向帝国的道路，最后站在帝国塔顶君临天下，你的子民们匍匐在地上高呼“吾皇万岁！”……这种动力，能不能支持你完成你的事业呢？<br /><br />少年，记住我说的话：“你的世界，你来决定！”<br /><br />……<br />……<br />……<br />嗯……看来你是打算走下去了。很好。那我们开始吧。<br /><br />[基础知识]<br />RMDS的引擎本身，可以被分成如下几个模块：<br />Logo模块。这个模块用于显示你的Logo和片头动画。这是最简单的模块，将图片或者视频，使用指定的工具，按照指定的规则，转化成指定的数据文件，然后放进引擎就万事大吉了。<br />菜单模块。这个模块用于显示标题画面和菜单选项。这个模块也很简单。<br />世界模块。这是最复杂的模块。整个引擎的核心就是这个模块。游戏的整个世界，剧情，都将在这个模块中进行。这个模块直接由脚本控制，需要的资源也是最多最复杂。<br />战斗模块。这个模块的复杂程度仅次于世界模块。不过，这个模块几乎不需要脚本控制，因此对于玩家来说相对简单。但是这个模块需要大量的资源，因此前期的处理工作很繁琐。<br />商会模块。顾名思义就是商会、旅店、银行、教堂系统。没有什么难点。<br />其他模块。<br /><br />游戏可以在任意模块中进行切换。<br />[/基础知识]<br /><br />不同的模块，其API也不同。因此在使用API手册的时候，请千万注意API的适用范围。<br /><br />下一次的教程，我们就先从最简单的logo模块入手。我将教你如何显示出自己的Logo。此外，下一次将开始进行实际操作，所以，少年们，准备好工具！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16515_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

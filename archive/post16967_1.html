@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS自制软件教程8</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS自制软件教程8</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-15 09:38:53</p>
+</div>
+<div class="col-10">
+<p>摘自：ndsbbs<br />作者：nashi1987<br /><br />本教程讲解DS的中断系统，之前在将垂直扫描中断时已经讲到的部分内容本篇不再涉及，不过建议最好先看那篇。<br /><br />中断就不详细介绍了，直接进入正题。接着那篇教程的。<br /><br />中断标志寄存器Interrupt Flags Register：<br /><br />REG_IF中断标志寄存器适当中断发生时由DS设置的，它包含一个标记位来显示是哪个中断发生。考虑到有可能同时发生许多中断，所以有好几个这样的标记位。中断处理程序应当检测REG_IF寄存器来检测需要处理哪个中断。<br /><br />REG_IF寄存器还有另一个功能。在中断程序结束时应当设置相关中断的标记位来告诉系统此中断已被处理。所以在处理程序开始时应当检测指示是哪个中断的标记位，在结束时应当设置相关的标记位来表示中断已被处理。<br /><br /><br />if(REG_IF & IRQ_VBLANK) {<br />  on_irq_vblank();<br />  VBLANK_INTR_WAIT_FLAGS |= IRQ_VBLANK;<br />  REG_IF |= IRQ_VBLANK;<br />}<br /><br />if(REG_IF & IRQ_KEYS) {<br />  on_irq_keys();<br />  VBLANK_INTR_WAIT_FLAGS |= IRQ_KEYS;<br />  REG_IF |= IRQ_KEYS;<br />}<br /><br />[...more code...]<br /><br /><br /><br />中断处理程序：<br /><br />当一个中断发生时调用中断处理程序，基本的中断处理程序内置在DS的BIOS中。<br /><br />ARM9中断：<br /><br />ARM9 的中断处理程序位于0xFFFF0018处.当中断发生时处理器保存当前相关信息以便返回时使用，然后立即跳转到0xFFFF0018处.在 0xFFFF0018处的结构是一些指向基本BIOS中断处理程序的数据（也可称为中断向量）。BIOS中的基本中断处理程序跳转到我们可以读写的内存地址中。通过在我们自己的函数中在这部分内存中储存指针我们就可以用我们自己的程序处理相关中断了。用到的内存地址技术上称为DTCM+0x3FFC。 DTCM是ARM9的一部分特殊内存区域，它可以被映射到不同的真实内存地址中。DevkitPRO默认DTCM为0x00800000。所以中断处理程序的地址储存在0x00803FFC处，这在libnds中是这样定义的：<br /><br /><br />#define IRQ_HANDLER (*(VoidFunctionPointer *)0x00803FFC)<br /><br /><br />虽然LIBNDS已经默认编译了，但这个地址是可以改变的。<br /><br /><br />ARM7中断：<br /><br />ARM7没有DTCM，他的中断处理程序地址位于内存0x03FFFFFC处，不可改变。LIBNDS中是这样定义的：<br /><br /><br />#define IRQ_HANDLER (*(VoidFunctionPointer *)(0x04000000-4))<br /><br /><br />设置处理程序：<br />通过在IRQ_HANDLER设置一个指针你可以用自己的程序处理中断。你可按这个示例<br />程序来做：<br /><br /><br />REG_IME = 0;<br />IRQ_HANDLER = on_irq;<br />REG_IE = IRQ_VBLANK | IRQ_KEYS;<br />REG_IF = ~0;<br />REG_IME = 1;<br /><br /><br /><br />首先我们通过将REG_IME设为‘0’来禁止所有中断，之后设置 'on_irq'到<br /><br />IRQ_HANDLER，on_irq是我们自己的中断处理程序：<br /><br /><br />void on_irq()<br />{<br />if(REG_IF & IRQ_VBLANK) {<br />  on_irq_vblank();<br />  VBLANK_INTR_WAIT_FLAGS |= IRQ_VBLANK;<br />  REG_IF |= IRQ_VBLANK;<br />}<br /><br />if(REG_IF & IRQ_KEYS) {<br />  on_irq_keys();<br />  VBLANK_INTR_WAIT_FLAGS |= IRQ_KEYS;<br />  REG_IF |= IRQ_KEYS;<br />}<br />}<br /><br /><br />当我们开启中断时，on_irq会在中断发生时调用。接下来设置'Interrupt Enable'寄存器来开启垂直扫描中断和键中断。REG_IF 设为默认值，之后，开中断。<br /><br />垂直扫描中断：在另一个专门的教程中。<br /><br /><br />键中断：<br /><br />我们的示例程序希望用中断来处理按键。这就用到了键中断。键中断的缺点是他在按键按下时发生，而不是释放时。这就不能使用持续按下时的功能。像垂直扫描中断一样，我们需要一些专门的代码来处理键中断。这有一个寄存器，KEYS_CR，用来设置哪个键触发中断，这些寄存器位是：<br /><br /><br />Bit   libnds define     Description<br />0       KEY_A         A button<br />1       KEY_B         B button<br />2     KEY_SELECT   Select button<br />3     KEY_START     Start button<br />4     KEY_RIGHT     Right shoulder button<br />5     KEY_LEFT       Left shoulder button<br />6     KEY_UP         Up directional key<br />7     KEY_DOWN     Down directional key<br />8       KEY_R         Right directional key<br />9       KEY_L         Left directional key<br />10                   Unused<br />11                   Unused<br />12                   Unused<br />13                   Unused<br />14                   Enable KEY interrupt (0=disable, 1=enable)<br />15                   Interrupt condition (0=or, 1=and)<br /><br /><br />14位必须设置来开启键中断，15位，如果清零则任一个键按下时都会引起中断发生，如果置位则须所有的键都按下时中断才发生。在我们的程序中，我们希望当用户同时按下A和B时中断发生：<br /><br /><br />// The interrupt will fire when both the A and B key are<br />// pressed. Bit 15 being set is what makes the requirement that both<br />// keys must be pressed.<br />KEYS_CR = KEY_A | KEY_B | (1<<14) | (1<<15);<br /><br /><br />在键中断处理程序中会自动记数中断发生的次数，然后显示在屏幕上：<br /><br /><br />void on_irq_keys()<br />{<br />// Key interrupt occurred.<br />interrupt_count++;<br />}<br /><br /><br /><br />等待中断，BIOS与SWI调用：<br /><br />在BIOS 中有一个程序允许等待一个中断发生。这个程序会将ARM9转到‘低电’模式，在这个模式中处理器停止处理并关闭一些内存单元。你已经在之前的教程中见到 'swiWaitForVBlank' ，这个函数关闭ARM9并等待垂直扫描中断，当VBI（垂直扫描中断）发生时重新开启ARM9并处理中断。这样做的好处是可以节省电力，延长电池使用时间。这被称作'SWI 5'。这个功能在LIBNDS中已经用C语言封装成swiWaitForVBlank函数了，我们可以简单的调用就行了。'SWI'是ARM的机器指令，它使处理器跳转到内存中的一个特殊区域（BIOS），在SWI之后他通过一些数字来索引到一个内存区域并跳转到那里执行。<br /><br />这还有一个更普通的等待中断发生的BIOS程序，这允许我们关闭部分电源并等待指定的中断发生，这被称作‘SWI 4’.在这个示例中我们使用这个简单的BIOS程序来等待键中断的发生，使用ARM汇编语言：<br /><br /><br />void swiWaitForKeys()<br />{<br />asm("mov r0, #1");<br />asm("mov r1, #4096");<br />asm("swi #262144");<br />}<br /><br /><br />头两句指令设置ARM的寄存器R0和R1，R0设为‘1’表示等待下一中断发生，R1的值‘4096’是IRQ_KEYS的值， '262144' 是设置SWI模式的，这里是SWI 4.通过调用这个函数BIOS的中断等待功能调用。实际的中断程序是这样：<br /><br /><br />  while(!(WAIT_FOR_INTR & R1)) {<br />  ; Switch the ARM9 to low power mode and<br />  ; wait for an interrupt<br />  MCR   p15, 0, LR,c7,c0, 4<br /><br />  ; We got an interrupt, returned from the interrupt<br />  ; handler so go back to loop condition.<br />  }<br />  ; Return from SWI<br /><br /><br />WAIT_FOR_INTR是保存有表示我们所要处理的中断的位标记的内存地址，它位于DTCM+0x3FF8。像我们前面讲到的，在0x00803FF8处。LIBNDS对此有定义，为VBLANK_INTR_WAIT_FLAGS。<br />你需要设置VBLANK_INTR_WAIT_FLAGS的相关位，不然使用后ARM9将一直处于挂起状态。<br />所以如果你使用swiWaitForVBlank，垂直扫描中断处理代码必须包含以下的代码：<br /><br /><br />VBLANK_INTR_WAIT_FLAGS |= IRQ_VBLANK;<br /><br /><br />因为我们也要使用swiWaitForKeys，所以也要做相似设置：<br /><br /><br />VBLANK_INTR_WAIT_FLAGS |= IRQ_KEYS;<br /><br /><br /><br />LIBNDS与中断：<br /><br />LIBNDS有一些功能可以使设置中断处理程序容易一点。在这里我没有使用有2个原因：1.为了弄清原理。2.LIBNDS的相关程序有些小问题。<br /><br />'libnds'的默认中断处理程序代码如下：<br /><br /><br />void irqDefaultHandler(void)<br />{<br />  int i = 0;<br /><br />  for (i = 0; i < 32; i++)<br />  {<br />    if(REG_IF & (1 << i) )irqTable[i]();<br />  }<br /> <br />  VBLANK_INTR_WAIT_FLAGS = REG_IF | REG_IE;<br />}<br /><br /><br /><br />使用这段代码会出现如果VBI发生了，但键中断未发生，BIOS会认为键中断也发生了并退出'swiWaitForKeys'。理想的LIBNDS代码应当这样：<br /><br /><br />VBLANK_INTR_WAIT_FLAGS |= REG_IF;<br /><br /><br />如果你使用LIBNDS的默认代码你可能在使用SWI时只能使用VBI中断。<br /><br />设置 REG_IF 和 VBLANK_INTR_WAIT_FLAGS：<br /><br />这仍有一件需要注意的事是当设置REG_IF 和 VBLANK_INTR_WAIT_FLAGS时，如果你需要用'REG_IF' 来付值 VBLANK_INTR_WAIT_FLAGS 你需要这样设置：<br /><br /><br />VBLANK_INTR_WAIT_FLAGS = REG_IF;<br />REG_IF = REG_IF;<br /><br /><br />对 'REG_IF' 的一个写操作将重置'REG_IF'，所以如果先写REG_IF后付值会将错误的数据付值给VBLANK_INTR_WAIT_FLAGS。<br /><br />主循环：<br /><br />在主循环中我们使用'swiWaitForKeys'：<br /><br /><br />while(1) {<br />  swiWaitForKeys();<br />  ++swi_return_count;<br />}<br /><br /><br /><br />从调用退出后我使用一个记数变量并将其显示到屏幕上，这样就可以证明SWI调用返回了。<br /><br />第二个屏幕：<br /><br />在这个例子中我们使用第二个屏幕显示相关输出结果，我们做如下设置：<br /><br /><br />videoSetModeSub(MODE_0_2D | DISPLAY_BG0_ACTIVE);<br />vramSetBankC(VRAM_C_SUB_BG);<br />SUB_BG0_CR = BG_MAP_BASE(31);<br />BG_PALETTE_SUB[255] = RGB15(31,31,31);<br />consoleInitDefault((u16*)SCREEN_BASE_BLOCK_SUB(31), (u16*) CHAR_BASE_BLOCK_SUB(0), 16);<br /><br /><br />这与教程一中的代码很相似，相关讲解请参照教程1。<br /><br />以上就是DS的中断系统，比较详细的讲解，原理部分也可不看。<br /><br />如有疏漏错误之处，还望大家多多指正！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16967_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

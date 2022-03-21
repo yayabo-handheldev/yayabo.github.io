@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>AMP中LUA的特殊之处</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">AMP中LUA的特殊之处</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>nosh</b><br/>
+2010-01-12 18:11:54</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 nosh 于 2010-1-22 16:48 编辑 [/i]<br /><br />整理了一下各个帖子中的内容和自己的心得：<br />------------------------------------------------------------------------------------<br />Q：在学习使用AMP的过程中发现代码这样写不执行:<br />for i=1,10 do <br />Print('some string'); <br />end<br />而改成这样之后就执行了：<br />for i=1,10 do Print('some string'); end<br />A：AMP有两种脚本模式,一种是start.lua采用的一帧执行一句指令的模式,还有直接载入,一次性执行的模式,由Run()指令,Jump()指令压入AMP的脚本采用的一帧一句的模式,这个模式下任何语句的分行书写都会出现语法错误,而由Include()指令,ResInit(),ResFree()指令载入的脚本则是一次性执行的,只要遵循lua的语法就不会出现任何问题。(白叔原版回答)<br />以最新版AMP0.55beta为例，module，system目录下的文件都是一次性执行的，user目录下的文件都是一帧一句执行的。按这个规矩写就没问题。<br />------------------------------------------------------------------------------------<br />Q：为什么每行语句后边都有个分号？不写不行吗？<br />A：AMP打包过程中把回车换行符都给去掉了。要是再没有分号，就无法分隔各个语句了。因此在普通LUA中可有可无的分号，在AMP中就是必要的。<br />------------------------------------------------------------------------------------<br />Q：为啥我的程序mp3播放语句发不出声音？<br />A：由于nge2库的硬伤，amp如果不播放一次pmp视频，声音系统不会初始化，所以会没声音。<br />------------------------------------------------------------------------------------<br />Q：下面的语句中<br />goto(*ev15_hxend);<br />*ev15_hx<br />Print("此处河蟹1000字...");<br />*ev15_hxend<br />为啥“此处河蟹1000字...”还会显示出来？<br />A：因为标签“ev15_hxend”“ev15_hx”被AMP看成是同样标签了。改善方法是一个标签名不能包含另一个标签名。<br />goto(*hxend_ev15);<br />*hx_ev15<br />Print("此处河蟹1000字...");<br />*hxend_ev15<br />这样就OK了。<br />------------------------------------------------------------------------------------<br />Q：下面的语句中<br />eventchose[1] = 3; Print(eventchose[1]);<br />为啥什么都没有显示出来？<br />A：别忘了数组的初始化。<br />eventchose = {}; eventchose[1] = 3; Print(eventchose[1]);<br />这样就可以显示出来了。<br />------------------------------------------------------------------------------------<br />Q：jump("event1.lua"); 执行了这句之后并没有运行我写在event1.lua里面的代码，为什么？<br />A：请检查其它目录下是否还有个名"event1.lua"的文件。这个问题还是跟AMP打包过程有关。因为打包时并不保存路径信息，运行时amp首先读取了打包文件的目录表,搜索名字的时候是按顺序搜索表,名字先对上哪个读取哪个。所以遇到同名字的文件,就杯具了。<br />------------------------------------------------------------------------------------<br />Q：game.ini这文件有啥用？<br />A：这是开放给用户的脚本。开发者可以在里面定义常量、函数，而打包的时候这个文件是不会打包进amcode.bin中的，因此用户可以自由修改其内容。<br />另外 在game.ini中加入DEBUG = 1;这句，会开启会开启帧率和内存使用量的显示。<br />------------------------------------------------------------------------------------<br />Q：我有个图 981x272的，用bgmove 横向移动，在PC上很正常，到P上就乱了？<br />A：只支持最大512x512的图。因此分成两个图同时移动吧。当然要自己改造一下sys_fairy.lua定义的bgmove函数或者干脆新造一个。<br />------------------------------------------------------------------------------------<br />Q：运行下面的代码，结果程序错乱了?<br />select("  保存进度一  " .. savefile[1].name,"  保存进度二  " .. savefile[2].name,"  保存进度三  " .. savefile[3].name,"  返回");<br />A：LUA的解释器不是很完善，尽量不要把一个语句写得这么长。改成下面这样就可以正常运行了：<br />temp = {};<br />temp[1] = "  读取进度一  " .. savefile[1].name;<br />temp[2] = "  读取进度二  " .. savefile[2].name;<br />temp[3] = "  读取进度三  " .. savefile[3].name;<br />select(temp[1],temp[2],temp[3],"  返回");<br />到底一个语句的长度限制是多少呢？不要问哥，哥也说不清...<br />------------------------------------------------------------------------------------</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>nosh</b><br/>
+2010-01-12 18:21:04</p>
+</div>
+<div class="col-10">
+<p>又更新啦！自己小顶一下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pmnds</b><br/>
+2010-01-12 18:46:07</p>
+</div>
+<div class="col-10">
+<p>我用我GB GBC的。。。残骸和你交换，行吗？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>a851381980</b><br/>
+2010-01-12 19:08:30</p>
+</div>
+<div class="col-10">
+<p>谢谢分享，以后能开个《软件下载专区》归类就好了</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16037_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

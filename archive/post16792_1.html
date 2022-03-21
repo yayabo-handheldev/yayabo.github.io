@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>初探Nintendo DS程式开发与设计（一）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">初探Nintendo DS程式开发与设计（一）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-03-12 07:00:43</p>
+</div>
+<div class="col-10">
+<p>摘自：[url=http://blog.monkeypotion.net/gameprog/note/nds-dev-part-one]http://blog.monkeypotion.net/gameprog/note/nds-dev-part-one[/url]<br />作者：猴子灵药<br /><br />        是的，你没有看错，本篇文章的主题是「NDS 程式设计」。<br /><br />        由任天堂公司所开发的 Nintendo Dual Screen 携带型掌上游乐器，前几年甫一上市就席捲了全世界的游戏市场，而在 NDS 平台上的程式设计与开发，也已经是行之有年并且十分活跃的社群活动。一开始是由 GBA 平台，开启了业余爱好者在 Console 平台上自制程式的可能性，接着在效能强大的 NDS 掌上型游乐器问世之后，很快地就有几位能力高强的程式设计者，开发出能够制作 NDS 程式的函式库与工具。<br /><br />        我自己原来就非常喜欢玩 NDS 上的各种游戏，在机缘巧合之下，最近刚好接触到 NDS 程式开发的相关知识，觉得实在是非常新奇有趣又好玩！所以往后在这个新增的「学习笔记」分类中，我将会分享自己在学习过程中所获得的一些心得与经验；包括从门外汉一步步踏入这个新领域的过程中，所需建立的概念以及所需阅读的文章，并且由浅入深地详细解释每个必要步骤，希望能够对于有兴趣学习 NDS 程式设计的读者有一点帮助。如果其中内容有所错误或疏漏之处，也请不吝指正。<br /><br />        在搜寻引擎中，键入 NDS 程式开发或 NDS 程式设计的相关字句，立即就能够找到许多相关于 NDS 程式开发的网站教学，然而，对于一个完全没有 Console 平台程式写作经验的人来说，应该要从哪里入门比较合适呢？在本篇文章中，将使用 libnds 函式库与 devkitPro 开发工具，加上 PAlib 的环境设定为辅，在 Windows 平台下，初探 NDS 程式设计领域中 Frame Buffer 的使用以及 Input System 的操作，并提供完整的程式码范例下载。<br /><br /><br />        由业余程式设计者自己制作的 NDS 程式，常被称为是 Homebrew（自家酿造）程式。而在 NDS 的 Homebrew 领域中，首先要认识的是 libnds、devkitPro 与 PAlib 这三项开发 NDS 程式的利器：<br /><br />[quote][list]<br />[*]libnds：是由几位热爱 NDS 程式的开发者，经由反向工程所制作出来的一套非官方版本的函式库。[*]devkitPro：开发各种 Console 平台程式的工具组，其中包含了开发 NDS 与 GBA 用的 devkitARM，开发 PSP 用的 devkitPSP，还有开发 Gamecube 用的 devkitPPC。[*]PAlib：以 libnds 为基础所建构起来的高阶函式库，能够免除掉许多关于记忆体的操作与复杂的低阶程序，相当便于 NDS 程式开发入门者使用。[/list][/quote]<br />        在众多素质参差不齐的网站资源与教学文章里，想要选择合适的对象做为踏入 NDS 程式设计领域的第一次亲密接触，我建议由「Introduction to Nintendo DS Programming」这篇文章开始认识并且学习 NDS 的各种基础知识，依序阅读下列的几个小节：<br /><br />[quote][list]<br />[*]第一节：瞭解 NDS 程式设计的背景资讯以及至关紧要的合法性问题。[*]第二节与第三节：认识各种 Passthrough 装置的缘由与沿革，瞭解如何在 NDS 游乐器上利用这些装置来执行自制程式。[*]第四节：简单介绍 libnds 与 devkitPro 两者所扮演的角色与作用。[*]第五节：以显示背景图片 (Background) 为目标，开始一步步建构起简单的 NDS 程式。[*]第八节：介绍 NDS 的输入系统 (Input System) 行为与操作方法。[/list][/quote]<br />        上述的教学文章里还有许多其他的内容，不过我认为在一开始踏入不熟悉的领域时，能够先搞懂这几个部分的内容就已经很不容易了。特别是在第五节的内容中，开始进入程式设计的部分：那些 VRAM Bank 是怎么回事？还有那些奇怪的操作行为是怎么来的？为什么在转置矩阵的设定上要使用 Shift Operation？以上这些问题，可能已经让某些读者开始头昏眼花了。这些部分都会在之后的文章里一一解说，不过在本篇文章里，会暂时先略过这些部分。<br /><br />        阅读连结文章中的几个部分，是为了对 NDS 程式设计领域建立起基础概念与印象。知道开发 NDS 程式大概是怎么个回事之后，接下来就可以开始阅读「NDS/Tutorials Day 3」这篇文章的内容，学习其中最简单容易的 Frame Buffer 功能使用与 Input System 功能操作：<br /><br />[quote][list]<br />[*]Frame Buffer：将 VRAM 视为最单纯的 Frame Buffer 型态，进行萤幕画面显示上的操作使用。[*]Talking to the keypad：如何侦测使用者按下了哪个按钮与按钮的作用状态，并且操作 NDS 的基本输入系统，。[*]Touching things：介绍 NDS 上最特别的触碰输入系统。[/list][/quote]<br />        具备了以上的知识以后，是不是已经觉得跃跃欲试了？不过在开始动手写程式之前，需要先下载并且安装几项必备的软体项目：<br /><br />[quote][list]<br />[*]Visual C++ Express 2005（或 Professional 以上版本）：Windows 平台上的程式开发必备 IDE，相信不用多做介绍。[*]devkitPro Windows Installer：这是安装 devkitPro 工具组用的 Updater，确认要安装的部分之后，它会直接连上网路下载所需的最新组件。请记得要把 devkitPro 安装在没有空格的目录中，例如 C:devkitPro 是合法的安装路径，但是如果将程式安装在 C:Program FilesdevkitPro 中就会出现问题，进行安装时需要多加注意。[*]PAlib 070717：开发 NDS 用的高阶函式库，本文中并不会直接使用 PAlib，而是为了以下的 AppWizard 而先安装这个函式库。[*]devkitARM release 20：由于目前的 PAlib 070717 仅对应至 devkitARM release 20 的版本，所以需要另外下载这个比较旧版的 devkitARM。安装完 devkitPro 之后，先将原来目录中的 devkitARM 重新命名为 devkitPro_21，然后再将这个 devkitARM release 20 的版本，安装至 devkitPro 的目录中。[*]PAlib AppWizard：这是 PAlib 专案的设定精灵，在依照安装方式执行完毕后，就能够很方便地在 Visual C++ 中创造出基本的 PAlib 专案，免除了 Make 档相关的建置参数设定，可以帮助不熟悉 Unix/Linux 程式开发环境的程式设计者迅速上手。[*]Emulators：各种 PC 平台上模拟真实 NDS 执行环境的模拟器，能够让程式设计者很便利地检视并测试程式的执行成果，这些模拟器包括有 No 等等，建议可以多下载几个不同的模拟器交叉试用比较。[/list][/quote]<br />        下载并安装完以上的软体之后，接着参照这篇文章的指示，在 Visual Studio 中一步步设定好建置程式的执行环境。首先将 devkitPro 与 PAlib 所需的环境变数设定完成，接着进行外部工具 (External Tools) 的设定程序；藉由外部执行档与执行参数的设定，再加上快速键的按键组合设定，就能够在 Visual Studio 中便利地执行模拟器，并且载入专案中的程式以迅速检视执行成果。<br /><br />        具备了基础概念与知识，并且将程式开发环境准备完毕后，终于可以真正开始在 Windows 上撰写第一个 NDS 程式了！这里的程式将以前述文章中的范例为基础，使用 NDS 中最单纯的 Frame Buffer 显示模式，在上萤幕中以像素点的移动，模拟出星星流动的样子，并且侦测 NDS 上所有按钮与触控萤幕的输入，以 Console 显示的方式将文字讯息输出在下萤幕中。<br /><br />        程式的主流程非常单纯而且简单，只需要依顺序进行以下几项步骤：<br /><br />[quote][list]<br />[*]初始化 IRQ 与 Console 设定[*]设定 Video Mode[*]映射 VRAM Bank[*]侦测 Input System[*]处理程式的 Update Procedure[*]将 RGB 值写入 VRAM[/list][/quote]<br />        主要进入点的程式码如下所示：<br /><br /><br />[code=c]int main(void)   <br />{   <br />    // Initialize IRQ settings   <br />    irqInit();   <br />    irqEnable(IRQ_VBLANK);   <br />    // Initialize console setting   <br />    consoleDemoInit();   <br />  <br />    // Setup video mode to frame buffer usage   <br />    videoSetMode(MODE_FB0);   <br />    // Mapping vram to frame buffer usage   <br />    vramSetBankA(VRAM_A_LCD);   <br />  <br />    // Initialize game logic   <br />    srand(time(NULL));   <br />    ClearScreen();   <br />    InitStars();   <br />  <br />    // Main loop   <br />    while (true) {   <br />        // Wait for V-Blank   <br />        swiWaitForVBlank();   <br />        // Clear console output   <br />        consoleClear();   <br />  <br />        // Game logic   <br />        for (int i = 0; i < NUM_STARS; i++) {   <br />            // Update stars   <br />            if (g_bStarsMoving) {   <br />                EraseStar(&g_tStars[i]);<br />                MoveStar(&g_tStars[i]);<br />            }   <br />            // Write stars (RGB values) to VRAM   <br />            DrawStar(&g_tStars[i]);   <br />        }   <br />        // Input system handling   <br />        ProcessInput();   <br />    }   <br />    return 0;   <br />}  [/code]<br />        这个程式中最重要的部分，在于以 videoSetMode(MODE_FB0) 指定 NDS 绘图引擎使用 Frame Buffer 的绘图模式，然后再使用 vramSetBankA(VRAM_A_LCD)，将 Bank A 的绘图记忆体 (VRAM) 指定给萤幕显示 (LCD) 使用。所谓的 Frame Buffer 模式，可以视为是直接由记忆体数值映射至萤幕显示颜色的一种方式，所以只要将 RGB 值写入对应的记忆体位址中，就能够在萤幕上直接看到颜色值的显示结果。<br /><br />        因此，在绘制星星的时候，就能够将 VRAM_A 的内容，直接以一维阵列的方式存取并填入适当的 RGB 值：<br /><br />[code=c]void DrawStar(Star* ptStar)<br />{<br />    VRAM_A[ ptStar->x + ptStar->y * SCREEN_WIDTH ] = RGB15( g_sStarColorR, g_sStarColorG, g_sStarColorB );<br />}<br /><br />void EraseStar(Star* ptStar)<br />{<br />    VRAM_A[ ptStar->x + ptStar->y * SCREEN_WIDTH ] = BACKGROUND_COLOR;<br />}[/code]<br />        这里所使用的是 NDS 架构中的 15 Bits Color 模式，R、G、B 三原色分别各佔 5 Bits 的大小，然后透过 RGB15 这个 Preprocessor Macro 的使用，就能够很方便的指定萤幕像素点的颜色值。<br /><br />[float=right][attach]999[/attach][/float]<br />        在使用 PAlib AppWizard 创建 NDS 程式专案的情形下，按下「编译」或「建置」都会使专案直接连结至 devkitPro 的相关工具以进行建置程序。在程式建置完毕之后，会产生出 *.nds 与 *.ds.gba 格式的 NDS 专用档案，并不是一般 Windows 平台中常见的 *.exe 可执行档。所以在此不能够按下 F5 快速键来直接执行程式，而是必须使用之前设置好的外部工具，如 No 之类的模拟器，以执行建置完成的程式。左边的图，就是以模拟器执行这个简单范例程式的画面。 <br /><br />        按照以上学习、安装、撰写的三拍子节奏行进，就能够优雅而轻松地进入 NDS 的程式设计领域，亲手写出人生中的第一个 NDS 程式！接下来的文章里，将会陆续介绍 NDS 的硬体架构与绘图模式，并且开始学习如何载入与绘制背景图片等等非常有趣的部分<br />[attach]1000[/attach]<br /><br />[[i] 本帖最后由 niubo_ 于 2009-3-12 07:17 编辑 [/i]]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-03-12 07:28:19</p>
+</div>
+<div class="col-10">
+<p>附上几点说明：<br />1. 附件里是一个VS2005的工程，如果没有VS2005或者没有把VS2005配置成DS开发环境就只能把源码文件拷出来自己弄了。<br />2. 代码在devkitARM r21 + libnds-20071023.编译通过，如果用devkitproupdater 1.4.9或更新的安装包，可以把：<br />  irqInit();   <br />    irqEnable(IRQ_VBLANK);   <br />这两行删除，因为编译器在main函数开始前已经将中断系统初始化过了。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-03-12 07:39:51</p>
+</div>
+<div class="col-10">
+<p>对于想学习nds开发的朋友来说这篇文章是一篇非常好的入门教程,其中比较详细的介绍了在nds开发中所碰到的各种术语.文章由浅入深,循序渐进.推荐想涉入nds开发的朋友阅读.</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16792_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

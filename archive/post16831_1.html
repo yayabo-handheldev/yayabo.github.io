@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PSP编程开发学习笔记（二）：SDL配置</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">PSP编程开发学习笔记（二）：SDL配置</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-18 09:34:30</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.sina.com.cn/jesil[/url]<br />作者：嫣雨华源<br /><br />我是打算在VS2008里调用SDL，所以只翻译了LAZY FOO's Productions下VS.net 2005/2008部分，如果有想要使用VC6平台的同志，可以去[url=http://lazyfoo.net/SDL_tutorials/index.php]SDL英文教程[/url]去查询VC6的安装SDL方法，这里就不另述了。这个网址下还有许多SDL的教程，希望对大家有所帮助。<br /><br />首先去[url=http://www.libsdl.org/download-1.2.php]这里[/url]下载SDL相关资源，下载下图红箭头所指部分。之后解压下载文件包，并存放在你觉得适当的路径下，我的是"C:PSP移植SDL"的目录下。<br /><br />[attach]849[/attach]<br /><br />1，启动VS，进入工具菜单栏的选项。 <br /><br />[attach]850[/attach]<br /><br />2，到项目和解决方案下的VC++目录里，分别在显示以下内容的目录的选项里选择包含文件(include)和库文件(lib)，将刚刚解压的文件添加进去。<br /><br />[attach]851[/attach]<br /><br />[attach]852[/attach]<br /><br />[attach]853[/attach]<br /><br />[attach]854[/attach]<br /><br />[attach]855[/attach]<br /><br />3，将刚解压的lib文件夹里的SDL.dll复制到"盘符:windowssystem32"里去，这样每次的SDL APP都可以找到SDL.dll，不用特意把SDL.dll放到工程目录里去。不过这样做有一个弊端，就是SDL.dll与SDL版本不一样的话，可能会发生问题。所以一般推荐是将SDL.dll文件放到编译的工程目录里<br /><br />4，之后就可以正常的建立项目了，不过建立项目后需要进行几个设置。进入项目工具栏里的属性。<br /><br />[attach]856[/attach]<br /><br />在C/C++的常规里，把检测64位可移植性问题选否。  <br /><br />[attach]857[/attach]<br /><br />在代码生成里的运行时库改为多线程dll<br /><br />[attach]858[/attach]<br /><br />在链接器里的输入中附加依赖项里添加SDL.lib和SDLmain.lib<br /><br />[attach]859[/attach]<br /><br />最后在链接器里的系统里，在子系统里选择Windows <br /><br />[attach]860[/attach]<br /><br />5，最后附加一个测试代码：<br /><br />[code=c]#include "SDL.h"<br />#include <string><br /><br />//The attributes of the screen<br />const int SCREEN_WIDTH = 480;<br />const int SCREEN_HEIGHT = 272;<br />const int SCREEN_BPP = 32;<br /><br />//The surfaces that will be used<br />SDL_Surface *message = NULL;<br />SDL_Surface *background = NULL;<br />SDL_Surface *screen = NULL;<br />SDL_Surface *load_image( std::string filename );<br />void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination );<br />int main( int argc, char* args[] )<br />{<br /> //Initialize all SDL subsystems<br /> if( SDL_Init( SDL_INIT_EVERYTHING ) == -1 )<br /> {<br />  return 1;   <br /> }<br /> //Set up the screen<br /> screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE );<br /> //If there was an error in setting up the screen<br /> if( screen == NULL )<br /> {<br />  return 1;   <br /> }<br /> //Set the window caption<br /> SDL_WM_SetCaption( "Hello World", NULL );<br /> //Load the images<br /> //message = load_image( "hello_world.bmp" );<br /> background = load_image( "hello_world.bmp" );<br /> //Apply the background to the screen<br /> apply_surface( 0, 0, background, screen );<br /> //Update the screen<br /> if( SDL_Flip( screen ) == -1 )<br /> {<br />  return 1;   <br /> }<br /> //Wait 2 seconds<br /> SDL_Delay( 2000 );<br /> //Free the surfaces<br /> // SDL_FreeSurface( message );<br /> SDL_FreeSurface( background );<br /><br />//Quit SDL<br /> SDL_Quit();<br /><br />//Return<br /> return 0;<br />}<br /><br />//load_image 读取位图并转换成32位图，好与显示器上的屏幕位图匹配<br />SDL_Surface *load_image( std::string filename )<br />{<br /> //Temporary storage for the image that's loaded<br /> SDL_Surface* loadedImage = NULL;<br /><br />//The optimized image that will be used<br /> SDL_Surface* optimizedImage = NULL;<br /> //Load the image<br /> loadedImage = SDL_LoadBMP( filename.c_str() );<br /> //If nothing went wrong in loading the image<br /> if( loadedImage != NULL )<br /> {<br />  //Create an optimized image<br />  optimizedImage = SDL_DisplayFormat( loadedImage );<br /><br />//Free the old image<br />  SDL_FreeSurface( loadedImage );<br /> }<br /> //Return the optimized image<br /> return optimizedImage;<br />}<br /><br /><br />void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )<br />{<br /> //Make a temporary rectangle to hold the offsets<br /> SDL_Rect offset;<br /><br />//Give the offsets to the rectangle<br /> offset.x = x;<br /> offset.y = y;<br /> //Blit the surface<br /> SDL_BlitSurface( source, NULL, destination, &offset );<br />}[/code]<br /><br />注意，必须将一个名为hello_world.bmp的文件拷贝到项目文件夹下才行。以后每次新建一个工程必须重复第四步。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16831_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

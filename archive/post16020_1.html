@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Editplus中使用lua编译器的输出来定位出错行的正则表达式</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">Editplus中使用lua编译器的输出来定位出错行的正则表达式</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-13 12:53:00</p>
+</div>
+<div class="col-10">
+<p>在editplus中的自定义Tool里面使用lua编译器来做lua语法检查的时候， 出错的输出会输出到Output窗口，如果没有设置 output pattern的话， 双击错误信息是不会自动跳转到出错行的。output pattern是使用正则表达式来匹配lua编译器的输出的，在网上找了好久也没找到这个正则表达式。实在无奈只好研究了下正则表达式的语法，自己写了一个。 献给大家。<br /><br /><br />在创建User Tool的时候有个按钮Ouput Pattern(在Capture Output那个复选框右边). 点击后会出现一个对话框. 取消 User default output pattern的选择. 将下面的表达式拷贝到下面的输入框里.<br /><br />^(.:\.*):([0-9]):.*<br /><br />下面的选项:<br />Filename : Tagged Expression 1<br />Line : Tagged Expression 2<br />Column : None<br /><br /><br />这下双击错误信息就可以像在VC里面那样直接跳到出错的代码行了. 编辑大文件没这个功能麻烦死了.</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16020_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

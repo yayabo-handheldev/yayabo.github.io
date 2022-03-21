@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>牛叔也邪恶之最简Makefile</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">牛叔也邪恶之最简Makefile</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-05-16 10:51:25</p>
+</div>
+<div class="col-10">
+<p>自从看懂了点编译参数，牛叔就开始飘飘然起来。现在他连模板中的Makefile都不屑一顾了。<br /><br />后来他又搭建了eclipse下的C/C++编译环境，由于没有直接安装MinGW，eclipse没有显示任何可用toolchain，索性自己把修改工程属性，硬是把dev-cpp的编译器拿过来做了一个make项目，当然Makefile也是从其他dev-cpp的项目里copy过来的了。不过貌似直接拿过来的这个Makefile没法用，查看那个Makefile时，牛叔乐了：这个低级的Makefile也太小儿科了，遂参考DS项目的Makefile重写了一个，居然编译成功了。<br /><br />牛叔对着黑洞洞的控制台窗口上显示的Hello World，不禁喃喃自语，“原来我也会写Makefile了。”<br /><br />为了炫耀自己何等的牛X，他决定自己写一个DS项目的Makefile，要求，一切从简。<br /><br />在一番复制/粘贴大法之后，一个最简Makefile的雏形就出现了，后经多处修改，终于在牛叔面前又出现了黑洞洞的No world……[code]<br />#-----------------------------------------------------------------------<br /># 使用这个伪目标清除make的默认后缀<br />#-----------------------------------------------------------------------<br />.SUFFIXES:<br />#-----------------------------------------------------------------------<br /># 把devkitARM/bin的路径添加到环境变量PATH中<br />#-----------------------------------------------------------------------<br />PATH  := $(DEVKITARM)/bin:$(PATH)<br />#-----------------------------------------------------------------------<br /># 重定义C编译器，链接器objcopy的名字<br />#-----------------------------------------------------------------------<br />PREFIX := arm-eabi-<br />CC  := $(PREFIX)gcc<br />LD  := $(CC)<br />OBJCOPY := $(PREFIX)objcopy<br />#-----------------------------------------------------------------------<br /># 设定“目标”变量为当年目录的目录名<br />#-----------------------------------------------------------------------<br />TARGET  := $(shell basename $(CURDIR))<br />#-----------------------------------------------------------------------<br /># 设定要传递给编译器和链接器的参数<br />#-----------------------------------------------------------------------<br />CFLAGS := -DARM9<br />LDFLAGS = -specs=ds_arm9.specs<br />#-----------------------------------------------------------------------<br /># 指定要使用的外部库<br />#-----------------------------------------------------------------------<br />LIBS :=  -lnds9<br />#-----------------------------------------------------------------------<br /># 这些变量名字都很清楚，我想不用多解释了吧<br />#-----------------------------------------------------------------------<br />OUTPUT  := $(CURDIR)/$(TARGET)<br />CFILES  := $(foreach dir,$(CURDIR),$(notdir $(wildcard $(dir)/*.c)))<br />OFILES  := $(CFILES:.c=.o)<br />INCLUDE  := $(DEVKITPRO)/libnds/include<br />LIBPATH  := $(DEVKITPRO)/libnds/lib<br />#-----------------------------------------------------------------------<br /># 声明一个伪目标clean，从而可以使用make clean清除生成文件<br />#-----------------------------------------------------------------------<br />.PHONY: clean<br />#-----------------------------------------------------------------------<br /># 主要目标以及他们之间的依赖关系<br />#-----------------------------------------------------------------------<br />$(OUTPUT).nds :  $(OUTPUT).arm9<br />$(OUTPUT).arm9 : $(OUTPUT).elf<br />$(OUTPUT).elf : $(OFILES)<br />#-----------------------------------------------------------------------<br /># 用make clean调用Makefile时会执行下面的操作<br />#-----------------------------------------------------------------------<br />clean:<br />	@echo clean ...<br />	rm -fr *.o $(TARGET).elf $(TARGET).nds $(TARGET).arm9<br />#-----------------------------------------------------------------------<br /># 使用通配符对特定后缀的文件进行匹配，根据依赖规则执行后面的命令<br />#-----------------------------------------------------------------------<br />%.nds: %.arm9<br />	@echo -------------------------------------------------------------<br />	@echo -ndstool build $(notdir $@) [arm9 TO nds]-<br />	@echo -------------------------------------------------------------<br />	ndstool -c $@ -9 $<<br />	@echo -----All Done!-----<br />#-----------------------------------------------------------------------<br />%.arm9: %.elf<br />	@echo -------------------------------------------------------------<br />	@echo -objcopy $(notdir $@) [elf TO arm9]-<br />	@echo -------------------------------------------------------------<br />	$(OBJCOPY) -O binary $< $@<br /> <br />#------------------------------------------------------------------------<br />%.arm7: %.elf<br />	@echo -------------------------------------------------------------<br />	@echo -objcopy $(notdir $@) [elf TO arm7]-<br />	@echo -------------------------------------------------------------<br />	$(OBJCOPY) -O binary $< $@<br />#------------------------------------------------------------------------<br />%.elf:<br />	@echo --------------------------------------------------------------<br />	@echo -linking $(notdir $@) [o TO elf]-<br />	@echo --------------------------------------------------------------<br />	$(LD)  $(LDFLAGS) $(OFILES) -L$(LIBPATH) $(LIBS) -o $@<br />#------------------------------------------------------------------------<br />%.o: %.c<br />	@echo --------------------------------------------------------------<br />	@echo -compilting $(notdir $<) [c TO o]-<br />	@echo --------------------------------------------------------------<br />	$(CC) -I$(INCLUDE) $(CFLAGS) -c $< -o $@<br /><br />[/code]不过简单虽然简单，限制也挺大：只能用C语言，不能调用bin2o，不能调用grit，更没法用EFSlib……所有源码码都要放在项目的根目录下，而且只能搜索一个外部库的路径。<br />无论如何，这个Makefile总算是能用的。想到这里，牛叔嘴角不禁泛起一丝邪恶的微笑……<br /><br />众人：完了，这娃儿被雷叔给带坏了……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>whm3d</b><br/>
+2009-07-11 16:46:32</p>
+</div>
+<div class="col-10">
+<p>不错</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mario</b><br/>
+2009-05-16 12:07:14</p>
+</div>
+<div class="col-10">
+<p>谢谢!真的很好！功能很强大!:)</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16727_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

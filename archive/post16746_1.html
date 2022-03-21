@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>将Code Blocks打造成DS开发IDE</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">将Code Blocks打造成DS开发IDE</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-04-15 23:33:18</p>
+</div>
+<div class="col-10">
+<p>Code Block这个东西我就不多说了，一个很强大的集成开发环境，下面我们来把它打造成给DS开发用的IDE。<br />首先，新建一个空的工程（Empty project），把带有一个样板源文件的source和Makefile文件拷到刚才新建的文件夹下。<br />按图示那样做就可以把文件导入到工程中来了。注意不要忘了要选上Makefile文件，把它一起导入进来。<br />[attach]1105[/attach]（图1）<br />还要对两个地方进行设置。<br />首先点击Project→Properties，如图示那样勾选“This is a custem Makefile”。这样就可以用自己拷过来的Makefile了。<br />[attach]1106[/attach]（图2）<br />然后点击Project→Build options，如图所示修改make指令……<br />[attach]1107[/attach]（图3）<br />现在已经可以Build（Ctrl + F9）一下了，看是不是编译出了nds文件？<br />另外呢还可以添加一个用模拟器运行目标nds文件的工具。点击Tools→Configure tools，添加一个自定义工具，比着图示填写，OK。<br />需要注意的是<br />[attach]1108[/attach]（图4）<br />最后，点击File→Save project as uer-template，把工程存成模板，下次就可以直接从模板新建DS工程了，真是方便呀。<br />最后附上我的模板工程吧，里面的Makefile可是我特制的，可以修改游戏图标，标题，还可以切换是否使用EFSlib。当然，要用EFSlib的话还需要几个额外的文件，这里就不多说了。<br />[attach]1109[/attach]（附件）<br /><br />[[i] 本帖最后由 niubo_ 于 2009-4-15 23:36 编辑 [/i]]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-08-05 11:17:45</p>
+</div>
+<div class="col-10">
+<p>你们发新闻能带个图么.....=-=</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-08-05 11:18:03</p>
+</div>
+<div class="col-10">
+<p>有人发过......=-=</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>忧郁de宝宝</b><br/>
+2010-08-05 11:18:14</p>
+</div>
+<div class="col-10">
+<p>恩偶只是路过的 2就是长期有人出现格式问题隐藏失败就是了</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16746_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS开发Wiki翻译：第七天：声音</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS开发Wiki翻译：第七天：声音</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_18.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-06 16:01:40</p>
+</div>
+<div class="col-10">
+<p>摘自：chenyi1976.spaces.live.com<br />翻译：陈轶<br /><br />天，我们谈一点DS的声音播放。。。首先，你要知道PAlib提供了两种声音输出的方式：<br /><br />    * raw格式，就像播放wav文件一样。对于声效很有用，如果作为音乐就太占地方了。<br />    * mod播放（鸣谢Deku!），作为音乐回放非常好，因为他占用rom空间比较笑。。。 <br /><br />Raw声音文件<br /><br /><br />DS不能播放Wav文件（也不能放mp3和ogg文件），因此你必须先转化成raw格式，再播放。。。<br /><br /><br />    转化Wav文件到Raw格式<br /><br />    我个人喜欢使用switch工具，[url]http://www.nch.com.au/switch/[/url]，因为它工作得不错，而且容易使用，但是Kleevah会向你们推荐Audacity, [url]http://audacity.sourceforge.net/[/url]，还有一些人喜欢使用Sox（命令行方式）。我将在教程中使用Switch工具，如果你们中有人使用其他工具得话，我们可以增加相关工具的教学。。。<br /><br />    下载安装Switch以后，打开它，你会看到：<br /><br />    [attach]32[/attach]<br /><br />    现在，点一下"增加文件"或"增加目录"按钮，把你要转化的文件加到列表里面。。。增加完成以后，在界面左下方修改输出格式为raw格式，并修改编码设置如下：<br /><br />    [attach]33[/attach]<br /><br />    如果你喜欢的话，也可以保留立体声输出，速率也可以设置为其他值。。。但是你必须把格式设置成"8 bit signed"，否则就玩不起来了。。。我推荐使用图中的参数，它可以帮助你获得较小的文件以及不错的音质。<br /><br />    设置一下你的输出路径，然后点一下"转化"按钮，稍等一会，你就得到你要的raw文件了！<br /><br />    播放RAW文件<br /><br />    现在你已经有了raw文件，把他们放到你工程的data目录下。如果没有这个目录，那就创建它。。。我们使用Sound/Sound这个例子来讲解。。。<br /><br />    可以看到代码很容易理解：<br /><br />    [code="c"]<br />    #include <PA9.h> // Include for PA_Lib<br />    #include "saberoff_raw.h" // Include the sound (found in the data folder in .raw format)<br /><br />    // Function: main()<br />    int main(int argc, char ** argv)<br />    {<br />    PA_Init(); // Initializes PA_Lib<br />    PA_InitVBL(); // Initializes a standard VBL<br />    PA_InitText(0, 0);<br /><br />    PA_InitSound(); // Init the sound system<br /><br />    PA_OutputSimpleText(0, 6, 10, "Press A to play the sound");<br /><br />    // Infinite loop to keep the program running<br />    while (1)<br />    { // Play the sound if A is pressed...<br />    if (Pad.Newpress.A) PA_PlaySimpleSound(0, saberoff_raw);<br /><br />    PA_WaitForVBL();<br />    }<br /><br />    return 1;<br />    }[/code]<br /><br />    只需要做以下的步骤：<br /><br />       1. #include "saberoff_raw.h" include 你的raw文件，告诉编译器他们在哪里。。。。就是 nameoftherawfile.h 文件，放到你的include目录下。。。<br />       2. PA_InitSound(); 初始化PAlib的声音系统（raw和mod都适用），设置确认raw文件类型为11025采样率和8 bit signed格式。。。<br />       3. PA_PlaySimpleSound(channel, soundfile); 这个函数很容易使用，选择一个声道 (0-7) 和一个声音文件。。。同时可以播放8个声道（缺省情况下，另外8个声道（译：共有16个声道）是保留给mod播放器的，但是这个也可以设置，后面我们再具体谈） <br /><br />    编译，下载到你的烧录卡中，按一下A键享受你的音乐吧！ <br /><br />Mod文件<br /><br />Mod文件用起来非常酷，容易使用，占用空间少，效果不错。。。。唯一不好的地方就是不容易创建，比较好的办法是去网络上下载。。。我个人推荐去[url]http://www.modarchive.com/[/url]， [url]http://www.exotica.org.uk/frames.html[/url]， [url]ftp://ftp.modland.com/pub/modules/[/url]这几个地方下载。可惜只有mod文件，没有转化工具。。。<br /><br />现在，让我们开始我们的例子吧：Sound/ModPlayer !<br /><br />首先，把mod文件放到data目录下。。。<br /><br />让我们看代码：<br />[code="c"]<br />// Includes<br />#include <PA9.h> // Include for PA_Lib<br />#include "modfile_mod.h" // Include the mod file (the .mod file is in the data directory)<br /><br /><br />// Function: main()<br />int main(int argc, char ** argv){<br /><br />PA_Init(); // PA Init...<br />PA_InitVBL(); // VBL Init...<br /><br />PA_InitSound(); // Sound Init, for the mod player...<br /><br />PA_PlayMod(modfile_mod); // Play a given mod<br /><br />while(1){ // Infinite loop<br />PA_WaitForVBL();<br />}<br /><br />return 0;<br />} // End of main()<br />[/code]<br />只需要知道3件事情！<br /><br />   1.<br />      #include "modfile_mod.h" 必须放在你的文件头部，在PAlib include之后。。。如果你不加，程序就不知道你的mod文件在哪里。<br />   2.<br />      PA_InitSound(); 是初始化的函数，必须在播放之前调用它。<br />   3.<br />      PA_PlayMod(modfile); 使用这个函数播放mod文件。<br /><br />现在，最后一件事情：我们看看有哪些限制。。。你的mod文件最多只能有16个声道，我推荐使用8个，你可以使用剩下的8个播放音效。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post17018_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

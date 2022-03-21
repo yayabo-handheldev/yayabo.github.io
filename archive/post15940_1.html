@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>让lua支持base64和md5</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">让lua支持base64和md5</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-18 20:54:43</p>
+</div>
+<div class="col-10">
+<p>1) base64支持<br /><br />wget [url]http://luaforge.net/frs/download.php/2664/luasocket-2.0.2.tar.gz[/url]<br /><br />Tar xzvf luasocket-2.0.2.tar.gz<br /><br />cd luasocket-2.0.2<br /><br />Make && make install<br /><br />测试<br />> require "mime"<br />> y=mime.b64("diego:password")<br />> print(y)<br />ZGllZ286cGFzc3dvcmQ=<br />><br />><br />> z=mime.unb64("ZGllZ286cGFzc3dvcmQ=")<br />> print(z)<br />diego:password<br />><br /><br />2）md5支持<br /><br /><br />Cd /usr/local/src<br /><br />wget [url]http://luaforge.net/frs/download.php/2746/md5-1.1.1.tar.gz[/url]<br /><br />tar xzvf md5-1.1.1.tar.gz<br /><br />cd md5-1.1.1<br /><br />./configure<br /><br />Make<br /><br />make install<br /><br />测试<br />> require 'md5'<br />>  y=md5.sumhexa("abc")<br />> print(y)<br />900150983cd24fb0d6963f7d28e17f72<br /><br />注意，通过上面的base64和md5所编码出的字符串和你的操作系统的编码设置有关系，如果你在别的应用上编码，然后通过 lua解码，注意两个系统上编码的一致性<br /><br />或者统一显示指定utf-8,关于lua的utf-8我还尝试。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15940_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

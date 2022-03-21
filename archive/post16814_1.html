@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS中ARM7与ARM9间的通信</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS中ARM7与ARM9间的通信</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-22 08:57:38</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]www.fw211.com[/url]<br />作者：火精灵<br /><br />    NDS中ARM7与ARM9的分工比较明确，ARM7主要处理音频、无线通信、实时时钟等，ARM9主要处理视频等主要任务。要使得它们能够协同工作，那么就必须有一个比较有效的通信办法。从NDS的系统框图上看可以知道ARM7与ARM9的AHB总线通过FIFO连接，对于主存与游戏卡则通过EMI(外部总线接口)连接。这样我们就可以通过FIFO与主存来进行通信与数据交互了。接下来介绍4个寄存器：<br />4000180h - NDS9/NDS7 - IPCSYNC - IPC Synchronize Register (R/W)<br />Bit     Dir      Expl.<br />0-3    R        Data input from IPCSYNC Bit8-11 of remote CPU (00h..0Fh)<br />4-7    -          Not used<br />8-11 R/W    Data output to IPCSYNC Bit0-3 of remote CPU (00h..0Fh)<br />12     -          Not used<br />13     W        Send IRQ to remote CPU (0=None, 1=Send IRQ)<br />14     R/W    Enable IRQ from remote CPU (0=Disable, 1=Enable)<br />15-31 -        Not used<br />同步寄存器，可以利用它来进行ARM7与ARM9的同步握手。<br />4000184h - NDS9/NDS7 - IPCFIFOCNT - IPC Fifo Control Register (R/W)<br />Bit     Dir     Expl.<br />0        R       Send Fifo Empty Status (0=Not Empty, 1=Empty)<br />1        R       Send Fifo Full Status (0=Not Full, 1=Full)<br />2        R/W   Send Fifo Empty IRQ (0=Disable, 1=Enable)<br />3        W       Send Fifo Clear (0=Nothing, 1=Flush Send Fifo)<br />4-7     -         Not used<br />8        R        Receive Fifo Empty (0=Not Empty, 1=Empty)<br />9        R        Receive Fifo Full (0=Not Full, 1=Full)<br />10     R/W    Receive Fifo Not Empty IRQ (0=Disable, 1=Enable)<br />11-13 -         Not used<br />14      R/W    Error, Read Empty/Send Full (0=No Error, 1=Error/Acknowledge)<br />15      R/W    Enable Send/Receive Fifo (0=Disable, 1=Enable)<br />16-31 -         Not used<br />FIFO控制寄存器，用来控制FIFO与读取FIFO的状态。<br />4000188h - NDS9/NDS7 - IPCFIFOSEND - IPC Send Fifo (W)<br />Bit0-31 Send Fifo Data (max 16 words; 64bytes)<br />发送FIFO地址，16个32bits的深度。<br />4100000h - NDS9/NDS7 - IPCFIFORECV - IPC Receive Fifo (R)<br />Bit0-31 Receive Fifo Data (max 16 words; 64bytes)<br />接收FIFO地址，16个32bits的深度。<br />    在使用FIFO的时候我们最常用的是打开接收FIFO非空的中断请求，预先约定好数据消息的格式，并且设置好每个数据消息的回调函数，这样对方处理器通过 FIFO发送过来的数据消息就可以在本地产生非空的中断，从而调用本地的回调函数，实现了两个处理器的完美通信。主存后4M是可以用来系统调试与处理器间通信的，两个处理器可以约定某些固定地址来存放通信间的数据。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16814_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

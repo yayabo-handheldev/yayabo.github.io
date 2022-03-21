@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[10/3/6][看漫画工具][Image viewer][版本 Ver1.2]</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[10/3/6][看漫画工具][Image viewer][版本 Ver1.2]</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-03-06 14:04:34</p>
+</div>
+<div class="col-10">
+<p>软件名：Image viewer<br />作  者：moonlight<br />官方网站：<br />用  途：ds上最为人熟知的看漫画工具<br />[attach]3264[/attach]<br />readme：[quote]MakeNDSROM.exe<br />生成各种烧录卡所使用的NDSROM文件。<br /><br />imgview.ini<br />系统设置文件。全部使用标准设置的情况下，可以不用此文件。<br /><br />img2ipk.exe<br />将图片文件打包成IPK文件的工具。<br /><br />----------<br /><br />运行MakeNDSROM.exe后、请向烧录卡拷贝对应的NDSROM文件运行。<br /><br />图片文件必须转换。<br />最大支持图片尺寸10000x10000。<br />图片过于庞大难以应用NDS的屏幕，这样的话你也可以显示最大图像尺寸。<br />通过对img2ipk.ini的编辑、您可以限制的大小，同时保持宽高比。<br /><br />色数（色深度）是多少都可以。全部转换为15bit/pixel。<br />担心画质的可以从「CustomJpeg模式」切换到「ZLIB模式」。可能是2倍以上的大小<br /><br />----------<br /><br />扩张内存使用。<br /><br />Version1.0以后引入一个有效的内存管理、在没有扩展内存的情况下也可以使用双画面模式。<br />但是、过大的图片（1024x768以上）建议结合扩展内存使用。<br />支持的扩展内存有、GBA用M3、GBA用SC、GBA用EZ4、DS浏览器附带内存扩展卡、'EZ 3in1 Expansion Pack'。<br />GBA用M3/SC/EZ4は、无法在DS卡启动的时候使用。GBA用SC/EZ4必须设置imgview.ini。<br />如果程序不稳定、请尝试使用图片浏览选择的第4页的内存测试工具确认。<br /><br />补充。<br />使用'EZ 3in1 Expansion Pack'的PSRAM的情况下、请不要和软复位并用。<br />虽然不会坏到,不过重新打开电源不能使用扩张内存。<br /><br />----------<br /><br />封面的图片制作工具、img2ipk.exe中您可以从右键单击菜单中添加文件夹。<br />カバー画像入りIPKファイルは、IPKファイル選択画面や単画面スライドショーで表示されます。<br /><br />----------<br /><br />文件选择菜单的补充。<br /><br />9以上的IPK文件无法显示时，你可以用方向键来滚动。<br />请注意触摸屏不能滚动。<br />最大可读取的IPK文件数为512个。<br />文件选择菜单需要横向放置、请将imgview.ini的FileSelectVertical改为0。<br /><br />----------<br /><br />上下左右A/B/X/Y、和L/R的功能相同。<br />所有的工作基本上都可以做触摸图标实现。<br /><br />文件选择模式<br /><br />左上图标：屏幕亮度变更<br />上下键：移動光标<br />L键：确定<br />START键：软复位或幻灯片过渡设置（参照后记）<br /><br />缩略图模式<br /><br />左上图标：屏幕亮度变更<br />右上图标：返回文件选择菜单<br />中上图标：切换横纵显示<br />中下图标：幻灯片过渡设置<br />上下左右键：移動光标<br />L键：确定<br />START键：软复位或幻灯片过渡设置（参照后记）<br />SELECT键：返回文件选择菜单<br /><br />幻灯片模式<br /><br />START键：软复位或幻灯片过渡设置（参照后记）<br /><br />浏览模式<br /><br />左上图标：屏幕亮度变更<br />右上图标：返回缩略图模式<br />左下图标：返回上一张图片<br />右下图标：下一张图片<br />中上(左)图标：切换横纵显示<br />中上(右)图标：切换「单屏幕全尺寸＋预览屏幕」と「双画面全尺寸」。<br />中下图标：变更缩放比<br />上下左右键：移動光标<br />START键：软复位或幻灯片过渡设置（参照后记）<br />L键：打开扩展菜单<br />L+上键：返回缩略图模式<br />L+左键：返回上一张图片<br />L+右键：下一张图片<br />L+SELECT键：打开开始位置的菜单<br /><br />标准设置中、所有的模式下按START键会软复位。<br />要想将START键由软复位更改为捷径、请将imgview.ini的[System]的StartButtonFunction变为0.<br /><br />[/quote]<br />软件下载：[attach]3262[/attach]<br />               [attach]3263[/attach]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-03-06 14:04:48</p>
+</div>
+<div class="col-10">
+<p>画吧，别输给我们的漫姬[img]http://www.yayabo.cn/sns/attachment/201003/6/4071_1267838603ssUX.jpg[/img]<br />顺便说一句不是8个雅鹿，是八个牙烙[i=s] 本帖最后由 fanhuai 于 2010-3-6 14:06 编辑 [/i]<br /><br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>NJNA</b><br/>
+2010-03-06 14:30:42</p>
+</div>
+<div class="col-10">
+<p>明白了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>沁ぅ純の寳貝</b><br/>
+2010-03-06 14:51:24</p>
+</div>
+<div class="col-10">
+<p>支持支持</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Frost8090</b><br/>
+2010-03-06 14:53:11</p>
+</div>
+<div class="col-10">
+<p>moonlight前辈隐退了好可惜啊。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>S.L.T</b><br/>
+2010-03-06 14:55:00</p>
+</div>
+<div class="col-10">
+<p>…咱更希望能发点没字幕的…让咱为以后的漫姬字幕组多练习练习…</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-03-06 15:04:50</p>
+</div>
+<div class="col-10">
+<p>空之境界5我发的没字幕</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>S.L.T</b><br/>
+2010-03-06 15:07:51</p>
+</div>
+<div class="col-10">
+<p>谁有翻译稿~这我练习练习时间轴~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lei551</b><br/>
+2010-03-06 15:40:45</p>
+</div>
+<div class="col-10">
+<p>怎么下不动。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-03-06 16:17:57</p>
+</div>
+<div class="col-10">
+<p>5945叔加油啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>沙耶</b><br/>
+2010-03-06 16:30:17</p>
+</div>
+<div class="col-10">
+<p>话说= =！不是才汉化了一部分么？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>沁ぅ純の寳貝</b><br/>
+2010-03-06 16:30:21</p>
+</div>
+<div class="col-10">
+<p>我再重复一遍这绝对是神作 没玩过的后悔去吧</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-03-06 16:33:20</p>
+</div>
+<div class="col-10">
+<p>管他，先下了再说，支持移植。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-03-06 16:35:44</p>
+</div>
+<div class="col-10">
+<p>。。。。。。。。。纳米盘啊。。。。。。。。。。<br />不过支持移植，支持分享。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pwlsysg</b><br/>
+2010-03-06 16:39:09</p>
+</div>
+<div class="col-10">
+<p>还是LOLI好，轻声体柔易推倒<br /><br />喜欢御姐的，其实芙蓉姐姐也算御姐，推倒的重任就由你们担当了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pwlsysg</b><br/>
+2010-03-06 16:46:56</p>
+</div>
+<div class="col-10">
+<p>音乐类游戏超赞，记得劲乐团公测我就开始玩起，到现在电脑里还保留着单机版<br /><br />还有吉他英雄跟DS上的Bandhero，能自制或者常更新，才是这类游戏发展的王道啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pwlsysg</b><br/>
+2010-03-06 16:54:08</p>
+</div>
+<div class="col-10">
+<p>感谢分享，支持移植</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>S.L.T</b><br/>
+2010-03-06 16:56:40</p>
+</div>
+<div class="col-10">
+<p>那啥…该说什么呢…恩…支持原创</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>S.L.T</b><br/>
+2010-03-06 17:00:47</p>
+</div>
+<div class="col-10">
+<p>那啥…还是喜欢高清的啊…要是有钱的话…俺还想买蓝光的呐…</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>S.L.T</b><br/>
+2010-03-06 17:05:46</p>
+</div>
+<div class="col-10">
+<p>那啥~支持</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>S.L.T</b><br/>
+2010-03-06 17:13:47</p>
+</div>
+<div class="col-10">
+<p>那啥!Loli怎么了!萝莉好啊~咱还看过一篇关于Loli的高考满分作文呢~叫萝莉有三好身娇腰嫩易推倒的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-06 17:39:00</p>
+</div>
+<div class="col-10">
+<p>崔斯特和秘银五侠没有出现~~~不过七姐妹倒是都有的~~~不过貌似已经有几位已经被干掉了~~~具体的忘了~~~毕竟这本小说的书写的时间跨度太长了~~~~很多几年前看的东西都记不大清了~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>computers000</b><br/>
+2010-03-06 17:41:34</p>
+</div>
+<div class="col-10">
+<p>建议加入第一次进入游戏的语言选项(繁体中文、简体中文)[i=s] 本帖最后由 computers000 于 2010-3-6 17:43 编辑 [/i]<br /><br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-06 17:48:55</p>
+</div>
+<div class="col-10">
+<p>来晚一步~~~什么都看不到~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-06 17:49:28</p>
+</div>
+<div class="col-10">
+<p>这是啥动画~~~没看过~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-06 17:50:18</p>
+</div>
+<div class="col-10">
+<p>鼓励鼓励~~~支持支持~~~嘎嘎嘎嘎~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-06 17:50:43</p>
+</div>
+<div class="col-10">
+<p>221？？？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-06 17:54:58</p>
+</div>
+<div class="col-10">
+<p>哦~~~初号机版么……以前看过其他的版本的……所以震精度有所降低~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-06 17:56:25</p>
+</div>
+<div class="col-10">
+<p>哦~~~原来这里好友1-10……最近动画下得太多……已经严重看不完了……过段时间再来下~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>NJNA</b><br/>
+2010-03-06 17:57:10</p>
+</div>
+<div class="col-10">
+<p>能换网盘不能啊</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15373_1.html">1</a>
+</li>
+
+<li class="page-item">
+<a class="page-link" href="post15373_2.html">2</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>lua中的require机制</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">lua中的require机制</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-19 15:01:13</p>
+</div>
+<div class="col-10">
+<p>lua中的require机制<br /><br />    为了方便代码管理，通常会把lua代码分成不同的模块，然后在通过require函数把它们加载进来。<br />现在看看lua的require的处理流程。<br /><br />1、require机制相关的数据和函数<br />    package.path:保存加载外部模块(lua中"模块"和"文件"这两个概念的分界比较含糊，因为这个值在不同的时刻会扮演不同的角色)的搜索路径，这种路径是"模板式的路径"，它里面会包含可替代符号"?",这个符号会被替换，然后lua查找这个文件是否存在，如果存在就会调用其中特定的接口。典型的值为:<br />    "./?.lua;./?.lc;/usr/local/?/init.lua"<br />    如果lua代码中调用:require("hello.world")<br />    那么lua会依次查找：<br />    ./hello/world.lua ==>这里"hello.world"变成了"hello/world",并替换了模型"./?.lua"<br />    ./hello/world.lc<br />    .....<br />    (这种处理方式和python类似，只不过不需要__init__.py,也有调用python中的__init__.py)<br />    package.path在虚拟机启动的时候设置，如果存在环境变量LUA_PATH，那么就用该环境变量作为<br />    它的值，并把这个环境变量中的";;"替换为luaconf.h中定义的默认值，如果不存在该变量就直接使用<br />    luaconf.h定义的默认值<br />   <br />    package.cpath:作用和packag.path一样,但它是用于加载第三方c库的。它的初始值可以通过环境变量<br />    LUA_CPATH来设置<br />   <br />    package.loadlib(libname, func):相当与手工打开c库libname, 并导出函数func返回，loadlib其实是ll_loadlib<br />   <br /><br />2.require的处理流程：<br />  require(modelname)<br />  require(在lua中它是ll_require函数)的查找顺序如下：<br />      a.首先在package.loaded查找modelname,如果该模块已经存在，就直接返回它的值<br />      b.在package.preload查找modelname, 如果preload存在，那么就把它作为loader，调用loader(L)<br />      c.根据package.path的模式查找lua库modelname，这个库是通过module函数定义的，对于顶层的lua库，文件名和库名是一样的而且不需要调用显式地在lua文件中调用module函数(在ll_require函数中可以看到处理方式)，也就是说lua会根据lua文件直接完成一个loader的初始化过程。<br />      d.根据package.cpath查找c库，这个库是符合lua的一些规范的(export具有一定特征的函数接口)，lua先已动态的方式加载该c库，然后在库中查找并调用相应名字的接口，例如:luaopen_hello_world<br />      e.已第一个"."为分割，将模块名划分为:(main, sub)的形式，根据package.cpath查找main，如果存在，就加载该库并查询相应的接口:luaopen_main_sub，例如：先查找 hello库，并查询luaopen_hello_world接口<br />      f.得到loder后，用modname作为唯一的参数调用该loader函数。当然参数是通过lua的栈传递的，所以loader的原型必须符合lua的规范:int LUA_FUNC(lua_State *L)<br />       <br />      ll_require会将这个loader的返回值符给package.loaded[modelname],如果loader不返回值同时 package.loaded[modelname]不存在时, ll_require就会把package.loaded[modelname]设为true。最后ll_reuqire把package.loaded [modelname]返回给调用者。<br />   <br /><br />3.module的处理流程<br />    module(name, cb1, cb2, ...)<br />   <br />    a.如果package.loaded[name]是一个table，那么就把这个table作为一个mod<br />    b.如果全局变量name是一个table，就把这个全局变量作为一个mod<br />    c.创建table:t = {[name]=package.loaded[name], ["_NAME"]=name, ["_M"]=t, ["_PACKAGE"]=*name*(删除了最后的".XXXX"部分)}. 如果name是一个以点分割的串，那么得到的mod类似这个样子：<br />      hello.world==> {["hello"]={["world"]={XXXXXXX}}}<br />    d.依次调用cbs：<br />      cb1(mod), cb2(mod),...<br />     <br />    e.将当前模块的环境设置为mod,同时把package.loaded[name] = mod   <br />   <br /><br />  清楚了lua关于模块的处理，就比较容易理解写lua扩展的细节了^_^。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15929_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

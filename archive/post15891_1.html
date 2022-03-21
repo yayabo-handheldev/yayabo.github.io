@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>LUA学习笔记2-Iterators and the Generic for</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">LUA学习笔记2-Iterators and the Generic for</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-24 19:41:49</p>
+</div>
+<div class="col-10">
+<p>Iterator是一种允许你遍历一个集合中元素的结构. 在Lua中, 我们可以用function实现iterator, 每次调用这个函数, 它都返回集合中的下一个元素. 一个iterator需要保留一些用来遍历的信息, 例如当前元素的位置以及什么时候结束. Closure的机制非常适合这个工作. 遍历所需的环境变量可以保存在upvalue中, 这样每一次调用这个closure, 他都返回遍历某一个list的iterator. 由于这样的Closure是用来产生iterator的, 我们称这样的closure为iterator factory.<br />每一次<br />以下是一个简单的iterator factory, 用来遍历一个table.<br />    function list_iter (t)<br />      local i = 0<br />      local n = table.getn(t)<br />      return function ()<br />        i = i + 1<br />        if i <= n then return t end<br />      end<br />    end<br />在这里, 每一次我们调用list_iter, 返回一个iterator, 这个iterator使用i, n来保存遍历时所需要的环境信息. 每一次我们调用这个iterator返回被遍历list的下一个值. 如果在我们遍历的list已经达到最后一个元素, 那么返回nil.<br />我们可以这样使用这个iterator:<br />    t = {10, 20, 30}<br />    iter = list_iter(t)    -- creates the iterator<br />    while true do<br />      local element = iter()  -- calls the iterator<br />      if element == nil then break end<br />      print(element)<br />    end<br />我们也可以使用generic for循环, 这样功能相同, 但是代码更少:<br />    t = {10, 20, 30}<br />    for element in list_iter(t) do<br />      print(element)<br />    end<br />相比一般循环, generic for多做了一些事情, 它内部调用iterator factory产生iterator, 然后将iterator保存起来依次调用, 当iterator返回nil的时候退出循环.<br />以下是另一个 iterator factory的例子:<br />function allwords ()<br />      local line = io.read()  -- current line<br />      local pos = 1          -- current position in the line<br />      return function ()      -- iterator function<br />        while line do        -- repeat while there are lines<br />          local s, e = string.find(line, "%w+", pos)<br />          if s then          -- found a word?<br />            pos = e + 1      -- next position is after this word<br />            return string.sub(line, s, e)    -- return the word<br />          else<br />            line = io.read()  -- word not found; try next line<br />            pos = 1          -- restart from first position<br />          end<br />        end<br />        return nil            -- no more lines: end of traversal<br />      end<br />    end<br />虽然iterator factory有些复杂, 但是使用很简单直观:<br />    for word in allwords() do<br />      print(word)<br />    end<br />一般说来, iterator是使用简单但是实现困难. 幸运的是多数情况下开发人员都不需要自己实现iterator而使用库中间已经定义好的iterator即可.<br /><br />The Semantics of the Generic for<br />在上面我们使用upvalue用来保存iterator时所需要的环境信息, 其实Generic for就有保存iterator时所需要的环境信息的功能, 这样可以使代码更简洁高效.<br />Generic for的一般形式如下:<br />    for <var-list> in <exp-list> do<br />      <body><br />    end<br /><var-list>是一些变量的list, 以逗号分隔, <exp-list>是一些表达式的list, 以逗号分隔. 大多数情况<exp-list>只包含一个调用iterator factory的表达式:<br />    for k, v in pairs(t) do<br />      print(k, v)<br />    end<br /><var-list>中的变量多数情况下也只有一个:<br />    for line in io.lines() do<br />      io.write(line, '<br />')<br />    end<br />在中的第一个变量称为控制变量, 如果它的值为nil, 那么循环退出. 在执行时首先会计算中的表达式, 应该返回3个元素, 第一个是iterator function, 第二个是一个常量用来记录一些环境信息, 最后一个是控制变量的初值.<br />    function iter (a, i)<br />      i = i + 1<br />      local v = a<br />      if v then<br />        return i, v<br />      end<br />    end<br /> <br />    function ipairs (a)<br />      return iter, a, 0<br />    end<br />    a = {"one", "two", "three"}<br />    for i, v in ipairs(a) do<br />      print(i, v)<br />    end<br />可以看出, 以下表达式<br />    for var_1, ..., var_n in explist do block end<br />与以下的循环是等价的.<br />    do<br />      local _f, _s, _var = explist<br />      while true do<br />        local var_1, ... , var_n = _f(_s, _var)<br />        _var = var_1<br />        if _var == nil then break end<br />        block<br />      end<br />    end<br />Stateless Iterators<br />Stateless Iterator就是不含状态和环境信息的iterator. 如同上面所说的,Stateless Iterator的遵从Generic For的约定, 主要靠Generic For来保存状态和环境信息.<br />a = {"one", "two", "three"}<br />    for i, v in ipairs(a) do<br />      print(i, v)<br />    end<br />    function iter (a, i)<br />      i = i + 1<br />      local v = a<br />      if v then<br />        return i, v<br />      end<br />    end<br /> <br />    function ipairs (a)<br />      return iter, a, 0<br />    end<br />当Generic For调用ipairs时, 他返回三个值, 分别为iterator function, invariant state和control value. 以后每次进入循环调用iter函数时使用两个参数, invariant state和control value.<br />文章来源于[url]http://www.luaer.cn[/url]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15891_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

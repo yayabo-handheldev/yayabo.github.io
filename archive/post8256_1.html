@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>amp新手教程</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">amp新手教程</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_9.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-08-23 18:34:09</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 fanhuai 于 2010-8-23 19:00 编辑 [/i]<br /><br />[color=Red]小白普及向amp教程[/color]<br />[color=Red][size=5]有钱人自觉缴纳保护费，木哈哈哈哈[/size][/color] <br />amp按键部分<br /><br />wsad对应psp方向键<br />ikjl对应psp三角形 叉 方框 圆<br /><br />初次运行amp，配置环境，运行问题啥的，去看其他教程<br />不解释<br /><br />在am_start.lua的底下写上你要运行的脚本，建议用jump("XXXXX.lua");分开<br /><br />其他的设置信息例如字体标题等设置在am_init.lua设置<br /><br />在am_start.lua里写jump("XXXXX.lua");之后，建议该脚本为标题脚本，剧情脚本另外制作，看着清爽<br /><br />下载好的amp里有剧情例子，自行打开amp的demo_title查看[code]*title_select<br />chose = titlechose();<br /><br />if chose==1 then goto(*newgame); end<br />if chose==2 then goto(*loadgame); end<br />if chose==3 then goto(*newgame2); end<br />if chose==4 then goto(*musicmode); end<br />if chose==5 then goto(*newgame3); end<br />if chose==6 then goto(*end); end[/code]像标题上的图标，光标什么的只是装饰使用，例如使用bg和fg造标题图片，也可以整合成一张图，或者自己造函数，不使用白叔的模版<br />使用模版的话，在am_init.lua找到以下部分进行自行修改<br />例子[code]-- 简易标题设置<br />-- {<br />	titleinit();<br />	settitlexy(0,0);			-- 设置标题文件坐标<br />	settitleiconxy(56,90);		-- 设置光标文件坐标<br />	settitleiconstep(0,27);			-- 设置光标移动长度<br />	settitleitem(6);			-- 设置选项数量<br />	--settitlebg("");			-- 设置标题文件<br />	settitleicon("title_icon.png",nil);	-- 设置光标文件<br />	settitlesound("sound_bi1.wav");		-- 设置标题选项音效<br />-- }<br />[/code]既然写了例如goto(*newgame3);之类的话，就要造标签<br />例如跑剧情标签[code]mp3fadeout(1,128,8,16);<br />mp3unload(1);<br />fg(10,"black.png",1,1000);<br />fgon(10);<br />fgxy(10,0,0);<br />pause(60);<br />jump("nscript.lua");<br />goto(*end);	-- 默认处理[/code]用black是为了形成过度，直接jump新脚本再allclear的话，会刷一下黑屏，效果不佳，mp3fadeout是bgm的淡出，直接allclear会有啪一下爆音，具体自行测试<br /><br /><br />------------------------------------------------------------------------------------<br /><br /> <br />剧情例子<br />一般选用480X272的背景，人物立绘建议用ps批处理成480X272，272为画像高度，480为画布大小，为了以后的批处理方便<br />ps（我是手工党，好吧，我输了）<br /><br /><br />以ef的剧情为例[code]bg(1,"bgc_sch002a01_02_pastm3.png",1,1000);  ----背景淡入，（啥，乃用0.74的新指令，好吧，当教程不存在）<br />bgon(1);<br />pause(60);<br /><br /><br />fg(18,"name.png",1,200,8888);  ----我设置的姓名框<br /><br />fgxy(18,0,0);<br />fg(19,"frame.png",1,200,8888);  ----我设置的对话框框，隐藏部分去am_init.lua设置<br />fgxy(19,0,0);<br />fgon(19);<br />pause(15);<br />name("");<br />fgoff(18);  ----这是俺的批处理痕迹，可以无视掉，属于垃圾部分<br />say("结束在图书馆的学习，来到走廊。");<br /><br />bgcpy(2,1); bgon(2);  ----把号码1的图像数据和坐标信息拷贝到号码2，拷贝之后需要再次使用bgon<br />bg(1,"bgc_sch002a01_02_pastm2.png",0,0); ----背景1，在2的下面所以在2没有淡出或者消失之前不会显示<br />bgon(1);<br />bgeff(2,2,1000); ----背景2进行淡出，背景1已经显示出来，画面效果=背景1淡入<br />pause(60);<br /><br /><br />name("");<br />fgoff(18);<br />say("四周寂静无声，连个人影都看不到。");<br /><br /><br />bgcpy(2,1); bgon(2); ----以下同上，不解释<br />bg(1,"bgc_sch002a01_02_pastm.png",0,0);<br />bgon(1);<br />bgeff(2,2,1000); <br />pause(60);<br /><br /><br />name("");<br />fgoff(18);<br />say("平时应该还有部团活动和委员会工作的学生在的，为什么今天如此安静呢。");<br />name("");<br />fgoff(18);<br />say("连自己的足音，都大到让人吃惊。");<br /><br />name("");<br />fgoff(18);<br />say("吸满夏日阳光的走廊，在傍晚仍然感受不到凉意。");<br />name("");<br />fgoff(18);<br />say("仅仅是走着而已，就已经汗流浃背。");<br /><br /><br /><br /><br />bgcpy(2,1); bgon(2); <br />bg(1,"bgs_sch009a01_02.png",0,0);<br />bgon(1);<br />bgeff(2,2,1000); <br />pause(60);<br /><br /><br /><br />name("");<br />fgoff(18);<br />say("换好靴子，走出教学楼。");[/code]off为关闭，on为开启，null为删除，off之后可以使用on来开启，null掉之后必须重新载入<br /><br />不提倡类似一下直接挤掉<br />类似[code]bg(1,"bgs_sch009a01_02.png",1,1000);<br />bgon(1);<br />pause(60);<br /><br />say("换好靴子，走出教学楼。");<br />bg(1,"bgs_sch009a01_03.png",1,1000);<br />bgon(1);<br />pause(60);[/code]以上剧情部分为不加人物立绘的例如单独的背景或者CG显示的例子，里面使用数据例如1，1000，60等，请自行查看说明书<br /><br /><br /><br />------------------------------------------------<br /><br /><br /> <br />文字显示切换<br /><br />剧情脚本中可随时使用例如textline();等进行修改数据，am_init.lua里的数据都可以在剧情脚本中进行修改，而不是一个完全僵硬的同一个写法到底<br /><br />例子[code]textclear();<br />fgoff(18);<br />fgoff(19);<br />fg(20,"fullframe.png",1,500,8888);<br />fgxy(20,0,0);<br /><br />bgcpy(2,1); bgon(2); <br />bg(1,"bg_ex001a01_01.png",0,0);<br />bgon(1);<br />bgeff(2,2,500); <br />fgeff(1,2,500); <br />pause(30);<br />fgnull(1);<br />fgon(20);<br />pause(30);<br />textline(5);				-- 设置行限制,超过则清屏<br />textmode(TEXT_FULLSCENE);		-- 显字模式,TEXT_HALFSCENE,TEXT_FULLSCENE<br />textxy(25,60);		<br />name("");<br />fgoff(18);<br />say("音羽这个城市——在我出生事前就因为震灾和火灾而失去城市的基本机能。[n]");<br />name("");<br />fgoff(18);<br />say("不过，在我懂事的时候城市已经开始了复建计划，震灾前的街道基本也都看不到了。[n]");<br />name("");<br />fgoff(18);<br />say("所以，在我看来这个欧风城市的存在是理所当然的而没什么奇异之处。[n]");<br /><br />textclear();<br />fgoff(18);<br />fgoff(19);<br /><br />bgcpy(2,1); bgon(2); <br />bg(1,"bgw_normal003m11_01.png",0,0);<br />bgon(1);<br />fg(1,"st_miyako06a03.png",1,800,8888);<br />fgxy(1,0,0);<br />fgon(1);<br />bgeff(2,2,1000); <br />fgeff(20,2,1000); <br />pause(60);<br />fgnull(20);<br /><br />textline(3);<br />textmode(TEXT_HALFSCENE);<br />textxy(25,210);<br /><br />playfile("voice/m/miy_103_01_0061.mp3",2);<br />name("宫子");<br />fgon(18);<br />fgon(19);<br />say("「就好像被诅咒了一样，难道都没有城市的守护神之类的存在吗？」");<br />mp3fadeout(2,128,1,128);<br />mp3unload(2);[/code] <br />人物fg的使用，暂时不写教程，每个人的写法不同<br />我在ef里一般使用[code]fg(2,"st_miyako05d05.png",1,400,8888);<br />fgxy(2,0,0);<br />fgon(2);<br />pause(20);<br />fgeff(1,2,100);<br />pause(6);<br />fgmov(1,2);fgon(1);[/code]这类来表现眨眼，修改400的效果时间来进行微小表情的调节<br />俺用该写法，纯碎是适合ef的的人物fg，其他的自行解决<br />想偷懒，把效果时间全部调为0pause();fgmov(1,2);fgon(1);等一系列都不用写，但同时也没有一个过度的效果<br /><br />大动作我一般用[code]fg(2,"st_miyako07a01.png",1,400,8888);<br />fgxy(2,0,0);<br />fgon(2);<br />fgeff(1,2,300);<br />pause(25);<br />fgmov(1,2);fgon(1);[/code]这个写法适合一切大动作fg，可以通过修改效果时间进行微调<br /><br /> <br />关于图片移动部分<br />自行查看amp说明书，这里不多讲<br /><br />--------------------------------------------------------<br />分支例子[code]ramus("和景继续聊","去追宫子");<br />chose = selectchose();<br />if chose==1 then goto(*select001); end<br />if chose==2 then goto(*select002); end[/code]下面造标签，标签名不能重复，一个脚本里只能出现一次，但不同脚本可以使用前一个脚本使用的标签<br />*select001<br />·······················<br /><br />*select002<br />·······················<br /><br />也可以将goto(标签);换成jump("xxxx.lua");<br /><br /><br />如果是有好感度系统的游戏，去看NC叔的好感度教程，帖子地址自行查找<br /><br />------------------------------------------------------<br />midea播放<br />bgm及voice级se的播放<br />我一般使用mp3<br />举例[code]playfile("bgm/efBGM010.mp3",1);-------bgm部分，此为0.74例子，默认1号mp3循环播放，mp3也可以是wav，但默认播放1次<br /><br />playfile("voice/k/kei_102_02_0003.mp3",2);-----------此为0.74例子，默认2号mp3播放一次<br /><br />pmplay("movie/ef_start.pmp");----------pmp播放，路径+文件名[/code]最后game over 加上jump("am_start.lua");<br /><br />关于游戏结束后，满足条件开鉴赏模式等，写法很多，请自行创造，过程一般也就是写变量，保存系统存档，每次读取系统存档时读取变量<br /><br />关于修改参数，自行到system和module文件夹里选择对应的lua进行修改，新人不懂就不要乱改，否则········<br /><br /><br />鉴赏部分<br />白叔的0.65里有CG鉴赏例子，请自行查看，一般分为界面+热区+执行+返回标题 四个部分<br /> <br />音乐鉴赏例子<br /><br />自行下载附件照着写，这是最简单的效果，逍遥变态效果的，自行创造函数去<br />[color=Red]例子下面有下载[/color]<br /><br />关于amp其他的函数使用，例如tst move 调查部分等，自行查看白叔的说明书，里面有例子<br /><br /><br />[color=Red]以上乃新手教程，老鸟自行无视[/color]<br /> </p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>alpies</b><br/>
+2010-08-23 18:34:46</p>
+</div>
+<div class="col-10">
+<p>thanks for sharing!!</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-08-23 18:34:53</p>
+</div>
+<div class="col-10">
+<p>沙发是俺的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>chbao</b><br/>
+2010-08-23 18:34:59</p>
+</div>
+<div class="col-10">
+<p>·········什么啊···········</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>飒飒de枫</b><br/>
+2010-08-23 18:37:24</p>
+</div>
+<div class="col-10">
+<p>后排后排~~不要50了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>凋零的樱</b><br/>
+2010-08-23 18:37:39</p>
+</div>
+<div class="col-10">
+<p>嘛嘛嘛————我决定了  下辈子做个有米的淫。。。。。。。。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ma8742044</b><br/>
+2010-08-23 18:37:55</p>
+</div>
+<div class="col-10">
+<p>    我当时也是一看到就非常喜欢~于是就满天下的去翻画师~在P站翻了几百页才把他给挖出来了~ <br /><br />当时我看到的第一张就是现在的签名~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-08-23 18:38:38</p>
+</div>
+<div class="col-10">
+<p>    嗯嗯！这张真是萌死了~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-08-23 18:38:48</p>
+</div>
+<div class="col-10">
+<p>给俺一千万也不给他打一个巴掌</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-08-23 18:39:08</p>
+</div>
+<div class="col-10">
+<p>教程有爱~~~TUT~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ljner</b><br/>
+2010-08-23 18:40:09</p>
+</div>
+<div class="col-10">
+<p>怎么说呢···可悲吧···</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>aa1144772233</b><br/>
+2010-08-23 18:40:22</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 aa1144772233 于 2010-8-23 18:41 编辑 [/i]<br /><br />有这爸= =孩子一准垃圾了，铁定一富二代。。。。。。。<br />这些暴发户。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>魔王</b><br/>
+2010-08-23 18:40:38</p>
+</div>
+<div class="col-10">
+<p>...........那么有钱的小孩玩什么玩具........打游戏去........就不会有这事了.........</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>giri04632</b><br/>
+2010-08-23 18:40:56</p>
+</div>
+<div class="col-10">
+<p>後宮塔?</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>『兔寳貝』</b><br/>
+2010-08-23 18:41:36</p>
+</div>
+<div class="col-10">
+<p><br />犯坏叔V5.</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>werhsqgl</b><br/>
+2010-08-23 18:42:27</p>
+</div>
+<div class="col-10">
+<p><br />犯坏叔V5</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>天凄</b><br/>
+2010-08-23 18:42:48</p>
+</div>
+<div class="col-10">
+<p>不是和我一个世界的……不是和我一个世界的……<br />这故事还…还真难明白啊……啊哈 哈   哈       哈 </p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>FINALYY</b><br/>
+2010-08-23 18:42:58</p>
+</div>
+<div class="col-10">
+<p>签到了~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yyeg</b><br/>
+2010-08-23 18:43:25</p>
+</div>
+<div class="col-10">
+<p>     作为一位新淫 鸭梨灰常大地撸过                      有爱可以吃么</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lei551</b><br/>
+2010-08-23 18:43:55</p>
+</div>
+<div class="col-10">
+<p>这是啥。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-08-23 18:44:20</p>
+</div>
+<div class="col-10">
+<p>    版主自行上缴保护费</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>862768424</b><br/>
+2010-08-23 18:44:30</p>
+</div>
+<div class="col-10">
+<p>来晚了，还是午夜签到好啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lei551</b><br/>
+2010-08-23 18:46:59</p>
+</div>
+<div class="col-10">
+<p>前排速度支持！！1</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>alpies</b><br/>
+2010-08-23 18:47:07</p>
+</div>
+<div class="col-10">
+<p>强烈需要一个</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>asxzl5945</b><br/>
+2010-08-23 18:47:34</p>
+</div>
+<div class="col-10">
+<p>不是一辆车，上面黑的下面银的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>asuracryin</b><br/>
+2010-08-23 18:47:34</p>
+</div>
+<div class="col-10">
+<p>嗯，签到了...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>king71036</b><br/>
+2010-08-23 18:47:38</p>
+</div>
+<div class="col-10">
+<p>辛苦了~感謝您~</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post8256_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

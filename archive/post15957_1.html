@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>lua 文件操作 IO库</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">lua 文件操作 IO库</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-18 20:37:37</p>
+</div>
+<div class="col-10">
+<p>I/O库为文件操作提供两种模式。简单模式（simple model）拥有一个当前输入文件和一个当前输出文件，并且提供针对这些文件相关的操作。完全模式（complete model）使用外部的文件句柄来实现。它以一种面对对象的形式，将所有的文件操作定义为文件句柄的方法。简单模式在做一些简单的文件操作时较为合适。在本书的前面部分我们一直都在使用它。但是在进行一些高级的文件操作的时候，简单模式就显得力不从心。例如同时读取多个文件这样的操作，使用完全模式则较为合适。I/O库的所有函数都放在表（table）io中。<br />21.1 简单I/O模式<br />简单模式的所有操作都是在两个当前文件之上。I/O库将当前输入文件作为标准输入（stdin），将当前输出文件作为标准输出（stdout）。这样当我们执行io.read，就是在标准输入中读取一行。我们可以使用io.input和io.output函数来改变当前文件。例如io.input(filename)就是打开给定文件（以读模式），并将其设置为当前输入文件。接下来所有的输入都来自于该文，直到再次使用io.input。io.output函数。类似于io.input。一旦产生错误两个函数都会产生错误。如果你想直接控制错误必须使用完全模式中io.read函数。写操作较读操作简单，我们先从写操作入手。下面这个例子里函数 io.write获取任意数目的字符串参数，接着将它们写到当前的输出文件。通常数字转换为字符串是按照通常的规则，如果要控制这一转换，可以使用 string库中的format函数：<br />> io.write("sin (3) = ", math.sin(3), "<br />")<br />--> sin (3) = 0.1411200080598672<br />> io.write(string.format("sin (3) = %.4f<br />", math.sin(3)))<br />--> sin (3) = 0.1411<br />在编写代码时应当避免像io.write(a..b..c)；这样的书写，这同io.write(a,b,c)的效果是一样的。但是后者因为避免了串联操作，而消耗较少的资源。原则上当你进行粗略（quick and dirty）编程，或者进行排错时常使用print函数。当需要完全控制输出时使用write。<br />> print("hello", "Lua"); print("Hi")<br />--> hello  Lua<br />--> Hi<br /><br />> io.write("hello", "Lua"); io.write("Hi", "<br />")<br />--> helloLuaHi<br />Write 函数与print函数不同在于，write不附加任何额外的字符到输出中去，例如制表符，换行符等等。还有write函数是使用当前输出文件，而 print始终使用标准输出。另外print函数会自动调用参数的tostring方法，所以可以显示出表（tables）函数（functions）和 nil。<br />read函数从当前输入文件读取串，由它的参数控制读取的内容：<br />"*all"<br />   <br />读取整个文件<br />"*line"<br />   <br />读取下一行<br />"*number"<br />   <br />从串中转换出一个数值<br />num<br />   <br />读取num个字符到串<br />io.read("*all") 函数从当前位置读取整个输入文件。如果当前位置在文件末尾，或者文件为空，函数将返回空串。由于Lua对长串类型值的有效管理，在Lua中使用过滤器的简单方法就是读取整个文件到串中去，处理完之后（例如使用函数gsub），接着写到输出中去：<br />t = io.read("*all")        -- read the whole file<br />t = string.gsub(t, ...)    -- do the job<br />io.write(t)                -- write the file<br />以下代码是一个完整的处理字符串的例子。文件的内容要使用MIME（多用途的网际邮件扩充协议）中的quoted-printable码进行编码。以这种形式编码，非ASCII字符将被编码为“=XX”，其中XX是该字符值的十六进制表示，为表示一致性“=”字符同样要求被改写。在gsub函数中的“模式” 参数的作用就是得到所有值在128到255之间的字符，给它们加上等号标志。<br />t = io.read("*all")<br />t = string.gsub(t, "([128-255=])", function (c)<br />    return string.format("=%02X", string.byte(c))<br />end)<br />io.write(t)<br />该程序在奔腾333MHz环境下转换200k字符需要0.2秒。<br />io.read("*line") 函数返回当前输入文件的下一行（不包含最后的换行符）。当到达文件末尾，返回值为nil（表示没有下一行可返回）。该读取方式是read函数的默认方式，所以可以简写为io.read()。通常使用这种方式读取文件是由于对文件的操作是自然逐行进行的，否则更倾向于使用*all一次读取整个文件，或者稍后见到的逐块的读取文件。下面的程序演示了应如何使用该模式读取文件。此程序复制当前输入文件到输出文件，并记录行数。<br />local count = 1<br />while true do<br />    local line = io.read()<br />    if line == nil then break end<br />    io.write(string.format("%6d ", count), line, "<br />")<br />    count = count + 1<br />end<br />然而为了在整个文件中逐行迭代。我们最好使用io.lines迭代器。例如对文件的行进行排序的程序如下：<br />local lines = {}<br />-- read the lines in table 'lines'<br />for line in io.lines() do<br />    table.insert(lines, line)<br />end<br />-- sort<br />table.sort(lines)<br />-- write all the lines<br />for i, l in ipairs(lines) do io.write(l, "<br />") end<br />在奔腾333MHz上该程序处理处理4.5MB大小，32K行的文件耗时1.8秒，比使用高度优化的C语言系统排序程序快0.6秒。 io.read("*number")函数从当前输入文件中读取出一个数值。只有在该参数下read函数才返回数值，而不是字符串。当需要从一个文件中读取大量数字时，数字间的字符串为空白可以显著的提高执行性能。*number选项会跳过两个可被识别数字之间的任意空格。这些可识别的字符串可以是 -3、+5.2、1000，和 -3.4e-23。如果在当前位置找不到一个数字（由于格式不对，或者是到了文件的结尾），则返回nil 可以对每个参数设置选项，函数将返回各自的结果。假如有一个文件每行包含三个数字：<br />6.0        -3.23        15e12<br />4.3        234          1000001<br />...<br />现在要打印出每行最大的一个数，就可以使用一次read函数调用来读取出每行的全部三个数字：<br />while true do<br />    local n1, n2, n3 = io.read("*number", "*number", "*number")<br />    if not n1 then break end<br />    print(math.max(n1, n2, n3))<br />end<br />在任何情况下，都应该考虑选择使用io.read函数的 " *.all " 选项读取整个文件，然后使用gfind函数来分解：<br />local pat = "(%S+)%s+(%S+)%s+(%S+)%s+"<br />for n1, n2, n3 in string.gfind(io.read("*all"), pat) do<br />    print(math.max(n1, n2, n3))<br />end<br />除了基本读取方式外，还可以将数值n作为read函数的参数。在这样的情况下read函数将尝试从输入文件中读取n个字符。如果无法读取到任何字符（已经到了文件末尾），函数返回nil。否则返回一个最多包含n个字符的串。以下是关于该read函数参数的一个进行高效文件复制的例子程序（当然是指在Lua 中）<br />local size = 2^13        -- good buffer size (8K)<br />while true do<br />    local block = io.read(size)<br />    if not block then break end<br />    io.write(block)<br />end<br />特别的，io.read(0)函数的可以用来测试是否到达了文件末尾。如果不是返回一个空串，如果已是文件末尾返回nil。<br />21.2 完全I/O 模式<br />为了对输入输出的更全面的控制，可以使用完全模式。完全模式的核心在于文件句柄（file handle）。该结构类似于C语言中的文件流（FILE*），其呈现了一个打开的文件以及当前存取位置。打开一个文件的函数是io.open。它模仿C 语言中的fopen函数，同样需要打开文件的文件名参数，打开模式的字符串参数。模式字符串可以是 "r"（读模式），"w"（写模式，对数据进行覆盖），或者是 "a"（附加模式）。并且字符 "b" 可附加在后面表示以二进制形式打开文件。正常情况下open函数返回一个文件的句柄。如果发生错误，则返回nil，以及一个错误信息和错误代码。<br />print(io.open("non-existent file", "r"))<br />    --> nil    No such file or directory      2<br /><br />print(io.open("/etc/passwd", "w"))<br />    --> nil    Permission denied              13<br />错误代码的定义由系统决定。<br />以下是一段典型的检查错误的代码：<br />local f = assert(io.open(filename, mode))<br />如果open函数失败，错误信息作为assert的参数，由assert显示出信息。文件打开后就可以用read和write方法对他们进行读写操作。它们和io表的read/write函数类似，但是调用方法上不同，必须使用冒号字符，作为文件句柄的方法来调用。例如打开一个文件并全部读取。可以使用如下代码。<br />local f = assert(io.open(filename, "r"))<br />local t = f:read("*all")<br />f:close()<br />同C语言中的流（stream）设定类似，I/O库提供三种预定义的句柄：io.stdin、io.stdout和io.stderr。因此可以用如下代码直接发送信息到错误流（error stream）。<br />io.stderr:write(message)<br />我们还可以将完全模式和简单模式混合使用。使用没有任何参数的io.input()函数得到当前的输入文件句柄；使用带有参数的 io.input(handle)函数设置当前的输入文件为handle句柄代表的输入文件。（同样的用法对于io.output函数也适用）例如要实现暂时的改变当前输入文件，可以使用如下代码：<br />local temp = io.input()    -- save current file<br />io.input("newinput")        -- open a new current file<br />...                        -- do something with new input<br />io.input():close()          -- close current file<br />io.input(temp)              -- restore previous current file<br />21.2.1 I/O优化的一个小技巧<br />由于通常Lua中读取整个文件要比一行一行的读取一个文件快的多。尽管我们有时候针对较大的文件（几十，几百兆），不可能把一次把它们读取出来。要处理这样的文件我们仍然可以一段一段（例如8kb一段）的读取它们。同时为了避免切割文件中的行，还要在每段后加上一行：<br />local lines, rest = f:read(BUFSIZE, "*line")<br />以上代码中的rest就保存了任何可能被段划分切断的行。然后再将段（chunk）和行接起来。这样每个段就是以一个完整的行结尾的了。以下代码就较为典型的使用了这一技巧。该段程序实现对输入文件的字符，单词，行数的计数。<br />local BUFSIZE = 2^13        -- 8K<br />local f = io.input(arg[1]) -- open input file<br />local cc, lc, wc = 0, 0, 0 -- char, line, and word counts<br /><br />while true do<br />    local lines, rest = f:read(BUFSIZE, "*line")<br />    if not lines then break end<br />    if rest then lines = lines .. rest .. '<br />' end<br />    cc = cc + string.len(lines)<br />    -- count words in the chunk<br />    local _,t = string.gsub(lines, "%S+", "")<br />    wc = wc + t<br />    -- count newlines in the chunk<br />    _,t = string.gsub(lines, "<br />", "<br />")<br />    lc = lc + t<br />end<br /><br />print(lc, wc, cc)<br />21.2.2二进制文件<br />默认的简单模式总是以文本模式打开。在Unix中二进制文件和文本文件并没有区别，但是在如Windows这样的系统中，二进制文件必须以显式的标记来打开文件。控制这样的二进制文件，你必须将“b”标记添加在io.open函数的格式字符串参数中。在Lua中二进制文件的控制和文本类似。一个串可以包含任何字节值，库中几乎所有的函数都可以用来处理任意字节值。（你甚至可以对二进制的“串”进行模式比较，只要串中不存在0值。如果想要进行0值字节的匹配，你可以使用%z代替）这样使用*all模式就是读取整个文件的值，使用数字n就是读取n个字节的值。以下是一个将文本文件从DOS模式转换到Unix模式的简单程序。（这样转换过程就是将“回车换行字符”替换成“换行字符”。）因为是以二进制形式（原稿是Text Mode！！？？）打开这些文件的，这里无法使用标准输入输入文件（stdin/stdout）。所以使用程序中提供的参数来得到输入、输出文件名。<br />local inp = assert(io.open(arg[1], "rb"))<br />local out = assert(io.open(arg[2], "wb"))<br /><br />local data = inp:read("*all")<br />data = string.gsub(data, "<br />", "<br />")<br />out:write(data)<br /><br />assert(out:close())<br />可以使用如下的命令行来调用该程序。<br />> lua prog.lua file.dos file.unix<br />第二个例子程序：打印在二进制文件中找到的所有特定字符串。该程序定义了一种最少拥有六个“有效字符”，以零字节值结尾的特定串。（本程序中“有效字符”定义为文本数字、标点符号和空格符，由变量validchars定义。）在程序中我们使用连接和string.rep函数创建validchars，以%z 结尾来匹配串的零结尾。<br />local f = assert(io.open(arg[1], "rb"))<br />local data = f:read("*all")<br />local validchars = "[%w%p%s]"<br />local pattern = string.rep(validchars, 6) .. "+%z"<br />for w in string.gfind(data, pattern) do<br />    print(w)<br />end<br />最后一个例子：该程序对二进制文件进行一次值分析[6]（Dump）。程序的第一个参数是输入文件名，输出为标准输出。其按照10字节为一段读取文件，将每一段各字节的十六进制表示显示出来。接着再以文本的形式写出该段，并将控制字符转换为点号。<br />local f = assert(io.open(arg[1], "rb"))<br />local block = 10<br />while true do<br />    local bytes = f:read(block)<br />    if not bytes then break end<br />    for b in string.gfind(bytes, ".") do<br />      io.write(string.format("%02X ", string.byte(b)))<br />    end<br />    io.write(string.rep("  ", block - string.len(bytes) + 1))<br />    io.write(string.gsub(bytes, "%c", "."), "<br />")<br />end<br />如果以vip来命名该程序脚本文件。可以使用如下命令来执行该程序处理其自身：<br />prompt> lua vip vip<br />在Unix系统中它将会会产生一个如下的输出样式：<br />6C 6F 63 61 6C 20 66 20 3D 20      local f =<br />61 73 73 65 72 74 28 69 6F 2E      assert(io.<br />6F 70 65 6E 28 61 72 67 5B 31      open(arg[1<br />5D 2C 20 22 72 62 22 29 29 0A      ], "rb")).<br />              ...<br />22 25 63 22 2C 20 22 2E 22 29      "%c", ".")<br />2C 20 22 5C 6E 22 29 0A 65 6E      , "<br />").en<br />64 0A                              d.<br />21.3 关于文件的其它操作<br />函数tmpfile函数用来返回零时文件的句柄，并且其打开模式为read/write模式。该零时文件在程序执行完后会自动进行清除。函数flush用来应用针对文件的所有修改。同write函数一样，该函数的调用既可以按函数调用的方法使用io.flush()来应用当前输出文件；也可以按文件句柄方法的样式f:flush()来应用文件f。函数seek用来得到和设置一个文件的当前存取位置。它的一般形式为 filehandle:seek(whence,offset)。Whence参数是一个表示偏移方式的字符串。它可以是 "set"，偏移值是从文件头开始；"cur"，偏移值从当前位置开始；"end"，偏移值从文件尾往前计数。offset即为偏移的数值，由 whence的值和offset相结合得到新的文件读取位置。该位置是实际从文件开头计数的字节数。 whence的默认值为 "cur"，offset的默认值为0。这样调用file:seek()得到的返回值就是文件当前的存取位置，且保持不变。 file:seek("set")就是将文件的存取位置重设到文件开头。（返回值当然就是0）。而file:seek("end")就是将位置设为文件尾，同时就可以得到文件的大小。如下的代码实现了得到文件的大小而不改变存取位置。<br />function fsize (file)<br />    local current = file:seek()    -- get current position<br />    local size = file:seek("end")  -- get file size<br />    file:seek("set", current)      -- restore position<br />    return size<br />end<br />以上的几个函数在出错时都将返回一个包含了错误信息的nil值。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15957_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

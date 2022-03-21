@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>【NGE2小更新】NGE2新增加PSP工具函数</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">【NGE2小更新】NGE2新增加PSP工具函数</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-02-24 08:27:36</p>
+</div>
+<div class="col-10">
+<p>[code=cpp]<br />/**<br /> *获取系统的唯一的30位序列号.<br /> *@return char*,30位序列号的字符串.<br /> */<br />char* sys_get_idstorage();<br />/**<br /> *获取系统的MAC地址字符串.<br /> *@return char*,返回字符串,XX:XX:XX:XX:XX:XX.<br /> */<br />char* sys_get_mac();<br />/**<br /> *获取系统的用户名.<br /> *@return char*,返回字符串.<br /> */<br />char* sys_get_nickname();<br /><br />/**<br /> *设置CPU的频率类型.<br /> *@param int,类型为CPU_TYPE_333MHZ,CPU_TYPE_222MHZ,CPU_TYPE_111MHZ<br /> *@return int,1设置成功,0设置失败.<br /> */<br />int sys_set_frequency_type(int type);<br />/**<br /> *取得CPU的频率类型.<br /> *@return int,类型为CPU_TYPE_333MHZ,CPU_TYPE_222MHZ,CPU_TYPE_111MHZ<br /> */<br />int sys_get_frequency_type();<br />[/code]<br /><br />MAC：网卡物理地址，通常不能修改，可以做为识别码，防盗版 。(windows:全F)<br />IDSTORAGE：PSP的序列号，无法修改，可以用于指定机器运行，防盗版。(windows:全F)<br />NICKNAME：psp的名字。。(windows:"NGE2")<br />频率：cpu的频率类型类型为CPU_TYPE_333MHZ,CPU_TYPE_222MHZ,CPU_TYPE_111MHZ<br />。<br /><br />示例代码，编译时需要先将makefile里增加，-lpspwlan.不然有个error。<br /><br />[code=lua]<br />printf("MAC: %s<br />",sys_get_mac());<br />printf("NUM: %s<br />",sys_get_idstorage());<br />printf("NAME: %s<br />",sys_get_nickname());<br />sys_set_frequency_type(CPU_TYPE_333MHZ);<br />int ret = sys_get_frequency_type();<br />if(ret == CPU_TYPE_333MHZ)<br />&nbsp; &nbsp; &nbsp; &nbsp;printf("CPU: 333mhz<br />");<br />else if(ret == CPU_TYPE_222MHZ)<br />&nbsp; &nbsp; &nbsp; &nbsp;printf("CPU: 222mhz<br />");<br />else if(ret == CPU_TYPE_111MHZ)<br />&nbsp; &nbsp; &nbsp; &nbsp;printf("CPU: 111mhz<br />");<br />[/code]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2010-02-24 09:10:22</p>
+</div>
+<div class="col-10">
+<p>关于wav目前最好的解决方法是不打包，tst的问题经过进一步测试，还出现了其它问题，目前的解决方法一是多存档，二就是bgon和fgon这两种指令不要写在同一行执行，三就是能不用tst就尽量不用，这样可以尽量避免死机问题，然后等着自行车修理铺的人来修</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>沁ぅ純の寳貝</b><br/>
+2010-02-24 09:40:28</p>
+</div>
+<div class="col-10">
+<p>补丁美~~~浪叔威武</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>NJNA</b><br/>
+2010-02-24 10:00:03</p>
+</div>
+<div class="col-10">
+<p>~~辛苦啦~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>沁ぅ純の寳貝</b><br/>
+2010-02-24 10:01:07</p>
+</div>
+<div class="col-10">
+<p>[b] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=9096&ptid=2256]6#[/url] [i]fanhuai[/i] [/b]<br /><br /><br />谢您老。。DOS环境下能用杀毒软件吗。。。我对电脑的这种知识可是一窍不通。。。。<br /><br />另：坏了的是我的老爷电脑，上网本还能用。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-02-24 10:01:28</p>
+</div>
+<div class="col-10">
+<p>事实上如果你用wap登录论坛就会发现有很多隐藏版块……包括手机开发方面的版块。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-02-24 10:18:16</p>
+</div>
+<div class="col-10">
+<p>汗~~~这是什么情况~~~隐藏版块~~~子版块？？？？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-02-24 10:19:40</p>
+</div>
+<div class="col-10">
+<p>UU酱~~~你实在太邪恶~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>xanadu</b><br/>
+2010-02-24 10:20:12</p>
+</div>
+<div class="col-10">
+<p>果然<br />meizu M8<br />N800 N810<br />pys60软件开发<br />Android软件开发<br />iava软件开发<br />s60平台开发<br />iphone软件开发<br />GVmaker(LAVA)<br />J2me软件开发</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-02-24 10:21:22</p>
+</div>
+<div class="col-10">
+<p>恩~~~话说老任干嘛不进军PC平台~~~旗下这么多的大腕明星~~~随便派出来几个就可以赚得盆满钵满的~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>无声の悲伤</b><br/>
+2010-02-24 10:36:35</p>
+</div>
+<div class="col-10">
+<p>网名:无声の悲伤<br />性別:男性<br />居住地:广东<br />星座:射手座<br />在做的事:上学<br />希望:玩更多GALgame...[i=s] 本帖最后由 无声の悲伤 于 2010-2-24 10:39 编辑 [/i]<br /><br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>娇傲loli控</b><br/>
+2010-02-24 10:54:19</p>
+</div>
+<div class="col-10">
+<p>音频问题！<br />我用mp3做背景音乐，然后语音用ogg！接着就悲剧了，[换了几种码率]都会有爆音和卡卡的感觉，然后语音换了wav，转了几个码率都播放不出来！求能流畅播放的采样率和码率······</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-02-24 11:13:37</p>
+</div>
+<div class="col-10">
+<p>AMP就是杯具制造机……<br />ogg播放效率比较低,wav建议使用PCM格式,44.1kHz,单声道<br />bgon和fgon这两种指令不要写在同一行执行,我怎么不知道?!</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-02-24 11:19:25</p>
+</div>
+<div class="col-10">
+<p>施主,一切随缘吧……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-02-24 11:30:16</p>
+</div>
+<div class="col-10">
+<p>回17楼a叔,男主他们可能住天桥底下……关于文字消失,可能是psp待机后出了问题</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>沁ぅ純の寳貝</b><br/>
+2010-02-24 11:37:22</p>
+</div>
+<div class="col-10">
+<p>回17楼。。。<br /><br />这是文件名重复问题。。但是我现在资料全部丢了。。。（电脑开不能，重装了）所以。。。。<br /><br />（捂脸跑过……）</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2010-02-24 11:40:31</p>
+</div>
+<div class="col-10">
+<p>你试试就知道了，快去修自行车</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Espada</b><br/>
+2010-02-24 11:54:37</p>
+</div>
+<div class="col-10">
+<p>希望早点解决死机问题<br />3000泪目~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pmnds</b><br/>
+2010-02-24 12:30:01</p>
+</div>
+<div class="col-10">
+<p>手上正好有一堆PDF格式小说，这下可以在掌机上看个够了。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>MIKI</b><br/>
+2010-02-24 12:30:03</p>
+</div>
+<div class="col-10">
+<p>[quote]如果以前下过老版本的fate的话~~~可以到这里去下载新版的Vnds~~~安装进去就行了~~~<br />提取地址[url]http://u.115.com/file/[/url]<br />提取码f821b973c0<br />[size=2][color=#999999]明日青蛙 发表于 2010-2-4 20:07[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=7471&ptid=1913][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /> 这有什么用的？  还有能提供新的下载地址～纳米下不了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wh054</b><br/>
+2010-02-24 12:38:17</p>
+</div>
+<div class="col-10">
+<p>第一季都没耐心看完的人路过</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-02-24 12:43:29</p>
+</div>
+<div class="col-10">
+<p>呵呵~~好多有趣的标志的说~~~话说我倒是没怎么注意过这东西的说~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wljp</b><br/>
+2010-02-24 12:48:28</p>
+</div>
+<div class="col-10">
+<p>不错！首来，支持！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wljp</b><br/>
+2010-02-24 12:49:22</p>
+</div>
+<div class="col-10">
+<p>不错！首来，支持！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wh054</b><br/>
+2010-02-24 12:53:15</p>
+</div>
+<div class="col-10">
+<p>这个要顶啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wh054</b><br/>
+2010-02-24 13:01:18</p>
+</div>
+<div class="col-10">
+<p>啊。。被河蟹了</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15503_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

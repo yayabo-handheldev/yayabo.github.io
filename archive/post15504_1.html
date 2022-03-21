@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>AMP的BUG汇总贴，实体机与NGE2的差别</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">AMP的BUG汇总贴，实体机与NGE2的差别</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-02-24 08:25:29</p>
+</div>
+<div class="col-10">
+<p>特别的，由于PSP的texture的限制，所以PSP上最大只支持512*512的图片，所以要想PSP上不发生错乱，图片资源不能超过512*512.<br />stop时的爆音问题已经在改进。<br />其他PSP实机与Windows版AMP的不同则是BUG，如果发现请提交，将尽快修改<br /><br />以下是已知的问题与bug：<br />一SE任·浪GA提供：<br />voice打包后，nge2跑得很流畅，切换不卡，实机上会卡1秒左右，基本上没法玩了<br />voice是wav格式。<br />解决方式：<br />由于记忆棒的速度较低，跟硬盘不能比，所以最好wav文件较小，这样就不会卡了，单个wav文件最好小于1M，如果太大，可以用goldwav软件调整wav的码率，使文件变小。<br />二SE任·浪GA，nosh提供：<br />[code=amp]<br />tst("alpha_2.png");<br />bg(2,"black_fugai.png",6,1000);<br />bg(1,"auc_bg03_1.png",6,1000);<br />bgon(1);bgon(2);<br />[/code]<br /><br />实机必死<br /><br />[code=amp]<br />tst("alpha_2.png");<br />bg(2,"black_fugai.png",1,1000);<br />bg(1,"auc_bg03_1.png",6,1000);<br />bgon(1);bgon(2);<br />[/code]<br /><br />这样没问题<br />总结起来就是 一个遮片用两次就死<br />分开用没问题，放一起就不行</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15504_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

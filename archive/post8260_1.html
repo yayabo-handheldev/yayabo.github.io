@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>求助.！关于标题做法.</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">求助.！关于标题做法.</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_9.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>『兔寳貝』</b><br/>
+2010-08-23 16:11:08</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 『兔寳貝』 于 2010-8-23 16:20 编辑 [/i]<br /><br /> <br />那啥.标题画面的做法始终不明.<br />然后bbs发给我的这个..<br /><br />function discolortitle(icon,newgame1,loadgame1,cgmode1,newgame2,loadgame2,cgmode2,dx,dy,stepx,stepy)<br />	if _discolortitle==nil then<br /><br />		_discolortitle = {}<br />		_discolortitle.blue = {}<br />		_discolortitle.pink = {}<br />		_discolortitle.blue[1] = LoadImage(newgame1,8888)<br />		_discolortitle.blue[2] = LoadImage(loadgame1,8888)<br />		_discolortitle.blue[3] = LoadImage(cgmode1,8888)<br />		_discolortitle.pink[1] = LoadImage(newgame2,8888)<br />		_discolortitle.pink[2] = LoadImage(loadgame2,8888)<br />		_discolortitle.pink[3] = LoadImage(cgmode2,8888)<br />		_discolortitle.icon = LoadImage(icon,8888)<br />		_discolortitle.icondx = dx-2<br />		_discolortitle.icondy = dy-2<br />		_discolortitle.mode = 1<br />		_discolortitle.chose = 1<br /><br />	elseif _discolortitle.mode==1 then<br /><br />		if KeyDown(KEY_UP)==1 then<br />			_discolortitle.icondx = _discolortitle.icondx - stepx<br />			_discolortitle.icondy = _discolortitle.icondy - stepy<br />			_discolortitle.chose = _discolortitle.chose - 1<br />			if _discolortitle.chose < 1 then<br />				_discolortitle.chose = 3<br />				_discolortitle.icondx = dx + stepx * 2<br />				_discolortitle.icondy = dy + stepy * 2<br />			end<br />		end<br />		if KeyDown(KEY_DOWN)==1 then<br />			_discolortitle.icondx = _discolortitle.icondx + stepx<br />			_discolortitle.icondy = _discolortitle.icondy + stepy<br />			_discolortitle.chose = _discolortitle.chose + 1<br />			if _discolortitle.chose > 3 then<br />				_discolortitle.chose = 1<br />				_discolortitle.icondx = dx<br />				_discolortitle.icondy = dy<br />			end<br />		end<br />		if KeyDown(KEY_CIRCLE)==1 then<br />			_discolortitle.mode = 2<br />		end<br /><br />		local _dx = dx<br />		local _dy = dy<br /><br />		for i=1,3 do<br />			if _discolortitle.chose==i then<br />				ImageToScene(_discolortitle.pink[i],_dx,_dy)<br />			else<br />				ImageToScene(_discolortitle.blue[i],_dx,_dy)<br />			end<br />			_dx = _dx + stepx<br />			_dy = _dy + stepy<br />		end<br /><br />	elseif _discolortitle.mode==2 then<br />		local chose = _discolortitle.chose<br />		FreeImage(_discolortitle.blue[1])<br />		FreeImage(_discolortitle.blue[2])<br />		FreeImage(_discolortitle.blue[3])<br />		FreeImage(_discolortitle.pink[1])<br />		FreeImage(_discolortitle.pink[2])<br />		FreeImage(_discolortitle.pink[3])<br />		FreeImage(_discolortitle.icon)<br />		_discolortitle = nil<br />		return chose<br />	end<br />	loop()<br />end<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />discolortitle(icon,newgame1,loadgame1,cgmode1,,newgame2,loadgame2,cgmode2,,dx,dy,stepx,stepy);<br /><br />icon:光标文件<br />newgame1:第一选项1<br />loadgame1:第二选项1<br />cgmode1:第三选项1<br />newgame2:第一选项2<br />loadgame2:第二选项2<br />cgmode2:第三选项2<br />dx:显示坐标x<br />dy:显示坐标y<br />stepx:间隔x<br />stepy:间隔y <br /><br /><br />chose = discolortitle("icon.png","start1.png","loadgame1.png","cg1.png","start2.png","loadgame2.png","cg2.png",0,0,0,25);<br />if chose==1 then goto(*newgame) end;<br />if chsoe==2 then goto(*loadgame) end;<br />if chose==3 then goto(*cgmode) end ;<br /><br /><br /><br />看不明...有哪位可以教教我.<br />或者给个简明一点的代码我...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Ansa翼</b><br/>
+2010-08-23 16:12:15</p>
+</div>
+<div class="col-10">
+<p>前來報道~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>『兔寳貝』</b><br/>
+2010-08-23 16:14:31</p>
+</div>
+<div class="col-10">
+<p><br />果断签到<br /><br /><br />另.哪位可以教教我做标题.？！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>諾亞</b><br/>
+2010-08-23 16:18:29</p>
+</div>
+<div class="col-10">
+<p>来了哈。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>81602861</b><br/>
+2010-08-23 16:18:35</p>
+</div>
+<div class="col-10">
+<p>前排了~~终于</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Lee</b><br/>
+2010-08-23 16:20:50</p>
+</div>
+<div class="col-10">
+<p>报到，终于前排</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>SD_TT</b><br/>
+2010-08-23 16:22:34</p>
+</div>
+<div class="col-10">
+<p>终于等到了啊<br />速度签到，不解释</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>『兔寳貝』</b><br/>
+2010-08-23 16:22:57</p>
+</div>
+<div class="col-10">
+<p><br />支持喵喵吖...话说玩玩PC版比较好..</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>810257825</b><br/>
+2010-08-23 16:23:10</p>
+</div>
+<div class="col-10">
+<p>看标题以为是好东西的路过·····</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>negimagi777</b><br/>
+2010-08-23 16:24:46</p>
+</div>
+<div class="col-10">
+<p>前來签到...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>810257825</b><br/>
+2010-08-23 16:25:38</p>
+</div>
+<div class="col-10">
+<p>·····不太玩，但支持一下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-08-23 16:25:59</p>
+</div>
+<div class="col-10">
+<p>来也~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-08-23 16:27:44</p>
+</div>
+<div class="col-10">
+<p>    可以的话....去玩下吧....山治.....很享受的游戏.....推理中的享受.....</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>washport</b><br/>
+2010-08-23 16:28:00</p>
+</div>
+<div class="col-10">
+<p>嗯 回覆</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>king71036</b><br/>
+2010-08-23 16:28:21</p>
+</div>
+<div class="col-10">
+<p>簽到~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>........</b><br/>
+2010-08-23 16:29:07</p>
+</div>
+<div class="col-10">
+<p>签到.....</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>SD_TT</b><br/>
+2010-08-23 16:29:25</p>
+</div>
+<div class="col-10">
+<p>有合集舅要支持吖</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>1239985932</b><br/>
+2010-08-23 16:30:00</p>
+</div>
+<div class="col-10">
+<p>    乃是不是有个内容给错了……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fcc330</b><br/>
+2010-08-23 16:30:24</p>
+</div>
+<div class="col-10">
+<p>签到~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>tsurugi</b><br/>
+2010-08-23 16:30:29</p>
+</div>
+<div class="col-10">
+<p>签到……过节……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>daye0091</b><br/>
+2010-08-23 16:30:51</p>
+</div>
+<div class="col-10">
+<p>切。。慢了一点没进前十啊。。签到</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ma8742044</b><br/>
+2010-08-23 16:30:58</p>
+</div>
+<div class="col-10">
+<p>= =~~日文通关~等正式版放出在玩一次~<br />剧透一下~~主角其实是只猫~<br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>a4381782</b><br/>
+2010-08-23 16:32:48</p>
+</div>
+<div class="col-10">
+<p>老朽参见</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>SD_TT</b><br/>
+2010-08-23 16:33:16</p>
+</div>
+<div class="col-10">
+<p>支持一下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>1239985932</b><br/>
+2010-08-23 16:33:20</p>
+</div>
+<div class="col-10">
+<p>    如果乃是这样想的，那么乃就不是好东西……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fjsmsn</b><br/>
+2010-08-23 16:33:55</p>
+</div>
+<div class="col-10">
+<p>我来签到了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>1239985932</b><br/>
+2010-08-23 16:34:07</p>
+</div>
+<div class="col-10">
+<p>偶尔咱也占个位置好了，前排什么的都是浮云……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>daye0091</b><br/>
+2010-08-23 16:34:21</p>
+</div>
+<div class="col-10">
+<p>多谢楼主努力啊！终于出来了！瑞穗姐姐万岁！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ma8742044</b><br/>
+2010-08-23 16:35:28</p>
+</div>
+<div class="col-10">
+<p>已决定等3ds的改良版~<br />初版造型太囧了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-08-23 16:36:39</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 fanhuai 于 2010-8-23 16:42 编辑 [/i]<br /><br />*title_select<br />chose = discolortitle("icon.png","start1.png","load1.png","exit1.png","extra1.png","start2.png","load2.png","exit2.png","extra2.png",0,0,0,0);<br /><br /><br />if chose==1 then goto(*XXXX) end;<br />if chose==2 then goto(*XXXX) end;<br />if chose==3 then goto(*XXXX); end<br />if chose==4 then goto(*XXXX) end ;<br /><br />乃照着这样写，乃用三个就写三个，四个就照着这样写，不过三个以上，乃的上面的函数要添加内容了</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post8260_1.html">1</a>
+</li>
+
+<li class="page-item">
+<a class="page-link" href="post8260_2.html">2</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

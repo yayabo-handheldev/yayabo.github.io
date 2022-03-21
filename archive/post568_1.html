@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>一步一步实现一个Cocos2d-x简单游戏</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">一步一步实现一个Cocos2d-x简单游戏</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lrb2010</b><br/>
+2014-02-28 11:21:40</p>
+</div>
+<div class="col-10">
+<p>[list]<br />[*][color=rgb(65, 131, 196)][font=inherit][url=http://www.cocos2d-x.org/docs/manual/framework/native/getting-started/step-by-step-cocos2dx-simplegame-series/chapter1-how-to-create-a-new-cocos2dx-project-on-multi-platforms/zh]第一章 如何在多平台新建Cocos2d-x项目[/url][/font][/color]<br />[*][color=rgb(65, 131, 196)][font=inherit][url=http://www.cocos2d-x.org/docs/manual/framework/native/getting-started/step-by-step-cocos2dx-simplegame-series/chapter2-how-to-add-a-sprite/zh]第二章 如何增加精灵（sprite）[/url][/font][/color]<br />[*][color=rgb(65, 131, 196)][font=inherit][url=http://www.cocos2d-x.org/docs/manual/framework/native/getting-started/step-by-step-cocos2dx-simplegame-series/chapter3-how-to-move-a-sprite/zh]第三章 如何移动精灵（sprite）[/url][/font][/color]<br />[*][color=rgb(65, 131, 196)][font=inherit][url=http://www.cocos2d-x.org/docs/manual/framework/native/getting-started/step-by-step-cocos2dx-simplegame-series/chapter4-how-to-fire-some-bullets/zh]第四章 如何发射子弹[/url][/font][/color]<br />[*][color=rgb(65, 131, 196)][font=inherit][url=http://www.cocos2d-x.org/docs/manual/framework/native/getting-started/step-by-step-cocos2dx-simplegame-series/chapter5-how-to-detect-the-collisions/zh]第五章 如何检测碰撞[/url][/font][/color]<br />[*][color=rgb(65, 131, 196)][font=inherit][url=http://www.cocos2d-x.org/docs/manual/framework/native/getting-started/step-by-step-cocos2dx-simplegame-series/chapter6-how-to-play-music-and-sound-effect/zh]第六章 如何播放音乐和音效[/url][/font][/color]<br />[*][color=rgb(65, 131, 196)][font=inherit][url=http://www.cocos2d-x.org/docs/manual/framework/native/getting-started/step-by-step-cocos2dx-simplegame-series/chapter7-some-icing-on-the-cake/zh]第七章 锦上添花技巧部分[/url][/font][/color]<br />[*][color=rgb(65, 131, 196)][font=inherit][url=http://www.cocos2d-x.org/docs/manual/framework/native/getting-started/step-by-step-cocos2dx-simplegame-series/external-tutorials/zh]外部指南[/url][/font][/color]<br />[/list]<br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>煤堆里的黑猫</b><br/>
+2014-02-28 12:20:11</p>
+</div>
+<div class="col-10">
+<p> 看一孩子 求萝球社中文 扔个萝球社的链接 不谢<br />[url]http://pan.baidu.com/s/1i3hxtpN[/url] <br /><br />兵库北一生黑<br />转[讨论] [转载]香菜汉化组《萝球社》中文汉化版  </p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-28 13:44:13</p>
+</div>
+<div class="col-10">
+<p>[quote][size=2][color=#999999]浅仓奈绪狸猫君 发表于 2014-2-28 00:07[/color] [url=forum.php?mod=redirect&goto=findpost&pid=342606&ptid=26155][img]static/image/common/back.gif[/img][/url][/size]<br />{:14:}<br />我也来一发征婚<br />要求如下↓<br />[/quote]<br /><br />性别呢？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>煤堆里的黑猫</b><br/>
+2014-02-28 13:45:02</p>
+</div>
+<div class="col-10">
+<p>ID:煤堆里的黑猫<br />光阴似箭 日月如梭.哎</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-28 13:45:50</p>
+</div>
+<div class="col-10">
+<p>[quote][size=2][color=#999999]浅仓奈绪狸猫君 发表于 2014-2-28 00:07[/color] [url=forum.php?mod=redirect&goto=findpost&pid=342606&ptid=26155][img]static/image/common/back.gif[/img][/url][/size]<br />{:14:}<br />我也来一发征婚<br />要求如下↓<br />[/quote]<br /><br />男女都可？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>煤堆里的黑猫</b><br/>
+2014-02-28 13:46:41</p>
+</div>
+<div class="col-10">
+<p>↑     水</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>煤堆里的黑猫</b><br/>
+2014-02-28 13:47:45</p>
+</div>
+<div class="col-10">
+<p>  度娘  万事不懂 问百度</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-28 13:48:40</p>
+</div>
+<div class="col-10">
+<p>苹果。。。。。。。呜呜</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-28 13:54:11</p>
+</div>
+<div class="col-10">
+<p>[quote][size=2][color=#999999]煤堆里的黑猫 发表于 2014-2-28 13:46[/color] [url=forum.php?mod=redirect&goto=findpost&pid=342616&ptid=26155][img]static/image/common/back.gif[/img][/url][/size]<br />↑     水[/quote]<br /><br />水+1，                        </p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-28 13:55:01</p>
+</div>
+<div class="col-10">
+<p>233                   </p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>浅仓奈绪狸猫君</b><br/>
+2014-02-28 14:35:46</p>
+</div>
+<div class="col-10">
+<p>[quote][size=2][color=#999999]syjsxxjy 发表于 2014-2-28 13:45[/color] [url=forum.php?mod=redirect&goto=findpost&pid=342615&ptid=26155][img]static/image/common/back.gif[/img][/url][/size]<br />男女都可？[/quote]<br /><br />哦差点忘了说了，必须是喵星人</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-28 14:55:10</p>
+</div>
+<div class="col-10">
+<p>[quote][size=2][color=#999999]浅仓奈绪狸猫君 发表于 2014-2-28 14:35[/color] [url=forum.php?mod=redirect&goto=findpost&pid=342621&ptid=26155][img]static/image/common/back.gif[/img][/url][/size]<br />哦差点忘了说了，必须是喵星人[/quote]<br /><br />喵！                     </p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-28 16:05:24</p>
+</div>
+<div class="col-10">
+<p>[quote][size=2][color=#999999]静止系 发表于 2013-2-19 01:04[/color] [url=forum.php?mod=redirect&goto=findpost&pid=334804&ptid=25712][img]static/image/common/back.gif[/img][/url][/size]<br />我竟然成妹纸了…… - -[/quote]<br /><br />对呀，静止妹子好可爱</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>静止系</b><br/>
+2014-02-28 16:39:12</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 静止系 于 2014-2-28 16:42 编辑 [/i]<br /><br />[quote][size=2][color=#999999]syjsxxjy 发表于 2014-2-28 13:45[/color] [url=forum.php?mod=redirect&goto=findpost&pid=342615&ptid=26155][img]static/image/common/back.gif[/img][/url][/size]<br />男女都可？[/quote]<br />必须男的！  不是男孩子不行   噗噗噗</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>静止系</b><br/>
+2014-02-28 16:44:29</p>
+</div>
+<div class="col-10">
+<p>[quote][size=2][color=#999999]煤堆里的黑猫 发表于 2014-2-28 13:47[/color] [url=forum.php?mod=redirect&goto=findpost&pid=342617&ptid=26153][img]static/image/common/back.gif[/img][/url][/size]<br />度娘  万事不懂 问百度[/quote]<br /><br />百度也只能查到部分词汇以及用法，有些地方果然还是问精通此道的人精确度最高啦！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-28 16:44:47</p>
+</div>
+<div class="col-10">
+<p>[quote][size=2][color=#999999]静止系 发表于 2014-2-28 16:39[/color] [url=forum.php?mod=redirect&goto=findpost&pid=342624&ptid=26155][img]static/image/common/back.gif[/img][/url][/size]<br />必须男的！  不是男孩子不行   噗噗噗[/quote]<br /><br />我是公的喵星人！喵！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-28 16:45:12</p>
+</div>
+<div class="col-10">
+<p>自己顶，我要上首页！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>静止系</b><br/>
+2014-02-28 16:46:34</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 静止系 于 2014-2-28 19:16 编辑 [/i]<br /><br />好久不见！！ 图又全部合上啦！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>葻</b><br/>
+2014-02-28 22:13:15</p>
+</div>
+<div class="col-10">
+<p>什么东东，还要回复...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>水無凝殇</b><br/>
+2014-02-28 22:13:20</p>
+</div>
+<div class="col-10">
+<p>QAQ 俺回来了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>水無凝殇</b><br/>
+2014-02-28 22:14:38</p>
+</div>
+<div class="col-10">
+<p>都是1级啊，太伤感了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>水無凝殇</b><br/>
+2014-02-28 22:19:18</p>
+</div>
+<div class="col-10">
+<p>俗话说得好，水水更健康…咳咳咳</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>水無凝殇</b><br/>
+2014-02-28 22:20:58</p>
+</div>
+<div class="col-10">
+<p>会发行港版中文的不？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>邮寄葵</b><br/>
+2014-02-28 23:43:06</p>
+</div>
+<div class="col-10">
+<p>白鼠：“【话筒】请问您一个人对着空气说话有意思吗”</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>邮寄葵</b><br/>
+2014-02-28 23:43:36</p>
+</div>
+<div class="col-10">
+<p>居然要回复可见</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>邮寄葵</b><br/>
+2014-02-28 23:46:20</p>
+</div>
+<div class="col-10">
+<p>我默默伫立<br /><br />摇摇欲坠的你的手<br /><br />多么愿能温柔地握住（摇摇欲坠的你的手）<br /><br />薄暮中的世界中不断回响的<br /><br />只有空虚的诗（）<br />                   诗（括号里是注音）</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>邮寄葵</b><br/>
+2014-02-28 23:52:42</p>
+</div>
+<div class="col-10">
+<p>美妙世界的风格吗</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post568_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

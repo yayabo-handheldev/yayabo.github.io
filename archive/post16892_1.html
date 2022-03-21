@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>开发M8上的.NET CF程序</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">开发M8上的.NET CF程序</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-01-13 09:20:03</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://www.meizu.com/[/url]<br />作者：Kyle<br /><br />开发M8上的.NET CF程序<br /><br />Kyle 2008/11/27<br /><br />（本文可以随意转载，但不得修改原作者）<br /><br />    本文涉及软件：<br /><br />    1.    Microsoft ActiveSync（Windows Mobile 设备中心 in Vista）；<br /><br />    2.    .NET Compact Framework 2.0 Service Pack 2 Redistributable；<br /><br />    3.    .NET Compact Framework 3.5 Redistributable；<br /><br />    4.    Visual Studio 2005（2008）。<br /><br />    Microsoft .NET Compact Framework (.NET精简框架，以下简称.NET CF) 是 .NET Framework 的一部分，是为了在移动设备（如移动电话、个人数字助理 (PDA)）和嵌入式设备）上运行而设计的。它包含 .NET Framework 中的类库的子集，同时还包含为了在其上运行而设计的专有类。利用熟悉 .NET Framework 的优势，开发人员现在能够使用 Visual Studio .NET 开发工具快速地创建移动应用程序。（摘自MSDN > .NET 开发>.NET Compact Framework 编程）<br /><br />    要在M8上运行.NET CF程序，首先需要通过PC在M8上安装.NET CF。 现在.NET CF有两个发行版本，V2 SP2和 V3.5。V3.5在V2 SP2的基础上增加了LINQ、WCF等等特性，增强了对数据的操作和网络服务的支持。个人建议将两个版本的.NET CF都安装到M8上。更正，只用装V3.5就会自动把V2.0包括进去了（感谢各位的提醒）。<br /><br /><br />V2下载地址：<br /><br />[url]http://www.microsoft.com/downloads/details.aspx?FamilyID=AEA55F2F-07B5-4A8C-8A44-B4E1B196D5C0&displaylang=zh-cn[/url]<br /><br />V3.5下载地址：<br /><br />[url]http://www.microsoft.com/downloads/details.aspx?FamilyID=e3821449-3c6b-42f1-9fd9-0041345b3385&DisplayLang=zh-cn[/url]<br /><br /><br />下图为两个安装包文件。<br /><br />[attach]559[/attach]<br /><br />第1节    安装.NET CF.至M8<br />Step1. 安装M8 USB同步驱动和Microsoft ActiveSync（若操作系统为Vista则无须安装驱动和ActiveSync， Vista会自动搜索驱动并且安装Windows Mobile 设备中心，它是Microsoft ActiveSync的升级版）。<br /><br />[attach]560[/attach]<br /><br />Step2. 在M8上进入设置，在USB端口模式处选择同步模式，并将M8连接至电脑。<br /><br />[attach]561[/attach]<br /><br />Step 3. 安装.NET CF.<br />在电脑上双击NETCFSetupv2.msi图标，开始安装。<br /><br />[attach]562[/attach]<br /><br />点击“下一步”。<br /><br />[attach]563[/attach]<br /><br />点击“接受”，再点击“下一步”。<br /><br />[attach]564[/attach]<br /><br />选择“完全”（默认），再点击“下一步”。<br /><br />[attach]565[/attach]<br /><br />点击“安装”。<br /><br />[attach]566[/attach]<br /><br />等待。。。<br /><br />[attach]567[/attach]<br /><br />此时，Windows Mobile 设备中心会自动弹出来提示安装.NET CF 2.0至M8的对话框。点击“是”。<br /><br />[attach]568[/attach]<br /><br />等待安装程序将.NET CF 2.0安装（拷贝）到M8中。这个进度条完成后，M8的屏幕上会出现沙漏图标，接着会出现安装的进度条。待进度条完毕，.NET 2.0 CF就安装好了。<br /><br />[attach]569[/attach]<br /><br />点击“完成”。<br /><br />.NET 3.5 CF的安装方法跟.NET 2.0 CF一样，我就不再赘述了。<br />注意，若升级固件以后，M8上的.NET CF会丢失。此时需要在电脑上运行安装程序，并且先执行卸载操作，再按照以上的步骤来安装。<br />到这里，M８就可以运行基于.NET CF 开发的程序了。<br /><br /><br />第2节    安装Visual Studio 2005（2008）<br />    若需要开发基于.NET CF的程序，就需要安装开发环境。微软为开发人员提供了功能非常强大的集成开发环境——Visual Studio。现在流行的常见的版本为2005和2008。个人建议使用最新的Visual Studio 2008。<br />    提示，若要在Vista系统上安装并运行Visual Studio 2005，需要安装Visual Studio 2005 for Vista和SQL 2005的补丁。<br />Visual Studio 的安装过程我就不在这里写了，注意安装的时候勾选“智能设备”就可以了。<br /><br /><br />第3节    抛砖引玉，开发M8上的.NET CF程序<br /><br />    .NET CF 和 VS安装好以后，就可以开发M8上的.NET CF程序了。<br />    不免俗套，我也教大家写一个Hello World程序。<br /><br />    首先启动Visual Studio 2008。<br /><br />[attach]570[/attach]<br /><br />启动VS2008。<br /><br />[attach]571[/attach]<br /><br />    新建一个智能设备项目，在这里我新建了一个“Hello World”项目，点击“确定”。<br /><br />[attach]572[/attach]<br /><br />    “目标平台”选择Windows CE, 版本选择3.5（选2.0亦可，若需要使用3.5的新特性就必须选择3.5）。模板选择“设备应用程序”，然后点击确定。<br /><br />    下图是Hello World智能设备程序开发页面。<br /><br />[attach]573[/attach]<br /><br /><br />    由于M8的分辨率是480×720，而默认的分辨率是640×480，宽度超出了屏幕范围，所以需要修改Form的Size，这里我选择了480,480。然后将Text属性修改为Hello World。<br /><br />[attach]574[/attach]<br /><br />    接下来从工具箱中拖入2个Label和3个Button到Form中。<br /><br />[attach]575[/attach]<br /><br />    下图显示放置在Form中的2个Label和3个Button控件。<br /><br />[attach]576[/attach]<br /><br />    由于M8分辨率很高，屏幕很精细，如果控件尺寸较小的话会比较难操作。我们将Label字体调大，Button的字体、尺寸调大，并拖放至合适的位置。<br /><br />[attach]577[/attach]<br /><br />    分别重命名lable1和lable2为lblWorld和lblM8，Text属性设置为“HelloWorld！”和“Hello Meizu M8!”。<br />    分别重命名3个button为btnShow, btnHide, btnExit，Text属性设置为“显示”、“隐藏”，“退出”。<br /><br />[attach]578[/attach]<br /><br />下图为lblM8的属性。<br /><br />[attach]579[/attach]<br /><br />以下为btnShow的属性。<br /><br />[attach]580[/attach]<br /><br />    下面我们开始为三个按钮添加事件。<br />    双击“显示”按钮，进入代码编辑页面。<br />    在btnShow_Click事件中添加以下代码：<br /><br />    lblWorld.Visible = true;<br />    lblM8.Visible = true;<br /><br />[attach]581[/attach]<br /><br />    同样，双击“隐藏”按钮，在btnHide_Click事件中添加以下代码：<br /><br />    lblWorld.Visible = false;<br />    lblM8.Visible = false;<br /><br />[attach]582[/attach]<br /><br />    最后，双击“退出”按钮，在btnExit_Click事件中添加以下代码：<br /><br />    Application.Exit();<br /><br />[attach]583[/attach]<br /><br />    代码解释：在btnShow_Click和btnHide_Click事件中，我修改了lblWorld和lblM8的Visible属性，当属性为 true时，lblWorld和lblM8为可见；当属性为false时，lblWorld和lblM8不可见（隐藏）。btnExit_Click事件中的代码表示退出程序，当按下“退出”按钮时，程序退出。<br /><br />    以下是本程序的所有代码：<br /><br />using System;<br />using System.Windows.Forms;<br />namespace Hello_World<br />{<br />    public partial class Form1 : Form<br />    {<br />        public Form1()<br />        {<br />            InitializeComponent();<br />        }<br />        private void btnShow_Click(object sender, EventArgs e)<br />        {<br />            lblWorld.Visible = true;<br />            lblM8.Visible = true;<br />        }<br />        private void btnHide_Click(object sender, EventArgs e)<br />        {<br />            lblWorld.Visible = false;<br />            lblM8.Visible = false;<br />        }<br />        private void btnExit_Click(object sender, EventArgs e)<br />        {<br />            Application.Exit();<br />        }<br />    }<br />}<br /><br />    此时，这个窗体程序就编写完成了。下一步我们将程序部署在M8上。<br />    在Visual Studio中按F5，将会出现以下窗口。<br /><br />[attach]584[/attach]<br /><br />    选择“Windows CE 设备”，然后点击“部署”。<br /><br />    稍等片刻，此程序就会运行在M8上了。<br />    可以通过点击“隐藏”或“显示”按钮将两句英文隐藏或显示。<br /><br />[attach]585[/attach]<br /><br />    点击“隐藏”，让英文消失。<br /><br />[attach]586[/attach]<br /><br />    最后点击“退出”按钮，退出程序。<br /><br />[attach]587[/attach]<br /><br />    我们也可以将程序拷贝出来，放置到M8中的任意位置，直接通过M8启动程序。<br />    在Visual Studio的工具栏中，选择Release（默认是Debug，程序在M8上直接运行时不需要调试，所以直接Release即可）。<br /><br />[attach]588[/attach]<br /><br />    然后在键盘上按下“Ctrl”+“Shift”+“B”，生成程序。我们可以在项目目录的binRelease目录中，找到此程序。<br /><br />[attach]589[/attach]<br /><br />    将“Hello World.exe”文件直接拷贝到M8中。<br /><br />[attach]590[/attach]<br /><br />    现在我们就可以在M8中找到此程序并运行了。<br /><br />[attach]591[/attach]<br /><br />    单击“Hello World”这个文件，就可以运行了。<br /><br />[attach]592[/attach]<br /><br />    到这里一个简单的Hello World程序就写完了。<br />    这篇文章的目的只是为大家抛砖引玉，简单的介绍为M8开发.NET CF程序的过程。相信有了.NET CF这个坚强的后盾，开发者可以写出更好更多的M8的程序。最后的第一个附件是这个Hello World程序解决方案的压缩包，各位有兴趣的朋友可以下载到电脑中试试。如果你的电脑安装了.NET Framework，程序也可以在电脑中直接运行。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16892_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ZEngine Demo 9 -  ZImage 中级 图形特效处理</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">ZEngine Demo 9 -  ZImage 中级 图形特效处理</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_6.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-10 22:18:27</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 easycker 于 2010-11-12 15:58 编辑 [/i]<br /><br />首先，欢迎各位步入了ZEngine的中级开发阶段<br /><br />大家用了这么久的ZEngine，发现ZEngine 的优势没？<br />速度~效率，开发的容易度~~<br /><br />[b]各种类的使用我给大家总结下方法[/b]：<br />1.在Game.h的Game类中声明ZEngine类的对象，比如ZImage,ZAudio等等的对象(ZImage *m_imgName等)<br />2.在GameInitial()中初始化对象并加载(m_imgName = new ZImage();等)以及其他变量初始化(如m_x=10等)GameInitial中的所有代码只执行1遍，<br />  可以做开场动画<br />3.在GameCircle()中做数据的变化处理(如图片的坐标m_x +=10)等。这个函数中的代码循环执行<br />4.在GameDrawScene()绘制图形，比如Show函数和ZPaint的绘图函数必须放在这里 。这里也可以处理数据的变化，可做GameCircle()中可做的内容,<br />   这里的代码也是循环执行<br />5.GameButtonDown()和GameButtonUp()中按键处理<br />6.GameEnd()这里做指针的释放，内存的清理等工作(delete m_imgName等)，也可以不清理(psp退出时会自动释放所有游戏内存)。<br />  也可以做游戏结束时的动画，这里的代码只执行一遍。<br /><br /><br /><br />[b]ZImage类使用流程总结[/b]:<br />1.Game.h的Game类中创建 对象 (ZImage *m_img);<br />2.GameInitial中初始化和Load资源<br />3.GameDrawScene中 Show图片<br /><br /><br /><br />一、[b]图形移动，色彩遮罩，缩放，旋转。  这个例子可是做多功能的 图片游览器或者图片编辑器的 基础[/b]<br />基本实现了图片移动，旋转，缩放，颜色遮罩等的特效,其中也用到了状态机，希望大家好好理解下<br />以下是代码，大家可以按照序号来做[code]按键操作说明：<br />//上下左右移动图片<br />//设置色彩遮罩 select + cross/circle等 组合键来设置 色彩+变化<br />//设置色彩遮罩 start + cross/circle等 组合键来设置 色彩-变化<br />//L R翻转图片<br />//square和cross分别控制 宽度和高度 - ,triangle和circle分别控制 宽度和高度 +<br />//同时按下start和select 复原图片状态[/code][code]//Game.h<br />#ifndef _GAME_H<br />#define _GAME_H<br /><br />#include "ZGame.h"<br /><br />class Game : public ZGame<br />{<br />public:<br />	Game(){}<br />	~Game(){}<br />	<br />	void GameInitial();<br />	void GameCircle();<br />	void GameDrawScene();<br />	void GameButtonDown(int nKeyNumber);<br />	void GameButtonUp(int nKeyNumber);<br />	void GameEnd();<br /><br />public:<br />	//(2)<br />	struct s_ZImage //建立处理ZImage显示用的结构体<br />	{<br />		float	 x,y;	//图形左上角坐标<br />		float	 wn,hn; //源图像长宽的n倍<br />		float	 angle; //图片角度<br />		int r,g,b,a; //遮罩色彩的红，绿，蓝，透明度四个通道<br />	};<br />	<br />	enum e_KEY<br />	{<br />		K_UP = 0,K_DOWN,K_LEFT,K_RIGHT,<br />		K_CROSS,K_CIRCLE,K_SQUARE,K_TRIANGLE,<br />		K_L,K_R,<br />		K_SELECT,K_START<br />	};<br /><br />	void f_m_img_s_init(); //自定义的初始化m_img_s结构初始化的函数<br />private:<br />	//(1)<br />	ZImage *m_img; //图像对象<br />	s_ZImage m_img_s; //图像结构变量<br />	int m_img_state[12]; //建立12个按键的状态,按下为1，弹起为0<br />	float m_img_speed; //设定移动等变量变化的速度<br />};<br /><br />#endif[/code][code]<br />//Game.cpp<br />//游戏入口类<br /><br />#include "Game.h"<br /><br />//游戏初始化<br />void Game::GameInitial()<br />{<br />        //(3)img初始化<br />        m_img = new ZImage();<br /><br />        //结构<br />        f_m_img_s_init(); //调用自定义的m_img_s初始化函数<br /><br />        int i;<br />        for(i=0;i<12;i++)<br />                m_img_state[i] = 0; //全部状态清零<br /><br />        m_img_speed = 3; //速度为3<br /><br />        //(4)img加载<br />        m_img->Load("image/demo0.jpg");<br />}<br /><br /><br />//游戏循环<br />void Game::GameCircle()<br />{<br />        //(8)处理状态,也用if...if....处理,因为各个功能相互独立<br /><br />        //上下左右移动图片<br />        if(m_img_state[K_UP]) //当状态不为零则执行<br />        {<br />                m_img_s.y -= m_img_speed;<br />                if(m_img_s.y + (float)m_img->GetImageP()->h < 0)<br />                        m_img_s.y = -(float)m_img->GetImageP()->h;<br />        }<br />        if(m_img_state[K_DOWN])<br />        {<br />                m_img_s.y += m_img_speed;<br />                if(m_img_s.y - (float)m_img->GetImageP()->h > 0)<br />                        m_img_s.y = (float)m_img->GetImageP()->h;<br />        }<br />        if(m_img_state[K_LEFT])<br />        {<br />                m_img_s.x -= m_img_speed;<br />                if(m_img_s.x + (float)m_img->GetImageP()->w < 0) //当图片最右边到了屏幕最左边<br />                        m_img_s.x = -(float)m_img->GetImageP()->w; //限制不要超过了<br />        }<br />        if(m_img_state[K_RIGHT])<br />        {<br />                m_img_s.x += m_img_speed;<br />                if(m_img_s.x - (float)m_img->GetImageP()->w > 0)<br />                        m_img_s.x = (float)m_img->GetImageP()->w;<br />        }<br /><br />        //设置色彩遮罩 select + cross/circle等 组合键来设置 色彩+变化<br />        if(m_img_state[K_SQUARE] && <br />                m_img_state[K_SELECT]) //红色<br />        {<br />                m_img_s.r += (int)m_img_speed;<br />                if(m_img_s.r > 255) //限制范围<br />                        m_img_s.r = 255;<br />        }<br />        if(m_img_state[K_CROSS] && <br />                m_img_state[K_SELECT]) //绿色<br />        {<br />                m_img_s.g += (int)m_img_speed;<br />                if(m_img_s.g > 255) //限制范围<br />                        m_img_s.g = 255;<br />        }<br />        if(m_img_state[K_CIRCLE] && <br />                m_img_state[K_SELECT]) //蓝色<br />        {<br />                m_img_s.b += (int)m_img_speed;<br />                if(m_img_s.b > 255) //限制范围<br />                        m_img_s.b = 255;<br />        }<br />        if(m_img_state[K_TRIANGLE] && <br />                m_img_state[K_SELECT]) //透明度<br />        {<br />                m_img_s.a += (int)m_img_speed;<br />                if(m_img_s.a > 255) //限制范围<br />                        m_img_s.a = 255;<br />        }<br /><br /><br />        //设置色彩遮罩 start + cross/circle等 组合键来设置 色彩-变化<br />        if(m_img_state[K_SQUARE] && <br />                m_img_state[K_START]) //红色<br />        {<br />                m_img_s.r -= (int)m_img_speed;<br />                if(m_img_s.r < 0) //限制范围<br />                        m_img_s.r = 0;<br />        }<br />        if(m_img_state[K_CROSS] && <br />                m_img_state[K_START]) //绿色<br />        {<br />                m_img_s.g -= (int)m_img_speed;<br />                if(m_img_s.g < 0) //限制范围<br />                        m_img_s.g = 0;<br />        }<br />        if(m_img_state[K_CIRCLE] && <br />                m_img_state[K_START]) //蓝色<br />        {<br />                m_img_s.b -= (int)m_img_speed;<br />                if(m_img_s.b < 0) //限制范围<br />                        m_img_s.b = 0;<br />        }<br />        if(m_img_state[K_TRIANGLE] && <br />                m_img_state[K_START]) //透明度<br />        {<br />                m_img_s.a -= (int)m_img_speed;<br />                if(m_img_s.a < 0) //限制范围<br />                        m_img_s.a = 0;<br />        }<br /><br />        //L R翻转图片<br />        if(m_img_state[K_L])<br />        {<br />                m_img_s.angle += m_img_speed; //加m_img_s.angle += 90; 为常用的90°翻转，<br />        }<br />        if(m_img_state[K_R])<br />        {<br />                m_img_s.angle -= m_img_speed;<br />        }<br /><br />        //square和cross分别控制 宽度和高度 - ,triangle和circle分别控制 宽度和高度 +<br />        if(m_img_state[K_SQUARE] && //按square<br />                !m_img_state[K_SELECT] && //没有按下select<br />                !m_img_state[K_START]) //没有按下start<br />        {<br />                m_img_s.wn -= (float)(m_img_speed * 0.01);<br />        }<br />        if(m_img_state[K_CROSS] && //按square<br />                !m_img_state[K_SELECT] && //没有按下select<br />                !m_img_state[K_START]) //没有按下start<br />        {<br />                m_img_s.hn -= (float)(m_img_speed * 0.01);<br />        }<br />        if(m_img_state[K_TRIANGLE] && //按square<br />                !m_img_state[K_SELECT] && //没有按下select<br />                !m_img_state[K_START]) //没有按下start<br />        {<br />                m_img_s.wn += (float)(m_img_speed * 0.01);<br />        }<br />        if(m_img_state[K_CIRCLE] && //按square<br />                !m_img_state[K_SELECT] && //没有按下select<br />                !m_img_state[K_START]) //没有按下start<br />        {<br />                m_img_s.hn += (float)(m_img_speed * 0.01);<br />        }<br /><br />        //同时按下start和select 复原图片状态<br />        if(m_img_state[K_SELECT] &&<br />                m_img_state[K_START])<br />        {<br />                f_m_img_s_init(); //调用自定义的m_img_s初始化函数<br />        }<br />}<br /><br />//游戏绘图<br />void Game::GameDrawScene()<br />{<br />        //(5)<br />        m_img->Show(0,0,(float)m_img->GetImageP()->w,(float)m_img->GetImageP()->h, //保持图片完整显示<br />                m_img_s.x, m_img_s.y, m_img_s.wn, m_img_s.hn, m_img_s.angle, //显示用到结构中的数据<br />                ZImage::RGBA(m_img_s.r, m_img_s.g, m_img_s.b, m_img_s.a));<br />}<br /><br />//按下按键<br />void Game::GameButtonDown(int nKeyNumber)<br />{<br />        //(6)用if...if...因为可以同时按下<br />        if(nKeyNumber == PSP_BUTTON_UP) m_img_state[K_UP] = 1; //按上键状态K_UP(0)置位,一下相同<br />        if(nKeyNumber == PSP_BUTTON_DOWN) m_img_state[K_DOWN] = 1;<br />        if(nKeyNumber == PSP_BUTTON_LEFT) m_img_state[K_LEFT] = 1;<br />        if(nKeyNumber == PSP_BUTTON_RIGHT) m_img_state[K_RIGHT] = 1;<br />        if(nKeyNumber == PSP_BUTTON_CROSS) m_img_state[K_CROSS] = 1;<br />        if(nKeyNumber == PSP_BUTTON_CIRCLE) m_img_state[K_CIRCLE] = 1;<br />        if(nKeyNumber == PSP_BUTTON_SQUARE) m_img_state[K_SQUARE] = 1;<br />        if(nKeyNumber == PSP_BUTTON_TRIANGLE) m_img_state[K_TRIANGLE] = 1;<br />        if(nKeyNumber == PSP_BUTTON_LEFT_TRIGGER) m_img_state[K_L] = 1;<br />        if(nKeyNumber == PSP_BUTTON_RIGHT_TRIGGER) m_img_state[K_R] = 1;<br />        if(nKeyNumber == PSP_BUTTON_SELECT) m_img_state[K_SELECT] = 1;<br />        if(nKeyNumber == PSP_BUTTON_START) m_img_state[K_START] = 1;<br /><br />}<br /><br />//弹起按键<br />void Game::GameButtonUp(int nKeyNumber)<br />{<br />        //(7)用if...if... 按键弹起时清零相应位<br />        if(nKeyNumber == PSP_BUTTON_UP) m_img_state[K_UP] = 0; //按上键状态K_UP(0)置位,一下相同<br />        if(nKeyNumber == PSP_BUTTON_DOWN) m_img_state[K_DOWN] = 0;<br />        if(nKeyNumber == PSP_BUTTON_LEFT) m_img_state[K_LEFT] = 0;<br />        if(nKeyNumber == PSP_BUTTON_RIGHT) m_img_state[K_RIGHT] = 0;<br />        if(nKeyNumber == PSP_BUTTON_CROSS) m_img_state[K_CROSS] = 0;<br />        if(nKeyNumber == PSP_BUTTON_CIRCLE) m_img_state[K_CIRCLE] = 0;<br />        if(nKeyNumber == PSP_BUTTON_SQUARE) m_img_state[K_SQUARE] = 0;<br />        if(nKeyNumber == PSP_BUTTON_TRIANGLE) m_img_state[K_TRIANGLE] = 0;<br />        if(nKeyNumber == PSP_BUTTON_LEFT_TRIGGER) m_img_state[K_L] = 0;<br />        if(nKeyNumber == PSP_BUTTON_RIGHT_TRIGGER) m_img_state[K_R] = 0;<br />        if(nKeyNumber == PSP_BUTTON_SELECT) m_img_state[K_SELECT] = 0;<br />        if(nKeyNumber == PSP_BUTTON_START) m_img_state[K_START] = 0;<br />}<br /><br />//游戏结束<br />void Game::GameEnd()<br />{<br />        Quit();<br />}<br /><br /><br /><br />//////////////////////////////////////////////////////////////////////////<br />//用户自定义函数区<br />//////////////////////////////////////////////////////////////////////////<br /><br />//(3)同时写这个<br />void Game::f_m_img_s_init()<br />{<br />        m_img_s.angle = 0;<br />        m_img_s.hn = 1; //1倍，原始大小<br />        m_img_s.wn = 1;<br />        m_img_s.x = 0;<br />        m_img_s.y = 0;<br />        m_img_s.r = 255; //无遮罩效果<br />        m_img_s.g = 255;<br />        m_img_s.b = 255;<br />        m_img_s.a = 255;        <br />}<br />[/code]请大家思考，能否将这个做的和IPHONE那样平滑的 转动呢？<br />提示：设置m_img_speed的变化</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zaizei00</b><br/>
+2010-11-10 22:20:02</p>
+</div>
+<div class="col-10">
+<p>谢谢了。。。。。。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post5092_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

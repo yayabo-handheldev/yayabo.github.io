@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS开发Wiki翻译：第四天：精灵（4）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS开发Wiki翻译：第四天：精灵（4）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_18.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-06 15:31:33</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://chenyi1976.spaces.live.com[/url]<br />翻译：陈轶<br /><br />旋转和缩放<br /><br />接下来的是另一个重要的教程，旋转和缩放（旋缩）！就像我以前说过的那样，精灵可以任意选择缩放，但是有一个小小的限制：尽管所有的精灵都可以旋转，但是同一屏幕上同时只允许32种方式。。。那么在只有32种方式的情况下，精灵们是如何旋转的呢？因为精灵的最大允许个数大于旋缩的的允许个数，那么有一些精灵将不得不有着同样的旋缩方式。想象你有一个宇宙飞船，能够在空中盘旋，并由多个部分组成（假设2个精灵作为飞船的翅膀，一个作为飞船的身体，一个作为驾驶舱，一个作为武器。。。），他们需要一起旋转和放大，否则就会看上去散架了。这种情况就是多个精灵共享一种旋缩方式。<br /><br />在PALIB例子里面有3个关于旋缩的例子：旋转，缩放，旋缩，他们使用了不同的函数，一个仅用了旋转，一个仅用了缩放，最后一个既使用了旋转又使用了缩放。。。<br /><br />    旋转<br /><br />    我们以旋转的例子开始学习。。。例子名称是Sprite_Rotation，我把有趣的部分粘贴到下面：<br /><br />[code=c]// Activate rotations for that sprite<br />PA_SetSpriteRotEnable(0,// screen<br />                      0,// sprite number<br />                      0);// rotset number. You have 32 rotsets (0-31) per screen. 2 sprites with*<br />// *the same rotset will be zoomed/rotated the same way...<br /><br />u16 angle = 0; // Rotation angle...<br /><br />while(1)<br />{<br />    ++angle; // change the angle<br />    angle &= 511; // limit the range to 0-511. works only with 1, 3, 7, 15, 31, etc... (2^n - 1)<br /><br />    // Fast function for rotations without zoom...<br />    PA_SetRotsetNoZoom(0, //screen<br />    0, // rotset<br />    angle); // angle, from 0 to 511<br /><br />    PA_WaitForVBL(); // Synch<br />}[/code]<br /><br />    (译：无人喝彩，我失去热情了，那我就挑自己感兴趣的人译吧，这里跳过一大段) <br /><br />精灵翻转<br /><br />精灵翻转在DS上非常简单，尽管看上去它应该是一个小型项目，我将显示这做起来多么简单。。。我将在下一版本中加入一个例子（Sprite/Flips）<br /><br />有2个翻转精灵的函数：<br /><br />[code=c]* PA_SetSpriteHflip(screen, sprite, 1/0 for yes/no), 水平翻转 (left/right)<br />* PA_SetSpriteVflip(screen, sprite, 1/0 for yes/no), 垂直翻转(up/down) [/code]<br /><br />这对你来说就非常简单了！1设置翻转，0去掉翻转，就这么简单。你能做到水平翻转，垂直翻转，或两者结合。<br /><br />那么，什么时候我们要用到翻转？假设你在编一个格斗游戏。。。。比如双截龙那样的游戏。你要实现一个小人向左看，向右看。那么你有两种方法来实现：<br /><br />    * 做两个图像，一个是向左，一个向右，然后在代码里面换来换去，好辛苦，而且难以扩展新功能。。。<br />    * 使用翻转功能，简单而快速。 <br /><br />哪个是简单的解决方案？<br /><br />马赛克效果<br /><br />马赛克效果很容易使用，但我并不很喜欢。举个例子，它在超级马里奥中被使用过，它通过用一个正方形替换一个象素点的方式来改变了精灵的样子。有什么好处呢？它能用于精灵的过渡效果，一种模糊效果，等等。。。但就像我说的一样，我不喜欢它也从不用它。<br /><br />请关注下一版本中将会退出的马赛克精灵的例子。<br /><br />不管怎样，DS和PAlib已经提供了非常简单的函数用来生成马赛克效果：PA_SetSpriteMosaic(Screen, Sprite, Mosaic on/off (1/0));.<br /><br />（译：跳过一段）<br /><br />透明效果<br /><br />透明，或称之为Alpha混合，是非常棒的游戏效果。看上去很棒，专业，实际上又不费事。<br /><br />PAlib使用DS的硬件来做到这一点，但是有一个重要的限制：尽管你可以设置任何精灵的透明效果，但是所有精灵的透明度都必须是一样的。。。所以你无法让一个精灵半透明，同时让另一个精灵完全透明。。。他们只能拥有一样的透明度。。。<br /><br />代码很容易理解，你可以找到AlphaBlending例子：<br /><br />[code=c]PA_SetSpriteMode(0, // Screen<br />                 0, // Sprite<br />                 1); // Alphablending<br /><br />s16 alpha = 7; // Transparency level<br /><br />// Enable the alpha-blending<br />PA_EnableSpecialFx(0, // Screen<br />                   SFX_ALPHA, // Alpha blending mode<br />                   0, // Nothing<br />                   SFX_BG0 | SFX_BG1 | SFX_BG2 | SFX_BG3 | SFX_BD); // Everything normal<br /><br />while(1) // Infinite loops<br />{<br />    alpha += Pad.Newpress.Up - Pad.Newpress.Down;<br />    PA_SetSFXAlpha(0, // Screen<br />                   alpha, // Alpha level, 0-15<br />                   15); // Leave this to 15<br /><br />    PA_WaitForVBL();<br />}[/code]<br /><br />精灵和任何普通精灵一样被创建，但它的透明特性通过PA_SetSpriteMode(screen, sprite, mode)函数已经激活，如果你看一下帮助文档，可以发现其实有很多种模式，但是现在只要记住0就是没有透明，而1就是透明。。。<br /><br />光激活精灵的透明特性还不够。你首先需要激活DS的特效系统，设置它为透明模式。。。PA_EnableSpecialFx (Screen, SFX_ALPHA (Alpha blending mode), 0 (leave to 0 for now), SFX_BG0 | SFX_BG1 | SFX_BG2 | SFX_BG3 | SFX_BD)。。。长长的列表包含了除了精灵以外所有的东西，不要担心，有一天你会理解这些参数的含义的。。。<br /><br />[code=c]PA_SetSFXAlpha(screen, alpha level (0-15), normal level (leave to 15));[/code]<br />是最后一个重要的函数（例子里面可以通过上下键来调整透明度），这个函数是用来设置透明度的。。。编译这个例子，然后看看按上下键会对精灵的透明度产生什么样的效果吧。。。 （译：待续，感觉翻译是个不错的看书的习惯，我小时候看书留下的怀习惯导致我看书的跳跃性非常强，应该很容易漏掉一些东西，翻译工作强迫我自己一字一句地看过去。非常好。）</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post17025_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

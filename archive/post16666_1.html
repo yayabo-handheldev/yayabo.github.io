@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>雷叔的阴谋 - 关于囧rz的MIDI播放引擎（第一篇）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">雷叔的阴谋 - 关于囧rz的MIDI播放引擎（第一篇）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2009-06-03 19:17:40</p>
+</div>
+<div class="col-10">
+<p>如果说GBA/DS中什么地方是最令人头疼的地方，那无疑就是音频了。倒不是说音频是多么高深复杂的技术，事实上音频确实也不算太难。不过，一般情况下，对于一个刚刚进入GBA/DS开发领域的新手来说，音频是绝对的禁忌。就拿我自己当成例子来说吧！在我刚刚迈进GBA开发领域，自己还纯洁得犹如未开苞的处女的时候，看到samples里面一些音频的例子，还有.h里面的一些音频的定义，又拿到一些做的非常出色的音频DEMO，于是就心痒痒了，总是想整点音频玩玩。然而，知识的匮乏终将导致梦想的破灭，看到自己写出来的东西无法运行，那种强烈的沮丧感，把自己的信心击得粉碎……想想看吧，一个新人，如果不靠点成功的经验来维持自己的信心，那么很可能这个新手就将永远离开这个领域……所以从那以后我再也不看有关音频的部分，直到自己觉得“嗯！我已经很强了~~~君子报仇十年不晚，音频，现在本大爷来取你的小命了！”的时候，我才开始重新把音频拾起来。而且当我骄傲地以“过来人”的身份带小弟的时候，我也总是极严肃地对小白们说：“民娜，千万不要研究音频！音频太复杂了，复杂到可以直接击碎你们的信心的地步……当你们真正当了婊子的时候再过来立牌坊吧！”——于是小弟们见音频如同见洪水猛兽如临大敌退避三舍望风而逃……<br /><br />GBA的音频相当复杂。因为GBA的音频模块并非一个单独的音频模块，而是由于邪恶的任地狱为了向下兼容GB/GBC，又往音频模块中添加了一些很恶心的东西。官方的文档将GBA的音频模式称为“Direct Sound Mode”，将那些额外添加的邪恶的东西称为“Compatible CGB Sound Mode”。由于这两种模式都可以被GBA操纵，因此变得相当复杂。而即便是你不用那些邪恶的东西而只用GBA特有的“Direct Sound Mode”，其实也不是轻松的事情。这种模式下需要DMA和Timer的配合，操纵音频更像是操纵音频“流”……还是从“原理上”操纵音频流，复杂程度可想而知~~~~<br />而DS虽然是GBA穿马甲，但不知道任地狱发什么疯，居然把整个音频模块大换血，完全抛弃了GBA的那种模式……这代表着GBA的一切音频相关的东西，在DS中都将不再适用。幸好，任地狱将DS的音频模块集成化、简易化，使得像我这种程度的小白也可以“磕磕绊绊地将就着好歹写出”一个比较像样的音频播放引擎~~~~<br /><br />话说到这里，想必诸位兄弟也都知道我在打什么谱了。是的。由于DS和GBA的差异性，我有必要将自己的研究心得和大家分享一下。我也希望有经验的弟兄们能够和我共同讨论探索DS音频，共同打造一个囧rz的音频播放引擎。<br /><br />那么，老传统，先无责任声明一下：DS的音频非常复杂。如果你是刚入门的新人，请绝对不要企图通过阅读该邪恶的文章就Level Up从而发白日梦如同飞蛾扑火般地钻研音频。建议你直接点击浏览器的“x”按钮。即便是你已经下定十二分决心决定要壮烈了，请先检查自己的基础知识。哪怕当场摔死也比摔个终生残废半死不活苟延残喘要好得多。<br /><br />[基础知识]<br />——我们所听到的、DS播放出来的音频，到底是什么东西呢？<br />不管你相信与否，事实上这是预先录制好的声音数据。DS在播放的时候，进行了一些邪恶的操作比如改变“声调”使得同一个声音数据在播放的时候能够呈现出高低音调的不同；比如控制“音量”使得声音大小轻重可以体现出来；比如操纵“声道”使得声音出现立体的感觉……<br /><br />——那么，那些预先录制好的声音数据，又是什么东西呢？<br />其实那和普通的wav文件差不多，都是将声音量化并记录下来的数据而已。DS直接支持PCM，所以一般情况下这些声音数据都是现成的PCM音频文件。你甚至可以用VGMTrans解开一个官方的游戏看看，里面应该是存在很多这样的音频文件。由于是标准的PCM，所以你可以用暴风影音之类的播放器听一下那些音频文件到底是啥。<br />像这样的音频文件，我们称之为“采样”。意思就是“采取过来的样本”。从什么地方采取过来的？那就很多了。比如游戏中有个场景是音乐会，为了体现场景，BGM也采用优美的管弦音乐。那么，DS要播放这个BGM，自然就需要各种管弦乐的“采样”。再例如《逆转裁判》中的“異議あり！”的音效，自然就是从C社的员工的嘴巴里“采取样本”啦~~~<br />通过指定的方式，按照指定的规则，将各种采样数据进行操纵最终输出BGM或者音效的这个过程，被称为“音频的渲染”（render）。这是音频播放引擎的一个极为重要的行为。渲染的结果，可以直接输出到DS的发声部件比如立体声耳机，即“音频的回放”（playback）；也可以再次回到内存进行二次处理，即“音频的捕获”（capture）。<br /><br />——哦……原来是这样。那么，我们要怎么才能播放采样呢？<br />嘿！我不是说过了吗，别指望看到上面的东西就妄想播放出音频。我们现在只不过是在恶补一些知识而已，离我们的目标还远着呢！<br /><br />——人家想要尽快看到……呃，听到效果嘛！NDSLIB不是有现成的音频播放的API吗？人家想要试试啦~~~<br />滚你妈的听效果！跟着我的脚步走，就像当年中国跟着苏联老大哥的脚步走一样！你们给老子玩大跃进试试！基础知识必须要掌握，尤其是我们这个音乐播放引擎是定位为“囧rz的MIDI播放引擎”，不打好基础你们就等着偏离社会主义路线吧！<br />[/基础知识]<br /><br />那么我们现在需要去找一些“采样”了。通过基础知识的恶补我们知道，DS中采样就是现成的PCM而已。那么好吧，我们去找一些乐器的声音，然后用工具软件转化成PCM。<br /><br />现在我找到了一个乐器的声音。我们用Goldwave将其转化成PCM。<br />[attach]1323[/attach]<br />注意，在保存的时候一定要保存为“Raw (*.snd)类型”。DS只支持Raw PCM和IMA-ADPCM。由于后者在处理的时候稍微慢一些，因此不建议使用。所以我们一定要保存成Raw。<br />此外，关于采样速率和比特率，也是有规定的。根据香农定理，我们应该将音频保存成22050Hz以上的采样速率，才能保证声音不失真。尤其是当使用真人语音做采样的时候，更是要求不得低于22050Hz。DS只支持8位和16位比特率，因此比特率选项只能选择8或者16。DS支持的PCM16是LSB的有符号PCM16，因此最下面两个复选框也不能选中。出于体积的考虑，我推荐使用PCM8@22050Hz，当然这一切取决于你自己。<br />[attach]1324[/attach]<br /><br />最后，这就是我们转化好的采样了。这是钢琴发出“C3”音符的时候的采样，PCM8@22050Hz。<br />[attach]1325[/attach]<br /><br />下面我们就设法把它播放出来！<br />——怎么，不是说“滚你妈的听效果”来着吗？怎么现在就要播放？<br />操！老子说啥就是啥！怎么，有意见？<br /><br />DS的音频模块，由ARM7，也只能由ARM7负责操纵。——看吧！脚还没踩到音频模块的门槛，CPU通信先跑出来当门神了！现在出现在我们面前的有两条路：转向ARM7直接操纵音频模块；借助CPU通信令ARM9操纵音频模块。当然，即便是直接用ARM7操纵音频模块，启动并提供必要信息给音频模块依然需要CPU通信，说到底两条路还是同一条路……<br />NDSLIB提供了一些现成的CPU通信API，可以使用已经定义好的结构直接操纵音频。无论如何，用户接口还挺友好的。我们先暂且使用这些现成的API练练手~~~~<br /><br />当然首先需要打开音频。<br />[code=c]<br />#include "sound.h"<br /><br />void soundEnable(void);<br />[/code]<br />ARM9端通过这个函数打开音频。当这个函数执行完之后，ARM7端的音频模块将会处于激活状态，一切音频相关的操作都将生效。<br /><br />[code=c]<br />int soundPlaySample(const void* data, SoundFormat format, u32 dataSize, u16 freq, u8 volume, u8 pan, bool loop, u16 loopPoint); <br />[/code]<br />这是ARM9端的音频接口。我们这次就要靠这个接口来实现播放我们的音频采样。<br /><br />代码片断：<br />[code=c]<br />#include <nds.h><br />#include "sound.h"<br />...<br /><br />int void main(){<br />	...<br />	soundEnable();<br />	void* sndBuf=你的载入资源的函数("/Piano_8Bit_C3.snd");<br />	int sndSize=你的获取资源大小的函数("/Piano_8Bit_C3.snd");<br />	...<br />	while(1){<br />		...<br />		scanKeys();<br />		if(keysDown() & KEY_A){<br />			soundPlaySample(sndBuf,SoundFormat_8Bit,sndSize>>2,22050,127,64,FALSE,0); <br />		}<br />		...<br />		swiWaitForVBlank();<br />		...<br />	}<br />}<br />[/code]<br />行了，现在你的DS就相当于一架钢琴，而A键就是钢琴的“C3”键。按下A键听效果吧。<br /><br />——啊~~~听到了！果真播放出来了。解释一下代码吧！<br />很明显，核心就是soundPlaySample(...);这个接口。我来解释这个函数的参数。<br /><br />首先就是const void* data。这个参数用于指定将要播放的采样数据的首地址。在我们这个练手的DEMO里面，“你的载入资源的函数("/Piano_8Bit_C3.snd");”这个函数会将采样载入内存并返回首地址。然后将这个首地址传递给soundPlaySample(...);即可。至于这个邪恶的“你的载入资源的函数(...);”，你可以直接将采样转成.c和主程序同时参与编译，也可以用文件系统从TF卡中载入内存。具体实现方法由你来决定。<br /><br />然后是SoundFormat format。这个参数指定你的采样是什么格式。由于我们的采样是PCM8，因此这个参数要写成SoundFormat_8Bit。如果你的采样是PCM16，那么这里就要写成SoundFormat_16Bit。<br /><br />然后是u32 dataSize。这个参数指定你的采样的大小，或者说长度。你不希望听到你辛辛苦苦录制的真人语音采样只能播放出一半吧！注意这个参数是以“字”为单位的，也就是以4字节为单位。所以我们通过“你的获取资源大小的函数("/Piano_8Bit_C3.snd");”获得采样的大小之后，除以4之后才能传递到音频播放API中。<br /><br />接着是u16 freq。这个参数指定你希望采样用什么回放频率进行回放。这是个极为重要的参数。我需要详细讲解。<br />在基础知识中我们知道，DS的采样其实是声音的量化数据。详细地说，就是通过某种设备把声音波形的模拟量转化成数字量，即A/D转换。在这个转换过程中存在着一个重要参数——采样速率，或者说，采样频率。顾名思义，就是对声音波形模拟量进行采样的速度。很明显，采样速率越高，两次采样之间的时间间隔就越小，在回放的时候，音频的“还原程度”就越高。自然，采样越频繁，数据量就越大。这也就是为什么高音质的音频，体积都较大的缘故。<br />我们的采样，其采样速率是22050Hz。换句话说，以前那个钢琴的声音波形，以每秒22050次的速度采样并记录每次采样的数据。如果我们按照22050Hz的速率进行回放，那么自然就可以将原本的声音精确地回放出来。<br />说到这里基本上就算解释完这个参数了。不过，我们考虑一下这个问题——假如我们用44100Hz的回放速率进行回放，会有什么后果呢？<br />——嗯，有趣！我先试试~~~~<br />……<br />——哎？声音的音调变高了！而且播放的时间变短了。好像……好像声音的波形被压缩了似的~~~~<br />没错！回放速率比采样速率高，回放时间自然会缩短。跑得越快花的时间越短嘛！而我们又知道，频率越高，音调越高。所以出现刚才的现象就很正常了。<br />由此可见，控制了这个参数，就控制了音频回放的咽喉！想想看吧，假如我们写一个算法，让回放频率按照正弦波或者什么的进行变化，那么做出警笛之类的音效就很简单了……<br /><br />继续讲解参数吧。下面是u8 volume。无需多说，这个是音量。注意这个参数的范围是0~127。数值越大音量越大。<br /><br />然后是u8 pan。这个参数是控制“声道”的。范围是0~127。如果设置为0的话，声音会完全从左声道播放出来，相反，127的话则是右声道。如果动态改变这个数值，可以做出类似“声源移动”的效果。<br /><br />接着是最后两个参数bool loop和u16 loopPoint。之所以一起讲解这两个参数，是因为它们是有关联的。如果loop设置为TRUE，则当声音播放完之后，会从loopPoint指定的位置继续循环播放。如果loop设置为FALSE，则最后一个参数无效。想想看这种效果：采样是真人语音“雷叔是天才！”，我把loop设置为TRUE，loopPoint设置到“是”字的前面，然后播放的时候动态调整volume参数使之呈现音量衰减的趋势。于是我们就得到了“雷叔是天才！是天才！是天才…是天才……是天才………是天才…………”<br />——（囧rz……）<br />你们别这样看着我嘛~~~~我没把那句“わしの強さ、天下に示せい！”说出来就已经很谦虚了~~~~<br />——你已经说出来了……<br />……<br />——别自恋了，解答问题吧。loopPoint的值怎么确定？<br />嗯……这个比较麻烦。目前我只能大体的确定这个值。我们用Goldwave打开采样，于是就显示出波形窗口。这个时候把光标移动到你指望循环播放的位置，获取这个时间点的精确时间t。又由于整个采样的时间s已知，采样的长度l也已知，因此loopPoint的值=l*t/s。<br /><br />——参数解释终于完了。我们是不是休息一下呢？<br />狗屁！我问你，我想同时播放两个采样，怎么做？<br />——呃……<br />看看！狗屁都不知道，休息个毛啊！<br /><br />当函数执行完之后，ARM7就会通过硬件电路将采样数据进行加工，最后输出到DS的喇叭或者耳机中回放出来。负责数据加工这一部分的硬件电路有个名称，叫做“Channel”，或者说“音频通道”。像这样的音频通道，DS一共有16个。<br />——16个？也就是说，可以同时播放16个采样？<br />正解。每一路音频通道都有一个ID，从0到15。soundPlaySample(...);这个函数会返回当前播放这个采样的音频通道ID。如果播放失败则返回-1。<br />——这是什么意思？<br />就是说，使用这个函数播放采样，会自动寻找“空闲”的通道进行播放。如果通道0正在忙着播放某采样，在这个时候如果你又一次调用了soundPlaySample(...);这个函数，那么通道0继续播放它的采样，你刚才调用的这一次将会在通道1进行播放，同时函数返回1。同样如果所有通道都在“忙着”播放采样，那么你再调用soundPlaySample(...);，就无法找到“空闲”的通道，于是播放失败。此时函数返回-1。<br />——原来如此！很好！现在我知道怎么同时播放多个采样了。雷叔，看我写的代码吧。<br />[code=c]<br />#include <nds.h><br />#include "sound.h"<br />...<br /><br />int void main(){<br />	...<br />	soundEnable();<br />	void* sndBuf=你的载入资源的函数("/Piano_8Bit_C3.snd");<br />	int sndSize=你的获取资源大小的函数("/Piano_8Bit_C3.snd");<br />	...<br />	while(1){<br />		...<br />		scanKeys();<br />		if(keysDown() & KEY_A){<br />			soundPlaySample(sndBuf,SoundFormat_8Bit,sndSize>>2,22050,127,64,FALSE,0); <br />		}<br />		if(keysDown() & KEY_B){<br />			soundPlaySample(sndBuf,SoundFormat_8Bit,sndSize>>2,44100,127,64,FALSE,0); <br />		}<br />		...<br />		swiWaitForVBlank();<br />		...<br />	}<br />}<br />[/code]<br />嗯……A键相当于音符C3，B键相当于音符C4……很好！非常好！<br />——へへへ～～～被雷叔夸奖了！ああ～～～恥ずかしいよ～～～[attach]1326[/attach]<br /><br />其实现在就开始有点走进MIDI了。为了彻底了解音频的工作原理，我们要转向ARM7，将上面的代码重写。<br />——我还知道，ARM7在绝大多数时间里都是空转的。把音频解码放到ARM7里面也可以缓解ARM9的压力。<br />说得对。总之，下面我们就要在ARM7上重写代码了。欲知详情，且听下回分解。<br />——哎？人家好不容易才感觉到有点“意犹未尽”，你又要中场插播广告啊？<br />“意犹未尽”？嘿嘿嘿……你已经湿了么？嘿嘿嘿……那边正好有个小黑屋，我们继续去“意犹未尽”怎么样？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-06-03 21:23:49</p>
+</div>
+<div class="col-10">
+<p>看雷叔的小说有一种莫名的快感，期待续集的推出（貌似开始连载了）。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zero_yp</b><br/>
+2009-06-04 01:31:38</p>
+</div>
+<div class="col-10">
+<p>报道~<br /><br />网名:zero_yp<br />性別:男性<br />星座:狮子座<br />在做的事:程序</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>whm3d</b><br/>
+2009-06-04 07:21:51</p>
+</div>
+<div class="col-10">
+<p>有见雷叔教程了！ <br /><br />顶你个肺。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>whm3d</b><br/>
+2009-06-04 07:28:28</p>
+</div>
+<div class="col-10">
+<p>期待续集的推出（貌似开始连载了）。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16666_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

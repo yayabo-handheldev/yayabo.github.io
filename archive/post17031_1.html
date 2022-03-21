@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PSP编程(一)译文</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">PSP编程(一)译文</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_18.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-06 11:15:57</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://hi.baidu.com/chujingyi001/blog/item/7fd592fc1c3f2586b801a045.html[/url]<br />第一课<br />建立开发环境<br />如何获取toolchain和PSPSDK并通过CYGWIN在windows计算机上运行。完全新手指南.<br /><br /><br />这是本系列导学的第一部分，它将引导一个程序员新手走上开发自己的Sony Playstation Portable (PSP)自制程序之路。如果你正在阅读，祝贺你，你已经越过了一个程序员的最大障碍。一般来说，编程的最难之处就是开始。好了，通过阅读这篇导学，你已经上路了。<br /><br />创建你自己的程序的第一步是建立你的开发环境。这个环境能够把你写的源代码转化成可以在PSP上运行的文件格式。我们将在你的系统上安装两个重要的工具。<br /><br />第一个工具叫做CYGWIN。它本其实是一个windows下的Linux模拟器。它通过在你的机器上创建一个模拟的Linux环境来运行原生的Linux程序。这听起来很可怕，但是别担心，它用起来很简单。<br /><br />你需要的第二个工具是toolchain。这是PSP程序编程的关键。它将安装你所需要的一切东西，从头文件，到类库，到编译器自身，到示例程序。当你把它装好之后，你几乎可以开始创建自己第一个程序了。<br /><br />现在开始我们已经期待已久的部分：安装。<br /><br />第一部是安装CYGWIN。你可以点击这里下载 CYGWIN网站上的的安装文件。下载完成后，打开可执行文件。你将看到一个飞出的画面，单击next。现在你将问你要干什么。选择默认选项“从网络安装”，单击next按钮。现在你将被询问CYGWIN将被安装到哪里。将安装路径改成“C:/cygwin”如果它没被设成这样的话（假设C：是你的本地硬盘分区）。其他选择取默认值不管就好，单击next。现在你要选择将下载安装文件保存在什么路径下。选择哪里都关系不大，但是我建议选择一个你容易找到的地方，以便安装完成后把它们删掉。当你选好位置后，单击next。下一个画面询问你的网络设置，如果你没有用代理（或者不知道代理是什么），请单击 next。如果不能连接，返回上一画面，尝试使用Internet Explorer中的设置。现在你能够看到一个提供安装文件下载的服务器列表。任何一个都可以，选择一个，单击next。现在它会下载包列表，这可能会需要几分钟，具体要根据你的连接速度。完成之后，向下拖动滚动条，找到"devel"，点击它后边的"default"使它变成"install"。然后再向下拖动滚动条，找到"web"，单击它旁边的"+"，向下滚动，将"wget"设置成"install"。<br /><br />完成之后，单击next。CYGWIN将会下载并安装刚才选择的包。这很可能会花上一段时间，所以去看看电视或者上上网。当CYGWIN安装完成之后，你可以安装toolchain了。<br /><br />现在， 我们开始在CYGWIN环境里安装toolchain。首先要先运行CYGWIN。所以，从开始菜单，或者从"C:/cygwin"，运行CYGWIN bash shell (cygwin.bat)。此时会打开一个命令行控制台。当你看到"yourusername@yourcomputername ~"时，说明你的环境建立成功了，关闭这个窗口。点击这里下载最新的toolchain。它应该在页面的底部。在我写此文的时候，最新的toolchain是20051202的。下载这个文件。完成之后，用Winrar解压这个文件到"C:/cygwin/home/user"，其中"user"是你的用户名。<br /><br />现在，真正安装的时刻到了，再打开你的CYGWIN bash shell。现在要给你介绍一下Linux命令行。你应该在行首看到一个"$"符号。这说明你运行的shell的user模式。这在CYGWIN中无关紧要，但是如果你曾经用过真正的Linux命令行，这是非常需要注意的事。（译注：在Linux只有root用户才是"$"提示符）<br /><br />我们进入到刚才解压的toolchain目录下。在命令行输入"ls"，它表示列出列表（list）。它将把当前目录下所有文件显示出来（这和 Windows命令行的"dir"类似）。现在你应该看到一个叫做"psptoolchain"的文件夹，这正是我们想去的地方。所以输入"cd psptoolchain"敲回车。CD表示更改目录（change directory），并且它会切换当前操作路径。现在再快速的"ls"一遍，你能看到这个文件夹下的文件。我们要使用其中的 "toolchain.sh"文件安装所有的东西。<br /><br />由于toolchain的一个最近的问题，我们需要更新所有的东西，所以获取toolchain的最新更新，你需要输入"svn update"并敲回车就行了。（译注：这部操作不是必须的，可能只是作者当时的情况所需）。<br /><br />这个完成之后，执行已经更新后的脚本：输入"./toolchain.sh"并敲回车。在Linux，"."表示当前目录，".."表示父目录，所以这条命令表示运行当前目录下的"toolchain.sh"。然后toolchain.sh会为你完成余下的事。这会用掉几个小时的时间，根据你机器的配置不同。做为参考，我的3.0GHz Pentium 4用了3个小时运行完整个脚本，耐心等吧。据说有人用了超过24个小时，但是这有点过分夸张了。（译注：我的Celeron M 1.4G的本子也是用了3个小时）出去休息一会，过几个小时再回来。或者更好的办法是晚上睡觉的时候进行，那样早上一觉醒来，你就准备好进行下一步了。<br /><br />终于到了最后一步。我们得告诉CYGWIN在哪能找到PSPSDK（toolchain刚刚为我们安装的东西）和toolchain。那么我们就得改变"C:/cygwin/cygwin.bat"，让它包含他们的路径。所以，关闭CYGWIN，找到"C:/cygwin"路径下的 cygwin.bat文件。右键单击它选择“编辑”，将弹出一个记事本窗口包含下列内容（如果你把CYGWIN安装到了其它盘而不是"C:"盘，你需要把所有的"C:"换成"D:"或"E:"等）：<br />@echo off<br /><br />C:<br />chdir C:cygwinin<br /><br />bash --login -i<br /><br />Change this to:<br />@echo off<br /><br />C:<br />chdir C:cygwinin<br /><br />set path=%path%;C:/cygwin/usr/local/pspdev/bin<br />set PSPSDK=C:/cygwin/usr/local/pspdev<br /><br />bash --login -i<br />现在你可以开始上路了！如果你有想要编译的源代码，用"cd"进入那个目录并且输入"make"，它就会为你产生一个能够放入PSP中的eboot.pbp文件。如果没有，请看第二课，学习如何在PSP上建立你自己的简单应用程序。<br /><br />注：原文地址[url]http://www.scriptscribbler.com/psp/tutorials/lesson01.htm[/url]<br /><br />由于原文可能不定期更新，所以本译文不保证与原文保持同步</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post17031_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

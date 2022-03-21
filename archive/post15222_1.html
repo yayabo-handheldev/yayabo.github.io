@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>救命啊！菜鸟死在一堆代码前啦！！！</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">救命啊！菜鸟死在一堆代码前啦！！！</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_16.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Down的传说</b><br/>
+2010-03-23 10:14:18</p>
+</div>
+<div class="col-10">
+<p> <br />求哪位大神发一段 简单的程序开始代码给我吧...<br /><br />刚开始研究AMP，一点都不懂，最开始怎么写也不知道...<br /><br /> <br />我需要教程，我需要最基本最基本的教程...<br /><br /> <br />哪位好心人教我一下吧...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Down的传说</b><br/>
+2010-03-23 10:16:03</p>
+</div>
+<div class="col-10">
+<p><br />掌叔，有空发段简单的AMP代码吧，我边连刚开始怎么写都不知道...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-03-23 10:32:35</p>
+</div>
+<div class="col-10">
+<p>白枫在amp0.67的发布贴上有关于指令的下载你可以看一下<br />这是脚本播放机部分:（白枫给的）<br />名字:Print<br />参数:字串<br />功能:打印信息<br />例子:Print("调试信息<br />");<br /><br />名字:run<br />参数:字串<br />功能:递归执行一个脚本<br />例子:run("event.lua");<br /><br />名字:jump<br />参数:字串<br />功能:关闭当前脚本的执行并无条件跳转执行一个脚本<br />例子:jump("event.lua");<br /><br />名字:goto<br />参数:标签<br />功能:跳转到一个标签所记录的位置执行<br />例子: <br />goto(*label);<br />Print("hello world!<br />");<br />*label<br />Print("hello world will be skip!<br />");<br /><br />名字:exit<br />参数:任意或无<br />功能:无条件关闭当前脚本的执行<br />例子: exit(); 或 exit(0);<br /><br />名字:loop<br />参数:无<br />功能:无条件锁定当前脚本行的执行<br />例子: Print("be loop!<br />"); loop();<br /><br />名字:pause<br />参数:数字<br />功能:暂停脚本一段时间,数字=60=1秒<br />例子:pause(60);<br /><br />名字:Include<br />参数:字串<br />功能:加载一个脚本文件<br />例子:Include("sys_media.lua");<br /><br />名字:docode<br />参数:字串<br />功能:加载一个脚本文件,和Include一样,只是名字不同<br />例子:docode("sys_media.lua");<br /><br /><br /><br />--------------<br />文字部分:<br />--------------<br /><br />名字:font<br />参数:文件路径,字体大小<br />功能:加载系统使用的字体文件<br />例子1:font("gbk12","asc12",12);<br />例子2:font("font.ttf",16);<br /><br />名字:fontnull<br />参数:无<br />功能:删除加载过的字体文件数据<br />例子:fontnull();<br /><br />名字:fontcolor<br />参数:r,g,b,a<br />功能:设置默认字体颜色<br />例子:fontcolor(255,255,255,255);<br /><br />名字:fontwidth<br />参数:数字<br />功能:字体间的列距离修正<br />例子:fontwidth(14);<br /><br />名字:fontheight<br />参数:数字<br />功能:字体间的行距离修正<br />例子:fontheight(14);<br /><br />名字:texton<br />参数:无<br />功能:文字@名字显示开关<br />例子:texton();<br /><br />名字:textoff<br />参数:无<br />功能:文字@名字显示开关<br />例子:textoff();<br /><br />名字:name<br />参数:名字<br />功能:设置名字<br />例子:name("yayabo");<br /><br />名字:namexy<br />参数:坐标<br />功能:设置名字显示的坐标<br />例子:namexy(80,190);<br /><br />名字:text<br />参数:字串<br />功能:设置要显示的文字<br />例子:text("[c=ff0000]12345[c=00ff00]6789[/c]8765[/c]4321");<br /><br />名字:textxy<br />参数:坐标xy<br />功能:设置文本显示位置<br />例子:textxy(80,206);<br /><br />名字:textmode<br />参数:TEXT_FULLSCENE或TEXT_HALFSCENE<br />功能:设置文字显示的模式,全屏+半屏<br />例子:textmode(TEXT_HALFSCENE);<br /><br />名字:textclear<br />参数:无<br />功能:把屏幕显示的文字刷掉<br />例子:textclear();<br /><br />名字:textlen<br />参数:数字<br />功能:设定文本显示的宽度,超过宽度则换行<br />例子:textlen(310);<br /><br />名字:textline<br />参数:数字<br />功能:超过行数自动清屏<br />例子:fontline(4);</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Down的传说</b><br/>
+2010-03-23 10:34:24</p>
+</div>
+<div class="col-10">
+<p><br />做为一位资深菜鸟...我看不懂...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-03-23 10:41:29</p>
+</div>
+<div class="col-10">
+<p>哥在bus上也看到了这篇文章，不过依旧顶楼主</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-03-23 10:42:56</p>
+</div>
+<div class="col-10">
+<p>顶楼主</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-03-23 10:45:55</p>
+</div>
+<div class="col-10">
+<p>这是仿钻吧？还是低质钻？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pwlsysg</b><br/>
+2010-03-23 12:01:12</p>
+</div>
+<div class="col-10">
+<p>如果这个做成犀利哥的造型估计销售量更好</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post15222_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

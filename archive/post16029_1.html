@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>LUA入门班《0基础篇》</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">LUA入门班《0基础篇》</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-13 12:26:48</p>
+</div>
+<div class="col-10">
+<p>作者：oblivioned  ×ㄨ┆花苼糖<br /><br />咱们洋洋工作很忙，帮帮他吧，既然做了版主，那也的为我们会员门做点贡献吧~~  好的，那就在这个板块开办一个LUA入门学习班吧，对于那些想学习LUA 的人，可以一步一步学习下去，不定时更新。<br />      引用一句话：“本教程只能教会你爬，至于你想要跑起来，甚至飞起来，就要自己努力学习,当然我建议多在论坛里逛逛收获会更多。”<br />好了说说我们要怎样开始学习吧。<br />      笔者呢，用LUA 是游戏开发方面的，所以准备从PSP掌机，的开发游戏为起点，让大家对LUA 又一定的了解以后。在由大家自己学习。<br />本套教程呢主参考资料是《菜鸟也能为PSP 写程序》不过我会加上自己的一些经验，和大家一起分享。说的不好谅解^_^<br /><br />要在windows上调试请 参照菜鸟也能为PSP 写程序 第一课~~~~~<br /><br />第一课：“hello world“<br />        《0基础篇》嘛，要是您没有学过任何一门编程语言，没关系。我们从“0”开始。<br />          很多语言第一课都是“hello world”我们也不例外！<br />开发环境：Luaplayer for psp<br />调试环境：Luaplayer for windows<br />代码编辑器：Notepad++<br />附件我打包了，到时候下载吧！<br />（我们这里撇开PSP 不说，只用windows的调试环境！）<br /><br /><br />这一课需要用的的函数：<br />Color.new(R,G,B,A)<br />功能：创建一个颜色对象，R:红 G：绿 B：兰 A：透明度。他们的取值范围是 0--255<br /><br />screen:print(x,y,string,Color)<br />功能：在屏幕x，y坐标处打印Color颜色string（字符串），<br /><br />还有一些关键字 ：<br />while （要是）<br />true    （真）<br />do    （就执行）<br />end  （结束）<br />- -| 汗~~~~~~<br />下面这两个是暂时不用理解的！到后面在讲！<br />screen.flip()<br />screen.waitVblankStart()<br /><br />好程序开始，我们先创建一个颜色<br />red=Color.new(255,0,0)<br />“red”是自己取名字的哪怕你取成hongse 也没问题，这句话，已经创建了一个红色值为255 的颜色对象。<br />接下来我们吧我们需要的文字打印到屏幕上！<br />screen:print(230,135,"hello world",red) 在x，y 用我们刚刚创建的颜色对象打印hello world的字样！<br />其实到这里，这个程序已经达到我们的目的了，但是这只有2个语句，一瞬间程序就已经结束了，我们根本来不及看到效果，<br />那我们就做一个死循环，让他停柱<br /><br /><br />1        while true do<br />2          screen.flip()<br />3          screen.waitVblankStart()<br />4        end<br />看第一句，这是一个循环。  ture（真） 所以第一句可翻译成 要是 真就执行 。慢慢理解来吧~~~  - - 不理解也没关系，往下看<br />然后第二句 ：稍微介绍一下吧。Luaplayer for psp 采用了一种二级缓存的技术，所有的图形在屏幕下方绘制好，必须要调用screen.flip()才能吧滴二层屏幕的图形显示给我们看。<br />第三句：screen.flip()后面更上就对，不然效果就~~~~~（你自己去试试？）<br />第四句：end 没有什么太特殊的意义， 表示 while循环体结束，不过注意了 这里它不会去执行第5句，它会跳回第一句执行，因为是循环嘛^_^<br /><br />行啦 看看效果，颜色值你可以自己修改，要什么颜色就看你怎么改了，内容也可以改。你改 "i kill you!" 也行的^_^<br />要是你能看见如下效果，那说明两个事，<br />1.你的开发环境设置好了，<br />2.这节课你听懂了。<br /><br />下课~~~~~ - -||<br /><br /><br />2009年1月21日  第二课<br /><br />同学们，带好纸笔和脑袋，上课啦！<br />几天说一些概念。做笔记哦！！<br />1.变量<br />      变量是以某标识符为名字，即变量名，在程序运行过程中，其值可以改变的量。<br />比如<br />a = 10<br />a 是变量名，10 就是这个变量对应的值。 “=”注意哦，这个在程序里不叫等于号，它有个新的名字。“赋值号”。<br />上面的意思就是， 把10 赋给 变量 a。<br />什么，你说，要是在下面在对a赋值<br />a = 11 怎么办！<br />对说的好。变量嘛，其值可变。任何一个变量的值应该和上一次改变的值一样~~（除非重大错误。）<br />补充一点，LUA对大小写很敏感也就是说<br />A  和a  是不同的变量~。<br /><br />2.运算符<br />“+” ：加<br />“-”  ：减<br />“*”  ：乘<br />“/”  ：除<br />“%”：“模除”或者说“取余数”<br />“-” ：负号运算<br />看下面的，<br />a = 10<br />b = -a<br />c = 20-a<br />计算以后a,b,c的值分别是 10 ，-10，10 。 自己看看你就明白了。<br /><br />2.逻辑表达式<br />LUA里有下面几个逻辑表达式<br />not<br />and<br />or<br />按C语言里的说法，他们被理解为，非，与，或，按我的理解他们为，“如果没有，和，或者，”<br />嘿嘿，先记好，用的时候你就明白了！<br /><br /><br /><br />3.关系表达式<br />比大小会做吧！！<br />9 （  ） 10 填什么？小时候我分不清楚“大鱼小鱼”，于是老师就交我说。（谁大，吃谁。）10比较大，所以嘴巴（开口）向10~~ 于是答案就是“<”<br />呵呵。<br />LUA的关系表达式如下<br />"<"  　 ：小于<br />">"  　 ：大于<br />"<=" 　 ：小于等于<br />">="　 ：大于等于<br />"=="　：等于<br />补充一点。关系表达式的计算结果用的是<br />ｔｒｕｅ　和　ｆｌａｓｅ　来表示的　即　“真　和　假，”<br />例如　１０>9  --ture<br />20 < 1 --ture<br />20< 20 -- flase<br />（老师说：这个关系，要被下来哦！）<br /><br /><br />很好，今天就学到这里，学习了几个重要概念，注意咯，这不仅是在LUA里面，几乎在所有的编程语言里，这些东西都是通用的。<br />要是没听懂的请发帖吧，发在论坛里，我帮你解答！<br />下节课，小心哦。我会一次性讲完 “选择结构语句”，“循环结构语句” 。这节课就是为下节课做铺垫的哦！！<br /><br /><br /><br />第三课 "选择结构语句"与“循环结构语句”<br /><br /><br />9天了呢- -| 朋友们说更新太慢了- -|确实啊确实。以后改正 ~~~||~<br />好开始讲课吧。先看我们今天要学习的<br />一.选择结构语句<br />1.if 语句<br />2.if else 语句<br />3.if elseif 嵌套语句<br />二.循环结构语句<br />1.for 语句<br />2.while 语句<br />程序一般来说都是顺序执行的，C语言也是一样，从main函数开始依次执行。但是不可能我没所有的程序都依次执行的，所以就出现了选择，与循环！<br /><br />下面我们一个一个的讲咯。<br />首先看if语句<br />例一：<br />a = 10<br />if a > 10 then<br />    a = 0<br />end<br />print(a)<br />解释：if可以理解成如果，所以如上的语句是，如果a>10（“then”你就理解成“就”）就吧 0 赋给变量 a 。然后输出a的值。<br />如上例题，因为啊的值本来就是10，所以a>10不成立，所以语句 “a=0”是不会被执行的。所以本例题的输出结果是。 “10”<br />if 语句，一般格式<br />if 表达式1 then<br />语句1<br />语句2<br />……<br />end<br />编译器会首先计算表达式1，如果结果为“真”也就是ture，就执行语句1，语句2，语句n，如果计算为“假”，也就是flase<br />编译前讲不执行then到end之间的语句。而跳到end以后开始执行！<br /><br />if else语句：<br />例题2：<br />a = 10<br />if a > 10 then<br />    a = 0<br />else<br />    a = 20<br />end<br />print(a)<br />解释：if else语句，其实最大的区别就在这个else，不像上面的if语句一样，表达式为假以后就会跳出整个if结构外执行，if else语句，会在表达式计算为假以后，计算else后面的语句，在跳出整个if。<br />所以呢。本题的输出结果应该是20！！！<br /><br />if else 语句的嵌套<br />例题3：<br />a = 10<br />if a > 10 then<br />    a = 0<br />elseif a ~= 1<br />    a = 20<br />end<br />print(a)<br />解释，if else的嵌套，其实就是在if 结构里，在加上一个或者多个if 语句，本人才疏学浅- -|不太能解释清楚这个问题。还希望朋友们多多揣摩。<br />本例题。首先计算 a >10 结果为假于是跳转到else~~elseif 在计算 a~=1（如果a不等于1）计算为真，于是执行了a=20，所以输出结果是~20<br /><br /><br />下面我们接着讲循环结构语句<br />for语句<br />for语句的形式<br />for 变量=起始值，终止值 do<br />语句1<br />语句2<br />……<br />end<br /><br />看例题，用for语句计算1+2+3+4+5+……+99+100<br />程序如下：<br />sum=0<br />for a = 1 ,100 do<br />sum = sum + a<br />end<br />print(sum)<br /><br />很简单吧，这个for语句会执行100次<br />a就是控制执行的变量，当a加到100的时候for语句编结束了。<br />我们来看看他的执行<br />首先，把0赋值给了sum。<br />然后进入for循环。第一次循环a的值是1<br />然后计算 sum =sum +a （sum = 0+1）<br />然后遇到end~~这里注意啦，它会跳回for 的开始的地方。开始执行第2次，第二次执行的时候a的值就编程了2<br />计算sum=sum+a（sum = 1+2）<br />同上执行100次~~~~就得到了我们想要的结果啦<br />结果应该是5050~~~（C语言老师常常拿这个题目讲的，不算我们也记得啦！！）<br /><br />今天最后一个知识点啦！！！<br /><br />while 循环语句<br />刚刚我们说的for呢是有循环次数限制的。也就是我们确定循环次数有for语句就简单了，不过要我们不知道循环次数呢？<br />看例题<br />a=0<br />while a < 123456789 do<br />a = a+20<br />end<br />很简单的，也就是说，while先计算了 表达式a<123456789 成立，就执行a=a+20<br />然后遇到了end ，又跳回while开始执行，如此一直执行下去，知道 a<123456789 这个条件不成立的时候变会结束。<br />呵呵~~~~~简单吧，活学活用哦。那给大家留个题目吧，用while 语句计算1递加到1000 的结果。<br />当然上面介绍的语句，其实还有我没有说到的用法，不过，那些暂时不用掌握太早。<br /><br />哦忘记了一句话，while 语句 小心用哦，不然就~~~~~ 不知大家听没听过这么一句话，我觉得挺经典的。和咱们的循环语句有关！！<br />爱就像“死循环”！<br />对啦，死循环呢就是永远跳不出来的循环啦，- -||汗<br />除非你需要死循环啦，<br />我们做游戏的就要用到死循环。。。。<br />比如<br />while ture do<br />end<br />就是一个死循环咯！！！！<br /><br />理论知识！，不懂就问咯。说的不好请见谅，因为我不是个挺好的老师！！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16029_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

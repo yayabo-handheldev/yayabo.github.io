@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>M8 SDK蹒跚学步（1）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">M8 SDK蹒跚学步（1）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-01-14 09:48:44</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://www.meizu.com/[/url]<br />作者：looyea<br /><br />前1-5肯定是原来SDK附带例子的分析了，以后会慢慢增加对SDK学习的相关内容。也希望已经开发程序的人员，把自己的代码拿出来分享一下。<br />er。。。除了开头那个/* */内的内容意外，所有程序代码中/* */标注起来的内容为个人笔记，欢迎高手指正，小白提问，喷子退散！<br /><br />/************************************************************************/<br />/*<br />* Copyright (C) Meizu Technology Corporation Zhuhai China<br />* All rights reserved.<br />* 中国珠海, 魅族科技有限公司, 版权所有.<br />*<br />* This file is a part of the Meizu Foundation Classes library.<br />* Author:        欧桂斌<br />* Create on:    2008-12-1<br />*/<br />/************************************************************************/<br /><br />//////////////////////////////////////////////////////////////////////////<br />//这个示例用到了MZFC类库中的应用程序类CMzApp、窗口类CMzWnd，及一些UiWin派生的控件类<br />// 使用MZFC创建窗口应用程序的最基本步骤：<br />//  1. 从CMzWnd派生主窗口类（添加控件，及控件的响应处理）<br />//  2. 从CMzApp派生主应用程序类<br />//  3. 定义应用程序全局变量<br />//////////////////////////////////////////////////////////////////////////<br /><br /><br />//请先创建一个Win32智能设备的空项目<br />//设置好项目的头文件目录及输入库目录指向MZFC库的相应目录<br />//在这个项目里添加一个sample.cpp文件，并把这片代码粘贴进去，即可编译运行<br /><br />// 引用mzfc库头文件<br />#include <mzfc_inc.h><br /><br />/// 本项目演示了使用MZFC中的：<br />/// 应用程序的启动，窗口的创建，<br />/// 及Ui按钮控件、命令消息的处理<br /><br />/* 宏定义，定义了测试变量101， 作为按钮的ID，以后就用它标识这个按钮了，哈哈 */<br />#define MZ_IDC_TESTBTN1    101<br /><br />// 从CMzWnd派生主窗口类<br />class CSample1MainWnd: public CMzWndEx<br />{<br />   /*<br />       MZFC的窗口类及其派生类的窗口类名的声明宏<br />       有点像windows窗口类的注册的感觉<br />   */<br />   MZ_DECLARE_DYNAMIC(CSample1MainWnd);<br />public:<br />   // 主窗口中的子窗口变量：一个按钮<br />   UiButton m_btn;<br /><br />protected:<br />   // 重载窗口初始化函数<br />   virtual BOOL OnInitDialog()<br />   {<br />       // 先调用基类的初始化函数<br />       /* 如果不能创建父级窗口就返回false出错 */<br />       if (!CMzWndEx::OnInitDialog())<br />       {<br />           return FALSE;<br />       }<br /><br />       // 初始化主窗口中的控件<br />       /*<br />           #define MZC_BUTTON_PELLUCID   0x0001<br />           半透明按钮<br />       */<br />       m_btn.SetButtonType(MZC_BUTTON_PELLUCID);<br />       /*<br />           virtual void UiWin::SetPos  (<br />           int  x,<br />           int  y,<br />           int  w,<br />           int  h,<br />           UINT  flags = 0  <br />           )   [virtual]<br />           首先我们声明的UiButton是继承自UiWin类，<br />           这个SetPos方法就是UiWin的，这里是子类继承了<br />           父类方法。<br />           四个参数分别是，xy坐标，长度(width宽)和宽度(height高)<br />           最后一个参数因为有默认值，所以调用这个方法的时候不指定<br />           值也是可以的。其值有三个选项0，SP_NOMOVE,SP_NOSIZE，<br />           就是默认、不改变控件位置、不改变控件大小<br />       */<br />       m_btn.SetPos(100,250,280,100);<br />       /*<br />           当前这个控件的ID号，就是最开始我们设定的那个，文档中给出的是：<br />           nID  控件的ID，由于MZ_WM_COMMAND 消息中的LOWORD(wParam) = 控件ID, 因此要求控件的ID不大于65535.<br />           以后就可以用这个ID标识这个设备了（button）<br />       */<br />       m_btn.SetID(MZ_IDC_TESTBTN1);<br />       /*<br />           设定按钮上的显示的字符串<br />           L代表的是LPCTSTR类型的字符串<br />           这个函数仅仅接受这种类型的参数<br />           而双引号里面的是char数组，所以要<br />           强制类型转换<br />       */<br />       m_btn.SetText(L"Exit Hello MZFC!");<br />       /*<br />           设置文字颜色<br />           RGB是取颜色函数，用过Adobe产品的都知道<br />           3个255就是白色<br />       */<br />       m_btn.SetTextColor(RGB(255,255,255));<br /><br />       // 把控件添加至窗口中<br />       AddUiWin(&m_btn);<br />     <br />       /* 完成以上工作之后表明，当前这个窗口类创建成功 */<br />       return TRUE;<br />   }<br /><br />   // 重载MZFC的命令消息处理函数<br />   /*<br />       点击按钮后，会产生一个单击事件，如果不做处理会没有任何效果，因此这里添加事件处理函数<br />       这个名字是固定的，这里是OnMzCommand，有两个参数<br />       这两个参数的描述在MZ_WM_COMMAND中有说明<br />       第一个wParam，其中的低16位代表的是触发事件的控件ID，不大于65535，就是FFFF<br />       第一个wParam的高16位代表的消息通知<br />       第二个参数LParam代表的是消息附加的数据，根据控件的不同，有不同的意思<br />       这里是按钮，按照Document说明代表出发此消息时鼠标的坐标。<br />       不过我们这个方法不用这么复杂，所以没有用到这个。<br />   */<br />   virtual void OnMzCommand(WPARAM wParam, LPARAM lParam)<br />   {<br />       /*<br />           无符号整形指针，哈哈，这里用到刚才我们的那个id了<br />           首先取ID，低16位<br />       */<br /><br />       UINT_PTR id = LOWORD(wParam);<br />       /* 判定ID */<br />       switch(id)<br />       {<br />           /* 如果ID跟我们给那个按钮定义的ID一样的话，说明是我们的按钮触发的事件*/<br />           case MZ_IDC_TESTBTN1:<br />           {<br />               /*<br />                   首先说说MzMessageBoxEx方法。它的作用是弹出一个提示对话框，这个函数在这里调用的时候有5个参数<br />                   第一个是窗口句柄，说白了，可以“权且”当成我们当前这个窗口类产生的实例的ID，就像那个Button的ID一样<br />                   第二个是对话框中的内容<br />                   第三个是弹出对话框中的标题，目前的设置是标题无效，为什么？看看效果你就知道了，呵呵，压根没有标题栏！<br />                   第四个是对话框按钮的类型，就好比windows经常弄的那个，什么yes no about，yes，yes no等等。根据Document<br />                   它有如下可选择的，具体的含义，顾名思义。<br />                   MZ_OK 、 MZ_OKCANCEL 、 MZ_ABORTRETRYIGNORE 、 MZ_YESNOCANCEL 、 MZ_YESNO 、 MZ_RETRYCANCEL<br />                   第五个是设置此窗口在收到Home键时的返回值，这个我们后述<br />                   这个函数的返回值就是你选中的按钮。具体是<br />                   “返回选中的按钮 YES-1，NO-2，OK-1，RETRY-1,CANCEL-2,ABORT-2,IGNORE-3”<br />                   因为当前的选项是这个对话框只有Yes 和 No按钮，根据上面的列表，如果点击的是yes就返回1<br />                   所以，下面这条语句的意思就是：<br />                   如果在弹出对话框中点中了yes按钮（显示在M8上的时候是“是”），就执行PostQuitMessage函数<br />               */<br />               if(1 == MzMessageBoxEx(m_hWnd, L"你按了“退出”按钮，真的想退出吗！", L"退出", MB_YESNO, false))<br />                   PostQuitMessage(0);<br />               /*<br />                   PostQuitMessage是……，是什么呢？M8 SDK的三个document都没有给~嘿嘿，这个不要紧<br />                   我们还有MSDN不是~，开开MSDN，搜之，哦，出来了很明显标注出来WinCE 5.0 -_-|||<br />                   MSDN指出：本函数的意思是一个线程Thread发出退出请求，后面括号里面那个int类型的参数表示退出代码<br />                   这里0表示啥毛病没有，退了~~<br />               */<br />           }<br />           break; /* 跳出当前的case 判断 */<br />       }<br />   }<br />};<br /><br />/*<br />   MZFC的窗口类及其派生类的窗口类名的定义宏<br />   前面有个，不过那个是声明<br />   这个表示的是实现了的类<br />*/<br />MZ_IMPLEMENT_DYNAMIC(CSample1MainWnd)<br /><br /><br />// 从CMzApp派生主应用程序类<br />/*<br />   这里CMzApp是一个标准mz应用程序，前面那个类是窗口，<br />   窗口类不能执行，能够执行的类都是应用程序，在应用程序中<br />   创建一个新的窗口类。<br />*/<br />class CSample1App: public CMzApp<br />{<br />public:<br />   // 主窗口变量<br />   /*声明了一个窗口类的变量，但是还没有实例化，换句话说，有了概念，没有实体，有了目标，资金没到位*/<br />   CSample1MainWnd m_MainWnd;<br /><br />   // 重载Init函数<br />   virtual BOOL Init()<br />   {<br />       /*<br />           这个函数依然MSND之，查到两个，我以第二个WinCE 5.0的为准<br />           为调用（这个函数的）线程初始化COM库，设置线程的并发模式，并且如果当前线程需要会为其创建一个新的apartment<br />           两个参数：<br />           第一个LPVOID，void类型的长指针，保留，设定为NULL，这里直接给0了<br />           第二个DWORD，双字类型，设定线程的并发模式，我们这里默认的就是COINIT_MULTITHREADED，多线程！SB IP就不是……可惜了FreeBSD那么好的系统<br />           关于这个函数还有更多的内容，下次我们再详说把。<br />       */<br />       CoInitializeEx(0, COINIT_MULTITHREADED);<br />       //创建主窗口<br />       /* 首先，获取当前的工作区大小，白话文就是当前屏幕上能显示程序的面积 */<br />       RECT rcWork = MzGetWorkArea();<br />       /*之后创建我们前面那个窗口类，并设置为全屏显示*/<br />       m_MainWnd.Create(rcWork.left,rcWork.top,RECT_WIDTH(rcWork),RECT_HEIGHT(rcWork), 0, 0, 0);<br />       /*顾名思义了*/<br />       m_MainWnd.Show();<br /><br />       return TRUE;<br />   }<br />};<br /><br /><br />// 应用程序全局变量<br />/*创建一个程序实例，运行就全靠它了~*/<br />CSample1App theApp;</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16887_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>看到版图竟然是能美！！大爱啊。。。</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">看到版图竟然是能美！！大爱啊。。。</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_15.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>KEY饭</b><br/>
+2010-04-23 08:33:54</p>
+</div>
+<div class="col-10">
+<p>这个版区应该是讨论KEY的作品的说。。。为什么只看到讨论CLANNAD的捏。。。虽然不否认CLANNAD是KEY社的经典。。。但是就米人讨论LB或者LBEX么。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>5545133</b><br/>
+2010-04-23 08:56:42</p>
+</div>
+<div class="col-10">
+<p>人在中国,魂在掌家就可</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>真的飞鸟</b><br/>
+2010-04-23 08:59:40</p>
+</div>
+<div class="col-10">
+<p>这里还有一个和你一样控能美的。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-04-23 09:07:37</p>
+</div>
+<div class="col-10">
+<p>那偶就试试</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-04-23 09:16:03</p>
+</div>
+<div class="col-10">
+<p>对呀，为什么R叔把自己露了呢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>KEY饭</b><br/>
+2010-04-23 09:17:26</p>
+</div>
+<div class="col-10">
+<p>哇呼~~~>.<~~~能美大爱的说~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-04-23 09:19:03</p>
+</div>
+<div class="col-10">
+<p>不错的说，不知好不好看~~~应该非常不错吧~~~大爱~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2010-04-23 09:29:31</p>
+</div>
+<div class="col-10">
+<p>去官方网站看了一下，貌似只适用于“FlashAdvance”卡带，GBALink好像不支持。<br />[url]http://www.emu-zone.net/gba-sp/flash-advance-linker.htm[/url]<br /><br />我又从SVN上下载了源代码，仔细研究了一下，以下是我目前的出来的结论：<br /><br />这个软件确实可以通过Slot1端往Slot2端烧录游戏。源代码中有个非常神奇的库叫做“cartlib”，这个库将识别Slot2端卡带的类型，然后针对不同的卡带类型采取不同的烧录措施。<br />目前这个库能够识别出来的卡带很少，只有如下几种：<br />0x00：Hudson卡带。<br />0x2E：非烧录卡。<br />0x17：FlashAdvance 64M烧录卡。<br />0x18：FlashAdvance 128M烧录卡。<br />0x96：Turbo FlashAdvance 64M烧录卡。<br />0x97：Turbo FlashAdvance 128M烧录卡。<br />0xE2：任天堂标准Flash烧录卡。<br />0xFF：无法识别的卡带。<br /><br />显然，你的GBALink被识别成了非烧录卡，说明这个软件无法访问GBALink的烧录硬件模块，只能把它当成没有烧录功能的普通卡带。<br /><br />这个软件的其他部分与Slot2烧录卡无关，所以能够正常启动并且除了烧录之外的功能一切正常。<br /><br />基本上，这个软件的核心就是那个cartlib了。可惜它不支持GBALink。<br />不过，令我感到意外惊喜的就是，这个库能够检测出来任天堂标准Flash烧录卡。当年我在某国外网站看到过任天堂标准Flash烧录卡的工作原理和电路图，和当时流行的GBA盗版卡原理差不多。而在GBALink的早期，是可以烧录通过硬件改造的盗版卡的。原理就是取消盗版卡NorFlash的写保护。当时我对这方面颇有研究。我记得家里还有几盘当年改造好的盗版卡，我估计这个软件也能把这种卡带检测出来。抽空我要试一下看看~~~如果真如我所愿的话，我甚至有能力将这个库强化一下，让它支持更多的烧录卡。……呃，没有加密的烧录卡……<br /><br />顺便一说，如果我的猜测没错的话，这个软件也能检测出来EZ3in1等Slot2端扩展卡，并且能够烧录。如果你手里有这样的扩展卡的话不妨试一下。<br /><br />总结：相当有实用价值和研究价值的软件！是个值得我投入精力的研究方向~~~<br /><br />最后再说一句吧：不借助Slot2端，直接从Slot1端玩GBA游戏是不可能的。除非你的Slot1烧录卡足够强劲，可以模拟GBA……普通的Slot1烧录卡没那么厉害的。原因是多方面的，DS的内存太小；只有ARM9可以访问Slot1；ARM9和ARM7的差异性……放弃吧。去指望DSI能够有GBA模拟器吧。单从硬件上来看，DSI是可以模拟GBA的。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>huxizhijian</b><br/>
+2010-04-23 09:37:32</p>
+</div>
+<div class="col-10">
+<p>* System.getDate() Only 1 Time call expected Eg year = 1,month = 2 or day = 3 Eg. year = System.getDate(1) Returns the year.* System.getTime() Only 1 Time call expected Eg hour = 1,minutes = 2 or seconds = 3 and microseconds = 4 and pm or am = 5.* Eg hour = System.getTime(1) Returns the hour. uses the psp clock.          这个是什么意思啊？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>huxizhijian</b><br/>
+2010-04-23 09:41:41</p>
+</div>
+<div class="col-10">
+<p>话说证明这些有什么用呢？还有详细说下LUA异常处理细节。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-04-23 09:42:20</p>
+</div>
+<div class="col-10">
+<p>虽然没看过但是还是支持~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>619414885</b><br/>
+2010-04-23 09:44:29</p>
+</div>
+<div class="col-10">
+<p>你们都坏掉了么</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>619414885</b><br/>
+2010-04-23 09:47:33</p>
+</div>
+<div class="col-10">
+<p>图还不错~顺便吐4楼的槽 CLANNAD 不是已经完结了么~难道还要出什么春原番外篇？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>619414885</b><br/>
+2010-04-23 09:48:58</p>
+</div>
+<div class="col-10">
+<p>无图无真相啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>619414885</b><br/>
+2010-04-23 09:50:30</p>
+</div>
+<div class="col-10">
+<p>游戏不是很有爱~我去玩猫里奥</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-04-23 09:53:15</p>
+</div>
+<div class="col-10">
+<p>嗯。。。。都不错的。。。。很难抉择。。。。。那随便选两个算了。。。。。用抽签来决定。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-04-23 09:58:58</p>
+</div>
+<div class="col-10">
+<p>感觉差不多了~~~要是可以帮加个荔枝上去~~~我喜欢荔枝~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-04-23 10:01:13</p>
+</div>
+<div class="col-10">
+<p>我是来购物的路人甲~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-04-23 10:05:09</p>
+</div>
+<div class="col-10">
+<p>不是很明白。。。。。没玩过这游戏。。。。。有空去玩下~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-04-23 10:06:33</p>
+</div>
+<div class="col-10">
+<p>洛克人好难玩的。。。。。以前不知死了多少回。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-04-23 10:08:43</p>
+</div>
+<div class="col-10">
+<p>没什么，拆下来装回去就好了~~~我这烂机子CPU老有问题，经常接触不良。。。。差不多两个星期拆一次。。。。。已经拆习惯了~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-04-23 10:10:16</p>
+</div>
+<div class="col-10">
+<p>已经投过票了。。。。。人太多不好选择。。。。。最后还是抽签决定的。。。。。。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post14687_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

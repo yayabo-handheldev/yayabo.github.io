@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>DS开发教程libnds篇（一）：位图背景</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">DS开发教程libnds篇（一）：位图背景</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_17.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-03-08 19:37:04</p>
+</div>
+<div class="col-10">
+<p>摘自:[url]http://blog.sina.com.cn/niubods[/url]<br />作者：niubo<br /><br />    这个教程又很长时间没有更新，原因是我这段时间在查资料的过程中发现很多我之前的认知都是错误的，对我打击很大。所以这里所谓的教程也不过是我的学习笔记罢了。另外为了保证文本的兼容性我尽量不使用图片，单纯通过文字描述一些概念真是累人啊。<br />帧缓冲模式<br /><br />    首先，我们来看一下要在DS屏幕上显示图像的最简单的方法：帧缓冲。DS支持多种显示模式，其中最简单的就是帧缓冲模式。<br /><br />    framebuffer，就是所谓的“帧缓冲”模式。在这个模式下，我们不使用DS的图形引擎直接操作显存，相当于直接在屏幕上画点，所以也不能使用背景、精灵、卷动和旋转缩放这些特性。而且该模式只能在主屏上使用。<br /><br />    下面来看实际代码。功能是用帧缓冲模式上屏幕中央画一个红色矩形。[code=c]#include <nds.h><br /><br />int main(void)<br /><br />{<br /><br />    u16 x, y;<br /><br />       //设定要填充的颜色。<br /><br />       u16 color = RGB15(31,0,0);<br /><br />       //设置主屏显示模式为帧缓冲，副屏不使用<br /><br />       videoSetMode(MODE_FB0);<br /><br />       //videoSetModeSub(0);<br /><br />      <br /><br />      //映射显存用于帧缓冲，不过实际上是多此一举<br /><br />       //vramSetBankA(VRAM_A_LCD)；<br /><br />      <br /><br />       for(y = 60; y < SCREEN_HEIGHT - 60; y++)<br /><br />       {<br /><br />           for(x = 60; x < SCREEN_WIDTH - 60; x++)<br /><br />              {<br /><br />                  VRAM_A[y * SCREEN_WIDTH + x] = color;<br /><br />              }<br /><br />       }<br /><br />      <br /><br />       while(1)<br /><br />       {<br /><br />              swiWaitForVBlank();<br /><br />       }<br /><br />}[/code]我用的IDE是默认安装的programmers notepad（以后简称PN），从零开始创建一个工程有些难度，尤其是如果要自己动手写那个Makefile，不过可以偷个懒：从 exampleGraph2D文件夹下随便拷一个示例工程过来，保留.pnproj（PN的工程文件）和Makefile两个文件及source一个文件夹，然后清理掉source文件夹里除main.cpp之外的文件。最后打开PN的工程文件，把main.cpp里的内容换成上述代码就可以了。<br /><br /> <br /><br />代码讲解<br /><br />    首先定义一个16位无符号整数用来储存颜色值，用RGB15()这个宏转换，括号里的三个数值分别是R、G、B三个颜色的分量，取值范围是0-31。<br /><br />    videoSetMode(MODE_FB0);<br /><br />    设定主屏的显示模式，这里帧缓冲模式可以是MODE_FB0~FB3分别是直接显示显存A-D中的图像，libnds文档里有误。至于设定副屏的videoSetModeSub()，这里不用副屏，所以也是多余的。<br /><br />    vramSetBankA(VRAM_A_LCD);<br /><br />    很多教程中使用帧缓冲模式的时候都有这么一句，设定显存A区用于帧缓冲。其实在设定显示模式时就明确指定所使用的显存区域了，这里我把它注释掉了，当然留着也没什么关系。<br /><br />帧缓冲模式下，我们可以把用于帧缓冲的一块显存区域看成一个16位无符号整数型的一维数组，屏幕上点的坐标和数组下标的对应关系不难推算：下标=y×屏幕宽度+x。<br /><br /> <br /><br />DS的背景模式<br /><br />Graphics Modes<br /><br />[attach]986[/attach]<br /><br />[attach]987[/attach]<br /><br />    上面这个表是DS的主引擎和副引擎支持的背景模式。可以看出副引擎比主引擎少了两个模式，而且只有主引擎支持3D。再来看各个模式的具体定义。<br /><br />    Frame Buffer：帧缓冲。这个前面提过了，这个模式很简单，但是需要自己来操纵每一个像素。图像色深为16位/像素。<br /><br />    3D：通过类似OpenGL的指令绘制3D图像，图像只能输出到0号背景上。<br /><br />    Text：传说中的图块（tile）背景。背景分成8×8的小块，我们可以通过每个图块什么模样还有每个小块用那个图块绘制来描述一个背景。这个模式支持 256×256、256×512、512×256和512×512四种尺寸的背景，不过图块映射（Maps）都是按32×32排列的，即大于 256×256的背景都是由两块或四块256×256的板块拼接出来的。<br /><br />    Rotation：旋转背景。和Text背景很类似，不过这种背景可以进行旋转和缩放。旋转背景支持128×128、256×256、512×512和 1024×1024四种尺寸，图块映射用的是8位而不是Text背景的16位。另外图块映射是连续排列的，和Text背景不一样。<br /><br />    Extended Rotation：扩展的旋转背景，以后简称扩展背景。可以像帧缓冲那样来用，而且支持256色位图，可以进行旋转和缩放。有一点要注意的是当用16位颜色的时候bit15是Alpha位，如果这一位是0，这个点是不会显示的。<br /><br />    large bitmap：大位图背景。一块512×1024或者1024×512的8位背景。这个背景会用光显存A-D四块容量的总和——512K。所以基本上用了这样一个背景就剩不下多少显存给其他背景了。<br /><br /> <br />在扩展背景上使用位图<br /><br />    下面这段代码也是在上中央显示一个红色矩形，不过这次用的不是帧缓冲，而是一个Extended Rotation背景：[code=c]#include <nds.h><br /><br />int main(void)<br /><br /> {<br /><br />      int x,y;<br /><br />      //也可以用u16 color = ARGB16(1,31,0,0);<br /><br />      U16 color = RGB15(31,0,0)|BIT(15);<br /><br />      videoSetMode(MODE_5_2D);<br /><br />      vramSetBankA(VRAM_A_MAIN_BG);<br /><br />   //初始化背景，并得到一个背景ID。<br /><br />      int bg = bgInit(3, BgType_Bmp16, BgSize_B16_256x256, 0,0);<br /><br />      //获得这个背景所用的显存地址<br /><br />      u16* buffer = (u16*)bgGetGfxPtr(bg);<br /><br />     <br /><br />      for(y = 60; y < SCREEN_HEIGHT - 60; y++)<br /><br />      {<br /><br />          for(x = 60; x < SCREEN_WIDTH - 60; x++)<br /><br />             {<br /><br />                 buffer[y * SCREEN_WIDTH + x] = color;<br /><br />             }<br /><br />      }<br /><br /> <br /><br />      while(1)<br /><br />      {<br /><br />             swiWaitForVBlank();<br /><br />      }<br /><br />}[/code]代码讲解<br /><br />    首先要注意的是颜色，之前在帧缓冲中被忽略的bit15现在是Alpha位，如果不把它弄成1这个点就不会显示，所以这里和BIT(15)做了一下按位与运算。BIT(n)是一个宏，就是1<<n。<br /><br />设定显示模式为背景模式5，然后把A区显存映射到虚拟显存上主屏背景的起始位置（关于显存与虚拟显存后面在做详细说明）。<br /><br />    接下来因为使用DS的图形引擎而变得稍微麻烦一些。这里bgInit这个函数主要完成了以下几件事：<br /><br />    1.操作显示控制寄存器DISPCNT，激活指定的背景层，这里激活了背景3。<br /><br />    2.操作背景控制寄存器BG3CNT，向相应位段写入背景大小、色深、Map基址和Tile基址这些信息。Map基址和Tile基址是图块背景里的概念，到时再做详细说明。<br /><br />    3.把背景的状态参数保存在一个BgState结构体中。<br /><br />    4.还有对一些相关控制寄存器赋值，比如仿射变换矩阵的四个参数，还有屏幕原点在地图上的坐标。这些是用来控制背景的旋转、缩放还有卷动这些特殊效果的，现在不明白也没有关系。<br /><br />    u16* buffer = (u16*)bgGetGfxPtr(bg);<br /><br />    获取指向背景图像的指针，后面就可以通过这个指针向显存写入数据了。后面的部分和帧缓冲基本没什么区别，这里也就不再赘述。<br /><br />总结<br /><br />    这里只是用最简单的例子实现了位图背景的使用方法。严格说来帧缓冲并不算是位图背景，因为是直接写屏，不涉及图形引擎当然也谈不上什么背景。帧缓冲是在 DS上显示位图的最简单的方式，但只能在主屏上使用是一个致命的缺点。在扩展背景上画点现在也不是很麻烦了，而且两个屏都可以用。知道了屏幕上点的坐标与显存中数据的对应关系就可以编写自己的绘图函数了。另外，也可以把一幅图片显示在扩展背景上，只是对于256色图片来说在加载完图片数据后不要忘了加载调色板。可以参考16bit_color_bmp和256_color_bmp两个示例。图片一般用grit来转换，这个工具在devkitpro里有，不过通过命令行方式来使用对初学者来说还是很不习惯的，可以到这里[url]http://www.coranac.com/projects/[/url]下载附带图形前端wingrit的版本。后面我会根据需要结合实际情况讲解一下如何使用grit。<br /><br />    对于游戏来说，DS处理位图背景是很慢的，所以只适合显示静态图片。地图场景一般都是使用图块背景，这个在下一章会有详细讲解。不过做应用软件就另当别论了。软件的图形界面对图像的渲染速度没那么严格的要求，可以放心使用位图背景。另外在DS上实现汉字显示也是少不了在位图背景上画点的。<br /><br /> <br /><br />位图<br /><br />    这里针对DS来讲一下位图。DS上常用的有16位，256色和16色位图，这是常用的说法，没办法，我有时候就经常弄混16位和16色这两个字眼。<br /><br />    16位位图每个点都是一个具体的颜色值，各颜色的分量是这样排列的：a[color=RoyalBlue]bbbbb[/color][color=YellowGreen]ggggg[/color][color=Red]rrrrr[/color]，0-4位是红色；5-9位是绿色；10-14位是蓝色；15位为Alpha位，决定着这个点是否透明。<br /><br />    256色位图由图像数据和调色板组成，图像数据为8位/像素，每个点都是一个索引值，对应调色板里的256种颜色。调色板是一个长度为256的16位数组，每个元素都是一个16位颜色值。所以对于一个颜色不太复杂的位图，用256色位图并不比16位位图的表现差。<br /><br />    16色位图和256色位图类似，只是每个点占的储存空间更小，可以使用的颜色数更少而已。可以把256色调色板看作是一个16×16的方格，一个16色调色板就是其中的一行。<br /><br /> <br /><br />显存和虚拟显存<br /><br />    先来说说显存。显存是从地址0x06800000开始的一段存储空间，分为从A到I九个区。再看虚拟显存，是从地址0x06000000开始，分成四部分分别给主副背景和主副精灵。从字面上也能看的出来，“虚拟显存”，其实这部分存储空间是根本不存在的。话说DS的系统很大程度上是继承自GBA的，而 GBA的显存就从0x06000000开始。到了DS上，因为有两个屏，配了两个图形处理引擎，但是却没有分别给两个引擎配上独立的显存，需要把显存映射到虚拟显存中（map另外还有个意思是“变址”我觉得用在这里挺合适）。对于图形引擎来说，它们仍然可以认为它们有专属于自己的显存……有限的显存根据需要可以灵活地分配给两个引擎使用，突然让我想起一个成语：拆东墙补西墙，老任还真是勤俭节约啊，真是不服不行。<br /><br /> <br /><br />垂直空白中断<br /><br />    这个标题是照抄某教程上的。其实我对中断系统也没多少了解，这里其实就是讲一讲swiWaitForVBlank();这个函数。在前面这些简单的例子中，我们只是简单的把它放在一个无限循环中就完事了，并没有让它发挥真正的价值。<br /><br />    首先来看一下DS上LCD的刷新机制。DS的屏幕刷新频率约为60Hz，不过事情没这么简单。当完成一次水平扫描，也就是扫完256个点之后，在扫描下一行的时候会有一个停顿，感觉就像继续扫描了一些空白的点，这叫做水平空白（Hblank）。DS的屏幕在水平方向有256个点，另外有99个点的水平空白。同样的在垂直方向上扫过192条线之后，另有71条线的垂直空白。<br /><br />    如果在画面扫描期间更新图像数据的话，扫描出的图像一部分是旧数据一部分是新数据，就像两张撕开的图画拼在一起。当然如果从一张静态图片切换到另一张静态图片，这种画面会一闪而过，但如果是放一组连续的动画，那样看起来就会相当难受了。为了避免这种情况，要在垂直空白期间更新数据。系统在垂直空白时会生成一个垂直空白中断，swiWaitForVBlank();这个函数的作用就是等待垂直空白中断。更新数据的语句就写在这个函数后面。<br /><br />写在最后的话<br /><br />    在写这篇教程期间，devkitpro又一次的更新了，libnds更新至1.3.2。这个更新让人又喜又犹，喜的是新版本肯定又有些新特性，犹的是以前的工程可能又要编译不过去了。<br /><br />    对于libnds的更新，不外乎有两种情况：要不就是宏定义名字变了，要不就是新增了些函数或把以前的函数改了。这里宏定义一般指的是那些寄存器，从 libnds1.3.1 开始，到现在的libnds1.3.2，寄存器的命名在一步步向GBATEK风格靠拢。不过名字变，寄存器的地址和作用是不变的，这个问题很容易解决。而库函数的改变就有些复杂，需要知道自己以前完成某一功能所做的事情，所用的函数各完成了哪一部分……总之，只能对DS的硬件和工作原理也稍作研究，做到以不变应万变吧。<br /><br />    在以后的教程中我会尽力多讲一些原理方面的东西，可能会很啰嗦，不过深入之后你会发现那都是很有趣的东西。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-03-08 21:40:23</p>
+</div>
+<div class="col-10">
+<p>哇，还有“后面逐步分析”。很期待……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-03-08 21:55:13</p>
+</div>
+<div class="col-10">
+<p>能不能把代码放在代码框里？<br />像这样：[code=c]#include <nds.h><br /><br />int main(void)<br /><br />{<br />      int x,y;<br />      //也可以用u16 color = ARGB16(1,31,0,0);<br />      U16 color = RGB15(31,0,0)|BIT(15);<br />      videoSetMode(MODE_5_2D);<br />      vramSetBankA(VRAM_A_MAIN_BG);<br />      //初始化背景，并得到一个背景ID。<br />       int bg = bgInit(3, BgType_Bmp16, BgSize_B16_256x256, 0,0);<br />      //获得这个背景所用的显存地址<br />       u16* buffer = (u16*)bgGetGfxPtr(bg);<br />     <br />      for(y = 60; y < SCREEN_HEIGHT - 60; y++)<br />      {<br />          for(x = 60; x < SCREEN_WIDTH - 60; x++)<br />             {<br />                 buffer[y * SCREEN_WIDTH + x] = color;<br />             }<br />      }<br />      while(1)<br />      {<br />             swiWaitForVBlank();<br />      }<br />}[/code]这样不知是否能好看些。<br /><br />[[i] 本帖最后由 niubo_ 于 2009-3-12 06:46 编辑 [/i]]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post16797_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

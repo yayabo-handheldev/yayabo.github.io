@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>nesds EX nds上的FC/nes模拟器</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">nesds EX nds上的FC/nes模拟器</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_3.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2011-02-17 20:51:49</p>
+</div>
+<div class="col-10">
+<p>今天心血来潮翻我自己的QQ书签时看到的 貌似更新了 不过更貌似是一个其他的版本 我的双手已经拿不起ds了 有爱的同学下载试试吧 另外试试赛尔达 看能玩不<br />作者首页：<br />[url]http://sourceforge.net/projects/nesds/files/[/url]<br />[quote]nesDS EX Edition, using toolchain devkitARM.<br />We spent a few weeks to port the original nesDS project to the GCC toolchain. Then we made a new EX Edition, and made it possible to emulate the the NES/FC games that the origianl nesDS didn't work well.<br />The original nesDS uses the NDS Video hardware the emulate the NES/FC's, so it has a good speed.<br />The Ex Edtion uses software to render the graphic of NES/FC, and the speed and sound not better than before.<br />EX 0.30(beta) takes advantage of hardware to render background and sprites, so the sound and speed is pretty much better now.<br /><br />The EX Edition is very nice, because we combine the two versions in to one NDS ROM, so we can enjoy boths.<br /><br />Q: When to use EX Edition?<br />A: If the games you want to play works well on the original nesDS, then you have no need to use the EX Edition. <br />If not, then you can have a try with the EX Edition. If you want to know the figures of the EX Edition,view the UPDATES.<br /><br /><br />UPDATES:<br />--------<br />0.30<br />All the rendering sections has been re-written. Uses the NDS hardware to emu the NES graphic.<br />Much better speed and sound.<br /><br />0.22<br />uses software to cal the CRC, same as Virtuanes.<br />mapper074 updataed, supporting some special games.<br />mapper0, 1, 4 updated.<br />fixed some bugs..<br /><br />0.22b<br />mappers supported: 0, 1, 2, 3, 4, 10, 16, 19, 74, 246 (EX's mapper files is very different from the original.)<br />function added: cheat<br /><br /><br />CHANGES&pound;&ordm;<br />--------<br />Touch screen should work better now<br />Fixed bug that was causing ARM7 to crash on emulators (ideas and desemu inputs were not working) <br /><br />CAUTIONS:<br />---------<br />Run the nesDS EX Edition on ideas may cause a crush, because ideas does NOT support "swi".<br /><br />NOTES:<br />------<br />All other functionality should be identical to the original. nesDS inputs now work properly on <br />emulators. You can run the nesDS on ideas by DLDI patching it with the R4 dldi patch using<br />dlditool. You must then enable DLDI support for R4 under File->Properties. You can also run nesDS <br />on desmume but you will need to create a filesystem image from some files and embed the files to <br />the emulator (you need to use fcsr for this).<br /><br /><br />COMPILING:<br />----------<br />You need devkitARM to compile this project. If you are compiling on windows you also need mingw. On linux you will need to have make installed. <br /><br />The project compiles on windows and linux using devkitARM r32 (devkitPro). To compile on windows use<br />msys-1.0.15 (devkitPro) as well. You do not need anyhting else to comiple the project.<br /><br />Compiling on windows:<br /><br />1) extract devkitARM to a folder<br />2) extract msys to a folder<br />3) add DEVKITARM environment variable  and set its value to the path where you extracted devkitARM, <br />e.g: /c/devkitARM (must be linux style path!)<br />4) (OPTIONAL) add path to msys binaries in you windows path, e.g: c:msysin (must be windows style path!)<br /><br />You only need to do step 4 if you want to compile from the windows command shell. You can compile the project<br />without step 4 by launching mingw using msys.bat in the msys folder.<br /><br />5) change to the project main directory, either in the windows command shell (step4 required) or mingw then<br />type make.<br /><br />Compiling on linux:<br /><br />1) extract devkitARM<br />2) create a DEVKITARM shell variable with the path to where you extracted devkitARM, e.g: /usr/local/devkitARM<br /><br />You can create a variable in /etc/profile or in your home directory .bash_profile file as follows<br /><br />export DEVKITARM=/usr/local/devkitARM<br /><br />or just type this command in the shell before typing make<br /><br /><br />3) change to the project main directory then type make.<br /><br /><br />To delete all object files type:<br /><br />make clean<br /><br />in the main project directory<br /><br /><br />If you make changes to the emulator and want to add them to this project or if you want to join the project notify us<br />on [url]http://sourceforge.net/projects/nesds[/url]<br /><br /><br />CREDITS:<br />--------<br />Original nesDS team<br />Dwedit (pocketnesgcc)<br /><br /><br />___________________________<br />ported to gcc by minitroopa<br />EX Edition made by huiminghao<br />Source: README.TXT, updated 2011-02-17[/quote]<br />[attach]20472[/attach]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qnarutop</b><br/>
+2011-02-17 20:53:00</p>
+</div>
+<div class="col-10">
+<p>前来围观~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>红林-万千</b><br/>
+2011-02-17 20:53:14</p>
+</div>
+<div class="col-10">
+<p>高达什么的,最喜欢啦~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>红林-万千</b><br/>
+2011-02-17 20:53:53</p>
+</div>
+<div class="col-10">
+<p>有爱滴说~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>强悍的葱头</b><br/>
+2011-02-17 20:54:00</p>
+</div>
+<div class="col-10">
+<p>大學雖然沒想像中的那麼好..但是沒讀過大學那是萬萬不好滴..貝貝叔勇敢的西內吧～</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qnarutop</b><br/>
+2011-02-17 20:54:03</p>
+</div>
+<div class="col-10">
+<p>恩不容易啊有点意思</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2011-02-17 20:54:26</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=206218&ptid=16552]4#[/url] [i]伪·红莲[/i] [/b]<br />    你不说我还忘了…我这几个星期弄吧，现在开学了都…</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qnarutop</b><br/>
+2011-02-17 20:55:10</p>
+</div>
+<div class="col-10">
+<p>哈哈很有创意顶一个！！！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>红林-万千</b><br/>
+2011-02-17 20:55:22</p>
+</div>
+<div class="col-10">
+<p>果断拿下..</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qnarutop</b><br/>
+2011-02-17 20:55:44</p>
+</div>
+<div class="col-10">
+<p>喜欢鲁鲁修的前来围观</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>红林-万千</b><br/>
+2011-02-17 20:56:19</p>
+</div>
+<div class="col-10">
+<p>好喜欢啊~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>红林-万千</b><br/>
+2011-02-17 20:56:36</p>
+</div>
+<div class="col-10">
+<p>来收藏了~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>红林-万千</b><br/>
+2011-02-17 20:57:43</p>
+</div>
+<div class="col-10">
+<p>支持滴说~~~~~~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>红林-万千</b><br/>
+2011-02-17 21:00:24</p>
+</div>
+<div class="col-10">
+<p>不支持 能行吗~~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>411711882</b><br/>
+2011-02-17 21:02:23</p>
+</div>
+<div class="col-10">
+<p>=.=回学校了，悲剧。假期签到，最后次。以上。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Ansa翼</b><br/>
+2011-02-17 21:02:57</p>
+</div>
+<div class="col-10">
+<p>今天又遲了~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>红林-万千</b><br/>
+2011-02-17 21:03:51</p>
+</div>
+<div class="col-10">
+<p>好喜欢~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>红林-万千</b><br/>
+2011-02-17 21:04:42</p>
+</div>
+<div class="col-10">
+<p>果断收藏~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>红林-万千</b><br/>
+2011-02-17 21:06:25</p>
+</div>
+<div class="col-10">
+<p>后排支持!!</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>伪·红莲</b><br/>
+2011-02-17 21:06:34</p>
+</div>
+<div class="col-10">
+<p>    活动地址的连接：[url]http://www.yayabo.cn/thread-14654-1-1.html[/url]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wo69628929</b><br/>
+2011-02-17 21:07:01</p>
+</div>
+<div class="col-10">
+<p>.....那个有什么用啊？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>伪·红莲</b><br/>
+2011-02-17 21:11:20</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 伪·红莲 于 2011-2-17 21:13 编辑 [/i]<br /><br />偶的技能吸收终于解限了么？这天等得偶的脖子都长了<br /><br />御用守护者、大寒波被禁是大势所催(这两张很贱格的说)<br />欧尼斯特这张光属性必备的混账卡被限了一方面真的很大快人心、但另一方面偶的天使族卡组的实力就被削去一大半了<br />六武众和黑羽这两副卡组本来就很强，更何况加了神鸟攻击的BT黑羽。不过现在的话，估计官方是想减少黑羽卡组的使用者量<br />准限的没啥意见，只不过潜行和终焉之王被解限实在dt了点</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qaz704525233</b><br/>
+2011-02-17 21:13:25</p>
+</div>
+<div class="col-10">
+<p>超喜欢看那个的 都重复看了好多遍的 电脑里还有全集  期待了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>boy545003571</b><br/>
+2011-02-17 21:13:52</p>
+</div>
+<div class="col-10">
+<p>呐，过来支持一下～～</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wo69628929</b><br/>
+2011-02-17 21:20:50</p>
+</div>
+<div class="col-10">
+<p>围观一下，还有偶单身</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>伪·红莲</b><br/>
+2011-02-17 21:21:23</p>
+</div>
+<div class="col-10">
+<p>[quote]回复  xz122992770 <br />    要想弄死这东西也很简单，一张熔岩魔神搞定=。=<br />我给熔岩魔神起过另外一个名字——山寨克星<br />[size=2][color=#999999]JoyJ 发表于 2011-2-17 12:26[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=205774&ptid=16525][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />     LZ果然是老手的说，居然连这连天神啥的都能瞬间解决的方法都如此了解<br /> 不过如果对方在场上不凑齐两只怪的话，这方法就没用了<br />(火山女皇只需一张而已，不过那效果dt了点。熔岩魔神的话用攻击限制类的卡基本无鸭梨)</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>dbcliu</b><br/>
+2011-02-17 21:23:16</p>
+</div>
+<div class="col-10">
+<p>收走了……用来搞iphone的mo2……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wo69628929</b><br/>
+2011-02-17 21:24:43</p>
+</div>
+<div class="col-10">
+<p>那个LZ能告诉我之前那些内容在哪能看到么？？？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ml1096</b><br/>
+2011-02-17 21:25:08</p>
+</div>
+<div class="col-10">
+<p>没被hx吗</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>PUI</b><br/>
+2011-02-17 21:27:10</p>
+</div>
+<div class="col-10">
+<p>THX FOR SHARING</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post2087_1.html">1</a>
+</li>
+
+<li class="page-item">
+<a class="page-link" href="post2087_2.html">2</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

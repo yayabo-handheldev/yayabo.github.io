@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PC及PSP端AVG游戏引擎 琳芙斯ⅡV0.60补丁</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">PC及PSP端AVG游戏引擎 琳芙斯ⅡV0.60补丁</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_11.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>sola</b><br/>
+2010-07-23 14:03:34</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 sola 于 2010-7-23 14:28 编辑 [/i]<br /><br />使用补丁前请确认是否下载过0.45版本...<br /><br />下载:[url=http://www.rayfile.com/zh-cn/files/631a7397-961f-11df-aa21-0015c55db73d/]ReinforceZweiV0.60补丁.7z[/url]<br />补丁使用:直接替换同名文件即可<br /><br /><br />增加函数:<br />#cg(hcg)<br />hcg:cg名<br />说明:cg记录函数<br /><br /><br />菜单方面更新<br />菜单特效:<br />通过配置 rfz_game_info.ini 就能实现。<br />测试的话可以用 sdk6.标题菜单及游戏菜单 来测试 = =...<br />以下<br />新版的 rfz_game_info.ini 配置文件.....<br />/////////////<br />/*游戏配置文件*/<br />/*文本X坐标*/<br />TEXT_DX=20<br />/*文本Y坐标*/<br />TEXT_DY=210<br />/*文本显示速度*/<br />TEXT_SPEED=20<br />/*文本透明度*/<br />TEXT_ALPHA=255<br />/*上下文本间隔*/<br />TEXT_GAP=20<br />/*人物名文本X坐标*/<br />SE_TEXT_DX=30<br />/*人物名文本Y坐标*/<br />SE_TEXT_DY=180<br />/*是否当显示背景前先隐藏对话框*/<br />MSG_OFTEN_HIDE=1<br />/*分支结构选择框文本与选择框图像X坐标间隔*/<br />SELECTBOX_TEXT_GAP_DX=3<br />/*分支结构选择框文本与选择框图像Y坐标间隔*/<br />SELECTBOX_TEXT_GAP_DY=3<br />/*文本等待光标 文件名*/<br />TEXT_WAIT_CURSOR=test.gif<br />/*文本等待光标X坐标*/<br />TEXT_WAIT_CURSOR_DX=400<br />/*文本等待光标Y坐标*/<br />TEXT_WAIT_CURSOR_DY=230<br />//游戏菜单-begin<br />/*<br />进入-主菜单-背景特效<br />1:渐入<br />2:顺时针-旋转一周-渐入-慢<br />3:逆时针-旋转一周-渐入-慢<br />4:顺时针-旋转一周-渐入-快<br />5:逆时针-旋转一周-渐入-快<br />6:旋转-渐入-快<br />7:旋转-渐入-慢<br />8:放大旋转-渐入<br />9:放大-渐入	<br />10:左右飞出<br />11:上下飞出<br />12:转场<br />13:左右向内飞入-1<br />14:左右向内飞入-2<br />15:上下向内飞入-1<br />16:上下向内飞入-2<br />*/<br />GAME_MENU_BG_EFFECT_IN=1<br />/*<br />进入-主菜单-按键特效<br />1:渐入<br />2:依次渐入<br />3:上下依次飞入-慢<br />4:上下依次飞入-快<br />5:下上依次飞入-慢<br />6:下上依次飞入-快<br />7:左右依次飞入-慢<br />8:左右依次飞入-快<br />9:右左依次飞入-慢<br />10:右左依次飞入-快<br />11:左右交错飞入-慢-1<br />12:左右交错飞入-慢-2<br />13:左右交错飞入-快-1<br />14:左右交错飞入-快-2<br />15:上下交错飞入-慢-1<br />16:上下交错飞入-慢-2<br />17:上下交错飞入-快-1<br />18:上下交错飞入-快-2<br />19:上下旋转飞入-慢<br />20:上下旋转飞入-快<br />21:左右旋转飞入-慢<br />22:左右旋转飞入-快<br />23:上下旋转交错飞入-慢-1<br />24:上下旋转交错飞入-慢-2<br />25:上下旋转交错飞入-快-1<br />26:上下旋转交错飞入-快-2<br />27:左右旋转飞入-慢-1<br />28:左右旋转飞入-慢-2<br />29:左右旋转飞入-快-1<br />30:左右旋转飞入-快-2<br />*/<br />GAME_MENU_BTN_EFFECT_IN=1<br />/*<br />进入-主菜单-按键按下后-特效<br />1:主按键放大其它按键-渐出<br />2:主按键及背景放大其它按键-渐出<br />3:主按键放大其它按键旋转上飞出-渐出<br />4:主按键放大其它按键旋转下飞出-渐出<br />5:主按键放大其它按键旋转左飞出-渐出<br />6:主按键放大其它按键旋转右飞出-渐出<br />7:主按键放大其它按键旋转右下飞出-渐出<br />8:主按键放大其它按键旋转右上飞出-渐出<br />9:主按键放大其它按键旋转左上飞出-渐出<br />10:主按键放大其它按键旋转左下飞出-渐出<br />*/<br />GAME_MENU_BTN_EFFECT_DOWN=1<br />/*<br />进入和退出-存档菜单-特效<br />1:进入-渐入-退出-渐出-1<br />2:进入-渐入-退出-渐出-2<br />3:进入-转场-退出-渐出-1<br />4:进入-转场-退出-渐出-2<br />5:进入-转场-退出-转场-1<br />6:进入-转场-退出-转场-2<br />*/<br />GAME_MENU_SAVE_EFFECT=1<br />/*<br />进入和退出-读档菜单-特效<br />1:进入-渐入-退出-渐出-1<br />2:进入-渐入-退出-渐出-2<br />3:进入-转场-退出-渐出-1<br />4:进入-转场-退出-渐出-2<br />5:进入-转场-退出-转场-1<br />6:进入-转场-退出-转场-2<br />*/<br />GAME_MENU_LOAD_EFFECT=1<br />//游戏菜单-end<br /><br />/////////////<br /><br />游戏里还加了些过渡特效。。。具体自己琢磨吧。。。<br /><br /><br />更新rfz_make_index_script.exe<br />更强大的索引模式转换工具.........<br />已支持cg索引化。。直接使用#cg函数把文件名扔就去。。。<br />用这个工具就可以转成 #index_cg了 = =<br />上张图:<br /><br />[attach]9439[/attach]<br />新版0.60 版本sdk.chm<br /><br /><br />以下索引化函数:[size=5]【你不需要理解那些函数是干啥的 = =。。。用rfz_make_index_script.exe直接就能生成】[/size]<br />#initgamemenu -> #index_initgamemenu<br />#initgamemenu_newgame_button -> #index_initgamemenu_newgame_button<br />#initgamemenu_save_button -> #index_initgamemenu_save_button<br />#initgamemenu_save_bg -> #index_initgamemenu_save_bg<br />#initgamemenu_save_menu_bg -> #index_initgamemenu_save_menu_bg<br />#initgamemenu_load_button -> #index_initgamemenu_load_button<br />#initgamemenu_load_bg -> #index_initgamemenu_load_bg<br />#initgamemenu_load_menu_bg -> #index_initgamemenu_load_menu_bg<br />#initgamemenu_bgm_button -> #index_initgamemenu_bgm_button<br />#initgamemenu_bgm_bg -> #index_initgamemenu_bgm_bg<br />#initgamemenu_bgm_bgm_bg -> #index_initgamemenu_bgm_bgm_bg<br />#initgamemenu_bgm_bgm_mode_button -> #index_initgamemenu_bgm_bgm_mode_button<br />#initgamemenu_bgm_bgm_mode_selbgm_button -> #index_initgamemenu_bgm_bgm_mode_selbgm_button<br />#initgamemenu_bgm_bg_bg -> #index_initgamemenu_bgm_bg_bg<br />#initgamemenu_bgm_bg_mode_button -> #index_initgamemenu_bgm_bg_mode_button<br />#initgamemenu_bgm_bg_mode_selbg_button -> #index_initgamemenu_bgm_bg_mode_selbg_button<br />#initgamemenu_recollection_button -> #index_initgamemenu_recollection_button<br />#initgamemenu_recollection_bg -> #index_initgamemenu_recollection_bg<br />#initgamemenu_exit_button -> #index_initgamemenu_exit_button<br /><br />#systemcg -> #index_systemcg<br />#systemcg_menu_next -> #index_systemcg_menu_next<br />#systemcg_menu_back -> #index_systemcg_menu_back<br />#systemcg_menu_mouse -> #index_systemcg_menu_mouse<br />#systemcg_menu_bg -> #index_systemcg_menu_bg<br />#systemnew -> #index_systemnew<br />#systemload -> #index_systemload<br />#systemload_menubg -> #index_systemload_menubg<br />#systemload_menusavedatabg -> #index_systemload_menusavedatabg<br />#systemexit -> #index_systemexit<br />#systembg -> #index_systembg<br /><br />#logvoice -> #index_logvoice<br />#logfadein -> #index_logfadein<br />#logfadeout -> #index_logfadeout<br />#logchange -> #index_logchange<br /><br />#selectbox -> #index_selectbox</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mengfanzhu2</b><br/>
+2010-07-23 14:05:21</p>
+</div>
+<div class="col-10">
+<p>就是要出喂~航~  没出来  退出~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Tilnanogue</b><br/>
+2010-07-23 14:08:17</p>
+</div>
+<div class="col-10">
+<p>我手贱。。。要看回复显示的内容</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-07-23 14:09:35</p>
+</div>
+<div class="col-10">
+<p>    MADAMADADANE~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-07-23 14:09:52</p>
+</div>
+<div class="col-10">
+<p>    嗯...厚度...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>dongrenhao</b><br/>
+2010-07-23 14:10:02</p>
+</div>
+<div class="col-10">
+<p>嘛~嘛~突然很想学这个东东~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-07-23 14:10:22</p>
+</div>
+<div class="col-10">
+<p>    纳尼............吐槽么....炸弹..</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>solarsystem</b><br/>
+2010-07-23 14:10:34</p>
+</div>
+<div class="col-10">
+<p>那是真的生物么？？？？？？？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>w2jmoe</b><br/>
+2010-07-23 14:10:45</p>
+</div>
+<div class="col-10">
+<p>    慢慢来吧~加油<br />~哦~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Tilnanogue</b><br/>
+2010-07-23 14:11:03</p>
+</div>
+<div class="col-10">
+<p>新人路过。。。。。。<br />原来签到帖是这么用的么。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>羊羊羊</b><br/>
+2010-07-23 14:13:00</p>
+</div>
+<div class="col-10">
+<p> [size=5]   其实我在多玩看到过封面。。。不过太小张（泪奔啊，好不容易找到却那么小。。。）[/size]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Tilnanogue</b><br/>
+2010-07-23 14:13:08</p>
+</div>
+<div class="col-10">
+<p>第一次签到。。。虽然已经不是50楼以内了的说</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>羊羊羊</b><br/>
+2010-07-23 14:14:24</p>
+</div>
+<div class="col-10">
+<p>    [size=5]普通的游戏封面你能在ISO里找到？<br />   在哪个文件夹里？[/size]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>aiandi</b><br/>
+2010-07-23 14:14:29</p>
+</div>
+<div class="col-10">
+<p>     别打击我啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>aiandi</b><br/>
+2010-07-23 14:15:15</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=77121&ptid=7397]17#[/url] [i]强悍的葱头[/i] [/b]<br /><br /> 共同进步吧....</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>sugar1991</b><br/>
+2010-07-23 14:16:08</p>
+</div>
+<div class="col-10">
+<p>爱佳大爱，那游戏非常大，。。。。。。。。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ast</b><br/>
+2010-07-23 14:16:20</p>
+</div>
+<div class="col-10">
+<p>召唤大侠 派发武功秘笈</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post10892_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

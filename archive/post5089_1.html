@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ZEngine Demo 8 -  ZPaint 初级</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">ZEngine Demo 8 -  ZPaint 初级</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_6.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-10 23:03:45</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 easycker 于 2010-11-10 23:05 编辑 [/i]<br /><br />ZPaint:直接在PSP屏幕上绘制几何图形的类<br /><br />一、基本使用[code]//Game.h<br />#ifndef _GAME_H<br />#define _GAME_H<br /><br />#include "ZGame.h"<br /><br />class Game : public ZGame<br />{<br />public:<br />	Game(){}<br />	~Game(){}<br />	<br />	void GameInitial();<br />	void GameCircle();<br />	void GameDrawScene();<br />	void GameButtonDown(int nKeyNumber);<br />	void GameButtonUp(int nKeyNumber);<br />	void GameEnd();<br /><br />private:<br />	//(1)<br />	//ZPaint *m_paint; //这个可以用对象的方法，可是我们可以不用这么麻烦，看后面<br /><br />};<br /><br />#endif[/code][code]//Game.cpp<br />//游戏入口类<br /><br />#include "Game.h"<br /><br />//游戏初始化<br />void Game::GameInitial()<br />{<br />	<br />}<br /><br /><br />//游戏循环<br />void Game::GameCircle()<br />{<br />	<br />}<br /><br />//游戏绘图<br />void Game::GameDrawScene()<br />{<br />	//(2)绘制图形<br />	<br />	ZPaint::LineTo(); //画线<br />	ZPaint::Circle(); //圆<br />	ZPaint::CircleFill(); //填充过的圆<br />	ZPaint::Ellipse(); //椭圆<br />	ZPaint::EllipseFill(); //填充过的椭圆<br />	ZPaint::Rect(200,200,300,300); //矩形 ,内容可以不填，但是全屏<br />	ZPaint::RectFill(300,200,400,300); //填充过的矩形，内容可以不填，但是全屏<br />	<br />	<br />}<br /><br />//按下按键<br />void Game::GameButtonDown(int nKeyNumber)<br />{<br />	<br />}<br /><br />//弹起按键<br />void Game::GameButtonUp(int nKeyNumber)<br />{<br /><br />}<br /><br />//游戏结束<br />void Game::GameEnd()<br />{<br />	Quit();<br />}[/code][attach]16706[/attach]<br />二、定制图形[code]//Game.h<br />#ifndef _GAME_H<br />#define _GAME_H<br /><br />#include "ZGame.h"<br /><br />class Game : public ZGame<br />{<br />public:<br />	Game(){}<br />	~Game(){}<br />	<br />	void GameInitial();<br />	void GameCircle();<br />	void GameDrawScene();<br />	void GameButtonDown(int nKeyNumber);<br />	void GameButtonUp(int nKeyNumber);<br />	void GameEnd();<br /><br />private:<br />	//(1)<br />	//ZPaint *m_paint; //这个可以用对象的方法，可是我们可以不用这么麻烦，看后面<br /><br />};<br /><br />#endif[/code][code]//Game.cpp<br />//游戏入口类<br /><br />#include "Game.h"<br /><br />//游戏初始化<br />void Game::GameInitial()<br />{<br />	<br />}<br /><br /><br />//游戏循环<br />void Game::GameCircle()<br />{<br />	<br />}<br /><br />//游戏绘图<br />void Game::GameDrawScene()<br />{<br />	//(2)绘制图形<br />	ZPaint::Circle(200,100,60,ZPaint::RGBA(255,0,0,255)); //红色圆形,坐标200，100. 半径60，颜色红<br />	ZPaint::LineTo(30,30,70,40,ZPaint::RGBA(128,128,0,255)); //画线起始坐标30,30终止70,40,颜色灰黄<br />	ZPaint::CircleFill(300,100,30,ZPaint::RGBA(0,0,255,128)); //填充圆 半径30<br />	ZPaint::Ellipse(100,100,50,80,ZPaint::RGBA(0,255,255,255)); // 横半径50 纵半径80<br />	ZPaint::EllipseFill(150,100,80,50,ZPaint::RGBA(0,255,0,128)); // 横半径80 纵半径50<br />	ZPaint::Rect(160,120,50,50,ZPaint::RGBA(255,0,255,255)); //矩形 50 50为宽度和高度<br />	ZPaint::RectFill(180,100,50,50,ZPaint::RGBA(255,0,255,128)); //矩形<br /><br />	float x[3] = {100,230,300};<br />	float y[3] = {100,150,256};<br />	ZPaint::Polygon(x,y,3); //绘制三角形x,y为定点，3为共3个点<br /><br />}<br /><br />//按下按键<br />void Game::GameButtonDown(int nKeyNumber)<br />{<br />	<br />}<br /><br />//弹起按键<br />void Game::GameButtonUp(int nKeyNumber)<br />{<br /><br />}<br /><br />//游戏结束<br />void Game::GameEnd()<br />{<br />	Quit();<br />}[/code][attach]16707[/attach]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>4118910</b><br/>
+2010-11-10 23:07:07</p>
+</div>
+<div class="col-10">
+<p>大师啊 顶啊 ！必下 学习学习</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>liyuans</b><br/>
+2010-11-10 23:17:14</p>
+</div>
+<div class="col-10">
+<p>支持。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yinolang</b><br/>
+2010-11-10 23:18:55</p>
+</div>
+<div class="col-10">
+<p>话说来试一下这类游戏。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>蔥哥</b><br/>
+2010-11-10 23:20:07</p>
+</div>
+<div class="col-10">
+<p>希望還能下載</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Yuan064</b><br/>
+2010-11-10 23:26:13</p>
+</div>
+<div class="col-10">
+<p>个人移植游戏这事情也很考技术的！向楼主表示辛苦啦！其实我也想玩.....</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post5089_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+
