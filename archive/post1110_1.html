@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>lua Packages</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">lua Packages</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-18 20:43:20</p>
+</div>
+<div class="col-10">
+<p>很多语言专门提供了某种机制组织全局变量的命名，比如Modula的modules，Java和Perl的packages，C++的 namespaces。每一种机制对在package中声明的元素的可见性以及其他一些细节的使用都有不同的规则。但是他们都提供了一种避免不同库中命名冲突的问题的机制。每一个程序库创建自己的命名空间，在这个命名空间中定义的名字和其他命名空间中定义的名字互不干涉。<br />Lua并没有提供明确的机制来实现packages。然而，我们通过语言提供的基本的机制很容易实现他。主要的思想是：像标准库一样，使用表来描述package。<br />使用表实现packages的明显的好处是：我们可以像其他表一样使用packages，并且可以使用语言提供的所有的功能，带来很多便利。大多数语言中，packages不是第一类值(first-class values)（也就是说，他们不能存储在变量里，不能作为函数参数。。。）因此，这些语言需要特殊的方法和技巧才能实现类似的功能。<br />Lua中，虽然我们一直都用表来实现pachages，但也有其他不同的方法可以实现package，在这一章，我们将介绍这些方法。<br />15.1 基本方法<br />第一包的简单的方法是对包内的每一个对象前都加包名作为前缀。例如，假定我们正在写一个操作复数的库：我们使用表来表示复数，表有两个域r（实数部分）和i（虚数部分）。我们在另一张表中声明我们所有的操作来实现一个包：<br />complex = {}<br /><br />function complex.new (r, i) return {r=r, i=i} end<br />-- defines a constant `i'<br />complex.i = complex.new(0, 1)<br /><br />function complex.add (c1, c2)<br />    return complex.new(c1.r + c2.r, c1.i + c2.i)<br />end<br /><br />function complex.sub (c1, c2)<br />    return complex.new(c1.r - c2.r, c1.i - c2.i)<br />end<br /><br />function complex.mul (c1, c2)<br />    return complex.new(c1.r*c2.r - c1.i*c2.i,<br />          c1.r*c2.i + c1.i*c2.r)<br />end<br /><br />function complex.inv (c)<br />    local n = c.r^2 + c.i^2<br />    return complex.new(c.r/n, -c.i/n)<br />end<br /><br />return complex<br />这个库定义了一个全局名：coplex。其他的定义都是放在这个表内。<br />有了上面的定义，我们就可以使用符合规范的任何复数操作了，如：<br />c = complex.add(complex.i, complex.new(10, 20))<br />这种使用表来实现的包和真正的包的功能并不完全相同。首先，我们对每一个函数定义都必须显示的在前面加上包的名称。第二，同一包内的函数相互调用必须在被调用函数前指定包名。我们可以使用固定的局部变量名，来改善这个问题，然后，将这个局部变量赋值给最终的包。依据这个原则，我们重写上面的代码：<br />local P = {}<br />complex = P      -- package name<br />P.i = {r=0, i=1}<br />function P.new (r, i) return {r=r, i=i} end<br />function P.add (c1, c2)<br />    return P.new(c1.r + c2.r, c1.i + c2.i)<br />end<br />...<br />当在同一个包内的一个函数调用另一个函数的时候（或者她调用自身），他仍然需要加上前缀名。至少，它不再依赖于固定的包名。另外，只有一个地方需要包名。可能你注意到包中最后一个语句：<br />return complex<br />这个return语句并非必需的，因为package已经赋值给全局变量complex了。但是，我们认为package打开的时候返回本身是一个很好的习惯。额外的返回语句并不会花费什么代价，并且提供了另一种操作package的可选方式。<br />15.2 私有成员（Privacy）<br />有时候，一个package公开他的所有内容，也就是说，任何package的客户端都可以访问他。然而，一个package拥有自己的私有部分（也就是只有package本身才能访问）也是很有用的。在Lua中一个传统的方法是将私有部分定义为局部变量来实现。例如，我们修改上面的例子增加私有函数来检查一个值是否为有效的复数：<br />local P = {}<br />complex = P<br />local function checkComplex (c)<br />    if not ((type(c) == "table") and<br />    tonumber(c.r) and tonumber(c.i)) then<br />      error("bad complex number", 3)<br />    end<br />end<br /><br />function P.add (c1, c2)<br />    checkComplex(c1);<br />    checkComplex(c2);<br />    return P.new(c1.r + c2.r, c1.i + c2.i)<br />end<br /><br />...<br /><br />return P<br />这种方式各有什么优点和缺点呢？package中所有的名字都在一个独立的命名空间中。Package中的每一个实体（entity）都清楚地标记为公有还是私有。另外，我们实现一个真正的隐私（privacy）：私有实体在package外部是不可访问的。缺点是访问同一个package内的其他公有的实体写法冗余，必须加上前缀P.。还有一个大的问题是，当我们修改函数的状态(公有变成私有或者私有变成公有)我们必须修改函数得调用方式。<br />有一个有趣的方法可以立刻解决这两个问题。我们可以将package内的所有函数都声明为局部的，最后将他们放在最终的表中。按照这种方法，上面的complex package修改如下：<br />local function checkComplex (c)<br />    if not ((type(c) == "table")<br />    and tonumber(c.r) and tonumber(c.i)) then<br />      error("bad complex number", 3)<br />    end<br />end<br /><br />local function new (r, i) return {r=r, i=i} end<br />local function add (c1, c2)<br />    checkComplex(c1);<br />    checkComplex(c2);<br />    return new(c1.r + c2.r, c1.i + c2.i)<br />end<br /><br />...<br /><br />complex = {<br />    new = new,<br />    add = add,<br />    sub = sub,<br />    mul = mul,<br />    div = div,<br />}<br />现在我们不再需要调用函数的时候在前面加上前缀，公有的和私有的函数调用方法相同。在package的结尾处，有一个简单的列表列出所有公有的函数。可能大多数人觉得这个列表放在package的开始处更自然，但我们不能这样做，因为我们必须首先定义局部函数。<br />15.3 包与文件<br />我们经常写一个package然后将所有的代码放到一个单独的文件中。然后我们只需要执行这个文件即加载package。例如，如果我们将上面我们的复数的 package代码放到一个文件complex.lua中，命令“require complex”将打开这个package。记住require命令不会将相同的package加载多次。<br />需要注意的问题是，搞清楚保存 package的文件名和package名的关系。当然，将他们联系起来是一个好的想法，因为require命令使用文件而不是packages。一种解决方法是在package的后面加上后缀（比如.lua）来命名文件。Lua并不需要固定的扩展名，而是由你的路径设置决定。例如，如果你的路径包含："/usr/local/lualibs/?.lua"，那么复数package可能保存在一个complex.lua文件中。<br />有些人喜欢先命名文件后命名package。也就是说，如果你重命名文件，package也会被重命名。这个解决方法提供了很大的灵活性。例如，如果你有两个有相同名称的package，你不需要修改任何一个，只需要重命名一下文件。在Lua中我们使用_REQUIREDNAME变量来重命名。记住，当require 加载一个文件的时候，它定义了一个变量来表示虚拟的文件名。因此，在你的package中可以这样写：<br />local P = {}      -- package<br />if _REQUIREDNAME == nil then<br />    complex = P<br />else<br />    _G[_REQUIREDNAME] = P<br />end<br />代码中的if测试使得我们可以不需要require就可以使用package。如果_REQUIREDNAME没有定义，我们用固定的名字表示 package（例子中complex）。另外，package使用虚拟文件名注册他自己。如果以使用者将库放到文件cpx.lua中并且运行 require cpx，那么package将本身加载到表cpx中。如果其他的使用者将库改名为cpx_v1.lua并且运行require cpx_v1，那么package将自动将本身加载到表cpx_v1当中。<br />15.4 使用全局表<br />上面这些创建package的方法的缺点是：他们要求程序员注意很多东西，比如，在声明的时候也很容易忘掉local关键字。全局变量表的Metamethods提供了一些有趣的技术，也可以用来实现package。这些技术中共同之处在于：package使用独占的环境。这很容易实现：如果我们改变了package主chunk的环境，那么由 package创建的所有函数都共享这个新的环境。<br />最简单的技术实现。一旦package有一个独占的环境，不仅所有她的函数共享环境，而且它的所有全局变量也共享这个环境。所以，我们可以将所有的公有函数声明为全局变量，然后他们会自动作为独立的表（表指package的名字）存在，所有 package必须要做的是将这个表注册为package的名字。下面这段代码阐述了复数库使用这种技术的结果：<br />local P = {}<br />complex = P<br />setfenv(1, P)<br />现在，当我们声明函数add,她会自动变成 complex.add:<br />function add (c1, c2)<br />    return new(c1.r + c2.r, c1.i + c2.i)<br />end<br />另外，我们可以在这个package中不需要前缀调用其他的函数。例如，add函数调用new函数，环境会自动转换为complex.new。这种方法提供了对package很好的支持：程序员几乎不需要做什么额外的工作，调用同一个package内的函数不需要前缀，调用公有和私有函数也没什么区别。如果程序员忘记了local关键字，也不会污染全局命名空间，只不过使得私有函数变成公有函数而已。另外，我们可以将这种技术和前一节我们使用的 package名的方法组合起来：<br />local P = {}      -- package<br />if _REQUIREDNAME == nil then<br />    complex = P<br />else<br />    _G[_REQUIREDNAME] = P<br />end<br />setfenv(1, P)<br />这样就不能访问其他的packages了。一旦我们将一个空表P作为我们的环境，我们就失去了访问所有以前的全局变量。下面有好几种方法可以解决这个问题，但都各有利弊。<br />最简单的解决方法是使用继承，像前面我们看到的一样：<br />local P = {}      -- package<br />setmetatable(P, {__index = _G})<br />setfenv(1, P)<br />（你必须在调用setfenv之前调用setmetatable，你能说出原因么？）使用这种结构，package就可以直接访问所有的全局标示符，但必须为每一个访问付出一小点代价。理论上来讲，这种解决方法带来一个有趣的结果：你的package现在包含了所有的全局变量。例如，使用你的package人也可以调用标准库的sin函数：complex.math.sin(x)。（Perl's package 系统也有这种特性）<br />另外一种快速的访问其他packages的方法是声明一个局部变量来保存老的环境：<br />local P = {}<br />pack = P<br />local _G = _G<br />setfenv(1, P)<br />现在，你必须对外部的访问加上前缀_G.，但是访问速度更快，因为这不涉及到metamethod。与继承不同的是这种方法，使得你可以访问老的环境；这种方法的好与坏是有争议的，但是有时候你可能需要这种灵活性。<br />一个更加正规的方法是：只把你需要的函数或者packages声明为local：<br />local P = {}<br />pack = P<br /><br />-- Import Section:<br /><br />-- declare everything this package needs from outside<br />local sqrt = math.sqrt<br />local io = io<br /><br />-- no more external access after this point<br />setfenv(1, P)<br />这一技术要求稍多，但他使你的package的独立性比较好。他的速度也比前面那几种方法快。<br />15.5 其他一些技巧（Other Facilities）<br />正如前面我所说的，用表来实现packages过程中可以使用Lua的所有强大的功能。这里面有无限的可能性。在这里，我只给出一些建议。<br />我们不需要将package的所有公有成员的定义放在一起，例如，我们可以在一个独立分开的chunk中给我们的复数package增加一个新的函数：<br />function complex.div (c1, c2)<br />    return complex.mul(c1, complex.inv(c2))<br />end<br />（但是注意：私有成员必须限制在一个文件之内，我认为这是一件好事）反过来，我们可以在同一个文件之内定义多个packages，我们需要做的只是将每一个package放在一个do代码块内，这样local变量才能被限制在那个代码块中。<br />在package外部，如果我们需要经常使用某个函数，我们可以给他们定义一个局部变量名：<br />local add, i = complex.add, complex.i<br />c1 = add(complex.new(10, 20), i)<br />如果我们不想一遍又一遍的重写package名，我们用一个短的局部变量表示package：<br />local C = complex<br />c1 = C.add(C.new(10, 20), C.i)<br />写一个函数拆开package也是很容易的，将package中所有的名字放到全局命名空间即可：<br />function openpackage (ns)<br />    for n,v in pairs(ns) do _G[n] = v end<br />end<br /><br />openpackage(complex)<br />c1 = mul(new(10, 20), i)<br />如果你担心打开package的时候会有命名冲突，可以在赋值以前检查一下名字是否存在：<br />function openpackage (ns)<br />    for n,v in pairs(ns) do<br />      if _G[n] ~= nil then<br />          error("name clash: " .. n .. " is already defined")<br />      end<br />      _G[n] = v<br />    end<br />end<br />由于packages本身也是表，我们甚至可以在packages中嵌套packages；也就是说我们在一个package内还可以创建package，然后很少有必要这么做。<br />另一个有趣之处是自动加载：函数只有被实际使用的时候才会自动加载。当我们加载一个自动加载的package，会自动创建一个新的空表来表示package 并且设置表的__index metamethod来完成自动加载。当我们调用任何一个没有被加载的函数的时候，__index metamethod将被触发去加载着个函数。当调用发现函数已经被加载，__index将不会被触发。<br />下面有一个简单的实现自动加载的方法。每一个函数定义在一个辅助文件中。(也可能一个文件内有多个函数)这些文件中的每一个都以标准的方式定义函数，例如：<br />function pack1.foo ()<br />    ...<br />end<br /><br />function pack1.goo ()<br />    ...<br />end<br />然而，文件并不会创建package，因为当函数被加载的时候package已经存在了。<br />在主package中我们定义一个辅助表来记录函数存放的位置：<br />local location = {<br />    foo = "/usr/local/lua/lib/pack1_1.lua",<br />    goo = "/usr/local/lua/lib/pack1_1.lua",<br />    foo1 = "/usr/local/lua/lib/pack1_2.lua",<br />    goo1 = "/usr/local/lua/lib/pack1_3.lua",<br />}<br />下面我们创建package并且定义她的metamethod：<br />pack1 = {}<br /><br />setmetatable(pack1, {__index = function (t, funcname)<br />local file = location[funcname]<br />if not file then<br />    error("package pack1 does not define " .. funcname)<br />end<br />assert(loadfile(file))()    -- load and run definition<br />return t[funcname]          -- return the function<br />end})<br /><br />return pack1<br />加载这个package之后，第一次程序执行pack1.foo()将触发__index metamethod，接着发现函数有一个相应的文件，并加载这个文件。微妙之处在于：加载了文件，同时返回函数作为访问的结果。<br />因为整个系统（译者：这里可能指复数吧？）都使用Lua写的，所以很容易改变系统的行为。例如，函数可以是用C写的，在metamethod中用 loadlib加载他。或者我们我们可以在全局表中设定一个metamethod来自动加载整个packages.这里有无限的可能等着你去发掘。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1110_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

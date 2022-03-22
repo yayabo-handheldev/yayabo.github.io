@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>关于3xx软件的编译问题</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">关于3xx软件的编译问题</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-10 10:22:02</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://www.iacger.com[/url]<br />作者：newcreat<br /><br />3.xx固件要求你的自制软件以prx格式运行。要得到这种格式，需要如下基本步骤：<br /><br />1. 修改你的Makefile - 你需要添加如下语句至Makefile以编译prx（在 include $(PSPSDK)/lib/build.mak 这一行前）：<br />引用:<br />BUILD_PRX = 1<br />PSP_FW_VERSION = 371<br />2. 设置你的软件为用户模式 - 自制软件需以用户模式启动。要达此目的，将PSP_MODULE_INFO 中的第2个参数改为 0。大多数软件还需要增加堆栈（heap）大小。堆栈大小是指malloc可用的内存量。我自己设为20mb。以下代码应置于你自己的源代码之前（通常是 main.c）:<br />引用:<br />PSP_MODULE_INFO("My Homebrew", 0, 1, 0);<br />PSP_HEAP_SIZE_KB(20480);<br />或者你可以用PSP_HEAP_SIZE_MAX()；前提是你用的toolchain是在2007年9月30日以后编译的（修订号2321）。它将尽可能分配最大的堆栈。请注意要使用此方法你需要重新编译整个toolchain（或者至少pspsdk和newlib），否则你的软件会因Exception - Bus错误（数据）崩溃。<br /><br />3. 尝试运行你的程序 - 你现在应该能够以通常方式编译程序并覆盖原有的eboot.pbp。3.xx固件不适用kxploit或者%文件夹。如果你从psplink运行你的程序，你需要运行prx文件而不是elf文件，否则无法运行。到了这一步你的自制软件应能正常运行，除非你的代码有核心模式的调用。如果代码有核心调用，启动程序会导致0x8002013C错误。别慌，看第4步。如果你的程序运行没问题，那好，跳过第4步。<br /><br />4. 找到并处理的你的核心调用 - 你需要了解什么是核心调用，什么不是。你可用 prxtool -f <prx file> 来验证。以下是一个例证输出：<br />引用:<br />$ prxtool -f project.prx<br />... output left out (it's a lot of output) ...<br />Import 9, Name UtilsForUser, Functions 1, Variables 0, flags 40010000<br />Functions:<br />0x79D1C3FA [0x0008CF34] - UtilsForUser_79D1C3FA<br />Import 10, Name LoadExecForUser, Functions 2, Variables 0, flags 40010000<br />Functions:<br />0x05572A5F [0x0008CF3C] - LoadExecForUser_05572A5F<br />0x4AC57943 [0x0008CF44] - LoadExecForUser_4AC57943<br />Import 11, Name IoFileMgrForKernel, Functions 1, Variables 0, flags 00010000<br />Functions:<br />0x411106BA [0x0008CF4C] - IoFileMgrForKernel_411106BA<br />Done<br />查看上述输出你会发现有一个导入称为 IoFileMgrForKernel。该导入有一个函数。参考下页：<br /><br />[url]http://silverspring.lan.st/1.5x/kd/.[/url]<br /><br />在该页搜索你会发现0x411106BA匹配函数sceIoGetThreadCwd。你现在可以搜索该函数并有两个选项：<br />(a) 使用用户模式代码替换核心调用，或者<br />(b) 将核心调用移入一个核心模式的prx并在程序中载入该核心模式prx。<br />选项A是我推荐的方案，除非你必须使用核心调用。<br /><br />b. 出现0x8002013C的解决方式，出现这个问题是因为用户态程序调用了核心函数，解决这个的办法是采用m33sdk，众所周之3.71版后的自制系统都提供了m33sdk，里面有函数可以加载核心的prx来解决。<br /><br />首先确认上面的函数在哪个prx里，用下面的方式加载那个prx即可。下面是核心调用的速查<br /><br />[url]http://www.iacger.com/topoc/pspdoc/psplibdoc.xml[/url]<br /><br />SceUID kuKernelLoadModule(const char *path, int flags, SceKernelLMOption *option);<br /><br />sceKernelStartModule(kuKernelLoadModule("xxx.prx", 0, 0), 0, 0, 0 0);<br /><br />附：401M33 SDK下载</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post261_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

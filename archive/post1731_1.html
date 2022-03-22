@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[NDS]RPG创作大师DS 出现一大推BUG</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[NDS]RPG创作大师DS 出现一大推BUG</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>xanadu</b><br/>
+2010-03-18 12:54:41</p>
+</div>
+<div class="col-10">
+<p>【BUG】<br />&#12539;マップ０状態でイベントの順番を変えるアイコンをコマンド操作で選択するとフリーズする（タッチペンでは無問題）<br />&#12539;アイテムは「使える時」の設定がいかなる場合でも戦闘中は関係なく使用出来てしまう<br />&#12539;「反撃」が一度発動すると、「反撃」を発動させたキャラはそのターン中は通常攻撃を受けると<br />　　「たまに反撃」の有無に関わらず確実に「反撃」する「反撃」の発生は「たまに反撃」でも「突進」でも可<br />&#12539;1ターン内で2回以上「反撃」を発動させると2回目以降は高確率で0ダメージになる<br />&#12539;「はい/いいえ」の分岐文に10文字使うと通常は消費値20のはずが64消費する<br />&#12539;モンスターに「特技」を設定したまま特技作成メニューでモンスターに設定した特技の並び替えを行う<br />　　→行動パターンの崩壊orセーブ時にフリーズorモンスターの行動のページを開こうとしてもフリーズ<br />&#12539;「メッセージ」の顔グラにDL素材を使用した状態のまま画像ホルダーからDL素材を削除<br />　　DL素材の顔グラがそれ以上無い場合はイベント参照時にフリーズ、顔グラがある場合は次のグラに強制差し替え<br />　　他のDL素材のカテゴリでも発生する可能性あり、要注意<br />&#12539;戦闘中、ターゲットを指定するタイプのコマンド選択時にABボタンを同時押しするとフリーズなどの不具合発生<br />&#12539;お店で一番上に設定されている武器などは「買う」を選択した直後のカーソルが乗ってる状態だと<br />　　装備可能か、数値の比較が行われない<br />&#12539;「特技」で設定したHP/MP回復技は先頭のメンバーが戦闘不能状態の場合、<br />　　移動中に使用すると消費コストは消費するが回復効果が発動しない<br />&#12539;ページの命令合計が50を越えるような内容を「はい/いいえ」などの分岐命令の中にペーストしようとするとフリーズ<br />&#12539;画面の色を変更した状態でゲームオーバーになり、「つづきから」を選択すると<br />　　再開した状態でも画面の色変更が継続する。「ゲーム終了」からタイトルに戻っても同じ<br />&#12539;消費○○半減効果を持つアクセサリーを装備している状態でも<br />　　本来の消費値分のHPまたはMPを持っていないと特技を使用出来ない<br />&#12539;戦闘中、アイテムの使用選択をした状態のキャラクターが戦闘不能になるとアイテムを使用しなくてもアイテムが1つ減る<br />&#12539;「逃走」したモンスターはHP0とグラフィック非表示と言う処理がされる<br />　　よって、全体攻撃するとその都度0ダメージで死亡エフェクトが付く。EXPやお金は入らない<br />&#12539;「雪の整った土地」から雪の整った土地の中の建物に場所移動するイベントを作るとフリーズ<br />&#12539;マップ都市&#12539;通常の白レンガ&#12539;屋敷02、内部1Fの左上部の部屋の椅子と机の表示がオブジェクト1個分消えてる<br />&#12539;２ページ目以降にページ条件を設定した後、ページ入れ替え等でそのページ１ページ目に移動させた場合、<br />　　ページ条件が内部的に生存する(一応条件は無視されるが、スイッチの場合使用済みとして表示されるので注意)<br /><br /><br />【需注意的BUG】<br />DPサイズにおいて発現。<br />マップに建物を置くと自動的に入り口と内部の繋ぐイベントが生成されるが、<br />この時マップ側の入り口にあるイベントを消すと、建物の中がFullモードの扱いになってしまう。<br />建物内では通常のFullモードと同じように、容量を使わずにBGMやアニメーションが使える。<br />通常なら容量オーバーとなる場合でも、このバグを使うとそのままDPサイズとしてセーブもできてしまう。<br />が、ソフトなし相手にこのDPデータを送っても相手側はゲーム開始直後にフリーズ。<br />バグった建物は消去すればほかに影響なし。また、建物内に作ったイベントを消したくない場合は復帰手順あり。<br />Fullモード扱いになった建物を再びDPモードに直すには、マップ～建物内部を繋ぐイベントを再び生成することで元に戻る<br />ソフトありに送った場合は不明（検証求む）。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cheyenne</b><br/>
+2010-03-18 13:10:30</p>
+</div>
+<div class="col-10">
+<p>tkool开发部的东西刚出时向来是没法用的，甚至有刚发售立即配布补丁的事情，我一直很蛋腚……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>asxzl5945</b><br/>
+2010-03-18 13:18:43</p>
+</div>
+<div class="col-10">
+<p>我已经习惯了。以前做过，内流满面</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>S.L.T</b><br/>
+2010-03-18 13:59:12</p>
+</div>
+<div class="col-10">
+<p>各位节哀吧</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-18 15:30:50</p>
+</div>
+<div class="col-10">
+<p>看不懂~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pwlsysg</b><br/>
+2010-03-18 19:11:26</p>
+</div>
+<div class="col-10">
+<p>满屏幕的圈圈点点，这文字太深奥了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-03-19 00:13:05</p>
+</div>
+<div class="col-10">
+<p>雷叔笑了。<br />雷叔:我没笑！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1731_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

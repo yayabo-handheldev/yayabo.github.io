@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>【教程19】获得系统时间与目录并显示</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">【教程19】获得系统时间与目录并显示</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-06-05 08:02:53</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]www.iacger.com[/url]<br />作者：newcreat<br /><br />本节需要图片images/demo1_bg.jpg，和ttf字体fonts/msyh.ttf，msyh.ttf是微软雅黑<br />大小14.3 MB的那个，没有请用任意ttf字体重命名替换<br /><br />本节例子用到上一节的目录遍历，和获得时间函数，请更新到nge2最新的版本165<br />注意中文名无法获得，小写名psp会变为大写。<br /><br />[attach]1329[/attach]<br /><br />[code=c]<br />#include "libnge2.h"<br />#include "nge_sys_compatible.h"<br />/**<br /> * nge_test:测试nge2的按键输入字体<br /> * 所需资源文件:拷贝到相应目录下<br />  */<br /><br />int game_quit = 0;<br />image_p plist,pimage_bg;<br />static char clist[128]; <br />PFont font ;<br />int line = 0;<br />void btn_down(int keycode)<br />{<br />       switch(keycode)<br />    {<br />       case PSP_BUTTON_UP: <br />              break;<br />       case PSP_BUTTON_DOWN:<br />              break;<br />       case PSP_BUTTON_LEFT:<br />              break;<br />       case PSP_BUTTON_RIGHT: <br />              break;<br />       case PSP_BUTTON_TRIANGLE:<br />              break;<br />       case PSP_BUTTON_CIRCLE:<br />              break;<br />       case PSP_BUTTON_CROSS:<br />              ScreenShot("screenshot.png");<br />              break;<br />    case PSP_BUTTON_SQUARE:<br />              break;<br />       case PSP_BUTTON_SELECT:<br />              game_quit = 1;<br />              break;<br />       case PSP_BUTTON_START:<br />              game_quit = 1;<br />              break;<br />    }<br />}<br /><br />void btn_up(int keycode)<br />{<br />       switch(keycode)<br />    {<br />       case PSP_BUTTON_UP:<br />              break;<br />       case PSP_BUTTON_DOWN:<br />              break;<br />       case PSP_BUTTON_LEFT:<br />              break;<br />       case PSP_BUTTON_RIGHT:<br />              break;<br />       case PSP_BUTTON_TRIANGLE:<br />              break;<br />       case PSP_BUTTON_CIRCLE:<br />              break;<br />       case PSP_BUTTON_CROSS:<br />              break;<br />    case PSP_BUTTON_SQUARE:<br />              break;<br />       case PSP_BUTTON_SELECT:<br />              game_quit = 1;<br />              break;<br />       case PSP_BUTTON_START:<br />              game_quit = 1;<br />              break;<br />    }<br />}<br /><br />void DrawScene()<br />{<br /><br />       BeginScene(1);<br />       ImageToScreen(pimage_bg,0,0);<br />       ImageToScreen(plist,0,0);<br />       EndScene();<br />}<br /><br />void mycall(dir_desc_p dir_desc,void* data) <br />{ <br />       if(dir_desc!=NULL){ <br />              if(dir_desc->flag == FIO_F_FILE) <br />                     sprintf(clist,"[FILE]%s",dir_desc->name); <br />              else if(dir_desc->flag == FIO_F_DIR){ <br />                     sprintf(clist,"[DIR ]%s",dir_desc->name); <br />              }<br />              //只显示10项<br />              if(line < 10 )<br />                     font_drawtext(font, clist, strlen(clist), plist, 0, 5+line*20, FONT_SHOW_SHADOW);<br />              line++;<br />       } <br />} <br /><br />extern "C"<br />int main(int argc, char* argv[])<br />{<br />       int i;<br />       <br />       NGE_Init(INIT_VIDEO);<br />       InitInput(btn_down,btn_up,1);<br />       font = create_font_freetype("fonts/msyh.ttf",12, DISPLAY_PIXEL_FORMAT_8888);<br />       pimage_bg = image_load("images/demo1_bg.jpg",DISPLAY_PIXEL_FORMAT_8888,1);<br />       if(pimage_bg == NULL)<br />              printf("can not open file<br />");<br />       plist = image_create(512, 512, DISPLAY_PIXEL_FORMAT_8888);<br />       font_setcolor(font, MAKE_RGBA_8888(255,255,255,255));<br />                //获得当前系统时间<br />       sys_time_t times;<br />       sys_localtime(&times);<br />       io_dir_travel(".",mycall,NULL); <br />       memset(clist,0,128);<br />       sprintf(clist, "[现在时刻] %d-%.2d-%.2d %.2d:%.2d:%.2d",times.year,times.month,times.day,times.hour,times.minutes,times.seconds);<br />       if(plist){<br />              font_setcolor(font,MAKE_RGBA_8888(0xb6,0x04,0xf8,0xff));<br />              font_drawtext(font, clist, strlen(clist), plist, 240, 250, FONT_SHOW_SHADOW);<br />       }<br />       while ( !game_quit )<br />       {<br />              ShowFps();<br />              InputProc();<br />              DrawScene();<br />       }<br />       font_destory(font);<br />       image_free(pimage_bg);<br />       image_free(plist);<br />       NGE_Quit();<br />       return 0;<br />}<br />[/code]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>sadwind</b><br/>
+2011-07-21 13:55:38</p>
+</div>
+<div class="col-10">
+<p>font_drawtext(pf[0],txt,50,pimage_text,20,(++m)*20,FONT_SHOW_NORMAL);<br /><br />奇怪，我用这个语在屏幕显示目录文件名，中文能显示的。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post478_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

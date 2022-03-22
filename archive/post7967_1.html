@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>应熊吉要求重置下AMDS的动画实现教程</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">应熊吉要求重置下AMDS的动画实现教程</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_8.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ljner</b><br/>
+2010-09-14 20:46:11</p>
+</div>
+<div class="col-10">
+<p>嘛，以前好像有的，大概沉底儿了，或是找不到了吧，反正就是重置下谢叔的教程，不是俺写的，俺只不过搬运而已。希望有帮助~<br />下面引用原文：<br />[quote]AVG MAKER DS现在还不支持现成的动画文件格式，但是可以利用背景切换实现一些简单的动画，制作简单OP应该是可以的。<br />利用bg切换做动画，这样需要的图特别多，工作量很大。但如有这种需求则可以尝试一下。<br /><br />教学<br />利用res_bg() 或 bg()<br />这两个指令最后一个参数是淡入淡出，只要把它设置为0，这样就关闭效果，实现快速bg切换。<br /><br />下面就可以这样写脚本<br />@res_bg(avgFiles/bg/bg.res,bg1,0);<br />@res_bg(avgFiles/bg/bg.res,bg2,0);<br />@jump(-2);<br />这里形成了一个死循环，程序会在bg1和bg2这两张图之间来回切换。<br />同理，利用jump跳转可实现循环。当然如果不需要重复而单张逐一切换实现动画就不用循环了。<br /><br />不重复只需一直写下去就可以了，结构很简单。<br />现在我们仍然讨论循环问题，<br />那么有人疑惑了，“死循环我怎么跳出去，不可能一直播动画啊？”<br />这里就要用到分支结构，利用系统变量实现。<br />--------------------------------------------------------<br />code:<br />--------------------------------------------------------<br />// 播放音乐<br />@playBGM(avgFiles/bgm/bgm1.mp3);<br />// 申请一个变量记录循环次数<br />@set_var(times, 0);<br />// 动画循环体 （假设有100张图）<br />@res_bg(avgFiles/bg/bg.res,bg1,0);<br />@res_bg(avgFiles/bg/bg.res,bg2,0);<br />....<br />@res_bg(avgFiles/bg/bg.res,bg100,0);<br />// 一次循环完毕，我们给times加上1<br />@set_value($(times)+1); <br />@if($(times)<2); // 判断是否循环了两次<br />@jump(-102);   // 没有到两次，继续跳上去循环<br />@endif();<br />// 循环了两次 执行脚本跳转，结束此脚本<br />@unset_var(times);<br />@stopBGM();<br />@changeText(avgFiles/data/scr1.spt);<br /><br />-----------------------------------------------------------<br />希望上面内容对制作有所帮助。<br /><br /><br /><br /><br />----------------------------------------------------------------------------------<br />Copyright (C) 2008 HewenXie <[email]hewenxie@gmail.com[/email]>[/quote]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>king71036</b><br/>
+2010-09-14 21:56:45</p>
+</div>
+<div class="col-10">
+<p>辛苦囉~~支持依下~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-09-19 12:39:39</p>
+</div>
+<div class="col-10">
+<p>啊，洒家的狗眼哒</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post7967_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

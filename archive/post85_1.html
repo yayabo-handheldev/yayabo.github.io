@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>简述安装devkitPSP开发环境</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">简述安装devkitPSP开发环境</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-09 09:05:16</p>
+</div>
+<div class="col-10">
+<p>摘自：bbs.khors.com<br />作者：Dr.Watson<br />相比用Cygwin建立PSP开发环境, 我觉得用devkitPro较为容易.<br /><br />首先下载devkitProUpdater, 到这里下载:<br />[url=http://www.devkitpro.org/]devkitPro[/url]<br /><br />执行devkitProUpdater后, 设定了基本的项目, 就会来到开发环境的选择: <br />[attach]55[/attach]<br />除了PSP, devkitPro 还有GBA, NDS等的开发环境.<br /><br />选择好, devkitProUpdater就会到网上下载开发环境的配件.<br /><br />安装完差不多就可以用了, 但devkitProUpdater忘了把"devkitPSP/bin"放到PATH里, 所以我们可以自己把它放进去, 或是建立一个像下面一样的START.BAT, 放在devkitPro的主目录内, 设定 "devkitPSP/bin" 并同时打开COMMAND PROMPT: <br />set path=%path%;C:/devkitPro/devkitPSP/bin;<br />cmd<br />(11月4日註: 終於明白devkitProUpdater沒有把devkitPSP/bin放在path里的原因, 要是你的系統里同時安裝了cywin+toolchain的psp開發環境, 把devkitPSP/bin放在path里會導致它"不良於行")<br /><br />我们可以随便选一个例子试一下: <br />[attach]56[/attach]<br />注意:要是你之前安装过PSP开发环境, 要把旧的环境参数"PSPDEV"或"PSPSDK"清除掉.<br /><br />再附上我自己正在用的START.BAT. 要是devkitProUpdater没把环境参数设定好,可以用这个. 另外, 安装时一定要装"MSYS"! <br />set PATH=%PATH%;c:devkitPromsysin;c:devkitProdevkitPSPin<br />set PSPDEV=<br />set PSPSDK=<br />set DEVKITPRO=/c/devkitPro<br />set DEVKITPSP=/c/devkitPro/devkitPSP<br />CMD</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post85_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Lua学习笔记之 Type and Values</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">Lua学习笔记之 Type and Values</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-24 19:40:13</p>
+</div>
+<div class="col-10">
+<p>lua是一种动态类型语言, 不用特别声明变量以及指定类型, 首次赋值即为声明. 说到此点, 我觉得动态语言的这种特点与汇编倒是蛮象的: 不管你是什么类型, 对于底层而言, 它代表的就是一内存地址, 而操作符代表的就是对这些地址及存在于这些地址里的量进行操作而已.  闲话少说,  继续看pil, 今天的内容是: types and  values.<br /><br />笔记内容:<br /><br />1. lua提供了八种数据类型: nil, boolean, string, number, userdata, function, thread, table. 如果想看某个表达式是何种类型的, 可以使用type()函数, 它的返回值是string类型:<br />> print(type(10.4*3))<br />number<br />> print(type(type(10.4*3)))<br />string<br /><br />2. 一个变量, 可以被多次赋以任何类型的值. 相比之下, lua中使用函数指针时的简单, 到了令人咋舌的程度: 再也不需要象c里那样弄个指针传来传去的了, 比如: a = print , 而后就可以用a(3)来打印表达式的值了. 让我觉得最爽的一点就是: 使用table+函数赋值的方式, 可以非常容易的实现函数表, 从而避免出现大量的if else语句. 形如下:<br />function func_1( para )<br />    para = para + 1<br />    return para<br />end<br /><br />function func_2( para )<br />    para = para+2<br />    return para<br />end<br /><br />func_table = {<br />    ["func1"] = func_1,<br />    ["func2"] = func_2,<br />}<br /><br />print ( func_table["func1"](1) )<br /><br />打印的结果是:<br />2<br /><br />选择string作为 key, 是为了让你了解在lua里, 作函数表是如何的方便.<br /><br />3. 全局变量在第一次赋值前, 默认是nil; 删除全局变量, 也是将此变量赋值为nil.  nil值, 也常作为函数的无效返回值来使用.<br /><br />4. boolean类型有两个值: false 和 true( 全为小写 ). 在条件表达式中,  只有false和nil才表示假, 其余任何值均表示真(0也表示真).  比如这些值:<br />if false then print( "ok" ) end<br />if nil then print("ok") end<br />if "" then print("ok") end<br />if '' then print( "ok" ) end<br />if "haha" then print( "ok") end<br />if 0 then print("ok") end<br />在上面的这些语句中, 只有前两条语句打印不出ok, 其它皆可以.<br /><br />5. 对于number类型, lua只提供real实型数. 没有整数类型, 按pil的说法: as it does not need it.... Moreover, most modern CPUs do floating-point arithmetic as fast as (or even faster than) integer arithmetic. 我想, lua自身的这些"狡辩"已经有足够的说服力, 不用再罗索了. 什么叫自由? 看这里:<br />>print( string.sub( "hello", 1.1, 2.2 ) )<br />he<br />其效果等同于: print( string.sub( "hello", 1, 2 ) )<br /><br />6. 都说lua的string类型功能很强大, 可就目前我的使用而言, 并没有感受到这种强大给我带来的更多的便利性, 我想, 可能还是码lua码得少了. lua里的string类型, 可以存放任意长的字符串, 一个字符串, 一旦创建便不可更改. 有人说, 这样操作起来岂不是效率很低? 其实, 也不尽然, 你想嘛, 那些对串进行操作的函数: sub, find, copy, replace, cat等等. 其中, 很多确实本身并没有要求一定要修改串本身, 很多函数都是不修改串的, 而同时, 修改串的那些操作, 还不如直接创建一个新串来得方便. lua对字符串的内存管理, 还是比较棒的, 编程者不用去管它的分配与回收, lua会根据自己的一套引用计数机制来自行决定何时释放掉这个串, 同时, 正是由于不可修改串本身, 也使得lua的字符串操作变成了单纯的引用操作, 这样效率应该是更高了.<br /><br />字符串常量, 可以使用单引号, 也可以使用双引号括起来.  但是, 要培养一种良好的编程习惯: 固定使用一种风格的声明形式. 转义字符, 一样在前面加 "" . 以 后引出的数字, 可以表示一个asc字符, 但的数字最多不会超过3位.<br /><br />定义含有多行的字符串时, 可以使用 [[ ]] 标识, 这样就不用在每行之间加<br />作转义了.<br /><br />lua 提供字符串与number类型之间的自动转换功能. 所谓的自动转换, 就是视调用时的函数行为, 决定当前的操作是按字符串处理, 还是按数值型处理,  比如:  "10"+1,  这种情况会按数字处理, 因为字符 串没有加法操作, 如果想连接两个字符串, 要用 .. 运算符. 而 "10"..1, 其结果为: 101 .  当然,  "a"+1这样的操作, 是非法的,  因为lua的转换, 并不是按asi来作, 而是等于执行了一个 atoi( "10"), 然后再加1.<br />在其它场合, 如果要将字符串转为数字, 使用tonumber, 转换失败时, 返回nil. 比如: tonumber("a")返回值就为nil. 如果要将数字转换成字符串, 有两种方法: 一种是使用tostring函数, 一种是使用连接符将数字和一个空串连接起来: 10.."", 其结果为:"10"</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1158_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>初探Nintendo DS程式开发与设计（四）：做个拼贴艺术大师</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">初探Nintendo DS程式开发与设计（四）：做个拼贴艺术大师</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-03-12 08:21:52</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.monkeypotion.net/gameprog/note/nds-dev-tiled-background#more-151[/url]<br />作者：猴子灵药<br /><br />        由之前一系列的三篇文章中，已经一步步地瞭解了如何在 NDS 平台上使用 Framebuffer 背景模式、Bitmap 背景模式，以及 Sprite 物件功能，接着本篇将再次深入与游戏制作息息相关的背景显示功能，介绍在真实的游戏程式应用中，更加实用的图块背景 (Tiled Background) 模式。<br /><br />[quote]前情提要：<br /><br />[url=http://www.yayabo.cn/thread-509-1-1.html]初探Nintendo DS程式开发与设计（一） [/url]<br />[url=http://www.yayabo.cn/thread-510-1-1.html]初探Nintendo DS程式开发与设计（二）[/url] <br />[url=http://www.yayabo.cn/thread-511-1-1.html]初探Nintendo DS程式开发与设计（三）：二维世界小精灵[/url] [/quote]<br />由于硬体架构上的先天限制，在 NDS 平台中，没有如同个人电脑平台上的全彩 (32 bits) 或高彩 (24 bits) 显示模式可以使用；在这个小小的掌上世界中，所有的绘图物件只能够使用 16 bits、8 bits 或 4 bits 的色彩显示模式。而如前篇文章的内容所提，Sprite 物件能够使用 16 色 (4 bits) 与 256 色 (8 bits) 两种模式，对于背景图件来说亦然如此。在 Sprite 的功能中，可以选择使用 OBJCOLOR_16 或 OBJCOLOR_256 这两项色彩模式，而在背景图件中，也有相对应于 16 色与 256 色模式的 BG_COLOR_16 与 BG_COLOR_256 定义。<br /><br />        瞭解了色彩模式的种类之后，就可以开始进入图块 (Tile) 的世界了。很久很久以前，在那个电脑记忆体仍然十分珍贵而稀少的年代里，多数的家用游乐器主机，都只配备着非常有限的记忆体容量。而对于掌上型主机来说，记忆体的限制则更为显着。因此，我们无法使用多张高解析度的点阵图 (Bitmap) 做为游戏中的背景图片，所以在 NDS 上存在着一种特别的绘图显示模式，能够以一组相同大小的图块，拼贴组合成为完整的游戏背景图片。因此，游戏开发者就可以利用类似磁砖拼贴的方式，由有限数量的小型图块，组合出变化多端的大型图片。<br /><br /><br />        [quote]在 NDS 平台上，Tile 是指一个 8×8 大小，共计由 64 个像素点所组成的图块。 [/quote]<br />       [float=right][attach]1005[/attach][/float]<br />        以一张 32×32 大小的点阵图为例，当程式设计者将原先存放于卡匣中的点阵图片载入至 NDS 的记忆体中时，在硬体系统的内部会将图片以 8×8 的大小，依照横列的顺序依序读取进来。因此，如图所示，一张 32×32 大小的点阵图片，就会被分为由 1 至 16 共计 16 个图块。<br /><br />        图块背景模式的显示原理，其实非常类似于图片的调色盘 (Palette) 显示模式原理。首先将相等大小的图块载入绘图记忆体中，然后在背景的显示区域中，再指定一个索引值 (Index) 至指定的图块编号；如此一来，NDS 的绘图引擎，就能够依据索引值找出相对应的图块资料以做为绘图显示之用。而这些索引值资料，则经常被称为 Map 或者 Tilemap。<br /><br />        请仔细地端详这张精美的 [url=http://www.dev-scene.com/images/5/57/Nds_2D_background_memory.png]2D Background Memory [/url]图片，其中的 Graphics Base（也可称为 Char Base）就是存放图块资料的地方，而 Map Base 则是存放背景图件索引值的地方。Map Base 的每一块 Base 大小为 0×800h (2 KByte)；而 Graphics Base 的每一块 Base 则佔据着 0×4000h (16 KByte) 的记忆体空间。但是请注意，在图片上显示出的 Graphics Base 与 Map Base，只是逻辑观念上的分野，实际上两者皆位于相同的记忆体位址 0×06000000 之中，只是依据程式设计者所做的设定，而使 NDS 系统对记忆体的内容物做出适当的解译。<br /><br />        为了使 CPU 存取记忆体资料的速度加快，在大多数的电脑硬体架构中，都存在着 [url=http://en.wikipedia.org/wiki/Data_structure_alignment]Memory Alignment [/url]的规则与限制，当然 NDS 平台也不例外。因此在图块背景模式中，程式设计者不能够随性地将资料填入任意的记忆体位址中，而是必须将图块资料与索引资料对齐 (align) 硬体架构中的逻辑边界。但是这些在 Base 与 Base 之间的分界，完全只是逻辑性的分野，并没有任何内建的机制能够确保这些记忆体位址上的资料不会相互重叠，因此程式设计者必须负责将资料写入适当的记忆体位址，并且确保它们不会彼此覆写。<br /><br />        至此，我们知道为了显示图块背景，需要设定两种资料：<br /><br />[list]<br />[*]图块资料 (Graphics)：由点阵图片分解而成 8×8 大小的像素点资料。 <br />[*]索引资料 (Map)：用来索引至图块资料的数值。<br />[/list]<br />        而为了能够迅速存取 Map Base 与 Graphics Base 的记忆体位址，所以在 libnds 中已经为 Main Engine 预先定义了方便使用的 #define 值：<br /><br />[code=c]#define BG_MAP_RAM(base)        (((base)*0x800) + 0x06000000)<br />#define BG_TILE_RAM(base)        (((base)*0x4000) + 0x06000000)[/code]举例来说，如果要将索引资料写入第 0 个 Base，并且将图块资料写入第 1 个 Base 中，可以使用以下的方法：<br /><br />[code=c]// Get Map Base 0<br />u16* piMapMemory = (u16*)BG_MAP_RAM(0);<br />// Copy data to Map Base 0<br />dmaCopy(mapData, piMapMemory, mapDataLen);<br /><br />// Get Graphics Base 1<br />u16* piTileMemory = (u16*)BG_TILE_RAM(1);<br />// Copy data to Graphics Base 1<br />dmaCopy(backgroundTiles, piTileMemory, backgroundTilesLen);[/code]接着，再于背景图件的设定中，指定所使用的 Map Base 与 Tile Base 编号，就能够顺利地显示背景图片了：<br /><br />[code=c]// 背景图层0：使用 32x32 个 Map，256 色模式，以及 Map Base 0 与 Tile Base 1 的资料<br />BG0_CR = BG_32x32 | BG_COLOR_256 | BG_MAP_BASE(0) | BG_TILE_BASE(1);[/code]<br />        <br />        在 NDS 的程式设计领域中，有一个非常重要的观念，就是不论是 Bitmap 资料、Tile 资料、Map 资料或者 3D 资料，同样都存在于相同的记忆体区段之中，NDS 本身并不知道如何诠释这些记忆体中存在的资料，因此程式设计者需要藉由 videoSetMode() 函式以及其他相关的设定，才能够使 NDS 对记忆体中的资料做出正确的解译。<br /><br />        还记得在前篇文章中，有提到 Sprite 系统最多可拥有 1024 个不同的 Tile 数吗？因为图块的 Map 有 8 bits 与 16 bits 两种形式，在 8 bits 模式下，最多只能索引至 2 的 8 次方，也就是 256 个不同的 Tile；而在 16 bits 模式下，只有其中的 10 个 bits 会拿来做为索引值的用途，最多只能索引至 1024 个不同的 Tile，所以这也就成为了 Sprite 所能使用的图块上限值。另外，16 bits 的 Map 还能够提供调色盘以及图块镜射 (Flip) 的功能。<br /><br />        在本文的范例程式中，将会载入 4 张 32×32 大小的图片，用来组合出数种不同的背景图片样式。由前述的图块定义可知，32×32 大小的图片会被分解成为 16 个图块，其中第一张图片的图块索引编号为 0、1、2 … 至 15 ，第二张图片的编号则从 16 至 31，其他则以此类推：<br /><br />[list]<br />[*]图片编号 0：由图块 0、1、2 …… 至 15。 <br />[*]图片编号 1：由图块 16、17、18 …… 至 31。 <br />[*]图片编号 2：由图块 32、33、34 …… 至 47。 <br />[*]图片编号 3：由图块 48、49、50 …… 至 63。<br />[/list]<br />接着，可以利用字元阵列的方式，定义出背景图片的样式：<br /><br />[code=c]static char g_acMap1[] =<br />{<br />	2,2,2,0,1,1,0,0,<br />	2,2,2,0,1,1,0,0,<br />	2,2,2,0,0,0,0,0,<br />	0,0,0,0,0,3,3,3,<br />	0,1,1,0,0,3,3,3,<br />	0,1,1,0,0,3,3,3,<br />};[/code]<br />        要注意的是，这个阵列中的编号并不是图块编号，而是用来表示萤幕上所需显示的图片编号；在游戏的背景中，填入 0 的位置显示第一张图片，1 显示第二张图片，2 显示第三张图片，3 则显示第四张图片。再来就是利用前述的 libnds 定义，将点阵图片的资料复制至 BG_TILE_RAM(1) 的位址上，并且将 g_acMap1 的资料与 BG_MAP_RAM(0) 传入 BuildBG() 函式中进行处理：<br /><br />[code=c]// Load graphics data<br />dmaCopy(backgroundTiles, (u16*)BG_TILE_RAM(1), backgroundTilesLen);<br />dmaCopy(backgroundPal, BG_PALETTE, backgroundPalLen);<br /><br />// Build up map data<br />BuildBG((u16*)BG_MAP_RAM(0), g_acMap1);[/code]<br />        NDS 的萤幕尺寸为 256×192 个像素点，以 32×32 大小的图片来说，在单一萤幕上总共能够容纳 8×6 张图片，也就是每一列有 8 张图片，每一行则有 6 张图片。所以，需要在 BuildBG() 函式中，对每一列与每一行的图片进行设定：<br /><br />[code=c]void BuildBG(u16* piMemory, char* pcMap)<br />{<br />	for (int y = 0; y < TILESET_HEIGHT; y++) {  // TILESET_HEIGHT = 6<br />		for (int x = 0; x < TILESET_WIDTH; x++) {  // TILESET_WIDTH = 8<br />			char cTileIndex = *pcMap++;<br />			BuildTileset(piMemory, x, y, cTileIndex);<br />		}<br />	}<br />}[/code]而在 BuildTileset() 函式中，则需要在先前传入的 BG_MAP_RAM(0) 位址上，设定图块的索引资料：<br /><br />[code=c]void BuildTileset(u16* piMemory, int iX, int iY, char cTileIndex)<br />{<br />	char cValue = cTileIndex * TILES_PER_TILESET;<br />	int iTileX = iX * TILES_NUM_WIDTH;<br />	int iTileY = iY * TILES_NUM_HEIGHT;<br /><br />	piMemory[iTileX + iTileY * BG_WIDTH] = cValue;<br />	piMemory[iTileX + iTileY * BG_WIDTH + 1] = cValue + 1;<br />	piMemory[iTileX + iTileY * BG_WIDTH + 2] = cValue + 2;<br />	piMemory[iTileX + iTileY * BG_WIDTH + 3] = cValue + 3;<br /><br />	piMemory[iTileX + (iTileY + 1) * BG_WIDTH] = cValue + 4;<br />	piMemory[iTileX + (iTileY + 1) * BG_WIDTH + 1] = cValue + 5;<br />	piMemory[iTileX + (iTileY + 1) * BG_WIDTH + 2] = cValue + 6;<br />	piMemory[iTileX + (iTileY + 1) * BG_WIDTH + 3] = cValue + 7;<br /><br />	piMemory[iTileX + (iTileY + 2) * BG_WIDTH] = cValue + 8;<br />	piMemory[iTileX + (iTileY + 2) * BG_WIDTH + 1] = cValue + 9;<br />	piMemory[iTileX + (iTileY + 2) * BG_WIDTH + 2] = cValue + 10;<br />	piMemory[iTileX + (iTileY + 2) * BG_WIDTH + 3] = cValue + 11;<br /><br />	piMemory[iTileX + (iTileY + 3) * BG_WIDTH] = cValue + 12;<br />	piMemory[iTileX + (iTileY + 3) * BG_WIDTH + 1] = cValue + 13;<br />	piMemory[iTileX + (iTileY + 3) * BG_WIDTH + 2] = cValue + 14;<br />	piMemory[iTileX + (iTileY + 3) * BG_WIDTH + 3] = cValue + 15;<br />}[/code]<br />[float=left][attach]1006[/attach][/float]<br />        在上述的程式码中，先将原来传入 BuildBG() 函式的图片编号，转换成相对应的图块编号 cValue，接着再直接存取 piMemory，也就是 BG_MAP_RAM(0) 位址，以每一列 4 个图块为一组，一次完成 16 个图块的索引值设定。<br /><br />        大功告成！只需要按照上述的步骤一步步执行，就能够完成 NDS 的程式设计领域中，非常实用也非常具有弹性的图块背景模式功能。<br /><br />        接续之前三篇文章所介绍的 Framebuffer、Bitmap 与 Sprite，一路走来已经认识了 NDS 平台的输入功能、声音功能、Sprite 图件，以及图块背景显示模式。光是利用这些知识，已经非常足够写出几个简单的小游戏了。有兴趣的读者，不妨试着利用这些概念开始动手写个简单的小型游戏吧！如果能够利用所学的知识，制造出完整的游戏成品，不止可以获得满满的成就感，同时也是一种非常棒的正向学习回馈噢！ ：D<br /><br />程式码范例下载：[attach]1007[/attach]<br />操作方式：程式中共有 3 种不同样式的 Tilemap，按下「A」键或「B」键即可切换。<br /><br />参考资料：[url=http://www.dev-scene.com/NDS/Tutorials_Day_4]NDS/Tutorials Day 4: 2D Tile Graphics[/url]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post345_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

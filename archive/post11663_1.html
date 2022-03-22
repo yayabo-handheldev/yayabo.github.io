@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>GGMDS pak图片问题</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">GGMDS pak图片问题</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_12.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wbn1883</b><br/>
+2011-02-10 21:36:16</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 wbn1883 于 2011-2-10 21:44 编辑 [/i]<br /><br />额。。最近研究ggmds ，但是pak图片。。完全不知道怎么打包的。。求各位叔工具。。<br /><br />rmds的pak打包工具不行额。。。<br /><br />如果用上面工具打包。。提示：<br /><br />断言错误<br /><br />找不到tex.bin<br /><br />上图：<br /><br />[attach]20119[/attach]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>jjt1018489501</b><br/>
+2011-02-10 21:49:42</p>
+</div>
+<div class="col-10">
+<p>小白围观中</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2011-02-10 22:03:32</p>
+</div>
+<div class="col-10">
+<p>小白围观中+1<br />最近还真多问题的说。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2011-02-10 22:58:13</p>
+</div>
+<div class="col-10">
+<p>RMDS的pak文件管理器是可以打开并提取pak中的文件的。<br />通常情况下pak中包含3个文件，分别是tex.bin、pal.bin和cfg.ini。前两者可以由png图片通过nitro_texture_converter这个命令行工具转化出来，后者需要手动编辑。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>king71036</b><br/>
+2011-02-10 22:58:16</p>
+</div>
+<div class="col-10">
+<p>小白围观中+2<br />問題真是無所不在～～</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wbn1883</b><br/>
+2011-02-11 12:45:31</p>
+</div>
+<div class="col-10">
+<p>雷叔nitro_texture_converter这个工具发下好吗？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wbn1883</b><br/>
+2011-02-11 12:45:55</p>
+</div>
+<div class="col-10">
+<p>雷叔nitro_texture_converter这个工具发下好吗？谢谢……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>as3303021996</b><br/>
+2011-02-11 13:56:49</p>
+</div>
+<div class="col-10">
+<p>围观一下额</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2011-02-11 21:07:27</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 雷精灵 于 2011-2-12 20:45 编辑 [/i]<br /><br />[attach]20147[/attach]<br />命令行工具。语法如下：<br />[color=Blue]Nitro_Texture_Converter[/color] [color=Green]待转化的png文件[/color] [color=DarkRed]颜色模式[/color]<br /><br />其中，颜色模式是个很重要的参数，只能取如下值：<br />[color=Blue]RGB4[/color]（转化后的图片，只有4种颜色。一般用于按钮等极简单的图片）<br />[color=Blue]A5RGB8[/color]（转化后的图片，只有8种颜色+32级半透明度。一般用于对话框图片）<br />[color=Blue]RGB16[/color]（转化后的图片，只有16种颜色，一般用于较为简单的图片）<br />[color=Blue]A3RGB32[/color]（转化后的图片，只有32种颜色+8级半透明度。作用非常广泛）<br />[color=Blue]RGB256[/color]（转化后的图片，只有256种颜色，可以用于任何不需要半透明的场合）<br /><br />例如：<br />[attach]20149[/attach]<br />这张背景图颜色数较多，因此需要使用RGB256参数。命令如下：<br />[color=Blue]Nitro_Texture_Converter[/color] [color=Green]Stadium_Outside.png[/color] [color=DarkRed]RGB256[/color]<br />转化后会生成两个文件，分别为Stadium_Outside_Tex.bin和Stadium_Outside_Pal.bin。然后改名为[color=Purple]tex.bin[/color]和[color=Purple]pal.bin[/color]。<br /><br />最后还需要配置一个[color=Purple]cfg.ini[/color]来指定图片的一些参数。语法如下：<br />[General]<br />centerX=0;[color=Sienna]图片中心点。用于旋转缩放的时候定位中心[/color]<br />centerY=0<br />w=256;[color=Sienna]图片的宽高[/color]<br />h=192<br />texFormat=4;[color=Sienna]这就是转化图片的时候的颜色模式参数，只允许取如下值：1=A3RGB32，2=RGB4，3=RGB16，4=RGB256，6=A5RGB8。其他数值均为非法[/color]<br />frameCount=1;[color=Sienna]图片帧数[/color]<br />isColor0Transparent=true;[color=Sienna]图片是否带有透明色。如果png带有透明色则该键值为true，否则为false[/color]<br /><br />最后三个文件打包成pak即可。<br /><br />[color=Red]注意：GGMDS严格区分大小写！请务必注意cfg.ini中的单词大小写，以及文件名的大小写。[/color]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wbn1883</b><br/>
+2011-02-11 22:46:32</p>
+</div>
+<div class="col-10">
+<p>哇。。。谢谢雷叔</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wbn1883</b><br/>
+2011-02-12 10:03:56</p>
+</div>
+<div class="col-10">
+<p>工具运行不能，是否缺少组件，支持库或平台？查壳工具查到vc8写的！要下vc吗？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wbn1883</b><br/>
+2011-02-12 10:04:41</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 wbn1883 于 2011-2-12 10:08 编辑 [/i]<br /><br />工具运行不能，窗口闪现0.5s后自动关闭，是否缺少组件，支持库或平台？查壳工具查到vc8写的！要下vc吗？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2011-02-12 20:52:38</p>
+</div>
+<div class="col-10">
+<p>更新了一下附件，现在不会出现缺少组件的问题了。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post11663_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

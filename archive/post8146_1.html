@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>小白求教如何修改立绘的使用数量</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">小白求教如何修改立绘的使用数量</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_9.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>梦旅人</b><br/>
+2010-09-20 21:29:20</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 梦旅人 于 2010-9-20 21:33 编辑 [/i]<br /><br />貌似在一个脚本里立绘载入的数量有限制数量用的多了就不显示出来了求教怎么改啊？难道只能jump到新开脚本重新编号~~？<br /><br />就各位大大解答~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ast</b><br/>
+2010-09-20 22:23:15</p>
+</div>
+<div class="col-10">
+<p>立绘能用的一共有32张</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yyeg</b><br/>
+2010-09-20 22:38:54</p>
+</div>
+<div class="col-10">
+<p>别用那么多  用的时候再载入  就好了  哟西  完了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2010-09-20 23:00:07</p>
+</div>
+<div class="col-10">
+<p>你FG序号是不是弄错了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-09-21 08:47:46</p>
+</div>
+<div class="col-10">
+<p>立绘使用fg指令载入,fg的缓冲区有32个,分别用1-32来区分,用代码表示就是<br />fg(1,..)<br />fg(2,..)<br />fg(3,..)<br />fg(32,..)<br />每一个fg缓冲区可以载入一张并且只能载入一张图片,[color=Red]fg同一个号码[/color]载入2张或2张以上的图片,<br />最后一张有效,比如<br />fg(1,"xx01.jpg",1,500)<br />fg(1,"xx02.jpg",1,500)<br />fg1号缓冲区载入的是xx02.jpg<br />也就是,fg是可以无限次载入图片并显示的,并不是只能载入32个,给个例子:<br />fg(1,"xx01.png",1,500); bgon(1); pause(45); -- 载入xx01.png并淡入显示<br />fg(2,"msgbox.png",1,500); bgon(2); pause(45); -- 载入对话框并淡入显示<br />say("说句话.");<br />fg(1,"xx02.png",1,500); pause(45); -- 载入xx01.png并淡入显示(和第一句一样使用1号fg)<br />say("从画面可以看到,立绘被改变了")<br /><br />ps:你显示不出来的原因可能是忘记使用fgon指令来打开显示了,fgon是显示开关.</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2010-09-21 17:01:55</p>
+</div>
+<div class="col-10">
+<p>白叔没有任何难道的用bgon打开了fg</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-09-21 19:15:41</p>
+</div>
+<div class="col-10">
+<p>。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>梦旅人</b><br/>
+2010-09-21 20:04:10</p>
+</div>
+<div class="col-10">
+<p>无的意思就是用的fg超过了32张怎么办？重新开个新脚本？有没有载入超过32张的方法~~~？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-09-21 23:57:36</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 白枫 于 2010-9-22 00:09 编辑 [/i]<br /><br />只要把fg缓冲区的图像数据删除掉就可以继续用了,用fgnull(1)~fgnull(32),不删除图像数据fg也是可以继续使用的,因为amp有很好的防泄漏措施,一直使用同一个fg号码加载图片也不会有内存溢出的问题</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-09-22 16:09:15</p>
+</div>
+<div class="col-10">
+<p>[quote]白叔没有任何难道的用bgon打开了fg<br />[size=2][color=#999999]任天之浪 发表于 2010-9-21 17:01[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=127164&ptid=11853][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />    是白叔的话应该没有难道吧……（笑…）</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post8146_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

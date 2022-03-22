@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>RPG Maker XP 教程(4)敌人相关</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">RPG Maker XP 教程(4)敌人相关</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-02-14 12:21:17</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://hi.baidu.com/%B7%E3%D3%F0%C1%FA%D0%F9[/url]<br /><br />角色设置完毕了，接下来就是角色的死对头——敌人部分了。首先点击“敌人”标签，切换到敌人的设置界面。<br />最大值敌人名称战斗图什么的都一目了然可以自己设置，在此不多罗嗦，右边那一串数值也是和角色设置差不多的东西，你可以自己调整，注意敌我实力平衡即可。测试战斗的方法后面我会讲到。随后我们可以看到设置打败这个敌人能够获得的“EXP”、“金钱”和“宝物”，在“宝物”的设置里我们可以设置该敌人掉落的战利品，并且在“出现”的数字栏里面填上掉落物品的概率。<br /><br />接下来比较重要的部分是设置敌人的“行动”，这也是是战斗增加乐趣的重要环节。按Del或者点击右键删除都可以去掉你不喜欢的行动。双击空白处打开设置行动的窗口。<br /><br />[attach]3012[/attach]<br /><br />在这里我一个一个讲：首先是条件——这个如果不设置的话，就会默认为该行动只要一进入战斗就有可能被用，而具体概率在下方就可以设置。然后我们来分别说说这四种条件：<br />回合——设定固定的回合数让这个敌人有一定概率做出该行动。固定会采用a+bx的形式（学过一元一次方程的都该懂这个吧- -）也就是说，如果将第一个数字填上2，第二个数字填上3，敌人的行动回合就是2+3x，也就是第2回合（x=0），第5回合（x=1），第8回合（x=2）……等这些回合行动，直到战斗结束为止。<br />HP多少以下——这个也很好理解，当该敌人的生命在多少百分比之下的时候，做出行动。可以用这个制作当敌人觉得自己快不行了的时候的垂死一击，或者补血行动之类的- -<br />等级多少以上——这个不是指敌人，而是指我方的等级。可以利用这个做出当我方等级很低的时候，敌人很暴虐用很厉害的大招虐主角；而当角色等级很高的时候，敌人会逃离战斗之类的……<br />开关XXX为ON——这个……呃，涉及到开关的运用，一般情况下来说制定一些特殊的情况，这个我们在讲开关用法的时候会顺便提及。<br /><br />设置完条件，就可以设置行动了。基本行动有攻击、防御、逃跑、什么也不做四种，这个也很明白不用多说。特技方面，你就可以从事先设定好的特技列表里面选择出你需要让敌人使用的特技就可以了。概率的数字大概是按照多少成的可能来算的，比如设置为7的话，就是七成可能。<br /><br />属性状态部分依旧放在后面说，接下来我们看看敌人“队列”的设置。<br /><br />[attach]3013[/attach]<br /><br />好，现在选择“队列”标签即可打开这个比较关键的部分了，它是一切战斗的基础。首先看到这个画面，左手边依然可以设置最大队伍数量这个不用多说，从中间的设置部分来看起。名称，可以自己定也可以让电脑给你自定（自动生成名称），它会根据你调入队伍的敌人数目和种类自动为你生成队伍的名字方便记住。参考默认的队伍就能明白了，图中有两只幽灵，那么就是幽灵*2。再右边的“战斗背景”是在你测试战斗的时候显示的背景，用来调试你把敌人的位置是不是放得对（比如森林中把敌人放在树上这样的囧事= =），和游戏的战斗背景无关，那个需要另外在“图块”选项里调整。<br /><br />[attach]3014[/attach]<br /><br />然后再右边就是战斗测试了，只会单独测试这一场和敌人的战斗。单击“战斗测试”，可以调整当前参战的角色和角色的等级、装备等，这样即使是测试BOSS战也可以预先设定好一个合适的等级来应对。“初始化”就是将这些角色还原为数据库最一开始设置的状态。默认战斗里，队伍最多只能有四个人。（XDDD剑同学我不厚道盗用你名字了别打我）<br /><br />当你点选了画面中一只幽灵后，“删除”那个键就可以用了。你可以用“删除”或者“全部删除”清除当前队伍中的敌人，然后添加新的敌人进去。在右边的列表里是你设置好了的“敌人”部分，只要选择你需要添加的敌人，按“添加”就可以了。然后你就能看到敌人的战斗图出现在画面上，用鼠标排列一下合适的位置即可。如果懒得排，也可以点击“整列”让电脑自动帮你排成一条横队在画面最下方。你最多允许添加的敌人只有八名。然后，在下面有一个“战斗事件”，这个是专门安排在战斗中的一些特殊事件的，当我们讲了地图事件之后，我们再专门抽出时间来讲这个地方的设置。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>reekin</b><br/>
+2010-03-23 15:00:20</p>
+</div>
+<div class="col-10">
+<p>继续学习</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1445_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

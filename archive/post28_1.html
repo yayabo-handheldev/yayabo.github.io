@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>［PSP教程００］libnge介绍</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">［PSP教程００］libnge介绍</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-05 16:52:41</p>
+</div>
+<div class="col-10">
+<p>摘自：TOPOC　studio<br />作者：newcreat<br /><br />nge是　nge's not a game engine.的递归缩写．它采用改进了图形系统的sdl．所有代码遵循GPL发布.<br /><br />众所周知，写psp程序时调试是一大难题，可能你写好一个程序之后，放到psp上调试，结果需要做这些工作：<br /><br />１　打开psp的usb连接．<br /><br />２　拷贝写好的程序到game下．<br /><br />３　运行程序，查看结果．<br /><br />这个可能是最好情况，可能你不小心写出程序了，psp挂了，结果还要关机拔电池等等，极大的浪费了开发人员的宝贵时间．可能绝大多数时间浪费在这个无聊的psp调试方面了．<br /><br />基于这个原因，所以需要一个与平台无关的库，这样在windows下开发程序就可以了．开发人员不需要在psp下调试，甚至可以连psp都不用买，一样可以开发psp程序．<br /><br />１　为什么nge采用SDL？<br /><br />　　sdl是一个非常出色的框架，而且是跨平台，nge采用了除图形显示的其他部分．原因是sdl显示是软件加速，而且放大，缩小，旋转，也是用的 sdl_gfx做的软件加速．完全不能达到做游戏的需求．所以需要改写一个接口能够实现硬件加速的放大，缩小，旋转．此外可能有的开发人员会考虑sdl＋ opengl的方式，的确这个对图象旋转等能够实现硬件加速，不过还是不够快．以下是一个在psp上的对比：<br /><br />(1) 512*512*32 贴图　psp采用默认２２２mhz<br /><br />sdl＋softrender　＜３０fps<br /><br />sdl＋pspgl　　　约５５fsp　<br /><br />sdl＋nge　　　　＞２７０fps<br /><br />(2)512*512*16贴图　psp采用默认２２２mhz<br /><br />sdl＋softrender　＜６０fps<br /><br />sdl＋pspgl　　　约１２０fsp　<br /><br />sdl＋nge　　　　＞４００fps<br /><br />所以用pspgl可以满足一般应用程序的要求，但是如果需要复杂的显示，比如更多画面特效，用它就不太适合了．采用sdl＋nge就基本能满足开发游戏的要求．<br /><br />２　nge的设计．<br /><br />　　nge主要是替换sdl的显示系统，在windows下采用opengl实现，在psp下直接采用gu实现，这样达到最大的显示效率．提供一套一致的接口，这样一份代码可以在windows和psp下都可以运行，不用做任何的修改．开发人员在windows下开发并且调试，最后只需在发布的时候编译一份psp版的发布就行了，可以完全抛弃psp．<br /><br />３　nge的特点．<br /><br />　　完全延续sdl的所有东西：<br /><br />1 各种图片格式支持，png，jpg，bmp，gif，tga．．．<br /><br />2 sdl的消息队列，这个对习惯消息机制开发者有很大用处．<br /><br />3 多线程程序，mutex，condition．．．<br /><br />4 输入输出<br /><br />5 更强大的SDL_BlitSurface函数功能，采用RendQuad函数名，可以在这个函数里实现旋转，放大，缩小，变换颜色，半透明效果．非常方便．<br /><br />6 完美的中文freetype支持．并且字的实时旋转，放大，缩小非常简单．<br /><br />　　另外新加的部分<br /><br />7 网络子系统　简单的异步网络，可以通过这个库编写psp网络程序，例如邮件收发，ftp下载等等．<br /><br />8 gui系统OCCULT，一个类似java的gui系统，采用xml作为配置文件，文档地址：<br /><br />　　　　　[url]http://www.zgnongyi.com/jackstop/Occult%20API%20Documentation.mht[/url]<br /><br />9 小型sql数据库，可以用于配置和大量数据的管理，非常方便<br /><br />4 　最新一键安装包，包含了用于psp和windows的所有最新库，真正做到一键安装，无须配置．<br /><br />下载地址：一共４个包，共４０m，解压之后运行setup.exe即可．<br /><br />[url]http://code.google.com/p/topoc/downloads/list[/url]<br /><br />windows版的设置：<br /><br />下载了windows版的会有下面几个目录：<br />[attach]1[/attach]<br />配置vc++ 6.0<br /><br />１　库的头文件设置，请看图<br />[attach]2[/attach]<br />２　lib文件设置，请看图<br />[attach]3[/attach]<br />３　设置好了就可以进入demo目录用vc打开工程测试环境了，如果demo编译没问题的话说明windows下配置好了（把dll目录里的dll拷到system３２下）．<br /><br />4　新建工程需要注意２个问题：由于是采用的多线程的库，所以新建工程需要注意２个地方的设置，一是需要用Multithreaded dll ，二是不用libcd，/nodefaultlib:"libcd.lib"， 具体设置请看本节最后．<br /><br />psp版的配置：<br /><br />采用整合包的可以直接启动start编译即可．(请看教程０４)下面可以不用看了．<br /><br />１　请在ps2dev上下载并安装sdl,sdl_ttf,freeype,sdl_image,sdl_mixer,jpeg,libpng,zlib.<br /><br />２　将libnge_psp拷贝到任意目录，然后cd进入test.cpp所在目录，键入make　SCEkxploit，如果没有错误说明libnge_psp已经装好了．<br /><br />开发实例：<br /><br />中国象棋pspv1.2采用的就是nge制作，在画面上有了很大的提高，而且整个制作过程中没有使用过一次psp，全部是在windows下完成的，只是在最后发布时编译了一份psp版程序．所以能够极大的加快开发进程和降低调试难度．<br /><br />－－－－－－－－－－－－－－－－－vc编译时问题的解答－－－－－－－－－－－－－－－－－－－<br /><br />Q&A:<br /><br />Q1.出现linkerror<br /><br />msvcrt.lib(MSVCRT.dll) : error LNK2005: _exit already defined in LIBCD.lib(crt0dat.obj)<br />msvcrt.lib(MSVCRT.dll) : error LNK2005: _strncpy already defined in LIBCD.lib(strncpy.obj)<br />msvcrt.lib(MSVCRT.dll) : error LNK2005: _fclose already defined in LIBCD.lib(fclose.obj)<br />msvcrt.lib(MSVCRT.dll) : error LNK2005: __isctype already defined in LIBCD.lib(isctype.obj)<br />LIBCD.lib(crt0init.obj) : warning LNK4098: defaultlib "msvcrt.lib" conflicts with use of other libs; use /NODEFAULTLIB:library...<br /><br />A1.这个是用多线成的libc的问题，解决方法采用Multithreaded dll即可，如下图设置:<br />[attach]4[/attach]<br />Q2:出现错误<br /><br />--------------------Configuration: text - Win32 Debug--------------------<br />Linking...<br />libcd.lib(strcat.obj) : error LNK2005: _strcpy already defined in MSVCRT.lib(MSVCRT.dll)<br />libcd.lib(dbgheap.obj) : error LNK2005: _malloc already defined in MSVCRT.lib(MSVCRT.dll)<br />libcd.lib(dbgheap.obj) : error LNK2005: _realloc already defined in MSVCRT.lib(MSVCRT.dll)<br />libcd.lib(crt0dat.obj) : error LNK2005: _exit already defined in MSVCRT.lib(MSVCRT.dll)<br />libcd.lib(crt0dat.obj) : error LNK2005: __exit already defined in MSVCRT.lib(MSVCRT.dll)<br />libcd.lib(crt0.obj) : error LNK2005: _mainCRTStartup already defined in MSVCRT.lib(crtexe.obj)<br />libcd.lib(crt0init.obj) : error LNK2005: ___xc_z already defined in MSVCRT.lib(cinitexe.obj)<br />libcd.lib(crt0init.obj) : error LNK2005: ___xc_a already defined in MSVCRT.lib(cinitexe.obj)<br />libcd.lib(crt0init.obj) : error LNK2005: ___xi_z already defined in MSVCRT.lib(cinitexe.obj)<br />libcd.lib(crt0init.obj) : error LNK2005: ___xi_a already defined in MSVCRT.lib(cinitexe.obj)<br />libcd.lib(winxfltr.obj) : error LNK2005: __XcptFilter already defined in MSVCRT.lib(MSVCRT.dll)<br />MSVCRT.lib(MSVCRT.dll) : error LNK2005: _strncpy already defined in libcd.lib(strncpy.obj)<br />MSVCRT.lib(MSVCRT.dll) : error LNK2005: _fclose already defined in libcd.lib(fclose.obj)<br />MSVCRT.lib(MSVCRT.dll) : error LNK2005: __isctype already defined in libcd.lib(isctype.obj)<br />LINK : warning LNK4098: defaultlib "MSVCRT" conflicts with use of other libs; use /NODEFAULTLIB:library<br />MSVCRT.lib(cinitexe.obj) : warning LNK4098: defaultlib "libcd.lib" conflicts with use of other libs; use /NODEFAULTLIB:library<br />Debug/text.exe : fatal error LNK1169: one or more multiply defined symbols found<br />执行 link.exe 时出错.<br /><br />text.exe - 1 error(s), 0 warning(s)<br /><br />A2:解决方法：加入/nodefaultlib:"libcd.lib"如图所示<br />[attach]5[/attach]<br />这２个问题是vc下写多线程都会遇到的，原因请baidu，google，我就不废话了．<br /><br />Q3: 如何去掉psp版的debug信息？<br />psp默认是debug版的，标明有当前fps和内存剩余量，主要是方便检测速度和内存泄露问题，如果经过一个操作你内存不断变少，说明有内存问题，则需要修改．<br />A3:编译release版的nge．<br /><br />你用－D RELEASE 编译release版的libnge，cd 进入pspdevlibnge_pspsrc　修改makefile，makefile修改的地方见红字<br /><br />TARGET_LIB = libnge.a<br />OBJS = vram.o GuSystem.o libnge.o libnge_global.o<br /><br />INCDIR = /usr/local/pspdev/psp/include/freetype2 /usr/local/pspdev/psp/include<br />CFLAGS = -G0 -w -DRELEASE<br />CXXFLAGS = $(CFLAGS) -fno-rtti<br />ASFLAGS = $(CFLAGS)<br /><br />PSPSDK=$(shell psp-config --pspsdk-path)<br />PSPBIN = $(PSPSDK)/../bin<br />CFLAGS += $(shell $(PSPBIN)/sdl-config --cflags)<br />LIBS += $(shell $(PSPBIN)/sdl-config --libs)<br />include $(PSPSDK)/lib/build.mak<br />install:<br />cp libnge.a ../lib/<br />cp *.h ../include/<br /><br />然后<br />make　clean<br />make<br />make　install<br />就可以了生成release的libnge.a<br /><br />－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－<br /><br />Q3: VS2005如何使用?<br /><br />A3:需要改一下工程设置．以下是步骤：<br /><br />1　打开xxxx.dsw会出现一个对话框，问你是否转换旧工程，选择　是．编译时出现那个DataCache重复定义问题可以把那个定义删除或者改个名字，那个定义没有用到．设置参考vc6.0 设置inlcude和lib<br />[attach]6[/attach]<br />编译会，出下边的问题<br />错误 1 error C2365: “CacheData”: 重定义；以前的定义是“枚举数” e:zxpc++libnge_winlibngeincludedatatype.h 121<br />错误 2 error C2143: 语法错误 : 缺少“;”(在“*”的前面) libnge_winlibngeincludedatatype.h 127 错误 3 error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int libnge_winlibngeincludedatatype.h 127<br />请将CacheData重新改个名字即可,或者删除他<br /><br />2 设置include和lib<br /><br />参照vc６的方式设置那５个include和lib（“工具->选项->项目和解决方案->VC++目录”里设置库文件Include和Lib路径；"）<br />[attach]7[/attach]<br />3　更改工程属性，选择linker，加入需要的库文件，可以用哪些添加哪些（例如sdl_ttf.lib 是lesson２才要的），如下图，我的是万恶的中文版的vs2005．<br /><br />附加依赖项　sdl_ttf.lib SDLmain.lib sdl.lib sdl_image.lib libnge.lib opengl.lib glu.lib msvcprtd.lib msvcrtd.lib<br /><br />忽略所有默认库　　选择　是<br />[attach]8[/attach]<br />３编译即可．<br />注：vs2005可能会需要opengl．dll请在这里下载（vc６会安装这个dll所以不用下，vs２００５安装的是opengl32.dll）<br />[url]http://code.google.com/p/topoc/downloads/list[/url]<br />5 以后自建工程需要选择console,然后工程设置按第３步即可<br />[attach]9[/attach]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>大猫</b><br/>
+2008-06-05 17:05:42</p>
+</div>
+<div class="col-10">
+<p>支持一下老大，俺对psp的库了解很少，希望能看到更多类似的文章:D</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zhkza99c</b><br/>
+2008-06-05 17:17:01</p>
+</div>
+<div class="col-10">
+<p>= =+新人，报道。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>TW241</b><br/>
+2009-05-12 11:12:37</p>
+</div>
+<div class="col-10">
+<p>好东西 ！！！！！！！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post28_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PSP中文输入法拼音 五笔 双拼 源代码(NGE2)</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">PSP中文输入法拼音 五笔 双拼 源代码(NGE2)</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-04 10:10:37</p>
+</div>
+<div class="col-10">
+<p>【NGE2 拼音五笔双拼 中文输入法】-----[极速单字版]<br />[自动显示智能双拼韵母键盘]<br />[源代码]open source<br />//**********************【SVS中的输入模块】***************************<br />NGE2 拼音五笔双拼 中文输入法 的集成版，极速单字版<br /><br /><br />在某些输入场合，（比如RPG游戏的主人公名字）只需输入简单汉字，考虑游戏的同时运行情况，<br />在尽量少增加cpu的负担和内存的情况下，完成基本中英数符号输入<br />此时极速单字版有较高的实用价值,非记事本类的程序完全够用<br /><br /><br />[NGE2词组输入法正在进行中，敬请期待.....]<br /><br /><br />最大拼音字符暂设为6位<br /><br /><br />十字键 ---文本编辑--移动文本的光标（光标移到字符中间，就可以插入输入）<br />                输入状态--控制键盘上的光标<br /><br />L---------文本编辑--光标移到编辑字符的最左端<br />                输入状态--汉字上翻一页                <br /><br />R---------文本编辑--光标移到编辑字符的最右端<br />                输入状态--汉字下翻一页<br /><br />△--------清空当前操作区域的字符<br />□---------backspace当前光标前区域<br />○--------选择键盘的相应字符<br />×--------两种状态的切换<br />                     输入分为两个状态<br />                     1.输入状态--只负责键盘到文本框的输入<br />                     2.文本编辑--只负责文本框的编辑<br /><br />select--键盘输入切换(拼音 小写 大写 符号)<br />start---输入完成(模块结束时 返回输入的字符串 与osk一样)<br /><br /><br /><br /><br />【输入小技巧】<br /><br />1.当出现 汉字 选择时，直接按 O键选择第一个汉字<br />2.每一个人的习惯不同，觉得十字键移动速度不爽的同学 请修改程序最顶端的<br />//键盘光标移动速度<br />#define KB_MOVE_VEC 100<br />值越大 越顿<br />值越小 越滑<br />3.[小细节]增加备选汉字组的 上一组 下一组翻页 图标提示<br />4.[小细节]光标移动时一直显示<br />  [小细节]高亮首选字<br /><br />[changelog]<br />【跟新】<br />[09-12-29]<br />--精心打造字频最好的单字库(单拼字频统计参数 8366 a=0.73)<br />--全面改进单字数据储存和装载架构<br />--增加少许功能的前提下，搜索代码从500 精简到200多行 并且单字搜索效率控制到了o(10)以内<br /><br />[09-12-30]<br />--增加五笔输入<br />--采用五笔86简码<br />--键盘布局和操作方式特别适合五笔盲打输入<br /><br />[10-01-1]<br />--增加双拼输入<br />--大量减少全拼输入量，特别针对摇杆输入,触屏更加方便<br />--采用 ABC 加加 双拼输入方案<br />--自己可以在双拼定义,建立自己的双拼方案<br /><br />[10-01-2]<br />--根据相应双拼方案自动显示智能双拼韵母键盘，无需记忆双拼码，直接键盘双拼输入(it's cool)<br /><br /><br />About NGE CHINESE INPUT<br />===========<br />NGE CHINESE INPUT is a input tool for the Sony PSP licensed under the GNU General Public License<br />It supports input chinese charaters for NGE in any games or homebrews.<br /><br />You need a Sony PSP with firmware version 3.XX-or later.. .<br />This program is free software, you can redistribute it or modify!<br /><br /><br />Programmer:YXL<br />Visit:[url]http://www.iacger.com/bbs[/url]<br /><br />Please use the following link to report bugs when you found:<br />[url]http://www.iacger.com/bbs/viewthread.php?tid=4771[/url]<br />[Changelog]<br />--<br />Added some functions for it.<br /><br /><br />Cross Pad---Text Status--move cursor<br />                   Input Status--control cursor<br /><br />L-----------Text Status--cursor will move the top of the inputs<br />                  Input Status--prev page<br />                <br /><br />R-----------Text Status--cursor will move the bottom of the inputs<br />                  Input Status--next page<br /><br />△----------Clean<br />□----------Backspace<br />○----------Select<br />×----------Change Status<br /><br />select------change keyboard(pinyin lower upper sign)<br />start-------return inputs</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lipop</b><br/>
+2010-01-14 12:18:32</p>
+</div>
+<div class="col-10">
+<p>这个是不错的东西啊 ，机子上的太难用了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>asxzl5945</b><br/>
+2010-02-06 16:07:00</p>
+</div>
+<div class="col-10">
+<p>我可不可以这么用...带着PSP去肯德基然后用该输入法来灌水，上网页QQ</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>彼得</b><br/>
+2010-02-24 15:38:31</p>
+</div>
+<div class="col-10">
+<p>是插件吗？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yang0yi</b><br/>
+2010-02-26 17:36:26</p>
+</div>
+<div class="col-10">
+<p>貌似这东西能让PSP中文输入了？<br />支持下看看。~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>SCZYB999</b><br/>
+2010-03-03 08:07:25</p>
+</div>
+<div class="col-10">
+<p>装到那个目录下呀，</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>computers000</b><br/>
+2010-03-04 00:12:46</p>
+</div>
+<div class="col-10">
+<p>[quote]是插件吗？<br />[size=2][color=#999999]彼得 发表于 2010-2-24 15:38[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=9174&ptid=1608][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br />好像不是插件，是自制软件<br />只能制成插件，在内置浏览器使用(不过较难实现，可能需要修改一些系统文件)</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>东曦既驾</b><br/>
+2010-05-07 23:53:14</p>
+</div>
+<div class="col-10">
+<p>如何使用？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wuxi0189</b><br/>
+2010-05-27 15:12:43</p>
+</div>
+<div class="col-10">
+<p>如何使用？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kemmybb</b><br/>
+2010-05-28 00:28:24</p>
+</div>
+<div class="col-10">
+<p>真是好东西。。。。一直想找的。。。谢谢了。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ddl73</b><br/>
+2010-06-06 10:56:24</p>
+</div>
+<div class="col-10">
+<p>终于找到了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>rokr888</b><br/>
+2010-06-26 19:45:59</p>
+</div>
+<div class="col-10">
+<p>请你告诉我们怎么用号码</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>asd0147014</b><br/>
+2010-07-04 11:44:43</p>
+</div>
+<div class="col-10">
+<p>这个不错!</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>呼延大藏</b><br/>
+2010-07-07 10:21:47</p>
+</div>
+<div class="col-10">
+<p>这麽牛逼,狂顶!</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>萌姬</b><br/>
+2010-07-07 19:19:21</p>
+</div>
+<div class="col-10">
+<p>用途很棒<br />但好像有點複雜呢<br />待會試試...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ttdasd123</b><br/>
+2010-07-21 21:57:03</p>
+</div>
+<div class="col-10">
+<p>[b]是在游戏中使用的...<br />比如:RPG游戏的主人公中文名字<br />有比如:联机游戏中的中文交流...[/b]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>dada941105</b><br/>
+2010-10-28 22:29:10</p>
+</div>
+<div class="col-10">
+<p>好像不是很方便的，但不错了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lrb2010</b><br/>
+2010-11-02 23:04:14</p>
+</div>
+<div class="col-10">
+<p>自制软件？似乎不太好用啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-09 21:59:47</p>
+</div>
+<div class="col-10">
+<p>都用的是NGE2那么说明可以完全移植到ZENGINE中 作为一个ZWindow的控件<br />有空我也会好好看看这个</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>marjeay</b><br/>
+2010-12-15 10:57:12</p>
+</div>
+<div class="col-10">
+<p>貌似不错的东西，试试看看</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>依芙依然</b><br/>
+2010-12-25 19:53:06</p>
+</div>
+<div class="col-10">
+<p>放在哪里？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>byxin</b><br/>
+2010-12-31 23:31:32</p>
+</div>
+<div class="col-10">
+<p>貌似很难用诶···</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>uyukm79</b><br/>
+2011-01-01 00:15:35</p>
+</div>
+<div class="col-10">
+<p>我的妈呀，这可不得了了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>609321569</b><br/>
+2011-01-02 23:12:34</p>
+</div>
+<div class="col-10">
+<p>果然少是好物啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>dm532x</b><br/>
+2011-01-12 19:54:39</p>
+</div>
+<div class="col-10">
+<p>。。。。。。。。。。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>司徒筱</b><br/>
+2011-01-26 13:14:42</p>
+</div>
+<div class="col-10">
+<p>放到哪个目录下啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>proboy</b><br/>
+2011-02-11 07:55:44</p>
+</div>
+<div class="col-10">
+<p>请问怎样使用</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>hitomi</b><br/>
+2011-02-12 22:42:15</p>
+</div>
+<div class="col-10">
+<p>谢谢分享~~终于上网无障碍咯~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yao8681869</b><br/>
+2011-02-17 12:16:30</p>
+</div>
+<div class="col-10">
+<p>光荣的收下了。。。表示会场感谢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fj7959804</b><br/>
+2011-02-21 20:42:03</p>
+</div>
+<div class="col-10">
+<p>  顶</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post966_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

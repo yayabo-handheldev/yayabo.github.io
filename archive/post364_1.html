@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>【教程10】实例小结：双手撞球</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">【教程10】实例小结：双手撞球</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yl_ls</b><br/>
+2009-03-20 15:37:38</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 yl_ls 于 2009-7-22 10:10 编辑 [/i]<br /><br />[url=http://www.iacger.com/]http://www.iacger.com/[/url] 首发<br /><br />学了前面的教程，你是否已经想动手了呢<br />本例总结了前面学习的一些知识，代码比较长，最先放图了<br />里面游戏上有一些小的BUG，大家可以试着去修改哟<br /><br />本例使用的字体在 libnge2 的 win32buildsin 目录下，包括之间的教程都应该放在此目录中运行<br /><br />效果图：<br />[img]http://www.iacger.com/bbs/attachments/molyx/1/6/3/9/1237533805_0.jpg[/img]<br /><br />资源：<br />[url=http://www.iacger.com/bbs/attachment.php?id=5382&u=1639&extension=wav&attach=1237533805_1.wav&filename=bump.wav&attachpath=1/6/3/9]bump.wav[/url]<br />[img]http://www.iacger.com/bbs/attachments/molyx/1/6/3/9/1237533805_2.png[/img]<br /><br />[code=c]<br />#include "libnge2.h"<br /><br />// 用于测试边界的常量<br />#define BORDERTOP 20<br />#define BORDERBOTTOM 252<br />#define BORDERLEFT 20<br />#define BORDERRIGHT 460<br /><br />// 反击板高度常量<br />#define BOARDHEIGHT 40<br /><br />// 退出标识<br />int game_quit = 0;<br /><br />// 建立资源图片结构指针<br />image_p res;<br /><br />// 建立输出文本的图片结构指针<br />image_p pimage_text;<br /><br />// 用于显示的字体结构指针<br />PFont font;<br /><br />// 建立音效结构指针<br />music_ops soundeffect;<br /><br />// 保存球的状态<br />// 0 在左手板上准备发球<br />// 1 在右手板上准备发球<br />// 2 正在移动<br />int state = 0;<br /><br />// 保存小球的移动量<br />pointf offset = {0,0};<br /><br />// 分别保存左手和右手是否正按下上移或下移键<br />bool leftup, leftdown, rightup, rightdown;<br /><br />// 保存资源图片中的四块图片的区域<br />rectf resrects[4] = {<br />    {0,0,480,272},        // 背景区域<br />    {280,0,6,40},        // 反击板区域<br />    {279,21,25,25},        // 小球区域<br />    {320,50,378,162}    // LOGO 区域<br />};<br /><br />// 保存两个反击板的位置<br />int boardleftpos = 116;        // 左手反击板的位置(只保存Y轴)<br />int boardrightpos = 116;    // 右手反击板的位置(只保存Y轴)<br /><br />// 保存得分<br />int scoreleft = 0;            // 左手得分<br />int scoreright = 0;            // 右手得分<br /><br />// 保存小球的当前位置<br />pointf ballpos = {20, 126};<br /><br />// 按下键处理<br />void btn_down(int keycode)<br />{<br />    switch(keycode)<br />    {<br />    case PSP_BUTTON_UP:<br />        leftup = true;        // 左手上移<br />        break;<br />    case PSP_BUTTON_DOWN:<br />        leftdown = true;    // 左手下移<br />        break;<br />    case PSP_BUTTON_LEFT:<br />        break;<br />    case PSP_BUTTON_RIGHT:<br />        if(state==0)<br />        {<br />            state = 2;<br />            offset.x = 3;    // 左手发球<br />            offset.y = -1;<br />        }<br />        break;<br />    case PSP_BUTTON_TRIANGLE:<br />        rightup = true;        // 右手上移<br />        break;<br />    case PSP_BUTTON_CIRCLE:<br />        break;<br />    case PSP_BUTTON_CROSS:<br />        rightdown = true;    //    右手下移<br />        break;<br />    case PSP_BUTTON_SQUARE:<br />        if(state==1)<br />        {<br />            state = 2;<br />            offset.x = -3;    // 右手发球<br />            offset.y = 1;<br />        }<br />        break;<br />    case PSP_BUTTON_SELECT:<br />        game_quit = 1;<br />        break;<br />    case PSP_BUTTON_START:<br />        game_quit = 1;<br />        break;<br />    }<br />}<br /><br />// 释放键处理<br />void btn_up(int keycode)<br />{<br />    switch(keycode)<br />    {<br />    case PSP_BUTTON_UP:<br />        leftup = false;<br />        break;<br />    case PSP_BUTTON_DOWN:<br />        leftdown = false;<br />        break;<br />    case PSP_BUTTON_LEFT:<br />        break;<br />    case PSP_BUTTON_RIGHT:<br />        break;<br />    case PSP_BUTTON_TRIANGLE:<br />        rightup = false;<br />        break;<br />    case PSP_BUTTON_CIRCLE:<br />        break;<br />    case PSP_BUTTON_CROSS:<br />        rightdown = false;<br />        break;<br />    case PSP_BUTTON_SQUARE:<br />        break;<br />    case PSP_BUTTON_SELECT:<br />        game_quit = 1;<br />        break;<br />    case PSP_BUTTON_START:<br />        game_quit = 1;<br />        break;<br />    }<br />}<br /><br />// 用户绘图函数<br />void DrawScene()<br />{<br />    // 为开始绘图准备<br />    BeginScene(1);<br /><br />    // 绘制背景<br />    DrawImage(res,<br />        resrects[0].left,<br />        resrects[0].top,<br />        resrects[0].right,<br />        resrects[0].bottom,<br />        0, 0, 0, 0);<br /><br />    // 绘制小球<br />    DrawImage(res,<br />        resrects[2].left,<br />        resrects[2].top,<br />        resrects[2].right,<br />        resrects[2].bottom,<br />        ballpos.x, ballpos.y, 0, 0);<br /><br />    // 绘制反击板<br />    DrawImage(res,<br />        resrects[1].left,<br />        resrects[1].top,<br />        resrects[1].right,<br />        resrects[1].bottom,<br />        BORDERLEFT - 6, boardleftpos, 0, 0);<br />    DrawImage(res,<br />        resrects[1].left,<br />        resrects[1].top,<br />        resrects[1].right,<br />        resrects[1].bottom,<br />        BORDERRIGHT, boardrightpos, 0, 0);<br /><br />    // 绘制得分<br />    DrawImage(pimage_text, 0,0,0,0,0,252,0,0);<br /><br />    // 完成绘图并显示<br />    EndScene();<br />}<br /><br />// 绘制 LOGO<br />void ShowLogo()<br />{<br />    // 总的 LOGO 出现时间为 300/60 = 5 秒<br />    for(int i=0;i<300;i++)<br />    {<br />        // 显示帧数显示<br />        ShowFps();<br />        // 为开始绘图准备<br />        BeginScene(1);<br />        if(i<51)<br />        {<br />            // 渐入显示 LOGO<br />            DrawImageMask(res,<br />                resrects[3].left,<br />                resrects[3].top,<br />                resrects[3].right,<br />                resrects[3].bottom,<br />                51,55, 0, 0, MAKE_RGBA_4444(255,255,255,i*5));<br />        }<br />        else if(300-i<51)<br />        {<br />            // 渐出显示 LOGO<br />            DrawImageMask(res,<br />                resrects[3].left,<br />                resrects[3].top,<br />                resrects[3].right,<br />                resrects[3].bottom,<br />                51,55, 0, 0, MAKE_RGBA_4444(255,255,255,(300-i)*5));<br />        }<br />        else<br />        {<br />            // 正常显示 LOGO<br />            DrawImage(res,<br />                resrects[3].left,<br />                resrects[3].top,<br />                resrects[3].right,<br />                resrects[3].bottom,<br />                51,55, 0, 0);<br />        }<br /><br />        // 完成绘图并显示<br />        EndScene();<br />        // 限制帧数<br />        LimitFps(60);<br />    }<br />}<br /><br /><br />// 刷新得分绘制图<br />void UpdateScoreImage()<br />{<br />    // 清除上一次绘制的文本<br />    memset(pimage_text->data, 0, 512*32*2);<br />    // 绘制得分<br />    char c[8] = {0};<br />    sprintf(c, "%4d", scoreleft);<br />    font_drawtext(font, c ,strlen(c), pimage_text, 2, 2, FONT_SHOW_SHADOW);   <br />    sprintf(c, "%4d", scoreright);<br />    font_drawtext(font, c ,strlen(c), pimage_text, 400, 2, FONT_SHOW_SHADOW);   <br />}<br /><br />// 处理游戏中的变量和更新状态<br />void GameProc()<br />{<br />    // 处理反击板移动<br />    if(leftup != leftdown)<br />    {<br />        if(leftup)<br />        {<br />            if(boardleftpos > BORDERTOP)<br />            {<br />                boardleftpos--;<br />            }<br />        }<br />        else<br />        {<br />            if(boardleftpos + BOARDHEIGHT < BORDERBOTTOM)<br />            {<br />                boardleftpos++;<br />            }<br />        }<br />    }<br />    if(rightup != rightdown)<br />    {<br />        if(rightup)<br />        {<br />            if(boardrightpos > BORDERTOP)<br />            {<br />                boardrightpos--;<br />            }<br />        }<br />        else<br />        {<br />            if(boardrightpos + BOARDHEIGHT < BORDERBOTTOM)<br />            {<br />                boardrightpos++;<br />            }<br />        }<br />    }<br />    // 处理小球移动<br />    switch(state)<br />    {<br />    case 0:<br />        // 小球随左板移动<br />        ballpos.x = BORDERLEFT;<br />        ballpos.y = boardleftpos + BOARDHEIGHT / 2 - 10;<br />        break;<br />    case 1:<br />        // 小球随右板移动<br />        ballpos.x = BORDERRIGHT - 20;<br />        ballpos.y = boardrightpos + BOARDHEIGHT / 2 - 10;<br />        break;<br />    default:<br />        // 小球正常移动<br /><br />        // 处理上下反弹<br />        if(offset.y != 0)<br />        {<br />            if(offset.y > 0)<br />            {<br />                // 向下移动中<br />                if(ballpos.y + offset.y + 20 >= BORDERBOTTOM)<br />                {<br />                    // 计算反弹新位置<br />                    ballpos.y -= (ballpos.y + offset.x + 20 - BORDERBOTTOM);<br />                    offset.y = -offset.y;<br />                    // 播放音效<br />                    soundeffect.playstop();<br />                }<br />                else<br />                {<br />                    ballpos.y += offset.y;<br />                }<br />            }<br />            else<br />            {<br />                // 向上移动中<br />                if(ballpos.y + offset.y <= BORDERTOP)<br />                {<br />                    // 计算反弹新位置<br />                    float hotposyp = ballpos.y - BORDERTOP;<br />                    float hotposx = ballpos.x + (offset.x/offset.y) * hotposyp;<br /><br />                    ballpos.y = BORDERTOP + hotposyp;<br />                    ballpos.x = hotposx;<br />                    offset.y = -offset.y;<br />                    // 播放音效<br />                    soundeffect.playstop();<br />                }<br />                else<br />                {<br />                    ballpos.y += offset.y;<br />                }<br />            }<br />        }<br />        if(offset.x != 0)<br />        {<br />            if(offset.x > 0)<br />            {<br />                if(ballpos.x >= 480)<br />                {<br />                    // 小球从右边出界了<br />                    state = 1;<br />                    scoreleft++;<br />                    UpdateScoreImage();<br />                }<br />                // 向右移动中<br />                if(ballpos.x + offset.x + 20 >= BORDERRIGHT)<br />                {<br />                    // 计算可能的反弹点<br />                    float hotposxp = BORDERRIGHT - ballpos.x - 20;<br />                    float hotposy = ballpos.y + (offset.y/offset.x) * hotposxp;<br /><br />                    // 到右边界，计算右板是否可以反弹<br />                    if(hotposy + 10 > boardrightpos && hotposy + 10 < boardrightpos + BOARDHEIGHT)<br />                    {<br />                        ballpos.x -= (hotposxp - offset.x);<br />                        offset.x = -offset.x;<br />                        // 播放音效<br />                        soundeffect.playstop();<br />                    }<br />                    else<br />                    {<br />                        ballpos.x += offset.x;<br />                    }<br />                }<br />                else<br />                {<br />                    ballpos.x += offset.x;<br />                }<br />            }<br />            else<br />            {<br />                if(ballpos.x - 20 <= 0)<br />                {<br />                    // 小球从左边出界了<br />                    state = 0;<br />                    scoreright++;<br />                    UpdateScoreImage();<br />                }<br />                // 向左移动<br />                if(ballpos.x + offset.x <= BORDERLEFT)<br />                {<br />                    // 计算可能的反弹点<br />                    float hotposxp = ballpos.x - BORDERLEFT;<br />                    float hotposy = ballpos.y - (offset.y/offset.x) * hotposxp;<br /><br />                    // 到左边界，计算右板是否可以反弹<br />                    if(hotposy + 10 > boardleftpos && hotposy + 10 < boardleftpos + BOARDHEIGHT)<br />                    {<br />                        ballpos.x -= (hotposxp - offset.x);<br />                        offset.x = -offset.x;<br />                        // 播放音效<br />                        soundeffect.playstop();<br />                    }<br />                    else<br />                    {<br />                        ballpos.x += offset.x;<br />                    }<br />                }<br />                else<br />                {<br />                    ballpos.x += offset.x;<br />                }<br />                   <br />            }<br />        }<br />        break;<br />    }<br />}<br /><br />extern "C"<br />int main(int argc, char* argv[])<br />{<br />   <br />    // nge 初始化<br />    NGE_Init(INIT_ALL);<br /><br />    // 加载资源图片<br />    res = image_load("images/res.png", DISPLAY_PIXEL_FORMAT_4444, 1);<br /><br />    // 建立用于显示文本的图片<br />    pimage_text = image_create(480, 20, DISPLAY_PIXEL_FORMAT_4444);<br /><br />    // 加载字体<br />    font = create_font_hzk("fonts/GBK16", "fonts/ASC16", 16, DISPLAY_PIXEL_FORMAT_4444);<br /><br />    // 设置白色<br />    font_setcolor(font, MAKE_RGBA_4444(255,255,255,255));<br /><br />    // 加载音效<br />    PCMPlayInit(&soundeffect);<br />    soundeffect.load("music/bump.wav");<br /><br />    // 调用绘制 LOGO 的函数<br />    ShowLogo();<br /><br />    UpdateScoreImage();<br /><br />    // 设置自定义按钮处理函数<br />    InitInput(btn_down,btn_up,1);<br />    while ( !game_quit )<br />    {<br />        // 显示帧数显示<br />        ShowFps();<br />        // 要求 nge2 处理按键，它将使用 InitInput 定义的函数来处理<br />        InputProc();<br />        // 调用用户游戏处理函数<br />        GameProc();<br />        // 调用用户绘图函数<br />        DrawScene();<br />        // 限制帧数<br />        LimitFps(60);<br />    }<br /><br />    PCMPlayFini();<br /><br />    // 释放字体<br />    font_destory(font);<br /><br />    // 释放资源图片<br />    image_free(res);<br /><br />    // nge 退出处理<br />    NGE_Quit();<br />    return 0;<br />}<br />[/code]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lihuaning</b><br/>
+2009-07-22 03:44:31</p>
+</div>
+<div class="col-10">
+<p>楼猪，图挂了。。。修复吧，话说真深奥哦。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yl_ls</b><br/>
+2009-07-22 10:11:03</p>
+</div>
+<div class="col-10">
+<p>图已修复~~~~~~，其实不太难，不过最好按教程顺序来看</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>huijuan520</b><br/>
+2010-10-22 02:48:44</p>
+</div>
+<div class="col-10">
+<p>够我们新手看好久的了</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post364_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

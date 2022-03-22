@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ZEngine 开发文档 - 02 ZAudio</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">ZEngine 开发文档 - 02 ZAudio</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_10.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-11 18:21:13</p>
+</div>
+<div class="col-10">
+<p>[size=2]ZAudio<br /><br />构造函数<br />ZAudio(int nForMat = MP3);<br />参数:  nForMat	将要打开的文件类型，MP3 WAV OGG 三种,不填默认MP3<br />返回值:  <br /><br /><br />加载音频文件<br />void Load(const char* filename); <br />参数:  filename	被打开文件名,如”sound/1.wav”<br />返回值:  <br /><br /><br />播放,play(1,0),用于播放音效; play(0,0)循环<br />void Play(int times = 1,int free_when_stop = 0); <br />参数:  （不常用这个函数）<br />times			播放次数,添0为循环播放<br />free_when_stop	是否在播放完后释放内存，不用填	<br />返回值:  <br /><br /><br />暂停播放<br />void Pause();  <br />参数:  <br />返回值:  <br /><br /><br />恢复播放<br />void Resume();  <br />参数:  <br />返回值:  <br /><br /><br />跳转到开头<br />void Rewind();  <br />参数:  <br />返回值:  <br /><br /><br />停止并关闭文件<br />void StopAndColos();  <br />参数:  <br />返回值:  <br /><br /><br />停止播放<br />void Stop();  <br />参数:  <br />返回值:  <br /><br /><br />音量<br />void Volume(int volume = 230);  <br />参数:  volume		音量 ，上限0~255<br />返回值:  <br /><br /><br />重播<br />void Replay(int times = 1,int free_when_stop = 0);<br />参数:  （常用这个函数播放）<br />times			播放次数,添0为循环播放<br />free_when_stop	是否在播放完后释放内存，不用填<br />返回值:  <br /><br /><br />是否到结尾<br />int Iseof();<br />参数:  <br />返回值:  播放完了返回1,否则返回0<br /><br /><br />是否暂停<br />int IsPaused(); <br />参数:  <br />返回值:  暂停播放(调用Pause()时)返回1,否则返回0<br /><br /><br />获取audio_play_p<br />audio_play_p GetAudioPlayP();<br />参数:  <br />返回值:  audio_play_p		存放当前音乐文件的信息结构体指针[/size]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post9311_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>C语言的一点学习积累</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">C语言的一点学习积累</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-16 09:00:01</p>
+</div>
+<div class="col-10">
+<p>摘自：etual.cublog.cn<br /><br />成长的过程，以前参透这些东西的时候记下的笔记，个人感觉还是挺实用的。<br /> <br />1  第一个 /* 和第一个 */ 的注释是以这两个标志为开始和结束，而不管中间有多少个符号。<br />所以如果一段程序屏蔽的话，原来有注释的话，这样做可以不行，办法是<br />#if 0<br />    statement<br />#endif<br />2 直接在字符数组赋值的过程中转义。但是占用的字符数还是算进去的。<br />char ch[]="qBASIC<br />dBASIC";<br />printf("%d<br />",sizeof(ch));          占14个字符<br /><br />3 定义常量<br />const int<br />int const 等价<br />指针的情况还有另外一种情况<br />int const *p ;  声明 *p 是不能修改的，也就是说改变变量的 *p =1 ; 操作违法<br />int * const p;  声明 p 是不能修改的常量，也就是说改变指针的 p=&i 操作是违法的<br /> <br />4 typdefe 和 ＃define的区别<br />看一个例子：<br />typedef int *pchar;<br />pchar  a,b;      声明了两个int形的指针变量 a ，b<br />#define pchar int *<br />pchar  a,b;     <br />替换之后编程 int *a,b ; <br />这个就跟之前不同了，b单纯是一个变量，而不是一个指针。<br /> <br />5 定义一个指针 int *p<br />占有空间，但是并不指向任何确定的寄存器，这个时候用指针的话，是非常危险的。<br />int *p;<br /> <br />*p=5;<br />非常典型，没有初始化指针就拿来用，绝对不允许这样做。<br /><br />而且，p如果是 auto 类型的话，那可以指向内存任何区域，所以<br />千万切记，定义指针之后，一定要初始化<br />NULL 指针的问题，每次都指向NULL 并不是一个好办法，最好的程序，是用指针之前进行NULL检查<br />这样可以避免很多错误。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post117_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

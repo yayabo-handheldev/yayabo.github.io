@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>GBAExpLoader有用在GBALINK上的吗？</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">GBAExpLoader有用在GBALINK上的吗？</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_3.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>sigior</b><br/>
+2010-04-20 01:26:29</p>
+</div>
+<div class="col-10">
+<p>想用GBALINK烧录GBA游戏，看到GBAExpLoader支持EZ3合1等扩展卡的烧录功能，不过在GBALINK不上用不了~~<br /><br />请问有没有烧录GBALINK的这样的软件？<br /><br />如果没有的话，能麻烦一下自制软件编写达人写一个吗？谢谢了！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-04-20 08:06:55</p>
+</div>
+<div class="col-10">
+<p>这张古老的卡得在PC端烧录游戏  http://www.ds-link.net/download/gbalink601.zip</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2010-04-20 13:45:26</p>
+</div>
+<div class="col-10">
+<p>GBALink烧录卡是借用GBA硬件设备进行烧录的，而DS是可以直接访问DS slot2的，所以理论上，可以实现在DS上烧录GBALink烧录卡。<br />但是！GBALink烧录卡的硬件未被破解，除了已经跑路的ediy小组，没人知道卡带中那个CPLD中固化的内容，自然也就无法通过软件访问GBALink烧录卡的烧录模块。<br />换句话说，除了GBALink烧录线之外，其他软硬件设备均无法开启烧录，只能把卡带当成普通的卡带。<br /><br />事实上，我更关心GBA盗版卡。相比于硬件加密的GBALink烧录卡，盗版卡的ASIC几乎是完全不设防的。通过软件实现在DS端直接烧录GBA盗版卡要简单得多。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>sigior</b><br/>
+2010-04-20 18:02:46</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=20397&ptid=3142]3#[/url] [i]雷精灵[/i] [/b]<br /><br />看起来想要破解硬件是有些难度的，不过国外有达人已经开发出类似的软件叫做FAS1(FlashAdvance Slot1 Flasher)，网上可以下到1.2、1.4、1.5、1.5f这四个版本，只是软件只出了模型测试版，好像只支持256M的GBALINK，而我用的是512M的，虽然软件在S1端能正常启用并能选择预先设定好的游戏列表，然而在最后一步开始烧录的时候会提示错误的信息，大概意思是不支持的卡带，代码是0x2e，而且软件没有删除GBALINK游戏的功能，但对于一些必要的游戏应该够用。遗憾的是这款软件没有继续开发，所以现在只能支持GBALINK 256M的烧录卡。<br />既然国外已经有达人编写了软件，我想这是一个很好的平台，希望有人能够从FAS1里找到一些破解的相关信息，我想这对以后在S1端实现GBA游戏是非常有利的，不知道是不是会这样。也希望国内玩家可以开发出类似的软件，来造福大众。<br /><br />[attach]3986[/attach]<br />FAS1 (FlashAdvance Slot-1) v1.5<br />by Smiths (smiths/AT/emuholic/DOT/com)<br />[url]http://www.emuholic.com[/url]<br />Source SVN @ [url]http://code.google.com/p/fas1/[/url]<br />===========<br />based off of tftpds v2.5 by Sten Larsson ([email]stonebone@planetunreal.com[/email]) and Gustav Munkby ([email]grddev@gmail.com[/email])<br />[url]http://www.itstud.chalmers.se/~larssten/nds/[/url]<br />[url]http://forum.gbadev.org/viewtopic.php?t=8682[/url]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2010-04-23 09:29:31</p>
+</div>
+<div class="col-10">
+<p>去官方网站看了一下，貌似只适用于“FlashAdvance”卡带，GBALink好像不支持。<br />[url]http://www.emu-zone.net/gba-sp/flash-advance-linker.htm[/url]<br /><br />我又从SVN上下载了源代码，仔细研究了一下，以下是我目前的出来的结论：<br /><br />这个软件确实可以通过Slot1端往Slot2端烧录游戏。源代码中有个非常神奇的库叫做“cartlib”，这个库将识别Slot2端卡带的类型，然后针对不同的卡带类型采取不同的烧录措施。<br />目前这个库能够识别出来的卡带很少，只有如下几种：<br />0x00：Hudson卡带。<br />0x2E：非烧录卡。<br />0x17：FlashAdvance 64M烧录卡。<br />0x18：FlashAdvance 128M烧录卡。<br />0x96：Turbo FlashAdvance 64M烧录卡。<br />0x97：Turbo FlashAdvance 128M烧录卡。<br />0xE2：任天堂标准Flash烧录卡。<br />0xFF：无法识别的卡带。<br /><br />显然，你的GBALink被识别成了非烧录卡，说明这个软件无法访问GBALink的烧录硬件模块，只能把它当成没有烧录功能的普通卡带。<br /><br />这个软件的其他部分与Slot2烧录卡无关，所以能够正常启动并且除了烧录之外的功能一切正常。<br /><br />基本上，这个软件的核心就是那个cartlib了。可惜它不支持GBALink。<br />不过，令我感到意外惊喜的就是，这个库能够检测出来任天堂标准Flash烧录卡。当年我在某国外网站看到过任天堂标准Flash烧录卡的工作原理和电路图，和当时流行的GBA盗版卡原理差不多。而在GBALink的早期，是可以烧录通过硬件改造的盗版卡的。原理就是取消盗版卡NorFlash的写保护。当时我对这方面颇有研究。我记得家里还有几盘当年改造好的盗版卡，我估计这个软件也能把这种卡带检测出来。抽空我要试一下看看~~~如果真如我所愿的话，我甚至有能力将这个库强化一下，让它支持更多的烧录卡。……呃，没有加密的烧录卡……<br /><br />顺便一说，如果我的猜测没错的话，这个软件也能检测出来EZ3in1等Slot2端扩展卡，并且能够烧录。如果你手里有这样的扩展卡的话不妨试一下。<br /><br />总结：相当有实用价值和研究价值的软件！是个值得我投入精力的研究方向~~~<br /><br />最后再说一句吧：不借助Slot2端，直接从Slot1端玩GBA游戏是不可能的。除非你的Slot1烧录卡足够强劲，可以模拟GBA……普通的Slot1烧录卡没那么厉害的。原因是多方面的，DS的内存太小；只有ARM9可以访问Slot1；ARM9和ARM7的差异性……放弃吧。去指望DSI能够有GBA模拟器吧。单从硬件上来看，DSI是可以模拟GBA的。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-04-23 14:13:19</p>
+</div>
+<div class="col-10">
+<p>雷叔貌似找到棋逢对手的牛人了～～～小白微观～～～</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post2148_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

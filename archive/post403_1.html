@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS中如何使用复杂的音频处理</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS中如何使用复杂的音频处理</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-05-05 08:45:58</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]www.fw211.com[/url]<br /><br />    PALib中MP3的解码处理放在了ARM7端，由于helix代码运行的速度快，33M的主频完全能处理的过来。如果要是再加上EQ处理或者频谱显示呢？恐怕ARM7就吃不消了。这时我们能用到的就只能是66M的ARM9了。ARM9端不但有紧耦合的指令数据ram还有cache系统，这样能确保音频处理的实时性了。<br />   那么怎样才能使ARM9处理完的音频数据交给ARM7去播放呢？这还真得感谢NDS的FIFO系统，它提供了一个有效的ARM7与ARM9的同步与互斥机制。首先ARM9在主存中设置一个用来存放音频数据的共享内存区域，这个内存区域应该是一个双缓冲的ping-pang buffer，通过FIFO机制将这个区域的地址通知给ARM7，同时设置主存的访问优先级为ARM7优先，这样能确保音频播放时不产生因为ARM9端使用主存而带来的噪音。刚开始播放时，ARM9首先要处理好两帧数据，当ARM7播放完一帧数据后通过FIFO通知给ARM9，这时ARM9再处理第三帧数据，由于ping-pang buffer机制以及ARM9的处理速度远大于ARM7的播放速度，所以在ARM7端永远都能看到准备好的一帧音频数据，播放也就自然流畅了。通过这种方法我实验了MP3播放，MP3加上EQ处理播放，WMA播放，WMA加上EQ处理播放，效果都是令人满意的。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post403_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

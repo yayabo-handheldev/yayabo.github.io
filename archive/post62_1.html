@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS硬件研究-MCU读写DS卡EEPROM芯片1</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS硬件研究-MCU读写DS卡EEPROM芯片1</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-07 10:19:41</p>
+</div>
+<div class="col-10">
+<p>摘自：ndsbbs<br />作者：nashi1987<br /><br />NDS硬件研究-MCU读写DS卡EEPROM芯片1<br /><br />本系列教程讲解如何通过MCU来完成对DS卡存档芯片EEPROM的读写。这个实验完全出于兴趣，没有多大实际意义，DS卡EEPROM可以通过DS直接读写，有兴趣的人可以看一下。<br /><br />本篇讲解DS卡储存芯片EEPROM的详细资料及使用方法；<br /><br />首先明确，DS卡EEPROM芯片是通过SPI与DS想连的。SPI协议之前已经讲了，有不明白的可以参考之前教程。我这里使用的DS卡是256M的，EEPROM为95640，是64Kbit Serial SPI Bus EEPROM。我们就先来了解一下这块芯片。<br /><br />首先是引脚定义：<br />DS的EEPROM共有8个引脚，采用SO8（MN）封装。本实验决定采用PDIP8封装的，大一些。不过引脚定义相同。<br />此芯片时钟频率有10MHZ，5MHZ，2MHZ，所以可以支持高速数据传输。并且支持基于硬件的状态寄存器保护。其引脚定义如下：<br /><br /><br />        |--------|        <br />    S-|           |-Vcc      <br />    Q-| M95640 |-HOLD<br />    W-|           |-C<br />  Vss-|--------|-D<br /><br /><br /><br />C：时钟；D：数据输入；Q：数据输出；S：片选；W：写保护；HOLD：暂停；VCC：电源正；VSS电源负；<br />接下来详细介绍一下：<br />数据输出（Q）：用来输出数据，在时钟下沿时一位数据输出。<br />数据输入（D）：用来输入数据，包括指令，地址，要写入的数据等。数据在时钟信号上沿时采集。<br />时钟线（C）：为接口提供时钟信号，指令，地址，数据等输入数据在上沿时采集。输出数据在下沿时改变。<br />片选（S）：当输入信号为高电位时，设备处于抑制状态，数据输入引脚为高阻抗。设备将处于待命状态除非内部正在进行写操作。当变为低电位时设备激活。<br />暂停（HOLD）：此引脚是用来在不使用片选引脚的情况下暂停任何串行通讯的。暂停时，数据输入变为高阻抗，任何数据输入或者时钟信号无用。<br />写保护（W）：这个输入信号的主要作用是用来冻结内存的一定区域，使其不能执行写操作。这部分内存由状态寄存器的BP1，BP0位控制。<br /><br />以上就是M95640的引脚定义和详细功能。<br /><br />然后我们来了解一下这个芯片的使用方法：<br /><br />这个芯片是一个基于SPI协议的芯片。所有的指令，地址，数据一位一位的串行输入设备。所有操作之前片选信号应当为低电位以激活设备。数据输入在时钟信号上沿时采集数据，数据输出在接受到指令后（像读内存或读寄存器指令）则在时钟信号下沿时输出数据，也是一位一位的串行输出。<br /><br />状态寄存器：<br />此芯片有一个8位的状态寄存器，他包含一些状态位和控制位。 如下图：<br /><br /><br />B7                         B0<br />|——|——|——|——|——|——|——|——|<br />|SRWD| 0 | 0 | 0 | BP1| BP0| WEL| WIP|<br />|——|——|——|——|——|——|——|——|<br /><br /><br />SRWD：状态寄存器写保护。BP1，BP0：块保护位。WEL：写使能锁状态。WIP：写操作进行。<br /><br />WIP：写操作进行位显示内存是否正在进行写操作。即忙判断位。<br /><br />WEL：写使能锁状态位显示内部写使能锁状态。<br /><br />BP0，BP1：这两位的不同值控制软件写保护的内存区域。<br /><br />SRWD：状态寄存器写保护位与写保护引脚联合使用，可使设备处于硬件保护模式，在这个模式中，状态寄存器中的所有位变为只读。<br /><br />数据保护和协议控制：<br /><br />写保护块控制说明：<br /><br /><br />BP1   BP0   保护块           保护的内存区域<br />0     0       无                     无<br />0     1     高1/4             1800H-1FFFH<br />1     0     高1/2             1000H-1FFFH<br />1     1     所有               0000H-1FFFH<br />BP1，BP0所控制的保护为软件写保护。<br /><br /><br />写或写寄存器指令在被执行前会被检测看是否为8的倍数。<br />在所有改变数据的指令前必须先完成写使能位的设置，通过WREN指令设置写使能位。<br /><br /><br />指令定义：<br /><br />每一条指令由1字节（8位）构成，输入任何未定义的指令将会将会使设备自动挂起。指令定义如下：<br /><br /><br />指令     描述           指令格式<br />WREN   写启用         0000 0110<br />WRDI     写禁用         0000 0100<br />RDSR     读寄存器       0000 0101<br />WRSR   写寄存器       0000 0001<br />READ     从内存读数据   0000 0011<br />WRITE   向内存写数据   0000 0010<br /><br /><br />以上是EEPROM的基本操作，余下的内容需要时序图，所以等可以上传了再写。<br /><br />如有疏漏错误之处，好望大家多多指正！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post62_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>雷叔的专横 - 关于DMA和它的仇家</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">雷叔的专横 - 关于DMA和它的仇家</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2009-10-03 13:50:25</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 雷精灵 于 2010-7-21 08:43 编辑 [/i]<br /><br />[基础知识]什么叫做DMA？<br />DMA=Direct Memory Access。这是一种通过硬件实现的数据传输机制。简单的说，就是不在CPU的参与下完成数据的传输。<br />[/基础知识]<br />不太明白？我举个简单的例子：<br />比如有个数组a，我希望把这个数组中的内容传输到另一个数组b中。我们假设这两个数组都是一样大。比如int a[10000];int b[10000];。<br />那么我可以这样做：<br />[code=c]for(int x=0;x<sizeof(a)/sizeof(int);x++){<br />    b[x]=a[x];<br />}<br />[/code]<br />循环将数组中的每个元素进行传递。这是最简单的一种方法，也是最容易理解的方法。<br />不过这种方法虽然简单，效率可算不上高。如果你了解微机原理和汇编的话就明白了，b[x]=a[x];这句话并非像你看到的那样，把a[x]中的元素值赋给b[x]。<br />那是怎么一个过程？<br />实际上是这样的：首先a[x]中的元素值赋给某CPU中的寄存器，然后再将该寄存器的值赋给b[x]。<br />为什么会这样？<br />这是因为a和b都是在内存中的，而CPU不允许内存直接进行数据传输。所以在这个过程中CPU必须参一脚当中介。<br />可想而知每赋值一次都要中介，效率就这么被降下去了。<br />既然问题是出在CPU当中介这个地方，那么有什么方法可以回避掉这个瓶颈呢？有。那就是DMA。<br />DMA是一种硬件设备。这种设备的工作原理是这样的：<br />——首先CPU告诉DMA设备，要有一堆数据需要传输，为了效率而请它出马。（DMA请求）<br />——DMA收到CPU的消息，开始准备。此时CPU把数据源地址、数据目标地址、传输数据量、传输模式等等参数告诉它。（DMA初始化）<br />——DMA初始化完，向CPU发送消息“借你的总线用一用，我要开始传输数据了！”（总线出借，DMA启动）<br />——CPU收到消息后，暂时切断自己与总线的联系。DMA开始传输数据。（DMA数据）<br />——DMA传输完数据之后，向CPU发送消息“搞定了！总线还给你。”（总线归还）<br />——CPU说：“干得好！老将出马一个顶俩！辛苦了，你先歇着吧。”DMA设备停止。CPU该干啥干啥。<br />由于是硬件实现的，所以DMA的速度非常快。快到什么程度呢？在DS上，尤其是数据量非常大的时候，相比于CPU当中介，效率能够提高一百万倍以上。<br />由于DMA的速度是如此之快，所以大量的数据传输，一般都要求使用DMA。<br />那么，刚才那个例子就可以写成：<br />[code=c]dmaCopy((void*)a,(void*)b,sizeof(a));<br />[/code]<br />但是DS是个很特殊的平台，在某些情况下，DMA不适用。有些内存区域，DMA是无法访问的。那就是BIOS、TCM和Cache。<br /><br />[基础知识]BIOS是一块被硬件保护的内存区域。这块区域正常情况下是“读写保护”。也就是说，采用正常的方法是无法访问这块内存的。自然，DMA也无法访问。直接读取BIOS，读出来的全是随机的数据。<br />那么，我想DUMP BIOS，该怎么做呢？<br />这就需要一些技巧了。现在我先不说，到教程的最后我再把这个坑给填了。<br />[/基础知识]<br />[基础知识]TCM=Tightly Coupled Memory。这是一种高速缓存，据说是被直接集成在CPU芯片中。DS有两种TCM，分别是ITCM（Instruction TCM）和DTCM（Data TCM）。不用解释你们也能知道这两种TCM是干啥用的。<br />[/基础知识]<br />由于是高速缓存，所以这两块内存区域被当做特殊的用途。比如某些对时间要求非常严格的代码，就可以被放到ITCM中执行。这可以有效地提高运行速度。某些需要频繁存取的数据，也可以放到DTCM中以节省存取时间。<br />怎么样把代码放到ITCM中？有两种方法。一种是使用gcc特有的“属性标签”，将指定代码赋予“ITCM”属性，此时该代码会被载入ITCM中执行。还有一种方法是直接将.c源文件改成.itcm.c，此时源文件会被直接编译成在ITCM中运行的目标文件。<br />而DTCM就方便得多了。虽然两个TCM都是可映射的，也就是说，它们的地址并非固定，但是NDSLIB的lnkscript将这两块TCM映射到了0x01000000和0x0B000000上。既然已经有了固定地址，那么就可以很轻松地访问了。不过，正如刚才所说的，这两块内存空间都是有特殊用途的，所以不建议直接访问。相比于ITCM来说，DTCM更加重要。因为在这块内存中，存在着一个非常重要的对象——栈。<br />“栈”这种东西我也不详细解释了。局部变量和函数调用的参数，就是靠栈进行传递的。<br />由于DMA无法访问TCM，所以也就无法访问栈。又由于局部变量是被开辟到栈中，所以DMA也无法对局部变量进行传递。举个例子：<br />我要往主引擎的标准调色盘中填充随机颜色。<br />下面的代码就是错误的：<br />[code=c]void fillRandomColorToMainPalette(){<br />    u16 tmpPalette[256];<br />    dmaCopy((void*)tmpPalette,(void*)BG_PALETTE,sizeof(tmpPalette));<br />}<br />[/code]<br />原因很简单，tmpPalette中的数据虽然是随机的，但这个数组是局部变量，被开辟在栈中，DMA无法访问。<br />下面则是正确方法：<br />[code=c]void fillRandomColorToMainPalette(){<br />    u16 tmpPalette[256];<br />    memcpy((void*)BG_PALETTE,(void*)tmpPalette,sizeof(tmpPalette));<br />}<br />[/code]<br />memcpy不是需要CPU参与吗？那岂不是很慢？<br />是的。很慢，相比于DMA来说慢多了。不过，目前我们只能用它。教程的最后我将教你一种又快又安全的方法。<br /><br />[基础知识]什么是Cache？<br />众所周知CPU的速度非常快。当CPU访问外设的时候，有些外设速度比较慢，响应CPU比较迟钝。此时CPU要么等外设响应，要么继续干它的活等外设的中断信号。<br />但是有些外设是没有中断的。此时CPU就必须等了。最典型的例子就是内存。<br />当CPU访问内存的时候，并非像你想象的那样，CPU立刻就能访问到它想访问的内存空间，而是有一个“WaitState”的过程。想想看吧，每访问一次内存都要等上几个机器周期，这可不是个好事~~~尤其是，这个“几”可不是简单的一位数，有些时候甚至能达到3位数。<br />那么这个问题又该怎么解决呢？那就是Cache了。<br />Cache是集成在CPU内部的极高速的缓存。注意关键词“极高速”。一般来说，它的访问速度几乎可以媲美CPU。这就意味着，CPU在访问Cache的时候几乎不会浪费多少时间。不过，速度的提升是用容量作为代价的。Cache的容量很小。在DS中，数据缓冲（Data Cache，简写为DC）只有4K，指令缓冲（Instruction Cache，简写为IC）只有8K。<br />[/基础知识]<br />那么，我们把常用的数据放到Cache中，CPU在访问的时候直接访问Cache就行了，不用耗费时间去访问内存了。<br />事实上CPU就是这么做的。在读内存的时候，CPU首先读Cache，看看有没有它想要的数据的“副本”，有的话那就太好了，直接拿过去用。没有的话就只好费点功夫去读内存了。而在写内存的时候，CPU直接写到Cache中，而非直接写到内存中。<br />哪尼？<br />确实是这样子的。当Cache写满了之后，此时才将Cache中的数据更新到内存，同时清空Cache。就像寄信一样，所有的信件会首先攒到邮局，到达一定数量之后才会送出去。<br />不过这又出现一个问题：假如Cache中有某个内存数据的“副本”，那么CPU在读该内存的时候就会直接使用该副本而不用去读内存。那万一内存中的数据被改写，此时CPU再读该内存，读出来的岂不是那个旧的副本而不是最新的内存数据？同样，假如我想DMA一些数据，谁能保证此时内存中的数据就是最新的数据？<br />某人：那啥，我直接读写Cache得了。鸟内存真它奶奶的麻烦！<br />很可惜，Cache是完全的黑箱。你不知道它的地址。你也无法直接访问它。<br />那该怎么办呢？幸好NDSLIB为我们提供了一些函数：<br />[code=c]// 将整个Data Cache更新到内存<br />void DC_FlushAll()<br />// 将Data Cache中指定地址指定大小的区域更新到内存<br />void DC_FlushRange(const void *base, u32 size)<br /><br />// 清空整个Data Cache<br />void DC_InvalidateAll()<br />// 清空Data Cache中指定地址指定大小的区域<br />void DC_InvalidateRange(const void *base, u32 size)<br /><br />// 清空整个Instruction Cache<br />void IC_InvalidateAll()<br />// 清空Instruction Cache中指定地址指定大小的区域 <br />void IC_InvalidateRange(const void *base, u32 size)<br />[/code]<br />那么，什么时候使用这些函数呢？<br />在DMA之前，我需要保证数据源内存中的数据是最新的。所以此时需要Flush，从而使DC中的副本能够更新到内存中。<br />在DMA之后，我需要保证DC中的副本和内存中的数据是相同的。但是NDSLIB没有更新DC的函数，所以没办法，我们只能把DC中的副本杀掉。此时如果CPU访问内存，由于DC中没有副本，所以就只能直接从内存访问并将访问到的值作为DC中副本了。所以此时需要Invalidate。<br />至于是用All还是Range，很明显，All的话肯定最保险，但肯定也会更花时间。所以如果你有把握，那就用Range以节省时间；没把握就用All求稳妥。<br /><br />注意，模拟器在模拟Cache上相当不完善。根据我的观察，三大著名模拟器——NO...(...);和DC_Invalidate...(...);。<br /><br />[填坑]正如我所说的，DMA非常之快。一般情况下的数据传输，靠它没问题。不过有些场合DMA无法访问，我又想要快，那该怎么办呢？有请swiCopy和swiFastCopy！<br />[code=c]#define COPY_MODE_HWORD  (0)<br />#define COPY_MODE_WORD  (1<<26)<br />#define COPY_MODE_COPY  (0)<br />#define COPY_MODE_FILL  (1<<24)<br />void swiCopy(const void * source, void * dest, int flags);<br />void swiFastCopy(const void * source, void * dest, int flags);<br />[/code]<br />这两个函数是所谓的“BIOS软中断”，又称“系统调用”。你可以把他看成是GBA/DS特有的函数。<br />这两个函数非常神奇，在GBA中，它们比DMA更快！不过很可惜，在DS中则一点都不快，甚至比memcpy还慢。<br />这两个函数没有区域限制。不管是BIOS还是内存，不管是ITCM还是DTCM，都能直接访问。<br />现在我们来改写一下那个随机调色盘的例子：<br />[code=c]void fillRandomColorToMainPalette(){<br />    u16 tmpPalette[256];<br />    swiCopy((void*)tmpPalette,(void*)BG_PALETTE,COPY_MODE_WORD|COPY_MODE_COPY|(sizeof(tmpPalette)>>2));<br />}<br />[/code]<br />注意最后一个参数。它的单位是WORD，即4字节。因此数据大小需要除以4以转换成WORD。<br />swiFastCopy则比swiCopy更快。你若是追求更高的速度也可以换成swiFastCopy。不过注意，这个函数只能传输半字宽度，也就是2字节的数据，因此不能使用COPY_MODE_WORD这个模式。但是传输数据大小依然以WORD为单位。<br />[/填坑]<br />最后我们把坑填了吧。这是DUMP ARM9的BIOS的函数：<br />[code=c]<br />#define BIOS_ADDRESS 0xFFFF0000<br />#define BIOS_SIZE 32768<br />void dumpARM9BIOS(){<br />    void* tmpBuffer=calloc(BIOS_SIZE,1);<br />    swiCopy((void*)BIOS_ADDRESS,(void*)tmpBuffer,COPY_MODE_WORD|COPY_MODE_COPY|(BIOS_SIZE>>2));<br />    DC_FlushAll();<br />    FILE* f=fopen("arm9.bios","wb+");<br />    if(f!=NULL)fwrite(tmpBuffer,BIOS_SIZE,1,f);<br />    fclose(f);<br />    free(tmpBuffer);<br />}<br />[/code]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuuhimesama</b><br/>
+2009-10-03 15:50:07</p>
+</div>
+<div class="col-10">
+<p>坐下慢慢看。。<br />话说R4没有开启DMA模式，哎。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gbayp</b><br/>
+2009-10-09 18:50:45</p>
+</div>
+<div class="col-10">
+<p>牛B</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wjzj5886</b><br/>
+2009-11-12 21:33:10</p>
+</div>
+<div class="col-10">
+<p>技术贴支持 虽然不懂函数 但是基本原理看懂了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>5826659</b><br/>
+2009-11-18 15:34:32</p>
+</div>
+<div class="col-10">
+<p>掌机类别的开发都要掌握汇编的吧···唉····</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>imcome</b><br/>
+2009-11-29 00:24:29</p>
+</div>
+<div class="col-10">
+<p>有收获，不错，呵呵</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-01-17 19:01:13</p>
+</div>
+<div class="col-10">
+<p>懂了一点~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-01-17 19:01:49</p>
+</div>
+<div class="col-10">
+<p>呵呵~~~以后写代码直接用dmacopy了~~~原来memcopy也不快啊~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>17625</b><br/>
+2010-02-23 14:49:11</p>
+</div>
+<div class="col-10">
+<p>Great!<br /> Thanks a lot,</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2010-07-13 11:11:57</p>
+</div>
+<div class="col-10">
+<p>雷叔还是把错误改一下吧...有些童鞋可能通过Google什么的找到这里。。。<br />[b]NDS上效率一般swiCopy<swiFastCopy<memcpy<dmaCopy...<br />[/b]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post655_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

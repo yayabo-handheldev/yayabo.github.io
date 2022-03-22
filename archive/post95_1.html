@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>SDL video子系统学习 (二)</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">SDL video子系统学习 (二)</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-10 09:21:24</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.sina.com.cn/vcbear[/url]<br />作者：vcbear<br /><br /> 上次学了如何在屏幕上绘图，这次我们将学习装载位图以及简单的键盘控制。<br /> 下面是完整的代码：<br />-------------------------------------------------------------------------<br /><br />#include "libnge.h"<br />#include "stdio.h"<br /><br /> <br /><br />int xpos = 0, ypos = 0;          //记录小熊坐标<br />SDL_Surface *bear = NULL;        //小熊图片<br />SDL_Surface *background = NULL;  //背景图片<br />SDL_Surface *screen = NULL;<br /><br /> <br /><br />void Slock(SDL_Surface *screen)<br />{<br />    if( SDL_MUSTLOCK(screen) )<br />   {<br />      if( SDL_LockSurface(screen) < 0 )<br />      {<br />         return;<br />      }<br />   }<br />}<br /><br /><br />void Sulock(SDL_Surface *screen)<br />{<br />    if ( SDL_MUSTLOCK(screen) )<br />   {<br />      SDL_UnlockSurface(screen);<br />   }<br />}<br /><br /><br />SDL_Surface *load_image( std::string filename )<br />{<br />    //Temporary storage for the image that's loaded<br />    SDL_Surface* loadedImage = NULL;<br /><br />    //The optimized image that will be used<br />    SDL_Surface* optimizedImage = NULL;<br /><br />    loadedImage = SDL_LoadBMP( filename.c_str() );<br />    if( loadedImage != NULL )<br />    {<br />        //Create an optimized image<br />        optimizedImage = SDL_DisplayFormat( loadedImage );<br /><br />        //Free the old image<br />        SDL_FreeSurface( loadedImage );<br />    }<br />    return optimizedImage;<br />}<br /><br /> <br /><br />void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )<br />{<br />    //Make a temporary rectangle to hold the offsets<br />    SDL_Rect offset;<br /><br />    //Give the offsets to the rectangle<br />    offset.x = x;<br />    offset.y = y;<br /><br />    //Blit the surface<br />    SDL_BlitSurface( source, NULL, destination, &offset );<br />}<br /><br /> <br /><br />void apply_surface(SDL_Surface *img, int x, int y, int w, int h, int x2, int y2)<br />{<br />   SDL_Rect dest;<br />   dest.x = x;<br />   dest.y = y;<br />   SDL_Rect dest2;<br />   dest2.x = x2;<br />   dest2.y = y2;<br />   dest2.w = w;<br />   dest2.h = h;<br />   SDL_BlitSurface(img, &dest2, screen, &dest);<br />}<br /><br /> <br /><br />void DrawScene()<br />{<br />   Slock(screen);<br />   apply_surface(background, xpos-2, ypos-2, 57, 89, xpos-2, ypos-2);<br />   apply_surface(xpos, ypos,bear, screen);<br /><br />   SDL_Flip(screen);<br />   Sulock(screen);<br />}<br /><br /> <br /><br />extern "C"<br />int main(int argc, char* argv[])<br />{<br /><br />   int done =0;<br />   Uint8* keys;<br /><br /><br />   /* Initialize the SDL library */<br />   if( SDL_Init(SDL_INIT_VIDEO) < 0 )<br />   {<br />      fprintf(stderr,"Couldn't initialize SDL: %s<br />", SDL_GetError());<br />      exit(1);<br />   }<br /><br />    /* Clean up on exit */<br />    atexit(SDL_Quit);<br /> <br />    /*<br />    * Initialize the display in a 640x480 8-bit palettized mode,<br />    * requesting a software surface<br />    */<br />    screen = SDL_SetVideoMode(640, 480, 32, SDL_SWSURFACE);<br />    if ( screen == NULL )<br />    {<br />       fprintf(stderr, "Couldn't set 640x480x8 video mode: %s<br />",SDL_GetError());<br />       exit(1);<br />    }<br /><br />    bear = load_image( "bear.bmp" );<br />    if (bear != NULL) printf("bear load succes!<br />");<br />    SDL_SetColorKey (bear, SDL_SRCCOLORKEY | SDL_RLEACCEL,*(Uint8 *) bear->pixels);<br /><br /><br />    background = load_image( "background.bmp" );<br />    if (background != NULL) printf("background load succes!<br />");<br /><br />    apply_surface( 0, 0, background, screen );<br /><br />    while (done == 0)<br />   {<br /><br />      SDL_Event event;<br />      while (SDL_PollEvent(&event))<br />     {<br />        if ( event.type == SDL_QUIT )<br />       {<br />           done = 1;<br />       }<br />     }<br /><br />     keys = SDL_GetKeyState(NULL);<br />     if ( keys[SDLK_UP] ) { ypos -= 1; }<br />     if ( keys[SDLK_DOWN] ) { ypos += 1; }<br />     if ( keys[SDLK_LEFT] ) { xpos -= 1; }<br />     if ( keys[SDLK_RIGHT] ) { xpos += 1; }<br /><br />     DrawScene();<br /><br />   }<br /><br />   SDL_FreeSurface( bear );<br />   SDL_FreeSurface( background );<br /><br />   exit(0);<br />}<br /><br />-----------------------------------------------------------------------<br /><br /> <br /><br />   在这个程序中，我们将加载一副小熊的位图，然后我们可以通过键盘来控制小熊上下左右移动。<br /><br />   首先，我们先声明一些变量， 声明3个SDL_Surface类型的全局变量，同时声明2个整型变量用于记录小熊的坐标。定义一个函数load_image来加载位图，返回一个SDL_Surface指针，在该函数内部，我们使用了SDL函数SDL_LoadBMP来真正加载位图，它把bmp文件的文件名作为参数传入，返回指向存储图像文件信息内存区域的指针。load_image中我们将背景图片background.bmp打开并使用background指针进行记录，将小熊图片bear.bmp打开并使用bear指针记录。<br />   下面就是两个将图像绘制到屏幕的两个函数，名字都叫apply_surface，参数不同。在该函数内部，我们使用了SDL函数SDL_BliSurface来真正绘制图像。函数原型：<br /><br />int SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect);<br /><br />  src 是需要进行绘制的surface，而dst是进行显示的surface。SDL_Rect是一个包含4个16位整型变量的结构：x, y, w(width)和h(height)。srcrect用来描述源surface中需要绘制部分，而dstrect用来描述在目的surface何处进行绘制。如果设置srcrect为NULL，那么源文件中包含的整个图像都会被显示。dstrect中的x和y变量指定了在何处blit SDL_Surface src。对于dstrect来说，w(width)和h(height)这两个变量是被忽略不计的。<br /><br />  如果需要只对源surface的一部分进行绘制并显示，就要用到第二个apply_surface函数了，这样就要用到源的x, y, w和h。再接下来，就是画小熊的函数了，首先我们用背景图案填充当前小熊图像所在区域，如果不这样做的话，小熊图像的移动就会造成背景上留下移动轨迹。就象下面的图：<br />[attach]87[/attach]<br />  由于小熊图象是53X85的，我们将新填充区域扩大到57X89，这样就可以覆盖由于移动造成的轨迹残留。最后使用SDL_Flip对新的图像绘制区域进行更新。<br /><br />  以上绘图部分基本完成，下面将要完成的键盘控制小熊图片的移动。由于要移动小熊图像，我们需要对键盘的方向键的按下事件进行响应，因此在main函数开始时定义了Uint8* keys。<br /><br />  keys用来获得每一时间的键盘状态。获得键盘状态的函数为SDL_GetKeyState(),它返回一个指向Uin8类型的数组头部的指针。数组的每个元素都对应记录了某个按键是否被按下的标志。这里不在象先前的几个例子中那样在事件轮询SDL_PollEvent中检查按键，因而如果我们一直按住某键不放，是不会触发新的事件发生的，要使得小熊移动我们必须一下又一下的敲击某个方向键，显示这很傻。应该是按下某键不放开的话，小熊一直保持向此方向移动。因此我们将检查按键的程序段放到事件轮询之后处理。由于这里没有使用else if…结构，因此可以多个方向键同时按下进行移动。<br /><br />  到此，程序就算完成了，编译一下，下面是程序运行的截图：<br />[attach]88[/attach]<br />  看起来还是有些小小的不和谐，那就是小熊图片上的黄色背景，可以去掉吗？当然可以，SDL提供了此方面的函数，我们只要在主函数中<br /><br />...<br /><br />load_image( "bear.bmp" );<br /><br />...<br /><br />加上<br /><br /> SDL_SetColorKey (bear, SDL_SRCCOLORKEY|SDL_RLEACCEL,*(Uint32 *) bear->pixels);<br /><br /> 再编译运行下，成功了吧？<br />[attach]89[/attach]<br />  经过实验SDL_SetColorKey 默认的取的是图片左上角第一个像素的颜色作为透明色，如果另有需求的话，也可以使用函数SDL_MapRGB来指定用何种颜色做透明色。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post95_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

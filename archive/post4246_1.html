@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>問一下AMP選單 是用 &quot;分支&quot;的方式呈現的嗎?</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">問一下AMP選單 是用 &quot;分支&quot;的方式呈現的嗎?</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_5.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>q0989588968</b><br/>
+2010-07-07 12:00:09</p>
+</div>
+<div class="col-10">
+<p>如題 最近在學AMP<br /><br />不過 在寫 "分支" 遇到了困難<br /><br />分支選項 一點選 遊戲本身 就會跳掉-.-<br /><br />腳本 有請 群裡的 同學看過 不知問題出在哪..<br /><br />可能是 繁體XP 或 音效卡 搞的鬼吧...應該....<br /><br />後來想想 先跳過分支好了<br /><br />可是.....<br /><br />後來又想到...選單 是不是也是用 "分支" 的原理 寫出來的.....<br /><br />如果是的話 就完了-.-...分支 寫不出來...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-07-07 12:16:31</p>
+</div>
+<div class="col-10">
+<p>分支在0.72有2种写法<br /><br />第一种:<br />SEL2("分支一","分支二",*one,*two);<br />*one<br />*two<br /><br />第二种:<br />ramus("分支一","分支二");<br />chose = selectchose()<br />if chose==1 then goto(*one); end<br />if chose==2 then goto(*two); end<br />*one<br />*two<br /><br />分支就是一个"标签"跳转,选了其中一个选项以后跳到一个特定的脚本位置继续执行<br />上面的标签就是代码中的*one和*two,标签是不被程序执行的,只作为标识使用,就和路牌差不多</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>q0989588968</b><br/>
+2010-07-07 13:44:07</p>
+</div>
+<div class="col-10">
+<p>白叔 感謝 分享 囧 法上來試試看</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post4246_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

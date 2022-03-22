@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>学习PSP游戏制作实况记录（一）由零开始!</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">学习PSP游戏制作实况记录（一）由零开始!</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-08 18:06:44</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://bbs.khors.com[/url]<br />作者：Dr.Watson<br /><br />经过大大小小的"波折"才装好了PSPSDK, 现在, 我终于可以开始干我本来想干的事了: 开发PSP游戏.<br /><br />拿到PSP到现在才一个多星期, 对于它的认识当然很少, 所以一切差不多是从零开始, 忽发奇想, 何不把整个学习过程记录在桉, 借此, 可以跟有兴趣自制PSP游戏的朋友互相交流学习, 有错或不妥当的地方, 也可望能得到高手们的指点.<br /><br />也不说太多的门面话了, 开始第一篇:<br /><br />由零开始!<br /><br />当我知道PSP可以直接读写VRAM(VIDEO RAM), 我心中不由一喜, 要知道可以直接读写VRAM, 以游戏编程的角度来说, 可是拿到了一把"屠龙宝刀", 只要我们有相应的知识, 2D/3D/特效等等都可以弄出来.<br /><br />当然, 话分两头说, 要是只靠读写VRAM, 游戏能不能达到到圆滑畅快的感觉, 是很依赖PSP处理器和VRAM的速度和编程功力了. 还好, PSP还有3D加速晶片和OPENGL ES可供选择.<br /><br />但我们应该先学爬再学跑, 所以我会从最基本开始, 这一篇, 我会说一下在萤幕上画点和画四方形, 下面是本篇程式的截图:<br /><br /> [attach]722[/attach]<br /><br />大家看到本篇的原始码, 就会知道它只是由HELLO WORLD改成, 所以我只是着重说明一下在萤幕上画点和画四方形的部份.<br /><br />[code=c]#define SCREEN_WIDTH 480<br />#define SCREEN_HEIGHT 272<br /><br />#define SCAN_LINE_SIZE 512 // 512 units (either 16bits or 32bits per scanline<br /><br />#define ARGB(a, r, g, b) (a<<24|b<<16|g<<8|r)[/code]<br /><br />先看一下开始时候的一些DEFINES, PSP的萤幕大小是480X272, 大家可能都已知道了. 至于这个SCAN_LINE_SIZE则是说明了, 虽然萤幕的横度是480, 到实际上, 每一条綫, 是512个单位, 就是说每条綫的右面, 有32个单位是没有用到的, 或是有些其他用图.<br /><br />当萤幕设定为32bit一个像素时, 颜色的排列是ABGR, 即透明度, 蓝, 绿, 红. 和我们平时用的ARGB有点不同, 所以用这个ARGB MACRO方便一下.<br /><br />[code=c]// VRAM actually starts from 0x04000000 but need to OR with 0x40000000 to prevent<br />// unpredictable behaviours due to caching<br />u32* pVRAM = (u32*)(0x04000000+0x40000000); [/code]<br /><br />pVRAM 就是VRAM的地址了, 它本身应该是0x4000000, 但根据<br />[url=http://wiki.pspdev.org/psp:memory_map]pspdev wiki[/url] 所言, 一定要OR 0x40000000才可直接运用, 要不然会有意想不到的后果!<br /><br />有了VRAM地址, 我们就可以画点了:<br /><br />[code=c]// Plot a single pixel on screen<br />void Plot(int x, int y, u32 color)<br />{<br />u32* p = pVRAM + y * SCAN_LINE_SIZE + x;<br />*p = color;<br />}[/code]<br /><br />很是方便呢! 注意:上面已提到, 每一条綫是512个单位, 所以我们在计算每条綫的地址时, 是乘以512而不是480!<br /><br />明白了画点, 画四方形也就很容易了:<br /><br />[code=c]// Fill a rectangular area with a specific color<br />void FillRect(int x, int y, int width, int height, u32 color)<br />{<br />// 計算第一個像素地址<br />u32* p = pVRAM + y * SCAN_LINE_SIZE + x;<br />int i, j;<br />for (j=0;j<height;j++)<br />{<br />for (i=0;i<width;i++) // 畫一條綫<br />{<br />*(p+i) = color;<br />}<br /><br />p += SCAN_LINE_SIZE; // 把地址移到下一行<br />}<br />}[/code]<br /><br />要是大家有注意, 会看到程式的主LOOP最后, 有个:<br /><br />[code=c]sceDisplayWaitVblankStart();[/code]<br /><br />根据一些网上资料所说, 要是我们的主LOOP是一直的走, 而中间没有一丁点停顿, 当用家按下"HOME"想把程式中止, PSP的KERNEL也会接收不到讯息, 除非我们另有"出口", 不然用家可要拔电池了!<br /><br />本篇到此也该完结了, 但忽然想到用作示范的话, 有个方便的截图功能会比较好, 于是加了从[url=http://forums.qj.net/showthread.php?t=19422]QJ FORUM[/url] 找到的截图功能.<br /><br />[code=c]// Taken from: [url]http://forums.qj.net/showthread.php?t=19422[/url]<br />// Original programmer: Yeldarb<br />void WriteByte(int fd, unsigned char data)<br />{<br />sceIoWrite(fd, &data, 1);<br />}<br /><br /><br />void ScreenShot()<br />{<br />const char tgaHeader[] = {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0};<br />const int width = SCREEN_WIDTH;<br />const int lineWidth = SCAN_LINE_SIZE;<br />const int height = SCREEN_HEIGHT;<br />unsigned char lineBuffer[width*4];<br />u32* vram = pVRAM;<br />int x, y;<br />int fd = sceIoOpen("ms0:/screenshot.tga", PSP_O_CREAT | PSP_O_TRUNC | PSP_O_WRONLY, 0777);<br />if (!fd) return;<br />sceIoWrite(fd, tgaHeader, sizeof(tgaHeader));<br />WriteByte(fd, width & 0xff);<br />WriteByte(fd, width >> 8);<br />WriteByte(fd, height & 0xff);<br />WriteByte(fd, height >> 8);<br />WriteByte(fd, 24);<br />WriteByte(fd, 0);<br />for (y = height - 1; y >= 0; y--) {<br />for (x = 0; x < width; x++) {<br />u32 color = vram[y * lineWidth + x];<br />unsigned char red = color & 0xff;<br />unsigned char green = (color >> 8) & 0xff;<br />unsigned char blue = (color >> 16) & 0xff;<br />lineBuffer[3*x] = blue;<br />lineBuffer[3*x+1] = green;<br />lineBuffer[3*x+2] = red;<br />}<br />sceIoWrite(fd, lineBuffer, width * 3);<br />}<br />sceIoClose(fd);<br />}[/code]<br /><br />当用户按"HOME"中止, 本篇程式就会在MEMORY STICK 的根目录, 写入一个叫"screenshot.tga"的图档.<br /><br />要是大家不想每次都浪费时间写入这个档, 可以把以下的句子删掉:<br /><br />[code=c]ScreenShot();[/code]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>TW241</b><br/>
+2009-08-07 21:33:05</p>
+</div>
+<div class="col-10">
+<p>我支持一下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2009-08-20 15:04:42</p>
+</div>
+<div class="col-10">
+<p>呼啦呼啦~~~支持了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Nokwiream</b><br/>
+2009-08-21 15:07:53</p>
+</div>
+<div class="col-10">
+<p>慢慢学，慢慢看</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>阿姆罗的雷</b><br/>
+2009-09-06 13:36:55</p>
+</div>
+<div class="col-10">
+<p>顶起哦。。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post251_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>cooleyes的mp3硬解码播放</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">cooleyes的mp3硬解码播放</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-17 15:49:00</p>
+</div>
+<div class="col-10">
+<p>摘自:topoc.5d6d.com<br />[code=c]<br />#include <pspkernel.h><br />#include <pspctrl.h><br />#include <pspdisplay.h><br />#include <pspdebug.h><br />#include <psppower.h><br />#include <stdio.h><br />#include <stdlib.h><br />#include <pspkernel.h><br />#include <pspctrl.h><br />#include <psppower.h><br />#include <pspdebug.h><br />#include <psprtc.h><br />#include <pspsdk.h><br />#include <pspaudiocodec.h><br />#include <pspaudio.h><br />#include <string.h><br />#include <malloc.h><br /><br />int SetupCallbacks();<br /><br />PSP_MODULE_INFO("MP3 decodeTest", 0x1000, 1, 1);<br />PSP_MAIN_THREAD_ATTR(0);<br /><br />__attribute__ ((constructor))<br />void loaderInit(){<br />   pspKernelSetKernelPC();<br />   pspSdkInstallNoDeviceCheckPatch();<br />   pspSdkInstallNoPlainModuleCheckPatch();<br />   pspSdkInstallKernelLoadModulePatch();<br />}<br /><br />SceCtrlData input;<br /><br />static int bitrates[] = {0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320 };<br /><br />unsigned long mp3_codec_buffer[65] __attribute__((aligned(64)));<br />short mp3_mix_buffer[1152 * 2] __attribute__((aligned(64)));<br /><br /><br />SceUID mp3_handle;<br />u8* mp3_data_buffer;<br />u16 mp3_data_align;<br />u32 mp3_sample_per_frame;<br />u16 mp3_channel_mode;<br />u32 mp3_data_start;<br />u32 mp3_data_size;<br />u8 mp3_getEDRAM;<br />u32 mp3_channels;<br />u32 mp3_samplerate;<br /><br /><br />int main(void)<br />{<br />   SetupCallbacks();<br />   <br />   int result = pspSdkLoadStartModule("flash0:/kd/me_for_vsh.prx", PSP_MEMORY_PARTITION_KERNEL);<br />   <br />   result = pspSdkLoadStartModule("flash0:/kd/videocodec.prx", PSP_MEMORY_PARTITION_KERNEL);<br />   <br />   result = pspSdkLoadStartModule("flash0:/kd/audiocodec.prx", PSP_MEMORY_PARTITION_KERNEL);<br />   <br />   result = pspSdkLoadStartModule("flash0:/kd/mpegbase.prx", PSP_MEMORY_PARTITION_KERNEL);<br />   <br />   result = pspSdkLoadStartModule("flash0:/kd/mpeg_vsh.prx", PSP_MEMORY_PARTITION_USER);<br />   <br />   pspSdkFixupImports(result);<br />   <br />   sceMpegInit();<br />   <br />   mp3_handle = sceIoOpen("ms0:/Test.MP3", PSP_O_RDONLY, 0777);<br />   if (  ! mp3_handle )<br />      goto wait;<br />   <br />   mp3_channels = 2;<br />   mp3_samplerate = 44100; //this is mp3 file's samplerate, also can be 48000,....<br />   mp3_sample_per_frame = 1152;<br />   <br />   mp3_data_start = sceIoLseek32(mp3_handle, 0, PSP_SEEK_CUR);<br />   <br />   memset(mp3_codec_buffer, 0, sizeof(mp3_codec_buffer));<br />   <br />   if ( sceAudiocodecCheckNeedMem(mp3_codec_buffer, 0x1002) < 0 )<br />      goto wait;<br />   if ( sceAudiocodecGetEDRAM(mp3_codec_buffer, 0x1002) < 0 )<br />         goto wait;<br />   mp3_getEDRAM = 1;<br />   <br />   if ( sceAudiocodecInit(mp3_codec_buffer, 0x1002) < 0 ) {<br />      goto wait;<br />   }<br />   int audio_channel = sceAudioChReserve(0, mp3_sample_per_frame , PSP_AUDIO_FORMAT_STEREO);<br />   int eof = 0;   <br />   while( !eof ) {<br />      int samplesdecoded;<br />      memset(mp3_mix_buffer, 0, mp3_sample_per_frame*2*2);<br />      unsigned char mp3_header_buf[4];<br />      if ( sceIoRead( mp3_handle, mp3_header_buf, 4 ) != 4 ) {<br />         eof = 1;<br />         continue;<br />      }<br />      int mp3_header = mp3_header_buf[0];<br />      mp3_header = (mp3_header<<8) | mp3_header_buf[1];<br />      mp3_header = (mp3_header<<8) | mp3_header_buf[2];<br />      mp3_header = (mp3_header<<8) | mp3_header_buf[3];<br />      <br />      int bitrate = (mp3_header & 0xf000) >> 12;<br />      int padding = (mp3_header & 0x200) >> 9;<br />      <br />      int frame_size = 144000*bitrates[bitrate]/mp3_samplerate + padding;<br />      <br />      if ( mp3_data_buffer )<br />         free(mp3_data_buffer);<br />      mp3_data_buffer = (u8*)memalign(64, frame_size);<br />      <br />      sceIoLseek32(mp3_handle, mp3_data_start, PSP_SEEK_SET); //seek back<br />      <br />      if ( sceIoRead( mp3_handle, mp3_data_buffer, frame_size ) != frame_size ) {<br />         eof = 1;<br />         continue;<br />      }<br />      <br />      mp3_data_start += frame_size;<br />      <br />      mp3_codec_buffer[6] = (unsigned long)mp3_data_buffer;<br />      mp3_codec_buffer[8] = (unsigned long)mp3_mix_buffer;<br />      <br />      mp3_codec_buffer[7] = mp3_codec_buffer[10] = frame_size;<br />      mp3_codec_buffer[9] = mp3_sample_per_frame * 4;<br />   <br />      int res = sceAudiocodecDecode(mp3_codec_buffer, 0x1002);<br />      if ( res < 0 ) {<br /><br />         eof = 1;<br />         continue;<br />      }<br />      sceAudioOutputBlocking(audio_channel, PSP_AUDIO_VOLUME_MAX, (void *) ((int) mp3_mix_buffer | 0x40000000));<br />      samplesdecoded = mp3_sample_per_frame;<br />   }<br /><br />wait:<br />   <br />   if ( mp3_handle ) {<br />      sceIoClose(mp3_handle);<br />   }<br />   if ( mp3_data_buffer) {<br />      free(mp3_data_buffer);<br />   }<br />   if ( mp3_getEDRAM ) {<br />      sceAudiocodecReleaseEDRAM(mp3_codec_buffer);<br />   }<br />   <br />   sceCtrlReadBufferPositive(&input, 1);<br />   while(!(input.Buttons & PSP_CTRL_TRIANGLE))<br />   {<br />      sceKernelDelayThread(10000);   // wait 10 milliseconds<br />      sceCtrlReadBufferPositive(&input, 1);<br />   }<br />   <br />   sceKernelExitGame();<br />   return 0;<br />}<br /><br /><br />/* Exit callback */<br />int exit_callback(int arg1, int arg2, void *common)<br />{<br />   sceKernelExitGame();<br />   return 0;<br />}<br /><br /><br />/* Callback thread */<br />int CallbackThread(SceSize args, void *argp)<br />{<br />   int cbid;<br /><br />   cbid = sceKernelCreateCallback("Exit Callback", exit_callback, NULL);<br />   sceKernelRegisterExitCallback(cbid);<br /><br />   sceKernelSleepThreadCB();<br /><br />   return 0;<br />}<br /><br /><br />/* Sets up the callback thread and returns its thread id */<br />int SetupCallbacks(void)<br />{<br />   int thid = 0;<br /><br />   thid = sceKernelCreateThread("update_thread", CallbackThread, 0x11, 0xFA0, 0, 0);<br />   if(thid >= 0)<br />   {<br />      sceKernelStartThread(thid, 0, 0);<br />   }<br /><br />   return thid;<br />}<br /><br />makefile<br /><br />TARGET = mp3<br />OBJS = main.o<br />CFLAGS = -O2 -G0 -Wall<br />CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti<br />ASFLAGS = $(CFLAGS)<br />LIBDIR =<br /><br />LIBS = -lpspaudiocodec -lpspmpeg -lpspaudio<br /><br />LDFLAGS =<br />EXTRA_TARGETS = EBOOT.PBP<br />PSP_EBOOT_TITLE = mp3 test<br /><br />PSPSDK=$(shell psp-config --pspsdk-path)<br />include $(PSPSDK)/lib/build.mak<br />[/code]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>terrypsp</b><br/>
+2008-07-08 21:01:19</p>
+</div>
+<div class="col-10">
+<p>可能要加入#include <pspmpeg.h>，不然会有警告</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post144_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

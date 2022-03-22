@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>(c)AVG MAKER DS– By Hewenxie脚本指令说明书V1.3</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">(c)AVG MAKER DS– By Hewenxie脚本指令说明书V1.3</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-07-12 20:38:30</p>
+</div>
+<div class="col-10">
+<p>无特殊说明每条指令均为@开头，以;结尾。<br />指令前加//，即为注释掉该行，被注释掉的指令不会执行。如//@say(.....);<br />	  <br />一. 对话文字显示指令<br />    前置说明：对话显示内容支持字体颜色。<br />字体颜色默认为白色，如要对字体颜色操作，请使用%cX，X为0～9任意数字，对应颜色如下：<br />1-白色(white)，2-红色(red)，3-绿色(green)，4-蓝色(blue)，5-紫色(purple)，<br />6-青色(cyan)，7-黄色(yellow)，8-淡灰色(light grey)，9-深灰色(dark grey)，0-黑色(black)<br />	如果希望在一句话中间出现换行，用<br />符号，停顿（继续则需要按键）效果，用	符号						<br />     1. @say<br />         1.1 功能：<br />               人物对话显示功能，在对话框中进行显示。<br />         1.2 脚本指令原型：<br />               @say(style, isAnimation, name, content)	<br />         1.3 参数说明：<br />               1. style：0-普通模式 1-有头像模式（会空出一块空间用于显示头像）<br />               2. isAnimation：人物说话是否有动画效果，具体效果与@anim()有关。1-有动画效果，0-无动画效果<br />               3. name：说话人物名字。如果不需要名字，置空即可<br />               4. content：说话内容。注意用英文模式下的""包含其内容，格式如"你好！"，引号内部不再兼容英文双引号，中文双引号兼容。	<br />         1.4 例：<br />               @say(0,0,????,"你好！我是%c2静%c1，初次见面！请多多关照！");<br />		<br />     2. @boxText<br />         2.1 功能：<br />               框文字显示功能，将文字在矩形框中进行显示。<br />         2.2 脚本指令原型：<br />               @boxText(screen, basex, basey, maxx, maxy, verbatim, content)<br />         2.3 参数说明：<br />               1. screen：显示用屏幕，0-上屏，1-下屏<br />               2. basex：用于显示文字的矩形框左上角顶点的x坐标<br />               3. basey：用于显示文字的矩形框左上角顶点的y坐标<br />               4. maxx：用于显示文字的矩形框右下角顶点的x坐标<br />               5. maxy：用于显示文字的矩形框右下角顶点的y坐标<br />               6. verbatim：是否逐字显示。0-否，1-逐字显示<br />               7. content：说话内容。注意用英文模式下的""包含其内容，格式如"你好！"，引号内部不再兼容英文双引号，中文双引号兼容。	<br />         2.4 例：<br />               @boxText(1,20,20,200,150,1,"你即将进入AVG的美妙世界！");<br />		<br />	<br /><br />二. 图像相关操作指令<br />     1. @chara<br />         1.1 功能：<br />               变更人物图像，支持渐变效果。<br />         1.2 脚本指令原型：<br />               @chara(path, isAlpha)<br />         1.3 参数说明：<br />               1. path：人物图象文件路径。文件名后不写文件后缀。<br />               2. isAlpha：是否打开渐变进出效果。0-不打开，1-打开<br />         1.4 例：<br />               @chara(avgFiles/chara/chara1, 1);<br /><br />     2. @clearChara<br />         2.1 功能：<br />               擦除人物图像。<br />         2.2 脚本指令原型：<br />               @clearChara()<br />         2.3 参数说明：<br />               无参数	<br />         2.4 例：<br />               @clearChara();<br /><br />     3. @anim<br />         3.1 功能：<br />               加载动画帧图像。此动画帧在对话过程中实现说话动作。<br />注意：由于此功能支持并不好，所以不建议使用。要使用的话图像长宽最好不要超过16*16。<br />         3.2 脚本指令原型：<br />               @anim(path, width, height, x, y)<br />         3.3 参数说明：<br />               1. path：图象文件路径。文件名后不写文件后缀。<br />               2. width：图像宽度。<br />               3. height：图象高度。<br />               4. x：显示图像的x坐标。<br />               5. y：显示图像的y坐标。<br />         3.4 例：<br />               @anim(avgFiles/chara/anim1, 16,16, 128,50);<br /><br />     4. @bg<br />         4.1 功能：<br />               加载背景。<br />         4.2 脚本指令原型：<br />               @bg(path,type)<br />         4.3 参数说明：<br />               1. path：背景图象文件路径。文件名后不写文件后缀。如果为null获NULL则为擦除背景<br />               2. type：是否打开渐变进出效果。0-无效果，1-白渐进， 2-黑渐进， 3-10 黑色拉幕效果（具体请实机测试）<br />         4.4 例：<br />               @bg(avgFiles/bg/bg1,1);<br /><br />     5. @res_chara<br />         5.1 功能：<br />               从打包资源读取，变更人物图像，支持渐变效果。<br />         5.2 脚本指令原型：<br />               @res_chara(resource, file name, isAlpha)<br />         5.3 参数说明：<br />               1. resource : 资源文件路径。<br />               2. file name：人物图象文件名字。文件名后不写文件后缀。<br />               3. isAlpha：是否打开渐变进出效果。0-不打开，1-打开<br />         5.4 例：<br />               @res_chara(avgFiles/chara/img.res, chara1, 1);<br /><br />     6. @res_bg<br />         6.1 功能：<br />               从打包资源读取，加载背景。<br />         6.2 脚本指令原型：<br />               @res_bg(resource, file name, type)<br />         6.3 参数说明：<br />               1. resource : 资源文件路径。如果为null获NULL则为擦除背景<br />               2. file name：背景图象文件路径。文件名后不写文件后缀。如果为null获NULL则为擦除背景<br />               3. type：是否打开渐变进出效果。0-无效果，1-白渐进， 2-黑渐进， 3-10 黑色拉幕效果（具体请实机测试）<br />         6.4 例：<br />               @res_bg(avgFiles/bg/bg.res, bg1, 1);<br /><br />     7. @btbg<br />         7.1 功能：<br />               加载背景至下屏。<br />         7.2 脚本指令原型：<br />               @btbg(path,type)<br />         7.3 参数说明：<br />               1. path：背景图象文件路径。文件名后不写文件后缀。如果为null获NULL则为擦除背景<br />               2. type：是否打开渐变进出效果。0-无效果，1-白渐进， 2-黑渐进， 3-10 黑色拉幕效果（具体请实机测试）<br />         7.4 例：<br />               @btbg(avgFiles/bg/bg1,1);<br /><br />     8. @res_btbg<br />         8.1 功能：<br />               从打包资源读取，加载背景至下屏。<br />         8.2 脚本指令原型：<br />               @res_btbg(resource, file name, type)<br />         8.3 参数说明：<br />               1. resource : 资源文件路径。如果为null获NULL则为擦除背景<br />               2. file name：背景图象文件路径。文件名后不写文件后缀。如果为null获NULL则为擦除背景<br />               3. type：是否打开渐变进出效果。0-无效果，1-白渐进， 2-黑渐进， 3-10 黑色拉幕效果（具体请实机测试）<br />         8.4 例：<br />               @res_btbg(avgFiles/bg/bg.res, bg1, 1);<br /><br />     9. @texton<br />         9.1 功能：<br />               上屏显示文字和文字框。<br />         9.2 脚本指令原型：<br />               @texton();<br />         9.3 参数说明：<br />               <br />         9.4 例：<br />               @texton();<br /><br /><br />     10. @textoff<br />         10.1 功能：<br />               上屏文字和文字框消失。<br />         10.2 脚本指令原型：<br />               @textoff();<br />         10.3 参数说明：<br />               <br />         10.4 例：<br />               @textoff();<br /><br />     11. @erase<br />         11.1 功能：<br />               擦除指定屏幕上的文字。<br />         11.2 脚本指令原型：<br />               @erase(screen);<br />         11.3 参数说明：<br />               screen：0-上屏  1-下屏<br />         11.4 例：<br />               @erase(1);<br /><br />     12. @head<br />         12.1 功能：<br />               加载头像。<br />         12.2 脚本指令原型：<br />               @head(path)<br />         12.3 参数说明：<br />               1. path：头像文件路径。文件名后不写文件后缀。置为NULL或null时，指令变为擦除头像功能。<br />         12.4 例：<br />               @head(avgFiles/chara/head1);<br />               @head(null);<br /><br />     13. @res_head<br />         13.1 功能：<br />               从打包资源读取，加载头像。<br />         13.2 脚本指令原型：<br />               @res_head(resource, file name)<br />         13.3 参数说明：<br />               1. resource : 资源文件路径。<br />               2. file name：头像文件名字。文件名后不写文件后缀。置为NULL或null时，指令变为擦除头像功能。<br />         13.4 例：<br />               @res_chara(avgFiles/chara/img.res, head1);<br />               @res_chara(null, null);<br /><br />     14. @clearHead<br />         14.1 功能：<br />               擦除头像。<br />         14.2 脚本指令原型：<br />               @clearHead()<br />         14.3 参数说明：<br />               无参数	<br />         14.4 例：<br />               @clearHead();<br /><br />     15. @quakex  @quakey<br />         15.1 功能：<br />               画面振动效果。按x或y轴方向<br />         15.2 脚本指令原型：<br />               @ quakex (times)<br />			   @ quakey (times)<br />         15.3 参数说明：<br />               times：振动次数, 不填则默认为5	<br />         15.4 例：<br />               @ quakex (1);   @ quakey (5);<br /><br /><br />	16. @lrchara<br />         16.1 功能：<br />               全屏分左半右半部分分别显示人物图像。也可用作全屏大小立绘显示，不过得对256×192大小的立绘进行分割处理为两张128×192图像。支持单边独立保留图像或清除图像。<br />         16.2 脚本指令原型：<br />               @lrchara(lpath, rpath, isAlpha)<br />         16.3 参数说明：<br />               1. lpath：左边人物图象文件路径。文件名后不写文件后缀。为NULL（大写）时则为清除，为KEEP（大写）时则为保留当前图像。<br />			   2. rpath：右边人物图象文件路径。文件名后不写文件后缀。为NULL（大写）时则为清除，为KEEP（大写）时则为保留当前图像。<br />               3. isAlpha：是否打开渐变进出效果。0-不打开，1-打开<br />         16.4 例：<br />               @lrchara(avgFiles/chara/chara1, avgFiles/chara/chara2, 1);<br />			   @lrchara(KEEP, avgFiles/chara/chara3, 1);<br />			   @lrchara(NULL, KEEP, 1);	<br /><br /><br />	17. @res_lrchara<br />         17.1 功能：<br />               全屏分左半右半部分分别显示人物图像。也可用作全屏大小立绘显示，不过得对256×192大小的立绘进行分割处理为两张128×192图像。支持单边独立保留图像或清除图像。<br />         17.2 脚本指令原型：<br />               @res_lrchara(resource, lpath, rpath, isAlpha)<br />         17.3 参数说明：<br />			   1. resource : 资源文件路径。<br />               2. lpath：左边人物图象文件路径。文件名后不写文件后缀。为NULL（大写）时则为清除，为KEEP（大写）时则为保留当前图像。<br />			   3. rpath：右边人物图象文件路径。文件名后不写文件后缀。为NULL（大写）时则为清除，为KEEP（大写）时则为保留当前图像。<br />               4. isAlpha：是否打开渐变进出效果。0-不打开，1-打开<br />         17.4 例：<br />               @res_lrchara(avgFiles/chara/img.res, chara1, chara2, 1);<br />			   @res_lrchara(avgFiles/chara/img.res, KEEP,  chara3, 1);<br />			   @res_lrchara(avgFiles/chara/img.res, NULL, KEEP, 1);<br /><br /><br />	18. @fadein  @fadeout<br />         18.1 功能：<br />               屏幕亮度控制的淡入淡出，可用于对屏幕整屏操作，同时对背景层和立绘层作用。<br />         18.2 脚本指令原型：<br />               @fadeout(screen,type,time);<br />               @fadein(screen,type,time);<br />         18.3 参数说明：<br />               1. screen：屏幕 0-上屏   1-下屏  2-双屏<br />			   2. type：渐变类型 0-白色渐变  1-黑色渐变 <br />               3. time：渐变时间，1代表半秒，2为一秒 依次<br />         18.4 例：<br />               @fadeout(0,1,5);<br />               @fadein(0,2,5);<br /><br /><br />	19. @flash<br />         19.1 功能：<br />               屏幕闪光效果<br />         19.2 脚本指令原型：<br />               @flash(screen, type, times, length);<br />         19.3 参数说明：<br />               1. screen：屏幕 0-上屏   1-下屏<br />			   2. type：闪光类型 0-白色闪光  1-黑色闪光 <br />               3. times：闪光次数 <br />               4. length：闪光变化延时，该值越小，闪屏的速度就越快。推荐值4<br />         19.4 例：<br />               @flash(0,0,1,4);<br /><br />	20. @wave<br />         20.1 功能：<br />               画面波浪效果<br />         20.2 脚本指令原型：<br />               @wave(time);<br />         20.3 参数说明：<br />               1. time：时间 单位ms <br />         20.4 例：<br />               @wave(3000);<br /><br />	21. @colorEffect<br />         21.1 功能：<br />               背景底片效果<br />         21.2 脚本指令原型：<br />               @colorEffect ();<br />         21.3 参数说明：<br />               无<br />         21.4 例：<br />               @ colorEffect ();<br /><br />	22. @graybg<br />         22.1 功能：<br />               背景灰化效果<br />         22.2 脚本指令原型：<br />               @graybg ();<br />         22.3 参数说明：<br />               无<br />         22.4 例：<br />               @ graybg ();<br /><br />三. 脚本操作类指令<br />     1. @jump<br />         1.1 功能：<br />               文本内无条件上下跳转。<br />         1.2 脚本指令原型：<br />               @jump(num)<br />         1.3 参数说明：<br />               1. num：条转行数。正数为向下跳转，负数为向上跳转，0为死循环不要用<br />         1.4 例：<br />               @jump(18);<br />               @jump(-18);<br /><br />     2. @if @endif<br />         2.1 功能：<br />               条件执行体。符合条件执行体内指令，一个@if对应一个@return，体内可以支持条件执行体嵌套。<br />         2.2 脚本指令原型：<br />               @if(condition)<br />               Body<br />               @endif()<br />         2.3 参数说明：<br />               1. condition：执行条件，支持判断类型：==(相等), >(大于), <(小于), >=(大于等于), <=(小于等于), !=(不等于)； 左操作数必须为变量，右操作数支持变量； <br />注意的是每个执行体只支持一次逻辑判断。	<br />         2.4 例：<br />               1. @if($(var) == 100);<br />                  ……………<br />                 @endif();<br />               2. @if($(var1) == $(var2));<br />                  ……………<br />                 @endif();<br /><br /><br />     3. @call<br />         3.1 功能：<br />               带返回的脚本文件跳转。目标脚本执行完毕后返回原脚本文件继续执行<br />         3.2 脚本指令原型：<br />               @call(path)<br />         3.3 参数说明：<br />               1. path：脚本文件路径	<br />         3.4 例：<br />               @call(avgFiles/data/test1.spt);<br /><br /><br /><br />     4. @changeText<br />         4.1 功能：<br />               不带返回的脚本文件跳转。直接更换脚本文件<br />         4.2 脚本指令原型：<br />               @ changeText (path)<br />         4.3 参数说明：<br />               1. path：脚本文件路径	<br />         4.4 例：<br />               @ changeText (avgFiles/data/test1.spt);<br /><br /><br />     5. @gameOver<br />         5.1 功能：<br />               游戏结束，游戏重新初始化<br />         5.2 脚本指令原型：<br />               @ gameOver ()<br />         5.3 参数说明：<br />               无	<br />         5.4 例：<br />               @ gameOver();<br /><br /><br />     6. =<br />         6.1 功能：<br />               文本结束标志，此标志前不加@，注意如带返回的脚本文件，末尾一定加上此结束标志。<br />         6.2 脚本指令原型：<br />               =<br />         6.3 参数说明：<br />               无	<br />         6.4 例：<br />               =;<br /><br /><br />     7. @select<br />         7.1 功能：<br />               出现按钮进行选择，执行相应操作。<br />         7.2 脚本指令原型：<br />               @select#1button_text1 $ @ins1 @ins2 @ins3 ~text1 ~ #2 $$ @ @ @ ~~ #3 $1$ @ @ @ ~~;<br />说明：该指令设定较为复杂，设定为3个选择项。每个选择项格式为#num button_text $ @instruction1 @instruction2 @instruction3 ~text ~，#号后数字为选<br />项号，顺序固定为1-2-3，不可改动。每个选项最大支持3条执行指令，判断后相应顺序执行。<br />         7.3 参数说明：<br />               1. button_text：按钮文字<br />               2. value：选项对应值，该功能预留，填该值无实际意义，所以每次写0即可 <br />               3. instruction：脚本指令名。<br />               4. text：选择后显示在对话文本框中文字。如不需要显示后续内容则不填写<br />         7.4 例：<br />               @select#1%c2按钮一 $-1$ @chara()@set_value($(sd)=18)@ ~选择了选项一$(sd)~ #2%c2按钮二 $0$ @ @ @ ~选择了按钮二~ #3%c2按钮三 $0$ @ <br />@ @ ~选择了按钮三~;<br /><br /><br />     8. @var_select<br />         8.1 功能：<br />               出现按钮进行选择，选择结果对应值将记录在指定变量中。0-第一个选项，1-第二个，2-第三个<br />         8.2 脚本指令原型：<br />               @var_select(variable, number, item|.....|....);<br />         8.3 参数说明：<br />               1. variable：变量名，注意，使用的变量必须之前申请。<br />               1. number：选项个数<br />               3. item：选项名字，选项之间用 | 隔开。 选项数量1-3个。<br />         8.4 例：<br />               @set_var(choice, -1);<br />               @var_select(choice, 2, no1|no2);<br /><br />	9. @menusys_on   @menusys_off<br />         9.1 功能：<br />               菜单系统打开，关闭。现在只添加了存档读档功能。菜单系统打开后可以在随时按Start键或点击在下屏的menu按钮选择相应功能。<br />         9.2 脚本指令原型：<br />               @menusys_on()   @menusys_off()<br />         9.3 参数说明：<br />               无<br />         9.4 例：<br />               @menusys_on();   <br />			   @menusys_off();<br /><br />	10. @tbtrans_on @tbtrans_off<br />         10.1 功能：<br />               文字框半透明效果开关, 关闭后文字框不做半透明处理，请在脚本初始化阶段使用。<br />         10.2 脚本指令原型：<br />               @tbtrans_on ()   @tbtrans_off()<br />         10.3 参数说明：<br />               无<br />         10.4 例：<br />               @ tbtrans_on();   <br />			   @ tbtrans_off();<br /><br />      11. @review<br />         11.1 功能：<br />               调用鉴赏系统。<br />         11.2 脚本指令原型：<br />               @review(filename)<br />         11.3 参数说明：<br />               filename: 鉴赏脚本的路径<br />         10.4 例：<br />               @review(avgFiles/data/review.txt);   <br /><br /><br />四．系统操作类指令<br />系统变量说明：本系统最大支持128个自定义整型类变量。并且在文本显示指令和条件判断指令中支持对系统变量值的显示和判断，调用形式为$(variable_name)，例如现<br />在已经申请了变量var1且值为100,调用时写”变量值为$(var1)” 即可显示 ”变量值为100”。<br />     1. @set_var<br />         1.1 功能：<br />               申请系统变量。<br />         1.2 脚本指令原型：<br />               @ set_var (var_name, var_value)<br />         1.3 参数说明：<br />               1. var_name：变量名，注意变量名不要过长<br />               2. var_value：初始值	<br />         1.4 例：<br />               @set_var(var1, 100);<br /><br /><br />     2. @unset_var<br />         2.1 功能：<br />               取消指定已经申请系统变量。<br />         2.2 脚本指令原型：<br />               @ unset_var (var_name)<br />         2.3 参数说明：<br />               1. var_name：变量名，注意变量名为已经申请的变量	<br />         2.4 例：<br />               @unset_var(var1);<br /><br /><br />     3. @set_value<br />         3.1 功能：<br />               对已申请的系统变量进行赋值。<br />         3.2 脚本指令原型：<br />               @ set_value($(var_name), var_value)<br />         3.3 参数说明：<br />               1. var_name：变量名，注意变量名不要过长<br />               2. var_value：要赋的值	<br />         3.4 例：<br />               @set_value($(var1), 0);<br /><br /><br />     4. @delay<br />         4.1 功能：<br />               系统等待指定时间。<br />         4.2 脚本指令原型：<br />               @delay(time)<br />         4.3 参数说明：<br />               1. time：等待的时间 （单位：毫秒）<br />         4.4 例：<br />               @delay(1000);<br /><br /><br />     5. @save<br />         5.1 功能：<br />               存储当前进度。<br />         5.2 脚本指令原型：<br />               @save(text)<br />         5.3 参数说明：<br />               1. text：选填参数，存盘标签内容，可以显示在存档按钮上。不填则默认标签内容为存盘时间。<br />         5.4 例：<br />               @save(第二章); <br />               @save();<br /><br /><br />     6. @load<br />         6.1 功能：<br />               读取进度。<br />         6.2 脚本指令原型：<br />               @load()<br />         6.3 参数说明：<br />               无<br />         6.4 例：<br />               @load();<br /><br />     7. @var_save<br />         7.1 功能：<br />               系统变量存储。会在工作目录生成config文件记录系统所用变量。<br />         7.2 脚本指令原型：<br />               @var_save()<br />         7.3 参数说明：<br />               无<br />         7.4 例：<br />               @var_save();<br /><br />     8. @var_load<br />         8.1 功能：<br />               系统变量读取。将config文件记录系统所用变量读入系统。<br />         8.2 脚本指令原型：<br />               @var_load()<br />         8.3 参数说明：<br />               无<br />         8.4 例：<br />               @var_load();<br /><br /><br />五. 声音类指令<br />     1. @playSFX<br />         1.1 功能：<br />               播放效果音，目前支持8bit signed 码率为11025的raw格式声音文件。<br />         1.2 脚本指令原型：<br />               @playSFX(path)<br />         1.3 参数说明：<br />               1. path：音频文件路径，注意文件用全名 <br />         1.4 例：<br />               @playSFX(avgFiles/sound/1.raw);<br /><br /><br />     2. @res_playSFX<br />         2.1 功能：<br />               从打包资源读取，播放效果音，目前支持8bit signed 码率为11025的raw格式声音文件。<br />         2.2 脚本指令原型：<br />               @res_playSFX(resource, file name)<br />         2.3 参数说明：<br />               1. resource：音频资源文件路径，注意文件用全名 <br />               2. file name：音频文件名，注意文件用全名 <br />         2.4 例：<br />               @res_playSFX(avgFiles/sound/sound.res, 1.raw);<br /><br />     3. @loopSFX<br />         3.1 功能：<br />               循环播放效果音，目前支持8bit signed 码率为11025的raw格式声音文件。<br />         3.2 脚本指令原型：<br />               @loopSFX(path)<br />         3.3 参数说明：<br />               1. path：音频文件路径，注意文件用全名 <br />         3.4 例：<br />               @loopSFX(avgFiles/sound/1.raw);<br /><br /><br />     4. @res_loopSFX<br />         4.1 功能：<br />               从打包资源读取，循环播放效果音，目前支持8bit signed 码率为11025的raw格式声音文件。<br />         4.2 脚本指令原型：<br />               @res_loopSFX(resource, file name)<br />         4.3 参数说明：<br />               1. resource：音频资源文件路径，注意文件用全名 <br />               2. file name：音频文件名，注意文件用全名 <br />         4.4 例：<br />               @res_loopSFX(avgFiles/sound/sound.res, 1.raw);<br /><br /><br />     5. @playBGM<br />         5.1 功能：<br />               播放背景音乐。只支持mp3格式文件，码率不宜过高，建议采用11025 8bit 96kps配置或更低，具体可以测试。在进行音乐切换的时候也是直接用该指令。<br />         5.2 脚本指令原型：<br />               @playBGM(path)<br />         5.3 参数说明：<br />               1. path：音频文件路径，注意文件用全名	<br />         5.4 例：<br />               @playBGM (avgFiles/bgm/bgm1.mp3);<br /><br /><br />     6. @stopBGM<br />         6.1 功能：<br />               停止播放当前背景音乐。<br />         6.2 脚本指令原型：<br />               @ stopBGM()<br />         6.3 参数说明：<br />               无<br />         6.4 例：<br />               @stopBGM();<br /><br /><br />     7. @res_playBGM<br />         7.1 功能：<br />               从资源文件播放背景音乐。只支持mp3格式文件，码率不宜过高，建议采用11025 8bit 96kps配置或更低，具体可以测试。在进行音乐切换的时候也是直接用该指令。<br />注意：建议声音文件不宜超过1.6M大小，否则极大可能出现BGM过大状态。<br />         7.2 脚本指令原型：<br />               @res_playBGM(resource, file name)<br />         7.3 参数说明：<br />               1. resource：音频资源文件路径，注意文件用全名 <br />               2. file name：音频文件名，注意文件用全名 <br />         7.4 例：<br />               @res_playBGM (avgFiles/bgm/bgm.res, bgm1.mp3);</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lzm2000</b><br/>
+2009-07-23 15:10:27</p>
+</div>
+<div class="col-10">
+<p>为什么都只看不回哪?</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuuhimesama</b><br/>
+2009-07-25 02:03:41</p>
+</div>
+<div class="col-10">
+<p>[quote]为什么都只看不回哪?<br />[size=2][color=#999999]lzm2000 发表于 2009-7-23 15:10[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=1886&ptid=824][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br />因为大家都在潜水[img]http://pic1.sosg.net/image/post/smile/53.gif[/img]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>alevolet</b><br/>
+2009-08-05 20:11:50</p>
+</div>
+<div class="col-10">
+<p>看着好晕</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>a851381980</b><br/>
+2009-12-21 09:23:14</p>
+</div>
+<div class="col-10">
+<p>太好了，我明白了很多！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>asxzl5945</b><br/>
+2010-01-15 10:31:48</p>
+</div>
+<div class="col-10">
+<p>因为这种时候不知道该说什么<br />真嗣：只要微笑就可以了</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post299_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

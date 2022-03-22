@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>学习PSP软件自制编程入门教程</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">学习PSP软件自制编程入门教程</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-30 16:36:17</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://liuyingxianglan.blog.163.com/[/url]<br /><br />   首先说下,PSP下的软件开发是见比较辛苦的事,需要对这个爱好的一种热情和对简单的软件编程思想和技能的掌握,希望大家在看完这贴后有所收获.<br />  <br />   先来讲下目前对于PSP自制软件的开发的要求和环境的需求:<br />   开发的要求<br />  首先是对软件工程设计的一个大概的了解:<br />   1> 系统分析和系统设计阶段: 主要是进行可行性分析和系统开发设计,这个阶段是最重要的,它把握着开发软件的走向和命脉.<br />   2> 系统开发和代码调试阶段: 主要是进行在设计基础上的系统开发,对编写的代码进行调试,就是<br />DEBUG的过程.<br />   3> 系统测试和功能调试阶段 : 主要是在系统完成后对系统整体容错处理和协调性方面的测试,以及对各种功能的调试.<br />   4>完成生成可执行文件和交付使用.<br />   环境的需求<br />这里最主要的是就PSPSDK这个非官方的环境,其中包括了多种支持:<br />  1> Cywin+pspsdk 和Devkitpro+pspsdk 2种环境.<br />   2>有关如何建立2种环境,我在这里先不做过多的介绍,需要的朋友请参看:<br />[url]http://bbs.verypsp.com/viewthread.php?tid=5611&extra=page%3D1[/url]和<br />[url]http://bbs.verypsp.com/viewthread.php?tid=11507&extra=page%3D1[/url]<br />      <br />                        简述建立Cygwin环境下的PSP开发环境<br />#安装Cygwin<br />1.下载Cygwin的安装程序([url]http://www.cygwin.com/setup.exe[/url])到本地.<br />2.双击安装,选Next,跳过第一页.<br />3.选Install from Internet(downloaded files will be kept for future re-use).<br />4.然后就是选择下载服务器了.等待读取下载列表.<br />5.读取完下载列表之后会让你选择要下载哪些类别的文件.每种类别都有4种安装类型(Install安装,Reinstall重新安装,Uninstall卸载,Default默认).用鼠标点类别名称后面的那个图标就能切换.至少要装gcc,gdb,make,patch,svn,wget,automake,autoconf,m4,perl什么的,Games,GNOME,KDE,Mail,X11什么的就不用装了.选Uninstall(不安装)就行了.<br />6.然后就是静静的等待下载和安装,时间视网络情况而定.<br /><br />#安装PSPSDK<br />1.到[url]http://www.oopo.net/consoledev/[/url]找psptoolchain的安装配置脚本.如果网页没有变动的话,应该在最下面Playstation Portable - Toolchain Files里.下载之后放到Cygwin/home/[username]([username]指代的是用户名,一般就是Cygwin/home里唯一的那个目录)下.<br />2.打开一个Cygwin Bash Shell.<br />3.输入cd /home/[username]([username]指代的是用户名)<br />4.输入tar xfvz psptoolchain-200*****.tgz.等待解压缩.(*****代替的是日期数值,如果你下的是psptoolchain-20060120.tgz,那就是照这个文件名打,可千万别打成psptoolchain-200*****.tgz)<br />5.输入cd psptoolchain<br />6.输入chmod a+x ./toolchain.sh<br />7.输入./toolchain.sh<br />8.然后就是漫长的下载与编译.这个过程无需手动.如果中途没发生什么异常的话(Error 1之类的),出现.如果当中出现什么异常,请参考FAQs解决,也可回帖提问.<br /><br />#设置环境变量<br />1.可以用记事本以文本文件的形式打开Cygwin/home/[username]/.bashrc([username]指代的是用户名),添加:<br />export PSPDEV="/usr/local/pspdev"<br />export PSPSDK="/psp/sdk"<br />export PATH=":/bin:/psp/bin"<br />并保存修改.<br />2.也可以直接在shell里用ed改:<br /> /home/[username]/.bashrc ([username]指代的是用户名)<br />输入a,回车<br />输入上面给出的那三行环境变量设置.<br />输入w,回车,q,回车.<br /><br />#检查<br />1.输入psp-gcc -v<br />得到:<br />Using built-in specs<br />Target: psp<br />Configured with: ../configure --prefix=/usr/local/pspdev --target=psp --enable-languages=c,c++ --with-newlib --enable-cxx-flags=-G0<br />Thread model: single<br />gcc version 4.0.2 (PSPDEV 20051022)<br />就算可以了(随着今后新的PSPSDK,可能会有些出入,版本号不同什么的).<br /><br />#测试<br />1.打开控制台,输入cd /samples/kernel/cwd<br />2.输入make<br />3.如果输出:<br />psp-gcc -I. -I/usr/local/pspdev/psp/sdk/include -O2 -G0 -Wall  -c -o main.o main.c<br />psp-gcc -I. -I/usr/local/pspdev/psp/sdk/include -O2 -G0 -Wall -L. -L/usr/local/pspdev/psp/sdk/lib main.o -lpspdebug -lpspdisplay -lpspge -lpspctrl -lpspsdk -lc -lpspuser -lpspkernel -o cwd.elf<br />mksfo 'Working Directory example' PARAM.SFO<br />psp-strip cwd.elf -o cwd_strip.elf<br />pack-pbp EBOOT.PBP PARAM.SFO NULL <br />        NULL NULL NULL <br />       NULL cwd_strip.elf NULL<br />rm -f cwd_strip.elf<br />那就证明psptoolchain已经安装成功了.你可以开发你的PSP自制程序了.<br /><br /><br />FAQs:<br />1. 我输入"./toolchain.sh"之后出现"ERROR: Please make sure you have GNU 'make' installed.","...'patch'...","...'wget'...","...'subversion (svn)'..."之类的,然后就安装就停止了,这是怎么回事?<br />->这是因为你并没有安装这些东西,你可能安装Cygwin时,这些选的是Default,它们默认是不安装的,最好是完全安装.安装时将All设为Install,完全安装.<br />感谢senzung热心提供的中文用户名解决方案:因为我发现如果windows用户名设置成中文，home资料夹里会是中文档，就会出现svn not found错误。可以在windows里新建一个英文名用户，用那个登陆windows再打开cygwin来解决。<br /><br />2.编译时突然停止了,输出了这个"aclocal: configure.ac: 11: macro 'AM_PROG_AS' not found in library",怎么办?<br />->请确定automake的版本是最新的.<br /><br />3.如果Home/[username]目录里没有.bashrc怎么办?<br />->可以通过修改Cygwin根目录下的cygwin.bat文件来解决.在bash --login -i上面加入:<br />set PSPDEV=X:/cygwin/usr/local/pspdev<br />set PSPSDK=X:/cygwin/usr/local/pspdev/psp/sdk<br />set PATH=%PATH%;%PSPDEV%/bin;%PSPSDK%/bin<br />4.如果连接不上服务器怎么办?<br />->有人反映过一直都连接不上服务器,这个我也碰到过一次,这时就可以用FTP工具下载(我使用的是FileZilla),在Cygwin Mirrors里找个服务器,就可以把release目录下的东西,需要什么就下载到本地,然后用本地安装即可.<br /><br />          有关Devkitpro的安装请到这里看:<br />[url]http://bbs.pspchina.net/viewthread.php?tid=32263&extra=page%3D1[/url]<br /><br />前言：<br /><br />    很多朋友都会和我有相同的愿望，希望小P除了运行游戏或者播放视听文件之外还能跑一些自治的小程序，哪怕是以一个小小的Hello World作为开始。<br /><br />    对于用什么样的平台开发PSP的程序，我首先选择了devkitPro，因为它涉及的东西比较少，安装比较简单，比较适合初学者掌握。一旦我们了解了其中的奥妙，使用其他的开发工具也就能举一反三了。更何况我想大家希望尽早看到自己努力的作品，而不是花费太多的时间和精力在系统环境的配置上。<br /><br />    另外，有些点比较重要的我会单独提出来，这样便于以后的举一反三和深入浅出。<br /><br />先决条件:<br /><br />    说明一下我写这篇文章时候涉及到软件安装的情况<br /><br />          o<br /><br />            Windows XP SP2<br />          o devkitProUpdater 1.3.5<br /><br />devkitPro下载和安装<br /><br />    devkitPro工具的官方首页[url]http://www.devkitpro.org/[/url]。下载地址是[url]http://www.devkitpro.org/downloads.shtml[/url]（也可以直接前往Source Forge的相关下载页面[url]http://sourceforge.net/project/showfiles.php?group_id=114505&package_id=160396[/url]）。<br />[attach]391[/attach]<br />    注意：这里下载的不是devkitPro的完整安装包，而是一个叫做devkitProUpdater的客户端软件，下载并且执行devkitProUpdater，就可以开始进行devkitPro的安装了。<br /><br />    建议：新建一个目录放置devkitProUpdater，因为在devkitProUpdater安装的过程中会下载很多的文件。如果你想保存这些文件的话，最好的办法是建立一个单独的文件夹。<br />[attach]392[/attach]<br />第一步，选择安装模式（“下载并且安装”或者“只是下载”）<br />[attach]393[/attach]<br />第二步，选择是否需要保存下载的文件（可以保留，这些文件可以在需要再次安装的时候继续使用）<br />[attach]394[/attach]<br />第三步，因为devkitProUpdater不仅仅面向PSP所以会有一些其它的工具包包含在其中，如果你不需要可以选择安装一些组件，这里我采用了完全安装的模式。请注意devkitPSP下的“PSP sdk documentation”选项。这个建议选中，因为在以后的开发过程中可以提供参考。<br />[attach]395[/attach]<br />第四步<br />[attach]396[/attach]<br />第五步<br />[attach]397[/attach]<br />检查和配置<br /><br />    好了，安装完毕后，我们不着急写代码，其中有些目录我们还是要过问一下的。所谓得知其所以然。<br /><br />    在此之前必须要说明一下系统变量PATH（使用过JDK的朋友对这个应该很熟悉），所谓的系统变量PATH简单的说是系统搜索相应应用程序的一组路径的设定值。安装完毕以后的系统我们可以看到如下的值：<br />[attach]398[/attach]<br />可以看到绿色的方框中的值是由于安装了devkit以后所新添加的值。在我所安装的系统中路径是“D:devkitPromsysin”我们不妨可以去看看这个目录到底有些什么样的东西。<br />[attach]399[/attach]<br />这里存放了一些可执行的应用程序，大部分程序都是需要在DOS命令行窗口中进行运行的，其中rxvt.exe（一个类似于Linux的Shell）可以直接双击打开。这里有些什么我们可以暂时忽略。<br />[attach]400[/attach]<br />接下来需要做的是写一个批处理文件StartPSPDev.BAT（名称可以按自己的想法取），可以存放在你想要保存的目录下，比如在我的机器上我就保存在项目文件夹中。具体BATCH文件内容：<br />set path=%path%;D:devkitProdevkitPSPin;<br />cmd<br />先解释一下上面两句话的意思。第一句话是用来设置环境变量PATH的，在这里我们新添加了新路径“D:devkitProdevkitPSPin”（各人安装的devkitPro路径不同，所以对应的bin的位置也不一样，请注意用你具体的路径取代这里的值）。然后调用Windows的Dos Command Shell。我们可以看到设置的新的路径已经添加在PATH的末尾了。<br />[attach]401[/attach]<br />    为了验证编译环境是否能够真正工作，我们采用一个简单的HelloPSP的代码进行编译。如果能够正常生成我们需要的EBOOT.PBP那就算成功了。正常的我们需要涉及到的文件只有代码文件和Makefile文件。其余的都是由编译器自动生成。<br /><br />    样例程序源代码以及makefile:<br />[attach]402[/attach]<br />[attach]403[/attach]<br />请注意，使用我们刚才创建的批处理文件StartPSPDev.BAT启动DOS命令窗口。否则使用普通的窗口会出现如下的错误：<br />D:DevFieldPSPDevHelloPSP>make<br />make: Stop.<br />    请注意出错信息第一行，“psp-config:)<br /><br />    好了就先写到这里，下次我们可以一起讨论一如何调试以及编写PSP小程序。<br /><br /><br /><br /><br />    再来就是说说对大家基本功的要求了,其实也不是多么的严格,因为是SDK环境的开发,所以你大可以用你自己所熟悉的语言去做开发,比如JAVA/C/C++等,但是因为大多数人都使用C/C++作为SDK的开发工具,所以以下的所有内容我都会以C/C++来做为主线,对大家入门开发领域做出点不到位的讲解.</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post169_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>微软DS开发套件－在VC2005中集成NDS编译环境</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">微软DS开发套件－在VC2005中集成NDS编译环境</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-06 20:43:11</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://guoy.blogbus.com/logs/4681161.html[/url]<br /><br />　　一直以来，我们所使用的NDS开发环境都是Windows下模拟Unix的编译环境。比如Msys，MinGW等等。这样的编译环境让时间整整倒转20年，回到了Unix时代。一切都由命令行来完成，复杂的编译工程不得不由Makefile来组织。没有带有语法提示的编辑工具，没有友好的集成环境，没有迅速简洁的除错机制。<br />前些天我在PAlib的论坛上看到了VC2005集成编译的办法。但是整个实现还是基于Makefile的。由于 VC的NMake格式和GNU的Make格式有很大的不同导致了整个集成具有一定的难度。目前的情况是这样的：如果采用Make必须模拟Unix的 Shell。如果采用NMake必须熟悉整个编译过程的每一个细节，把Make翻译为NMake。<br />　　经过十余天的摸索，我另辟蹊径让DS编译器和VC2005完美的集成到了一起。整个实现还得依靠VC2005强大的功能。VC2005在对于不同格式的源文件可以采用自定义的命令进行编译。于是我就针对libnds中所有的源代码进行了一次配置。分别设计了针对arm7和arm9，针对DS应用程序和DS库文件的编译规则。实现了完全利用 vcproj解决方案的DS编译过程和VC2005的完美集成。不再需要任何佶屈聱牙的Makefile，不再需要不灵活的文件夹设置，不再需要外部编辑工具，只需要VC2005一个集成环境就可以了。我们久违的编译环境又回来了！<br /><br />一　编译器和库<br />首先介绍一个网站[url]http://www.sourceforge.net/[/url]。这里可以下载到DS开发需要的所有工具。编译器是基于GNU的Arm编译器。它是devkitPro的一个组成部分。<br />第一步：安装devkitArm(r20)。(建议安装到D:devkitProdevkitARM)解压即可完成，非常方便。<br />第二步：安装PALib。同样解压即可，把libnds安装到D:devkitProlibnds，把PALib安装到D:devkitPropalib。<br />第三步：安装模拟器和其他工具。PALib自带的模拟器安装到D:devkitProEmulators。同样其他工具可以一同安装到D:devkitPro目录下。<br />整个安装过程的目的就是保证整个开发环境的所有东西都安装到D:devkitPro下，就好像我们在安装VS2005的时候会选定一个根目录一样。<br /><br />二　环境变量<br />set DEVKITARM=D:DevkitProdevkitARM<br />set LIBNDS=D:DevkitProlibnds<br />我用批处理的方式写大家应该看得明白吧。建议直接配置为操作系统的环境变量。<br /><br />三　小工具<br />从这里下载三个小工具，安装到D:devkitPro	ools。补充说明一下：这几个工具是由C#编写的使用了Framework2.0。既然你已经使用了VS2005就一定安装了Framework2.0吧。所以都能正常运行。小工具是为了完成这次集成所必须的辅助工具。<br />四　VC中的配置<br />第一步：增加Path路径。工具->选项　然后在树型导航中选择　项目和解决方案->VC++目录　增加“可执行文件”路径，分别把D: DevkitProdevkitARMin　D:DevkitProEmulators　D:DevkitPro	ools增加进去。<br />第二步：增加Include路径。用同样的方法增加“包含文件”路径，分别把D:DevkitProdevkitARMarm-eabiinclude　 D:DevkitProlibndsinclude　$(SolutionDir)include增加进去。注意前两个Include路径必须位于最开始用“上”箭头调整次序。<br />第三步：在这里下载三个自定义规则文件释放到D:DevkitPro目录。用类似的方法修改“VC++项目设置”的规则文件搜索路径属性为D:DevkitPro。<br /><br />五　VC工程的新建步骤<br />第一步：确定解决方案的名称和类型　假设名称为DSApp 是DS应用程序<br />第二步：新建名为DSApp的VC++　常规　空项目解决方案名称和项目名称都填DSApp<br />第三步：向DSApp这个解决方案中添加DSApp7 DSApp9这样两个空项目。这样我们一共有了一个解决方案，三个项目。如果只要求生成DS库文件那就只需DSLib7 DSLib9两个项目。<br /><br />第四步：为每个项目配置各自的自定义生成规则文件。<br />[attach]34[/attach]<br />第五步：修改自定义生成顺序。<br />[attach]35[/attach]<br />第六步：修改项目属性，进行第一次编译并为工程添加manifest文件<br />[attach]36[/attach]<br />第七步：添加源文件和头文件进入开发。<br />　　至此，一个DS工程就完成了虽然做不到一键完成但我们可以把刚才的解决方案作为简化“模板”来使用。接下来你就可以体验全新的开发乐趣了从代码编写到调试运行只需一个按钮。<br /><br />六　两个模板<br />从这里下载DSApp DSLib两个模板分别是编译DS应用程序和DS库文件的事例解决方案模板。使用时只需用VS集成环境打开并修改名称就可以使用了。<br /><br />七　让我们做得更好<br />由于我对VS2005的了解还不够透彻，暂时对模板的制作缺乏经验。没有能做出向导式的工程模板。不知道那位高手能替我完成这一步，让我们做得更好。<br /><br />    整个集成过程也是我对编译工程演化的一次亲身体验。从最初的单文件编译到Makefile时代再到以VisualStudio为代表的IDE时代无不体现了人们对编译要求的一次次提高。现在在SourceForge上所发展的编译工程仍有非常多个如大名鼎鼎的Ant还有各种不知名的make工具（在Unix下特多毕竟没有界面）。也许这也将是我最后一次怀有这么大的热情来解读Makefile。这将是好事，时间的步伐永不停息，我们没有太多的时间在复杂而又对开发没有贡献的技术上停留。把程序员从复杂的编译环境中解放出来，放眼于程序设计，创造出更多更好用的DS程序。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post56_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>教大家一个提速TF卡的格式化方法~更稳定的进行游戏！</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">教大家一个提速TF卡的格式化方法~更稳定的进行游戏！</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_8.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>夜月L</b><br/>
+2010-08-18 17:03:53</p>
+</div>
+<div class="col-10">
+<p>[size=4][color=Red]TF卡速度一般默认的不太稳定~经过测速软件测试也明显的证实了这一点（有兴趣的朋友可以测试一下），现教大家一个方便快捷，而且能让TF卡稳定的格式化方法~[/color][/size]<br />   [color=Blue] 2G及以下用FAT，4G及以上用FAT32，不过要改下格式化的属性。当时我也被这个问题困扰过，还有不要用快速格式化。按我下面发的直接输入命令格式话就行，我一直在用，稳定和速度都很好，我是SDHC的4G卡。[/color]<br /><br />    [color=SeaGreen]看见现今的主流烧录卡都支持FAT32，所以入手了SANDISC的4G　SDHC　Class2的卡，因为FAT是不支持2G以上容量的。一开始使用的XP系统的格式化为FAT32，装入DSTT内核和游戏后，发现速度真慢，读取列表和在列表上下移动慢得让人无法忍受，没办法，格成FAT吧。果然，格成FAT后速度快很多，但随着游戏越装越多，越过2G时，大问题来了，加载游戏卡死！试着装入游戏前更改DMA状态，倒是可以成功进入游戏，但每次都改一下，很麻烦啊！<br />研究了一下，发现XP系统在用FAT32格式化我的4G卡时，使用的单位大小是4K。难怪这么慢！ <br />知道了问题，就有解决办法了！[/color]办法： <br />[color=Magenta]●对于4G容量的卡，请点击XP系统“开始”-“所有程序”-“附件”-“命令提示符”<br />输入“format I: /fs:fat32 /a:32K”命令格式化（注意空格，其中“I:”表示我的卡在电脑上的盘符是I盘，如果你的在E盘，就改成E:），回车，提示“卷标(11 个字符；如果没有，则按 ENTER)?”，直接回车确认，OK了。<br /><br />●对于8G或8G以上容量的卡，建议使用“format I: /fs:fat32 /a:64K”命令格式化（注意空格，其中“I:”表示我的卡在电脑上的盘符是I盘，如果你的在E盘，就改成E:），可以进一步提升速度。<br /><br />●16G就用128k……以此类推，PSP的记忆棒同样适用。[/color] <br />[color=Pink][size=4]没错，增加簇单位大小来提升读写速度，是以降低空间利用率为代价的，但对于DS烧录卡这特定的使用对象而言，由于每个游戏的ROM都很大，加上游戏存档的文件大小也基本是32K或64K的整数倍，实际浪费掉的空间其实不多，再加上现在高容量卡的白菜价，实在是不必对空间利用率太过于在意。<br />如果是作为智能手机的扩展卡使用，由于手机文件都比较小，适当降低簇单位大小，可以获得更满意的空间利用率，不过这都是题外话了，呵呵[/size][/color] </p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-08-18 17:20:05</p>
+</div>
+<div class="col-10">
+<p>绝对不建议PSP使用这个方法格式化记忆棒……楼主自己试试就知道了……<br />还有……不建议8GB以上的SD卡使用64KB的簇……仍然使用32KB为佳……<br />这都是俺亲身测试出来的……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>634647175</b><br/>
+2010-08-18 17:32:55</p>
+</div>
+<div class="col-10">
+<p>不知道行不行，还是等等高手吧。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>king71036</b><br/>
+2010-08-18 17:35:14</p>
+</div>
+<div class="col-10">
+<p>說到記憶卡壓~ds的朋友使用轉卡~不要用超過4g的記憶卡~因為遊戲會因記憶卡容量太大而讀不到~關於格式化~定期的格式化會影響遊戲讀取速度~也會影響遊戲能不能玩~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-08-18 17:51:54</p>
+</div>
+<div class="col-10">
+<p>这个咱也有心得，不过也感谢LZ分享</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mckey7</b><br/>
+2010-08-18 18:50:15</p>
+</div>
+<div class="col-10">
+<p>好吧。 感谢分享。   但是对于我这个文盲太麻烦了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>夜月L</b><br/>
+2010-08-18 18:51:42</p>
+</div>
+<div class="col-10">
+<p>PSP的确实不是很清楚。<br />不过DS用这个相当不错。很稳定</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>k8u</b><br/>
+2010-08-18 18:58:46</p>
+</div>
+<div class="col-10">
+<p>快也不是快很多....还是原厂配置好一点.....一旦格式化的时候分区错误就得不偿失了....(个人意见)</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>夜月L</b><br/>
+2010-08-18 20:16:21</p>
+</div>
+<div class="col-10">
+<p>    确实是这样的。但是如果不格式游戏很容易出错误的。<br />DS就是这样 烧录卡内核和游戏会出错误。所以必须格式换重装！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>k8u</b><br/>
+2010-08-18 20:36:51</p>
+</div>
+<div class="col-10">
+<p>    目前只见过家教XX要这样做。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>夜月L</b><br/>
+2010-08-19 16:03:35</p>
+</div>
+<div class="col-10">
+<p>    DS很多游戏都可能出现在这样的情况。<br />估计你运气好没出现过吧- -！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>vwcp4119</b><br/>
+2010-08-19 16:12:38</p>
+</div>
+<div class="col-10">
+<p>科普要收藏</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>k8u</b><br/>
+2010-08-19 20:40:45</p>
+</div>
+<div class="col-10">
+<p>    更新数据库就好了....更新了还不能开就用moonshell或者YS打开就好了....</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>夜月L</b><br/>
+2010-08-19 21:33:05</p>
+</div>
+<div class="col-10">
+<p>好麻烦的说~！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>a4381782</b><br/>
+2010-08-25 15:55:31</p>
+</div>
+<div class="col-10">
+<p>看不懂啊  郁闷</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ZEROvsL</b><br/>
+2010-08-25 20:03:00</p>
+</div>
+<div class="col-10">
+<p>嗯<br />凡事都要试试才知道</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>reddotv</b><br/>
+2010-08-27 09:57:56</p>
+</div>
+<div class="col-10">
+<p>FAT那么陈旧...而且为什么是C2的TF?</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post7024_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

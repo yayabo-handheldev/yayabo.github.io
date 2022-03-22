@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ZEngine Demo 1 - ZImage 初级使用 (更新版本v101109)</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">ZEngine Demo 1 - ZImage 初级使用 (更新版本v101109)</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_10.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-08 22:57:14</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 easycker 于 2010-11-10 16:30 编辑 [/i]<br /><br />[color=Red]以后默认C:psp_developmentNGE2libnge2NGE2 ZeusEngineproject 1为引擎项目目录[/color]<br /><br />ZImage类：图形处理类<br /><br />新建一个ZEngine项目（就是复制，说明文件中有写）<br /><br />在里面新建一个image文件夹，在里面放入名为demo0.jpg的图片文件<br />零，框架。以下是Game.h和Game.cpp的原始内容，只要把之后教材中不同的地方添加进去就可以了[code]Game.h:<br />#ifndef _GAME_H<br />#define _GAME_H<br /><br />#include "ZGame.h"<br /><br />[code]<br />class Game : public ZGame<br />{<br />public:<br />	Game(){}<br />	~Game(){}<br />	<br />	void GameInitial();<br />	void GameCircle();<br />	void GameDrawScene();<br />	void GameButtonDown(int nKeyNumber);<br />	void GameButtonUp(int nKeyNumber);<br />	void GameEnd();<br />};<br /><br />#endif<br />[/code][/code]Game.cpp:[code]<br />//游戏入口类<br /><br />#include "Game.h"<br /><br />void Game::GameInitial()<br />{<br />	<br />}<br /><br /><br />//游戏循环<br />void Game::GameCircle()<br />{<br />	<br />}<br /><br />//游戏绘图<br />void Game::GameDrawScene()<br />{<br /><br />}<br /><br />//按下按键<br />void Game::GameButtonDown(int nKeyNumber)<br />{<br />	<br />}<br /><br />//弹起按键<br />void Game::GameButtonUp(int nKeyNumber)<br />{<br />	<br />}<br /><br />//游戏结束<br />void Game::GameEnd()<br />{<br />	Quit();<br />}<br /><br />[/code]一，最基本的显示<br /><br />Game.h:[code]<br />#ifndef _GAME_H<br />#define _GAME_H<br /><br />#include "ZGame.h"<br /><br />class Game : public ZGame<br />{<br />public:<br />	Game(){}<br />	~Game(){}<br />	<br />	void GameInitial();<br />	void GameCircle();<br />	void GameDrawScene();<br />	void GameButtonDown(int nKeyNumber);<br />	void GameButtonUp(int nKeyNumber);<br />	void GameEnd();<br /><br />private:<br />	ZImage *m_img_demo; //这里添加图形类的对象<br />};<br /><br />#endif<br />[/code]Game.cpp:<br />//游戏入口类[code]<br />#include "Game.h"<br /><br />void Game::GameInitial()<br />{<br />	//图像加载<br />	this->m_img_demo = new ZImage;<br />	this->m_img_demo->Load("image/demo0.jpg");<br />}<br /><br /><br />//游戏循环<br />void Game::GameCircle()<br />{<br />	<br />}<br /><br />//游戏绘图<br />void Game::GameDrawScene()<br />{<br />	this->m_img_demo->Show();<br />}<br /><br />//按下按键<br />void Game::GameButtonDown(int nKeyNumber)<br />{<br />	if(nKeyNumber == PSP_BUTTON_SELECT)GameEnd(); //按Select退出程序<br />}<br /><br />//弹起按键<br />void Game::GameButtonUp(int nKeyNumber)<br />{<br />	<br />}<br /><br />//游戏结束<br />void Game::GameEnd()<br />{<br />	Quit();<br />}<br />[/code]运行后显示图片<br /><br />[attach]16669[/attach]<br /><br /><br /><br /><br />二，简单的移动图片[code]<br />Game.h:<br />#ifndef _GAME_H<br />#define _GAME_H<br /><br />#include "ZGame.h"<br /><br />class Game : public ZGame<br />{<br />public:<br />	Game(){}<br />	~Game(){}<br />	<br />	void GameInitial();<br />	void GameCircle();<br />	void GameDrawScene();<br />	void GameButtonDown(int nKeyNumber);<br />	void GameButtonUp(int nKeyNumber);<br />	void GameEnd();<br /><br />private:<br />	ZImage *m_img_demo;<br />	float m_img_demo_x,m_img_demo_y;<br />};<br /><br />#endif<br />[/code]Game.cpp:<br />//游戏入口类[code]<br /><br />#include "Game.h"<br /><br />void Game::GameInitial()<br />{<br />	//图像加载<br />	this->m_img_demo = new ZImage;<br />	this->m_img_demo->Load("image/demo0.jpg");<br />	this->m_img_demo_x = 0;<br />	this->m_img_demo_y = 0;<br />}<br /><br /><br />//游戏循环<br />void Game::GameCircle()<br />{<br />	<br />}<br /><br />//游戏绘图<br />void Game::GameDrawScene()<br />{<br />	this->m_img_demo->Show(this->m_img_demo_x,this->m_img_demo_y); //按坐标显示<br />}<br /><br />//按下按键<br />void Game::GameButtonDown(int nKeyNumber)<br />{<br />	if(nKeyNumber == PSP_BUTTON_SELECT)GameEnd(); //按Select退出程序<br />	if(nKeyNumber == PSP_BUTTON_UP) //上 用IF IF IF IF 而不用IF ELSE 意在按键可以做同时按下的处理<br />		this->m_img_demo_y -= 10;<br />	if(nKeyNumber == PSP_BUTTON_DOWN)//下<br />		this->m_img_demo_y += 10;<br />	if(nKeyNumber == PSP_BUTTON_LEFT)//左<br />		this->m_img_demo_x -= 10;<br />	if(nKeyNumber == PSP_BUTTON_RIGHT)//右<br />		this->m_img_demo_x += 10;<br />}<br /><br />//弹起按键<br />void Game::GameButtonUp(int nKeyNumber)<br />{<br />	<br />}<br /><br />//游戏结束<br />void Game::GameEnd()<br />{<br />	Quit();<br />}<br /><br />[/code]三，图片的移动（状态机处理），以后都要用到状态机，大家一定要理解这个[code]<br /><br />Game.h:<br /><br />#ifndef _GAME_H<br />#define _GAME_H<br /><br />#include "ZGame.h"<br /><br />class Game : public ZGame<br />{<br />public:<br />	Game(){}<br />	~Game(){}<br />	<br />	void GameInitial();<br />	void GameCircle();<br />	void GameDrawScene();<br />	void GameButtonDown(int nKeyNumber);<br />	void GameButtonUp(int nKeyNumber);<br />	void GameEnd();<br /><br />private:<br />	ZImage *m_img_demo; //图片对象<br />	float m_img_demo_x,m_img_demo_y; //图片显示的左上角的坐标<br />	int m_img_demo_state; //图片坐标变化的状态值 0为静止，1为上移等等 [color=Red]，状态机[/color]};<br /><br />#endif<br /><br />[/code]Game.cpp:[code]<br />//游戏入口类<br /><br />#include "Game.h"<br /><br />void Game::GameInitial()<br />{<br />	//图像加载<br />	this->m_img_demo = new ZImage;<br />	this->m_img_demo->Load("image/demo0.jpg");<br />	this->m_img_demo_x = 0;<br />	this->m_img_demo_y = 0;<br />	this->m_img_demo_state = 0;<br />}<br /><br /><br />//游戏循环<br />void Game::GameCircle()<br />{<br />	//处理坐标变化<br />	switch(this->m_img_demo_state)<br />	{<br />	case 1: //图片上移<br />		this->m_img_demo_y -= 1;<br />		break;<br />	case 2: //图片下移<br />		this->m_img_demo_y += 1;<br />		break;<br />	case 3: //图片左移<br />		this->m_img_demo_x -= 1;<br />		break;<br />	case 4: //图片右移<br />		this->m_img_demo_x += 1;<br />		break;<br />	case 0: //图片静止<br />		break;<br />	}<br />}<br /><br />//游戏绘图<br />void Game::GameDrawScene()<br />{<br />	this->m_img_demo->Show(this->m_img_demo_x,this->m_img_demo_y); //按坐标显示<br />}<br /><br />//按下按键<br />void Game::GameButtonDown(int nKeyNumber)<br />{<br />	if(nKeyNumber == PSP_BUTTON_SELECT)GameEnd(); //按Select退出程序<br />	switch(nKeyNumber) //上下左右按下时<br />	{<br />	case PSP_BUTTON_UP: <br />		this->m_img_demo_state = 1;<br />		break;<br />	case PSP_BUTTON_DOWN:<br />		this->m_img_demo_state = 2;<br />		break;<br />	case PSP_BUTTON_LEFT:<br />		this->m_img_demo_state = 3;<br />		break;<br />	case PSP_BUTTON_RIGHT:<br />		this->m_img_demo_state = 4;<br />		break;<br />	}<br />}<br /><br />//弹起按键<br />void Game::GameButtonUp(int nKeyNumber)<br />{<br />	switch(nKeyNumber) //上下左右弹起时<br />	{<br />	case PSP_BUTTON_UP: <br />		this->m_img_demo_state = 0;<br />		break;<br />	case PSP_BUTTON_DOWN:<br />		this->m_img_demo_state = 0;<br />		break;<br />	case PSP_BUTTON_LEFT:<br />		this->m_img_demo_state = 0;<br />		break;<br />	case PSP_BUTTON_RIGHT:<br />		this->m_img_demo_state = 0;<br />		break;<br />	}<br />}<br /><br />//游戏结束<br />void Game::GameEnd()<br />{<br />	Quit();<br />}<br />[/code][attach]16670[/attach]<br /><br /><br /><br />四，提示：做个图片查看器（支持BMP ，JPG,PNG等），需要用到标准库的 文件处理函数（遍历文件名）。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>浅仓奈绪狸猫君</b><br/>
+2010-11-08 23:13:24</p>
+</div>
+<div class="col-10">
+<p>这这这…瞎了俺的超级合金狗眼般的存在啊%…算了抛弃之前的来搞这个吧……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>william6849</b><br/>
+2010-11-09 00:00:16</p>
+</div>
+<div class="col-10">
+<p>有待研究 俺的眼睛啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>boy545003571</b><br/>
+2010-11-09 08:01:05</p>
+</div>
+<div class="col-10">
+<p>教程什么的，一定要收藏的～～谢谢LZ了，辛苦</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2010-11-09 11:52:24</p>
+</div>
+<div class="col-10">
+<p>狗眼！乃赔我的狗眼！C++什么的最讨厌了。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2010-11-09 12:25:38</p>
+</div>
+<div class="col-10">
+<p>现在偶正在学习C++中</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>乐不思蜀</b><br/>
+2010-11-09 16:16:34</p>
+</div>
+<div class="col-10">
+<p>表示很无力的说…</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>andy</b><br/>
+2010-11-09 16:54:55</p>
+</div>
+<div class="col-10">
+<p>看不懂说.......<br />虽然想学.......</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-09 20:42:48</p>
+</div>
+<div class="col-10">
+<p><br />C嘎嘎有那么难吗~~~！！！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-09 20:56:08</p>
+</div>
+<div class="col-10">
+<p>已更新              了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-11-10 08:04:13</p>
+</div>
+<div class="col-10">
+<p>[quote]狗眼！乃赔我的狗眼！C++什么的最讨厌了。<br />[size=2][color=#999999]雷精灵 发表于 2010-11-9 11:52[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=150407&ptid=13382][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />  。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2010-11-11 14:14:08</p>
+</div>
+<div class="col-10">
+<p>[quote]<br />ISO/IEC 14882:2003<br />17.4.3.1.2 Global names [lib.global.names]<br />1 Certain sets of names and function signatures are always reserved to the implementation:<br />— Each name that contains a double underscore (_ _) or begins with an underscore followed by an uppercase<br />letter (2.11) is reserved to the implementation for any use.[/quote]<br />所以header guard最好不要用_GAME_H之类的，这样确实比较瞎眼……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-11 18:35:33</p>
+</div>
+<div class="col-10">
+<p>    没有看明白，上面的英文是什么东西。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2010-11-12 20:26:47</p>
+</div>
+<div class="col-10">
+<p>[quote]回复  幻の上帝 <br /><br /><br />    没有看明白，上面的英文是什么东西。<br />[size=2][color=#999999]easycker 发表于 2010-11-11 18:35[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=151304&ptid=13382][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br />简而言之，遵守C++标准的规定，不要使用包含两个连续下划线或者以下划线紧接大写字母开头的自定义标识符，除非你写了个编译器来把它当作一个关键字，或者你在写一个标准库的实现。<br />当然，实际上问题不大。但这多少能体现出一个库的严谨性。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-13 20:08:47</p>
+</div>
+<div class="col-10">
+<p>    Each name that contains a double underscore (_ _) or begins <br /><br />_GAME_H<br />是定义的宏<br /><br />MFC里到处都是这种N个下划线的。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2010-11-14 15:32:18</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=152118&ptid=13382]15#[/url] [i]easycker[/i] [/b]<br />向MFC这种古董看齐么？<br />也罢。MFC出来的时候倒是还没有标准。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>easycker</b><br/>
+2010-11-17 09:00:27</p>
+</div>
+<div class="col-10">
+<p>那么Qt4呢？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2010-11-18 20:00:34</p>
+</div>
+<div class="col-10">
+<p>Qt后台硬，非标准工具链就是有人用，所以无所谓——反正不是“纯”C++嘛。如果LZ能有时间自己写附加预处理器那就最好不过——尽管仍然要看编译器脸色。<br />PS.Qt刚出的那时候也还没标准，和MFC一样存在历史遗留问题；当然，后续维护要好一些。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post9244_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

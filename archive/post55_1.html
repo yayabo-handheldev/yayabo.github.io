@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS开发Wiki翻译：第六天：设备相关的运算（2）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS开发Wiki翻译：第六天：设备相关的运算（2）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-06 16:07:02</p>
+</div>
+<div class="col-10">
+<p>摘自：chenyi1976.spaces.live.com<br />翻译：陈轶<br /><br />使用重力(实现跳跃等效果)<br /><br />请务必已经读过定点数教学部分。。。代码很简单，你可以用于任何类型的游戏。。。你必须懂得一些定点数的运算，否则可能看不懂下面的东东。<br /><br />"重力"的代码非常不错，因为它可以用在很多的游戏中，特别是类似于超级马里奥那种。。。它有一个基本原则：你的精灵（或马里奥或玩家或任何东西）有垂直速度的时候，"重力"代码能够给予这个速度以加速度。下面有3件事情：<br /><br />    * 每次转身，速度根据它的加速度进行变化<br />    * 每次转身，精灵的位置根据它的速度而变化<br />    * 任何时候，如果你的精灵碰到地面（或在地面以下），它应该放到地面上来，并且速度应该归零。。。。<br /><br />因为速度和加速度有很多值，我们也不希望给它们增加限制，我们将使用定点数。。。这就是你为什么要使用移位操作的原因（&laquo;8和&raquo;8这种操作 ）。这个例子是演示一个小飞船上升，下降。你能够改变重力和启动力（相当于跳跃）来看看飞船的不同效果。<br /><br />#define FLOOR (160<<8) // Floor y level<br /><br />int main(void){<br /><br />PA_Init(); //PAlib inits<br />PA_InitVBL();<br /><br />PA_InitText(1, 0);<br /><br />PA_OutputText(1, 2, 4, "Press A to take off !");<br />PA_OutputText(1, 2, 5, "Gravity change : Left/Right");<br />PA_OutputText(1, 2, 7, "Takeoff Speed change : Up/Down");<br /><br />PA_LoadSpritePal(0, 0, (void*)sprite0_Pal)<br /><br />PA_CreateSprite(0, 0, (void*)vaisseau_Sprite, OBJ_SIZE_32X32, 1, 0, 50, 50);<br /><br /><br />s32 gravity = 32; // change the gravity and check the result :)<br />s32 velocity_y = 0;<br />s32 spritey = FLOOR; // at the bottom<br />s32 takeoffspeed = 1000; // Takeoff speed...<br /><br />while(1) // Infinite loops<br />{<br /><br />takeoffspeed += (Pad.Held.Up - Pad.Held.Down)*8; // Change takeoff speed...<br />gravity += (Pad.Held.Right - Pad.Held.Left)*2; // Change gravity speed...<br /><br />PA_OutputText(1, 4, 8, "Takeoff speed : %d ", takeoffspeed);<br />PA_OutputText(1, 4, 6, "Gravity : %d ", gravity);<br /><br />if((spritey <= FLOOR) && Pad.Newpress.A) { // You can jump if not in the air...<br />velocity_y = -takeoffspeed; // Change the base speed to see the result...<br />}<br /><br />// Moves all the time...<br />velocity_y += gravity; // Gravity...<br />spritey += velocity_y; // Speed...<br /><br />if(spritey >= FLOOR) // Gets to the floor !<br />{<br />velocity_y = 0;<br />spritey = FLOOR;<br />}<br /><br />PA_OutputText(1, 0, 0, "Y : %d <br />VY : %d ", spritey, velocity_y);<br /><br />if (spritey>>8 > -32) PA_SetSpriteY(0, 0, spritey>>8); // show if on screen<br />else PA_SetSpriteY(0, 0, 192);<br /><br />PA_WaitForVBL();<br />}<br /><br />return 0;<br />}<br /><br />下面解释一下：<br /><br />    * #define FLOOR (160&laquo;8)</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lichaoyiren</b><br/>
+2010-01-13 11:44:44</p>
+</div>
+<div class="col-10">
+<p>我说解释呢</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post55_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

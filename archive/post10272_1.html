@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>请教各位大大们PSP上的可用内存大小是多少？（问题更新）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">请教各位大大们PSP上的可用内存大小是多少？（问题更新）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_11.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gvc051126</b><br/>
+2010-12-07 21:44:48</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 gvc051126 于 2010-12-8 15:29 编辑 [/i]<br /><br />已经做了这么长时间的AMP了，居然还不知道有点惭愧<br />请教各位大大们PSP上的可用内存大小是多少？<br />另外，再请教一下大大们是用什么办法来优化脚本，和优化内存调用的<br />我在PC上运行良好的脚本，一上PSP就死机不断，尤其是在同时播放BGM和语音，或加载到有20张立绘的场景后必死，<br />有时读取存档也会死，超郁闷的<br />OGG文件的加载又是怎么计算的?我现在加载fg基本没什么问题了，<br />但只要一加上语音就会先卡一下，有时甚至直接死机。而且只要有语音，读档必死。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-07 22:14:15</p>
+</div>
+<div class="col-10">
+<p>又是一个只会一直加载不会清除的人呐。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gvc051126</b><br/>
+2010-12-07 22:17:43</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=161241&ptid=14070]2#[/url] [i]kong[/i] [/b]<br />清除我可是有做的，几乎每换次场景就全fgnull()一下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-07 22:18:18</p>
+</div>
+<div class="col-10">
+<p>个人建议除了必用的例如对话框之类的，fg一般加载在10个以内都够用了。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gvc051126</b><br/>
+2010-12-07 22:21:04</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=161244&ptid=14070]4#[/url] [i]kong[/i] [/b]<br />其实那20个fg是用在鉴赏模式里的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2010-12-07 22:29:38</p>
+</div>
+<div class="col-10">
+<p>用小图对好坐标之后显示就行，20张全屏的fg当然会死</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-07 22:29:38</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 kong 于 2010-12-7 22:30 编辑 [/i]<br /><br />     不会吧？<br />这还是别的人来回答好了。。。<br /><br />纳尼？！居然是全屏？！起初还以为是小图</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-12-08 10:00:37</p>
+</div>
+<div class="col-10">
+<p>AMP的可用内存大概有14-15MB左右，这个值可能有偏差，而图片在内存里的容量是由分辨率和质量决定的，用一张全屏480*272分辨率的图片来做例子的话，使用bg指令加载就是占用480*272*4字节，使用fg指令加载就是占用480*272*2字节，如果fg使用8888质量加载的，那内存占用量和bg指令一样，而实际的内存占用量会比这个计算上的数值要更大些，因为有很多需要用到的变量并没有进算进去，以AMP的可用内存来看，512*512分辨率的图片用8888质量加载，最多只能加载10张左右，如果用4444质量加载的话，最多也不会超过20张，所以要自己管理好内存的使用，可用内存很小的情况下很容易死机</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>轨迹叔</b><br/>
+2010-12-08 10:20:25</p>
+</div>
+<div class="col-10">
+<p>[quote]AMP的可用内存大概有14-15MB左右，这个值可能有偏差，而图片在内存里的容量是由分辨率和质量决定的，用一张 ...<br />[size=2][color=#999999]白枫 发表于 2010-12-8 10:00[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=161303&ptid=14070][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />    AMP之爹说的木错</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ljner</b><br/>
+2010-12-08 10:35:30</p>
+</div>
+<div class="col-10">
+<p>psp大 陆的人们又在炫耀自己的内存了么······</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gvc051126</b><br/>
+2010-12-08 12:55:26</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 gvc051126 于 2010-12-8 15:25 编辑 [/i]<br /><br />[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=161303&ptid=14070]8#[/url] [i]白枫[/i] [/b]<br />原来图片的内存大小是根据分辨率来的啊，我一直以为是根据实际的KB来的<br />顺带再问一下,OGG文件的加载又是怎么计算的?我现在加载fg基本没什么问题了，<br />但只要一加上语音就会先卡一下，有时甚至直接死机。而且只要有语音，读档必死。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-12-08 19:13:19</p>
+</div>
+<div class="col-10">
+<p>ogg播放用不成,建议使用mp3和wav格式</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gvc051126</b><br/>
+2010-12-08 19:36:11</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 gvc051126 于 2010-12-8 19:45 编辑 [/i]<br /><br />[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=161427&ptid=14070]12#[/url] [i]白枫[/i] [/b]<br />感谢不厌其烦地指导，我试了mp3格式的，卡机现象没有了，但是读档依然必死 ，但没语音的话就能读取<br />wav不敢试，1万2多的语音转成wav要3，4G了，我的棒子可没这么大<br />难道要我不存档，一次通关吗?<br />另附上我在标题模块里的读档脚本写法，能否帮忙看下是否正确<br />*loadgame<br />savinit(2); <br />drawload(SAV_MODULE);<br />goto(*mc);<br />goto(*end);<br />*mc<br />findinit();<br />drawfind();<br />*end<br />SetGameMode(QUIT_MODULE);</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gvc051126</b><br/>
+2010-12-08 19:51:53</p>
+</div>
+<div class="col-10">
+<p>顺带再说下，我的场景上最多的时候同时有8个136*272的fg，一个480*100的对话框，<br />2个480*360的bg,bgm和voice各一个</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-12-08 20:19:07</p>
+</div>
+<div class="col-10">
+<p>你用的版本太老了，赶紧去下个新版吧，之前的存档也都删了吧</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gvc051126</b><br/>
+2010-12-08 20:41:30</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=161454&ptid=14070]15#[/url] [i]白枫[/i] [/b]<br />我用的是0.72+CG0.6的,主要是这个版本能不用压扁图片,<br />最新的是0.75的吗?和CG0.6兼容吗?</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-12-08 21:09:35</p>
+</div>
+<div class="col-10">
+<p>savinit(2);<br />SetGameMode(QUIT_MODULE);<br />这些指令在0.72以后好像都不存在的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2010-12-08 21:11:52</p>
+</div>
+<div class="col-10">
+<p>你的指令版本太老了<br />savinit(2); <br />drawload(SAV_MODULE);<br />这两句换成<br />drawload();</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kiseeyou</b><br/>
+2010-12-08 21:49:20</p>
+</div>
+<div class="col-10">
+<p>    l叔压力了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gvc051126</b><br/>
+2010-12-08 21:49:49</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=161483&ptid=14070]18#[/url] [i]任天之浪[/i] [/b]<br />感谢大大了,另外有没有新版的指令表啊?我接触AMP没多久,只能学着论坛上的那八个教程做,里面用的都是老指令<br />PS:默默支持新版AMP的开发顺利</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-12-09 07:55:35</p>
+</div>
+<div class="col-10">
+<p>教程会有的。。面包也会有的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gvc051126</b><br/>
+2010-12-09 18:31:24</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=161573&ptid=14070]21#[/url] [i]白枫[/i] [/b]<br />那么能否再回答一个问题,游戏脚本文件的大小和死机有关系吗?<br />我现在在标题读挡没问题,但在游戏过程中读挡必死<br />单独一个游戏脚本大概5.2M</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-12-09 20:14:04</p>
+</div>
+<div class="col-10">
+<p>只要不把内存用光,那脚本载入是不会造成死机的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gvc051126</b><br/>
+2010-12-09 23:06:07</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=161788&ptid=14070]23#[/url] [i]白枫[/i] [/b]<br />感谢回复和指导.那么有没有办法在PC上模拟运行的时候显示内存大小呢?<br />我都已经想放弃加入语音了,只要有语音就是各种死机,没有就能正常运行 <br />(好好一个全程语音的游戏,就注定不能上PSP平台？）</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-12-10 12:02:28</p>
+</div>
+<div class="col-10">
+<p>语音造成的死机可能是格式不对,你用好的工具再转换一次试试,建议不要使用千千静听转换格式</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gvc051126</b><br/>
+2010-12-10 20:06:25</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=161909&ptid=14070]25#[/url] [i]白枫[/i] [/b]<br />感谢回复.先试试看<br />我就是用千千静听转的 ,难道真是这个问题?<br />PS:为什么不能用千千静听转?</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>iamwin</b><br/>
+2010-12-10 21:56:58</p>
+</div>
+<div class="col-10">
+<p>68mb吧</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>轨迹叔</b><br/>
+2010-12-11 10:19:43</p>
+</div>
+<div class="col-10">
+<p>白叔  快去修自行车</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post10272_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

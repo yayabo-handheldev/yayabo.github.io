@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>按教程编译发现错误</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">按教程编译发现错误</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_3.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>绝望的希望</b><br/>
+2010-05-01 18:25:31</p>
+</div>
+<div class="col-10">
+<p>按掌叔的[color=Red]一步一步搭建nds开发平台[/color]帖子弄下来后,在[color=Red]编译一个例子[/color]中第5,6步有问题<br /><br />第5步output窗口内容<br />main.c<br />In file included from E:/devkitPro/PAlib//include/nds/PA9.h:24,<br />   from e:/devkitPro/PAlibExamples/Text/Normal/HelloWorld/source/main.c:3:<br />E:/devkitPro/PAlib//include/nds/arm9/PA_General.h: In function 'PA_CheckLid':<br />E:/devkitPro/PAlib//include/nds/arm9/PA_General.h:302: warning: 'getIPC' is static but used in inline function 'PA_CheckLid' which is not static<br />E:/devkitPro/PAlib//include/nds/arm9/PA_General.h:308: warning: 'getIPC' is static but used in inline function 'PA_CheckLid' which is not static<br />E:/devkitPro/PAlib//include/nds/arm9/PA_General.h: In function 'PA_SetScreenLight':<br />E:/devkitPro/PAlib//include/nds/arm9/PA_General.h:388: warning: 'getIPC' is static but used in inline function 'PA_SetScreenLight' which is not static<br />E:/devkitPro/PAlib//include/nds/arm9/PA_General.h:389: warning: 'getIPC' is static but used in inline function 'PA_SetScreenLight' which is not static<br />E:/devkitPro/PAlib//include/nds/arm9/PA_General.h: In function 'PA_SetLedBlink':<br />E:/devkitPro/PAlib//include/nds/arm9/PA_General.h:405: warning: 'getIPC' is static but used in inline function 'PA_SetLedBlink' which is not static<br />E:/devkitPro/PAlib//include/nds/arm9/PA_General.h:406: warning: 'getIPC' is static but used in inline function 'PA_SetLedBlink' which is not static<br />In file included from E:/devkitPro/PAlib//include/nds/PA9.h:73,<br />                 from e:/devkitPro/PAlibExamples/Text/Normal/HelloWorld/source/main.c:3:<br />E:/devkitPro/PAlib//include/nds/arm9/PA_16c.h: In function 'PA_16c8pixels':<br />E:/devkitPro/PAlib//include/nds/arm9/PA_16c.h:91: warning: 'PA_Plot8Pixels' is static but used in inline function 'PA_16c8pixels' which is not static<br />E:/devkitPro/PAlib//include/nds/arm9/PA_16c.h: In function 'PA_16c8X8Letter':<br />E:/devkitPro/PAlib//include/nds/arm9/PA_16c.h:105: warning: 'PA_16c8X8Color' is static but used in inline function 'PA_16c8X8Letter' which is not static<br />In file included from E:/devkitPro/PAlib//include/nds/PA9.h:73,<br />                 from e:/devkitPro/PAlibExamples/Text/Normal/HelloWorld/source/main.c:3:<br />E:/devkitPro/PAlib//include/nds/arm9/PA_16c.h: In function 'PA_16cLetter':<br />E:/devkitPro/PAlib//include/nds/arm9/PA_16c.h:507: warning: 'PA_16c16X16Letter' is static but used in inline function 'PA_16cLetter' which is not static<br />e:/devkitPro/PAlibExamples/Text/Normal/HelloWorld/source/main.c: In function 'main':<br />e:/devkitPro/PAlibExamples/Text/Normal/HelloWorld/source/main.c:18: error: 'quot' undeclared (first use in this function)<br />e:/devkitPro/PAlibExamples/Text/Normal/HelloWorld/source/main.c:18: error: (Each undeclared identifier is reported only once<br />e:/devkitPro/PAlibExamples/Text/Normal/HelloWorld/source/main.c:18: error: for each function it appears in.)<br />e:/devkitPro/PAlibExamples/Text/Normal/HelloWorld/source/main.c:18: error: expected ')' before ';' token<br />make[1]: *** [main.o] Error 1<br />"make": *** [build] Error 2<br /><br />第6步没有.nds和其他文件,build文件夹中有main.d,大小4806B<br /><br />不知道那里有问题</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>hewenxie</b><br/>
+2010-05-01 20:17:58</p>
+</div>
+<div class="col-10">
+<p>看看你安装的devkitpro的版本, 还有PALib的版本。<br />注意搭配问题 PALib现在兼容好点的搭配是devR21+PA080823</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>绝望的希望</b><br/>
+2010-05-01 22:51:31</p>
+</div>
+<div class="col-10">
+<p>PAlib是070717,devkitPro我貌似是devkitProUpdater-1.5.0把,忘了<br />另外想问下,在WIN 7系统中能用吗,还是只能在XP里? 安装devR21还要设置环境变量吗?Nb的教程里要设置环境变量但掌叔这里没写</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2010-05-14 20:27:51</p>
+</div>
+<div class="col-10">
+<p>Win7里面也是可以用的。只要PALib和devkitPro的版本对的上，能够兼容。<br />环境变量什么的- -我都是编译出错以后找makefile然后看里面引用了哪些...自己写。。。<br />PALib这种麻烦的东西还是扔了吧，libnds是王道。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post2495_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

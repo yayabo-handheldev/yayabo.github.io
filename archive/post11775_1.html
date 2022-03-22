@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>请教一下，安装devkitPro1.5.0 和palib 070717后编译palib的范例报错</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">请教一下，安装devkitPro1.5.0 和palib 070717后编译palib的范例报错</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_12.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>buxiugangluobo</b><br/>
+2011-02-13 20:33:59</p>
+</div>
+<div class="col-10">
+<p>请教一下大家<br /><br />我安装了 devkitPro1.5.0、编译范例成功<br />又安装了 .NET 2.0 和 palib 070717<br />编译 palib 的 helloworld 范例，提示错误如下：<br /><br />> "make" <br />main.c<br />c:/devkitPro/PAlib//include/nds/arm9/PA_16c.h:507:7: warning: 'PA_16c16X16Letter' is static but used in inline function 'PA_16cLetter' which is not static<br />c:/devkitPro/PAlib//include/nds/arm9/PA_16c.h:105:2: warning: 'PA_16c8X8Color' is static but used in inline function 'PA_16c8X8Letter' which is not static<br />c:/devkitPro/PAlib//include/nds/arm9/PA_16c.h:91:2: warning: 'PA_Plot8Pixels' is static but used in inline function 'PA_16c8pixels' which is not static<br />c:/devkitPro/PAlib//include/nds/arm9/PA_General.h:406:2: warning: 'getIPC' is static but used in inline function 'PA_SetLedBlink' which is not static<br />c:/devkitPro/PAlib//include/nds/arm9/PA_General.h:405:2: warning: 'getIPC' is static but used in inline function 'PA_SetLedBlink' which is not static<br />c:/devkitPro/PAlib//include/nds/arm9/PA_General.h:389:2: warning: 'getIPC' is static but used in inline function 'PA_SetScreenLight' which is not static<br />c:/devkitPro/PAlib//include/nds/arm9/PA_General.h:388:2: warning: 'getIPC' is static but used in inline function 'PA_SetScreenLight' which is not static<br />c:/devkitPro/PAlib//include/nds/arm9/PA_General.h:308:9: warning: 'getIPC' is static but used in inline function 'PA_CheckLid' which is not static<br />c:/devkitPro/PAlib//include/nds/arm9/PA_General.h:302:7: warning: 'getIPC' is static but used in inline function 'PA_CheckLid' which is not static<br />arm-eabi-g++ -g -mthumb-interwork -mno-fpu -L/c/devkitPro/PAlib/lib -specs=ds_arm9.specs main.o -Lc:/devkitPro/PAlib//lib -lpa9 -L/c/devkitPro/libnds/lib -lfat -lnds9 -ldswifi9 -o build.elf<br />c:/devkitpro/devkitarm/bin/../lib/gcc/arm-eabi/4.5.1/../../../../arm-eabi/lib/ds_arm9_crt0.o: In function `CIDLoop':<br />(.init+0x1c0): undefined reference to `__libnds_mpu_setup'<br />c:/devkitpro/devkitarm/bin/../lib/gcc/arm-eabi/4.5.1/../../../../arm-eabi/lib/ds_arm9_crt0.o: In function `CIDLoop':<br />(.init+0x210): undefined reference to `initSystem'<br />c:/devkitpro/devkitarm/bin/../lib/gcc/arm-eabi/4.5.1/../../../../arm-eabi/lib/ds_arm9_crt0.o: In function `CIDLoop':<br />(.init+0x21c): undefined reference to `__libnds_exit'<br />collect2: ld returned 1 exit status<br />make[1]: *** [/c/devkitpro/palibexamples/text/normal/helloworld/helloworld.elf] Error 1<br />"make": *** [build] Error 2<br /><br />> Process Exit Code: 2<br />> Time Taken: 00:02<br /><br />请教一下，这是什么原因？盼指教</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>king71036</b><br/>
+2011-02-13 21:20:19</p>
+</div>
+<div class="col-10">
+<p>眼花撩亂～暈～～我放棄解決問題了＠＠</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>buxiugangluobo</b><br/>
+2011-02-13 21:32:54</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 buxiugangluobo 于 2011-2-13 22:02 编辑 [/i]<br /><br />额...在百度一顿翻，说是新版的 devkitPro 和 palib 不兼容<br /><br />用 devkitPro 1.4.4 和 palib070717 工作正常</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2011-02-13 22:31:20</p>
+</div>
+<div class="col-10">
+<p>甚么也不懂的前来围观</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mock828</b><br/>
+2011-02-14 00:05:55</p>
+</div>
+<div class="col-10">
+<p>[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=203136&ptid=16387]3#[/url] [i]buxiugangluobo[/i] [/b]<br /><br />欣赏 LZ 在问题解决後, 也特意把解决方法发上来</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2011-02-14 09:15:14</p>
+</div>
+<div class="col-10">
+<p>本少爷以一个过来人的身份强烈建议把palib踢飞。这种东西对新手有百害而无一利。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>quot</b><br/>
+2011-02-16 17:28:23</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 quot 于 2011-2-16 17:32 编辑 [/i]<br /><br />[attach]20365[/attach]<br />作为一个新人<br />完全同意,<br />装个烂PAlib 浪费我0.5天时间调试,改这改那,新版本的devkitARM还不行,退到R26,再退R21,算了吧!!<br />直接libnds一样编,多看看源代码ok<br />我已完成第一个程序,找到了俺的mac_address</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zerokkqq</b><br/>
+2011-02-16 19:59:13</p>
+</div>
+<div class="col-10">
+<p>[quote]本少爷以一个过来人的身份强烈建议把palib踢飞。这种东西对新手有百害而无一利。 ...<br />[size=2][color=#999999]雷精灵 发表于 2011-2-14 09:15[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=203312&ptid=16387][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />    不是吧 前一段 还特意去下个palib哩。。。话说，雷叔的NDS引擎在哪可以下载到呢？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gechanghan</b><br/>
+2011-02-16 20:10:26</p>
+</div>
+<div class="col-10">
+<p>太。。。太专业了。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>william6849</b><br/>
+2011-02-16 20:41:11</p>
+</div>
+<div class="col-10">
+<p>雷鼠說過PALIB是渣 LIBNDS是S級神器<br />雷精灵(153828448)  21:30:41<br />威廉叔渣解。如果通过devkitupdater安装的话，那么完全无需设置环境变量。安装程序会自动帮乃设置。<br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>o70078</b><br/>
+2011-02-16 23:14:11</p>
+</div>
+<div class="col-10">
+<p>2号问题?我今天也碰到了,在群里问了雷叔,结果被指出一个文件路径错误~</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post11775_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

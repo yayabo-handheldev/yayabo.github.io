@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>请大虾们有空的话 我想请教如何制作游戏开始标题跟CG画廊</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">请大虾们有空的话 我想请教如何制作游戏开始标题跟CG画廊</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_9.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ERIC1007</b><br/>
+2010-09-25 10:40:27</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 ERIC1007 于 2010-9-25 11:48 编辑 [/i]<br /><br />下载了软件 内制的教程 没详细说明如何制作  游戏菜单  跟 怎样添加CG画廊<br />看了一些分享的脚本 还是看不懂 请大侠们有空的话 写下这两个教程 例子<br /><br />我就搞懂了 最基本写剧情 图片头像 音乐<br />我想知道  如果一开始游戏时 就进入游戏菜单的脚本 是怎么写的<br />把某张CG加入 画廊是怎么写的?<br /><br />菜单 我看教程 自己学<br />@ setMenuBg 和 @setMenuBtn<br /><br />我就画了两张图建为  BG1  BTN<br />转换跟打包后叫 BG1.res 跟 BTN1.res  这两个文件扔到 COMPONENT 目录<br /><br />脚本写<br />@setMenuBg(avgFiles/component/bg1.res,bg1); <br />@setMenuBtn(avgFiles/component/btn1.res,btn);<br /><br />运行游戏时 提示加载失败 请问哪里出错了?</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-09-25 15:35:26</p>
+</div>
+<div class="col-10">
+<p>注意大小写</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ERIC1007</b><br/>
+2010-09-25 17:31:39</p>
+</div>
+<div class="col-10">
+<p><br /><br />    我全部是小写的 还是加截失败</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2010-09-25 18:20:07</p>
+</div>
+<div class="col-10">
+<p>咋又是AMDS......</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ljner</b><br/>
+2010-09-25 18:34:06</p>
+</div>
+<div class="col-10">
+<p>开始标题的制作就是放一张cg图，然后自己做几个按钮，至于@setMenuBg和@setMenuBtn这两个指令，则是游戏开始后按start出来的那个菜单相关的设置，这个不能当做开头来制作的。所以说，系统提示的加载失败，应该不是这两项加载失败，而是这两行下面的命令有问题，因为这两项只是设置，并不实际反应在开头画面上。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ERIC1007</b><br/>
+2010-09-27 11:15:10</p>
+</div>
+<div class="col-10">
+<p>    听你这么一说，我基本了解这个原理了，但是下面的脚本不会写...。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ljner</b><br/>
+2010-09-27 13:33:59</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 ljner 于 2010-9-27 13:35 编辑 [/i]<br /><br />    给你个例子吧，下面的是刻痕2DSbegin脚本里面的一部分，对照游戏看下面的例子应该比较好理解。<br />刻痕的脚本可能比较复杂，如果看了还是不好理解的话，可以在AMDS区找秒速5厘米的脚本，对照游戏理解title部分的制作，那个稍微简单点。[code]@res_playBGM(avgFiles/bgm/bgm.res,title.mp3);//加载一个title使用的bgm<br />@fadeout(2,1,2);//来个白屏，像遮片一样的感觉<br />@res_bg(avgFiles/bg/imagedata.res,back0,0);//加载title画面上屏的背景<br />@res_btbg(avgFiles/bg/imagedata.res,back01,0);//加载title画面下屏的背景<br />@fadein(2,1,2);//撤掉白色遮片，这时候屏幕显示出来title画面的上下两个bg啦<br />@LoadImageButton(0,avgFiles/chara/button.res,start,64,27);//加载图片按钮，图需要自己ps出来，这个按钮应该是start<br />@LoadImageButton(1,avgFiles/chara/button.res,load,64,59);//再加载一个读取的按钮，记得应该是load<br />@image_select(choice,2);//这个是图片选项功能，其实也应该算是加载的一个过程吧<br />@if($(choice)==1);//这个是选择load以后的命令了<br />@load();<br />@jump(-5);//这一步跳回加载前的那行，从新加载<br />@endif();<br />@if($(choice)==0);//这里是选择start以后的命令<br />@res_bg(avgFiles/bg/imagedata.res,view1,1);//从新加载一张bg<br />@res_playBGM(avgFiles/bgm/bgm.res,charselection.mp3);//加载新的bgm<br />@var_select(selection,2,　小夜视点|　玄云视点);//再次做2个按钮，这次使用的是默认按钮，而不是自制的图片按钮，所以不用加载图片了，选择小夜视点后自动将selection这个变量赋值为0，而选择玄云视点这个按钮以后会将selection这个按钮赋值为1<br />@if($(selection)==0);//又是if语句，这个是selection为0的话执行的命令<br />@set_value($(selection)=-1);//这里将selection赋回原值<br />@changeText(avgFiles/data/nsafter1.spt);//跳到正式的游戏剧情脚本中<br />@endif();<br />@if($(selection)==1);//这个是selection为1的命令<br />@set_value($(selection)=-1);<br />@changeText(avgFiles/data/xyvstory1.spt);<br />@endif();<br />@endif();//最后这个endif对应的是@if($(choice)==0);这句，不要忘记了[/code]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ERIC1007</b><br/>
+2010-09-29 13:19:05</p>
+</div>
+<div class="col-10">
+<p><br />花了N小时的尝试失败，这原理基本上搞懂，也成功的把这种标题制作做了出来。<br />太谢谢你了。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ljner</b><br/>
+2010-09-29 20:50:19</p>
+</div>
+<div class="col-10">
+<p>    嘛，有什么问题进来超级群找俺、q叔、威廉叔或者小生叔都可以问，u姐也行，俺们几个经常在线的</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post8368_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

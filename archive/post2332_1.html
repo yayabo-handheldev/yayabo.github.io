@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>白枫手把手教你lua编程1(最简单的lua程序)</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">白枫手把手教你lua编程1(最简单的lua程序)</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_3.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-04-25 20:53:09</p>
+</div>
+<div class="col-10">
+<p>前言:<br />学习最忌心浮气躁,如果你真的看不下去了,就不要看,只有坚持到最后的人才能得到自己想要的东西.<br /><br />[color=Red]注[/color]:首先请确保您已经下载了[url=http://www.yayabo.cn/thread-3339-1-1.html][color=Lime]目录帖[/color][/url]里面提供的lua脚本解释器程序.<br /><br />----------------------------------------------------------------------------------<br /><br />[attach]4335[/attach]<br /><br />介绍上图中的文件分别是什么:<br />lua.exe      --  这个是lua脚本解释器,代码的执行就靠它了<br />run.bat      --  这是个批处理,为了让你看到屏幕输出必要<br />script.lua    --  这个就是我们的主脚本文件<br /><br />----------------------------------------------------------------------------------<br /><br />[attach]4334[/attach]<br /><br />我们打开script.lua,来看一下世界知名的程序hello world.<br />代码很简单,只有一句,它的功能是向屏幕打印一句hello world,来看一下实际效果:<br /><br />[attach]4333[/attach]<br /><br />大家只要双击run.bat就可以出现如图的窗口,屏幕中很醒目的打印了hello world字样至于包含lua begin和lua finish字样的两行分割线,则是我专门加入的很普通的分隔符而已,没什么实际意义,大可不用理会,和lua没什么关系,只是为了告诉你程序开始和结束而已下方的按键等待则是run.bat的内容,也是和lua没有半点关系的,我们的代码的主要内容,只有屏幕中显示的hello world字样而已.<br /><br />现在解释一下lua脚本代码的特点:<br />代码以指令和参数的形式书写,print就是指令,"hello world"就是参数,并且参数都被一对括号包围,代码的最后以分号;结束,需要说明的一点是,lua代码的分号;是可有可无的,如果你尝试把代码中的分号去掉,你会发现程序运行以后的输出结果和原来没有任何改变.<br /><br />代码只要写到文件里面就可以被主程序执行,无需编译,实际上在执行那个脚本的时候,lua引擎在内部是进行了编译的,只是我们看不到罢了,但这样的机制对调试来说无疑是很方便的,因为没有其他程序语言那样的需要由编译器编译成机器码才能执行的时间消耗.<br /><br />到这里为止,你已经知道lua的代码是怎么书写的了,请牢记print这个指令,<br />因为在后面的学习中,我们都很依赖它帮我们打印必要的信息.<br /><br />这一节主要带你认识一下提供的lua脚本引擎和lua脚本代码的书写风格,下一节我们讲讲<算法>.</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-04-25 21:12:22</p>
+</div>
+<div class="col-10">
+<p> 白叔来真的？<br /> 俺一定要好好学习~~<br /> 不会忘记党对俺的期望~~、<br /> 不会忘记国家对俺的期望~~、<br /> 不会~~~~~<br /><br /><br /><br /> 来人，拖出去阿鲁巴............</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>沁ぅ純の寳貝</b><br/>
+2010-04-25 21:19:25</p>
+</div>
+<div class="col-10">
+<p>太威武了！！lua党内牛满面</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Reafves</b><br/>
+2010-04-25 21:20:09</p>
+</div>
+<div class="col-10">
+<p>果断前排占位子听讲座</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-04-25 21:22:04</p>
+</div>
+<div class="col-10">
+<p>白叔来真的？<br /> 俺一定要好好学习~~<br /> 不会忘记党对俺的期望~~、<br /> 不会忘记国家对俺的期望~~、<br /> 不会~~~~~<br /><br /><br /><br /> 来人，拖出去阿鲁巴............</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-04-25 21:58:19</p>
+</div>
+<div class="col-10">
+<p>白叔要来真的了~~~难道要搞全民GALGAME化~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>『兔寳貝』</b><br/>
+2010-04-25 21:59:36</p>
+</div>
+<div class="col-10">
+<p><br />有点难.</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pwlsysg</b><br/>
+2010-04-25 22:07:26</p>
+</div>
+<div class="col-10">
+<p>我已经学习到不同的按键能显示预先编好的语句，可惜后面都看不懂了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2010-04-25 22:10:51</p>
+</div>
+<div class="col-10">
+<p>竟然忘了占位了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>huxizhijian</b><br/>
+2010-04-25 22:43:24</p>
+</div>
+<div class="col-10">
+<p>白叔也来这个？前排站位。呵呵，白叔不如讲点C吧，教程国外的看着不太懂。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ast</b><br/>
+2010-04-25 23:23:39</p>
+</div>
+<div class="col-10">
+<p>简单易懂 <br /><br />没有任何难道之其一</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>619414885</b><br/>
+2010-04-26 11:27:21</p>
+</div>
+<div class="col-10">
+<p>学习学习~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-04-26 11:37:11</p>
+</div>
+<div class="col-10">
+<p>lua编程和galgame没有任何关系</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zhy_6666</b><br/>
+2010-04-26 23:45:40</p>
+</div>
+<div class="col-10">
+<p>不用lua的路过。。。<br />这个太麻烦了吧。。。无限接近编程。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ymg545</b><br/>
+2010-04-27 22:06:59</p>
+</div>
+<div class="col-10">
+<p>支持, 希望 BZ 的 lua 教程吸引更多人加入游戏开发行列</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mobo</b><br/>
+2010-05-01 14:41:08</p>
+</div>
+<div class="col-10">
+<p>lua！！！！！！！！！！！！！！！！！！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>aa1144772233</b><br/>
+2010-05-01 18:17:24</p>
+</div>
+<div class="col-10">
+<p>白叔交到哪，学到哪</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>S.L.T</b><br/>
+2010-05-23 16:18:50</p>
+</div>
+<div class="col-10">
+<p>翻到好东西!教程并不难!适合新手!白叔威武!</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>reekin</b><br/>
+2010-08-20 17:19:05</p>
+</div>
+<div class="col-10">
+<p>AMP和LUA不是一回事吧- -...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>无风</b><br/>
+2011-02-07 20:40:51</p>
+</div>
+<div class="col-10">
+<p>咱出问题了 白叔求解……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2011-02-08 23:55:31</p>
+</div>
+<div class="col-10">
+<p>什么问题?</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post2332_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

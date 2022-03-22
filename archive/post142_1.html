@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS自制软件教程-串行设备接口(SPI)</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS自制软件教程-串行设备接口(SPI)</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-17 09:50:34</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]www.nashsu.com[/url]<br /><br />之前在DS卡接口定义中提到了SPI(Serial Peripheral Interface)串行设备接口，但并不知在DS中的作用。这两天研究了一下，将基本功能弄懂了，写下来供大家参考。<br /><br />SPI在DS中有很重要的功能。它是一种基于传行设备协议的总线，在DS中电源控制模块，触摸屏，麦克风和固件都通过SPI控制，可见其重要性了。 SPI是ARM7的一个总线接口，在此总线上可以控制4个设备。DS中用到了3个，电源控制模块，触摸屏/麦克风和固件。触摸屏和麦克风被设计成一个设备（只在总线上）。<br /><br />SPI有一个控制寄存器(SERIAL_CR)和一个数据寄存器 (SERIAL_DATA)，通过对这两个寄存器的设置可完成对SPI总线上设备的控制。它们的地址如下：<br /><br />0×040001C0:16 SERIAL_CR <br />0×040001C2:16 SERIAL_DATA <br /><br />16表示它们是16位寄存器。数据寄存器 (SERIAL_DATA)的16位全部用来保存数据。控制寄存器(SERIAL_CR)中每一位的信息如下：<br /><br />Cpu    Bit       Name             Expl. <br />7       0-1      波特率     0..3=4MHz, 2MHz, 1MHz, 512kHz <br />7         7       忙碌标志   0=Ready, 1=Busy <br />7       8-9       设备      0..3=电源控制, 固件(NVRAM), 触摸屏/<br /><br />麦克风, 禁止（只使用3个） <br />7 10 时钟模式 0=8 clocks, 1=16 clocks <br />7 11 传输模式 0=单比特, 1=连续 <br />7 14 中断控制 0=不允许, 1=允许 <br />7 15 使能 0=不允许, 1=允许 <br /><br />SPI是一个同步时钟协议：每一时钟周期，一比特（BIT）数据传输到从设备（总线上的设备），或从从设备传输到控制器，通常使用同一个物理寄存器，这里是数据寄存器 (SERIAL_DATA)。也就是说与从设备的数据通讯都通过数据寄存器来完成。只有一个数据寄存器，如何来完成3个设备的通讯？这就由控制寄存器来完成了。SPI一次只能控制一个设备，也就是说不可能3个设备同时控制。在控制寄存器中，8-9位是控制设备的选择位，通过对这两位的设置选择所要控制的设备。所只需要一个数据寄存器就行了。<br /><br />时钟模式是控制数据传输的，8 clocks是传输8位数据，有些设备的返回数据为8位，16 clocks则传输16位数据。为了使用方便，我们可以在程序中作如下定义：<br /><br />#define SERIAL_CR (*(vuint16*)0×040001C0)<br />#define SERIAL_DATA (*(vuint16*)0×040001C2)<br /><br />#define SPI_ENABLE (1<<15)<br />#define SPI_IRQ (1<<14)<br />#define SPI_BUSY (1<<7)<br /><br />#define SPI_BAUD_4MHZ (0<<0)<br />#define SPI_BAUD_2MHZ (1<<0)<br />#define SPI_BAUD_1MHZ (2<<0)<br />#define SPI_BAUD_512KHZ (3<<0)<br /><br />#define SPI_BYTE_MODE (0<<10)<br />#define SPI_HWORD_MODE (1<<10)<br /><br />#define SPI_NOT_LAST (1 << 11)<br /><br />#define SPI_DEVICE_POWER (0 << 8)<br />#define SPI_DEVICE_FIRMWARE (1 << 8)<br />#define SPI_DEVICE_TOUCH (2 << 8)<br /><br />这样在编程时就方便多了。<br />这就是DS的SPI，以上只是讲解了SPI，具体功能的使用方法将在以后<br /><br />单独写出来，希望大家多多关注。<br /><br />如有疏漏错误之处，还望大家多多指教更正！</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post142_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

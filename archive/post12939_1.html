@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[翻译]如何使用Visual Studio的Debugger调试NDS自制软件</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[翻译]如何使用Visual Studio的Debugger调试NDS自制软件</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_13.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2011-05-10 00:01:05</p>
+</div>
+<div class="col-10">
+<p>如何使用Visual Studio的Debugger调试NDS自制软件<br />原作：Video Game Coding论坛的Antonio Maiorano<br />翻译&萌化：雷精灵<br /><br />我致力于自制软件《塞尔达DS》的开发已经超过一年了，积累了一些使用devkitPro提供的自制软件开发工具的经验。不过，随着项目的增长，我很快开始怀念使用源码级调试器帮助调试修正代码问题的日子。其实，devkitPro自带一个调试器，名叫Insight，是devkitPro的一部分，可以随着devkitPro捆绑下载。但是，这狗屁东西相当苛刻，而且远不如另一个深入人心的强大的调试器好使——那就是Microsoft Visual Studio Debugger。<br />嘛，好消息就是，经过相当的研究和验证，我发现其实调试NDS自制软件也可以使用Visual Studio Debugger！我决定把方法分享出来，于是这篇教程就诞生了。<br />需求：<br />你必须已经安装好如下软件：<br />Visual Studio：完整版，非Express版。我使用的是VS2008，不过2005和2010应该也没问题。为啥不能使用Express版本呢？因为它不支持插件。而没有插件，就无法满足下一个条件。<br />WinGDB：这是个好物！这插件可以让你通过Visual Studio的gdb调试gcc编译器编译的应用程序。不过可惜的是这狗屁东西不是免费的！你要么去寻找破解补丁，要么使用30天试用版。幸好试用版只有使用时间限制，没有功能限制。<br />DeSmuME模拟器：这是DS的开源模拟器，支持gdb调试ROM。这款模拟器的完成度相当高，而且完全免费。<br />安装设置：<br />Visual Studio Makefile工程<br />第一步是创建一个Visual Studio的Makefile工程。工程会自动帮你创建NDS自制软件的makefile，如果你打算用VS当成IDE的话，也可以顺便在VS里面建立工程目录结构，添加源文件。这里有个非常好的教程可以手把手教你把VS当成DS自制软件的IDE：http://www.console-dev.de/2009/09/03/create-nintendo-ds-applications-...<br />唯一的区别就是在我的设置里面，不用NO ROM，那么你就可以继续下一个步骤了。<br />编译Debug版本<br />为了能够调试NDS自制软件，在编译代码的时候，必须要编译成为Debug版本。devkitPro的模板没有开启Debug版本，一旦编译就直接成为Final ROM版本。之所以这么做，是因为开启Debug版本之后，ROM的运行速度会下降，ROM体积也会变大。<br />如何开启Debug版本呢？只需要禁止gcc编译器优化代码就可以了。具体方法如下：<br />在makefile中搜索如下字符串：<br />CFLAGS := -g -Wall -O2 <br />-fomit-frame-pointer <br />-ffast-math  <br />$(ARCH)<br />你需要把 -O2 去掉，或者改成 -O0 也行。（注意！大写字母O和数字0的区别！O代表Optimization）另外，我个人建议把 -fomit-frame-pointer 和 -ffast-math 也去掉。这样做会避免在单步调试代码的时候出现一些很诡异的行为。不过有些时候这样做反而会出问题，总之自己看着办！一旦修改好makefile之后，一定要重新build一次工程，注意不要用Incremental Build，因为当源代码没有修改过的话，Incremental Build是不会真正build的。实在不保险就先Clean工程再Build工程。<br />你或许也注意到了，每次Debug好之后，需要生成Final ROM版本，就需要修改makefile，重新开启gcc编译器的代码优化，显然有点麻烦。最好的方法是通过宏开关，控制makefile行为。甚至可以控制输出ROM的路径，使得Debug版本和Final ROM版本同时输出到不同的文件夹。（顺便一提，老任官方的SDK，就是这么干的……）以后如过我闲得蛋疼，我会把具体方法贴出来。<br />WinGDB安装配置<br />假设你已经正确安装好Visual Studio和WinGDB了。这个时候你应该能够在Visual Studio的菜单上看到WinGDB的菜单项：<br />选择WinGDB - Preference - General选项卡，你唯一需要设置的选项就是默认Debugger的路径。设置这个路径为devkitPro中arm-eabi-gdb.exe的路径，即“X:devkitProdevkitARMarm-eabi=gdb.exe”，其中那个X为你的devkitPro的安装盘符。然后点确定。<br />下面我们需要针对WinGDB设置项目属性。在Solution Explorer中的当前项目上单击右键，选择WinGDB - Properties，此时出现几个选项卡。<br />首先是General选项卡，Target type：Embedded Linux system(gdbserver)。<br />然后Debug选项卡，Exeutable path：这个路径必须选择arm9.elf的路径。这个arm9.elf，是在build的过程中产生出来的可执行文件，其中包含了代码、数据、还有ARM9的debug信息。正是这些debug信息，才使得我们调试成为可能。注意：如果你使用devkitPro的ARM9工程模板，那么在编译的过程中会build出一个“工程名.elf”，这就是ARM9的elf了。而在使用ARM9+ARM7联合模板的时候，会build出两个elf，一个名叫“工程名.arm9.elf”，另一个自然就是“工程名.arm7.elf”。这个时候选择前者就可以了。<br />接着是Stop in main()。没错，这个功能挺好用，不过，用不用随你便。<br />再然后是Byte order。自然选择Little Endian。<br />最后是Target选项卡，设置Targetspecification to：Remote localhost:20000。<br />这个值是啥意思呢？远程gdb stub会通过本地端口20000进行监听DeSmuME。<br />然后点击确定保存设置。顺便一说，这些参数会被保存到工程的.suo文件中。<br />调试<br />现在可以调试ROM了！<br />第一步是通过指定的命令行启动Dev版本的DeSmuME。命令如下：<br />c:emusdesmumeDeSmuME_dev.exe --arm9gdb=20000 C:codingeldaDSeldaDS_d.nds<br />路径不解释。注意命令行参数--arm9gdb=20000。<br />需要格外注意的地方：<br />首先，必须使用desmume_dev.exe。<br />这个例子中是通过gdb调试ARM9。同样的方法我们也可以调试ARM7。命令行使用--arm7gdb=20000，然后在WinGDB中选择arm7.elf即可。<br />至于那个端口号20000，你可以随便设置，只要模拟器和WinGDB中保持一致即可。<br />当一切都弄好之后，模拟器就开始运行了。此时会打开控制台窗口，并且显示ROM成功载入，但是ROM不会运行，而是等待连接gdb。<br />通过WinGDB启动Visual Studio Debugger<br />Visual Studio载入工程，菜单，WinGDB - Start Debugging。如果一切正常，那么Visual Studio会自动进入调试模式。<br />然后，一切，全都，清净了。<br />断点、条件、跟踪……<br />鼠标悬浮在变量上实时查看变量值……<br />使用变量窗口、监视窗口、内存窗口、线程窗口……<br />反汇编查看器实时查看反汇编过的代码……<br />实时断点……（顺便一说，我从没在别的debugger上成功使用过这个功能，包括Insight和eclipse。泪目……）<br />结语<br />艹，比想象中的要长。但愿这篇教程能够令你的NDS自制软件开发之路更好走一些。如果你有什么疑问，不论是关于这篇教程还是NDS开发，不要犹豫，尽管问吧。<br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>flamesmile</b><br/>
+2011-05-10 00:05:20</p>
+</div>
+<div class="col-10">
+<p>雷叔威武啊，迅速膜拜增加经验值<br />话说“翻译&萌化”......居然萌化了么........</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>悸樱奏</b><br/>
+2011-05-10 00:11:05</p>
+</div>
+<div class="col-10">
+<p>雷叔V5膜拜雷叔~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>boy545003571</b><br/>
+2011-05-10 06:11:39</p>
+</div>
+<div class="col-10">
+<p>雷叔辛苦了，果然还是汉字看起来要亲切得多</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>甲虫飞</b><br/>
+2011-05-10 08:24:22</p>
+</div>
+<div class="col-10">
+<p>汉化塞高~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2011-05-10 08:39:17</p>
+</div>
+<div class="col-10">
+<p>这个得收藏，雷叔的英语几级？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>710895609</b><br/>
+2011-05-10 08:44:31</p>
+</div>
+<div class="col-10">
+<p>雷叔太强大了！膜拜了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>quot</b><br/>
+2011-05-10 08:51:57</p>
+</div>
+<div class="col-10">
+<p>惭愧，偶在搞破解时才会用Debugger.</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yht19921212</b><br/>
+2011-05-10 11:53:08</p>
+</div>
+<div class="col-10">
+<p>自制软件啊，不太懂</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>naclchen</b><br/>
+2011-06-08 22:19:48</p>
+</div>
+<div class="col-10">
+<p>恩恩<br />试了一下果然好使<br /><br />不过我的VS2008在建立工程的时候可以选择为devikitPro建立项目<br />所以就免去了 把VS当成DS自制软件的IDE 的过程<br /></p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post12939_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

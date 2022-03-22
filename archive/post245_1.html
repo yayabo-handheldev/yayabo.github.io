@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>FBA4PSP,街机模拟器,PSP1000/2000通用</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">FBA4PSP,街机模拟器,PSP1000/2000通用</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-03 16:53:09</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]www.pspchina.net[/url]<br />作者：lbicelyne<br />lbicelyne本软件修改自大神OopsWare的FBAPSP源码, 修改了ROM cache算法,使得PSP1000这种小内存设备可以工作。<br />本程序目前针对PGM基板, seta2, Cave部分进行了优化。<br />该程序在3.71M33-4，2G假棒下测试通过。已知作者本人的8G伪棒不能运行(制作和读取缓存文件有错误),当然也可能是个体问题.<br />第一次使用时由于要制作缓存文件，需要时间比较久，请耐心等待．各位如果发现有什么明显Bug请回帖告知，不胜感激。<br />安装方法：<br />请下载带游戏ROM的版本，用附件中的EBOOT.PBP覆盖同名文件即可。<br />All: 全驱动版。<br />Mid = All - CPS3 - CPS2 - CPS1 - NEOGEO - Sega (System16/18...)<br />Small = Mid - PGM - Cave<br />PGM: Only for PGM/IGS games.<br />Cave: Only for Cave games.<br />CPS3: CPS1, CPS2 and CPS3 NO CD games. sfiii2 drivers are removed.<br />FBA4PSP.zip 模拟器运行所需环境文件。<br />FBA4PSP的源代码已经发布到[url]http://fba4psp.sourceforge.net[/url] 欢迎有兴趣的朋友参加进来功能开发完善这个模拟器。<br />FBA里面很多驱动都已经非常老旧，大部分都存在各种各样的问题，需要更新一下。由于FBA源自Mame，驱动的移植相对比较容易。只是这是一个相当浩大的工程。我个人精力还是很有限的，想更多地放在模拟器运行效率方面。如果有朋友有兴趣，麻烦更新一下这些驱动。只有大家共同来完善FBA，才有可能做出一个比较完美的模拟器。谢谢。<br />Source of FBA4PSP has been published at [url]http://fba4psp.sourceforge.net.[/url] Welcome joining this project if. Many FBA game drivers are very old.they have some kinds of issues. FBA's driver is nearly the same toMame. So if you have interests, please help update the issue driversand public your new release. I will integrate it into official version.Thank you for your help! I will forcus on improving FBA4PSP'sefficiency.<br /><br />测试发现部分(或全部)CPS游戏在Wifi的P2P模式下会黑屏（死循环）。原因未知。如果遇到这种问题，还是用Host Client模式吧。<br />另外，使用Wifi进行游戏之前，需要确保所有PSP网络设置里面Adhoc项的频道是一致的，否则无法联机。<br /><br />Update:<br />090123:preV12p3_kov2_DEMO2放出<br />大的问题基本上都解决了，可以正常游戏了<br />Working now<br />已知问题：<br />还不支持存盘<br />Game saving is not supported<br />使用方法：<br />Usage:<br />1. 目前只支持kov2.zip和kov2106.zip<br />It only supports kov2.zip and kov2106.zip<br />2. 如果zip包里有sango2.rom文件，必须改名为kov2_v100_hongkong.asic<br />If there is sango2.rom in your zip file, please rename to kov2_v100_hongkong.asic<br /><br />暂时不打算做存盘功能了。<br />Saving state function will not be implemented recently.<br /><br />预祝广大网友新春快乐!<br /><br /><br />081225:V12p2版(圣诞特别版)放出<br />1. 菜单界面美化，调整位置，顺序，增加了背景图等。请下载更新过的FBA4PSP.rar文件，里面有配套的圣诞背景图<br />2. 增加游戏截图，存档截图以及预览功能。<br />3.  支持游戏画面横向纵向无级缩放。<br />4. L和R键可以前后翻页<br /><br />081208:V12p1版放出<br />1. 修正V12版本玩带Qsound的cps游戏黑屏的问题<br />2. 增加去除单声道游戏背景噪音功能，比如wildfang, stratof, gunsmoke等等。在游戏同名的ini文件中增加 monoSound 0x1<br />3. cps3版本修改为cps123, 在PSP1000上提供对cps游戏的支持。<br /><br />081127:V12版放出<br />主要就是增加联机功能。<br />1.打开无线网卡开关，Wifi Game在所有主机上选择P2p模式，不同主机最好选择不同的Controller。<br />2.每个机选择同一个游戏进入。如果是p2p模式半路进入的可以选择选择Sync Game(在Reset Game上按左右键)一次或几次以同步游戏。<br /><br /><br />081102:V11p3版放出<br />1. 增加全局按键配置功能，请参看FBA4PSP.rar附件中的fba4psp.ini文件。<br />2. 更新部分驱动至FBA最新版本，有些游戏可以运行的更好了，也增加了几个驱动(未测试)。<br />3. Save/Load bug修复。现在可以在大部分游戏里面随时存盘读盘了。<br />4. 一些细微改动。<br /><br />081026:V11p1版放出<br />1.版本组织变更。<br />All: 全驱动版。<br />Mid = All - CPS3 - CPS2 - CPS1 - NEOGEO - Sega (System16/18...)<br />Small = Mid - PGM - Cave<br />PGM: Only for PGM/IGS games.<br />Cave: Only for Cave games.<br />CPS3: Only for CPS3 NO CD games. sfiii2 drivers are removed.<br />FBA4PSP.zip 模拟器运行所需环境文件。<br />建议PSP1000的用户建立多个文件夹分别放置Small及其以下多个版本的模拟器,比如FBA4PSP_PGM, FBA4PSP_CAVE等。<br />2. 新增按键自定义功能, 请参照sfiii3n.ini的设置例子. (祥见FBA4PSP.zip中的Readme文件)<br />3. CPS3性能提升。但是——还是很慢：）大概20fps左右。CPS3独立版本可以在PSP1000上正常运行。只支持No CD版本的ROM.就是Rom名后面带n的，比如sfiii3n<br />4. 按键扫描频率提升，auto fire算法变更。<br />5. 支持关闭摇杆。<br />6. 修正快速运动时画面不同步问题<br />7. 新增一些驱动，支持更多游戏(比如小飞侠和忍者神龟在small以上版本得到有限支持)<br />8.修改C68K内存读取部分，希望能提高兼容性，但是会影响一点点性能．如果兼容性没有提升，下个版本会把它改回来。<br /><br />081021:V10p2版放出<br />1. 修正铁甲万能侠死机问题<br />2. 应网友要求尝试，按键扫描速率比V10p1有所提升<br />3. 非全屏方式下留黑边（花边太费事了)，无缩放方式居中画面．<br />4. 其他一些细微调整<br /><br />081018: V10版放出<br />1. 驱动的增加导致剩余内存急剧减小，打算分成PSP2000和PSP1000两个版本来开发，后者将去除CPS, CPS2, CPS3, NEOGEO驱动以节约内存。<br />2. 简单看了一下uo版本中CPS3的驱动, 仅Ram部分就要占用10M左右内存, 而PSP1000上用户空间可用内存不到20M. 移植起来确实有点难度。如果可行的话打算针对CPS3单独做一个版本，后续推出。<br />3. 增加1P-4P按键映射切换功能。<br />4. 显示模式增加一种无缩放模式。<br />5. 集成UO版本新增驱动<br />6. 跳帧算法变更，增加跳帧级别并控制游戏速度<=60FPS<br />7. 部分按键变更。原R键功能调整至L键。返回主菜单改为R+Select。增加按键auto fire模式（按住R键及相应按键即可)<br />8. 修正休眠恢复后无法继续正常工作的Bug.<br />9. 实现Reset功能<br />10. 实现Load/Save功能, 每个游戏10个存档 (部分游戏必须选人开始游戏后才能进行存档读档，原因未知。不打算修复了)<br />注：存档功能不十分稳定，请在进游戏后多等一段时间再读档以增加成功率。如遇到不可恢复的错误按住开关4秒可直接关机。<br />PSP2000版本未经测试。如有问题请跟贴回复，谢谢。<br /><br />Especially thanks to the author of UO version.<br /><br />081005: V9p1版放出<br />解决DEMO3.x PGM精灵优化部分代码BUG, PGM游戏性能有所提升。<br />由于代码的增加导致内存不足，部分游戏在PSP1000上无法制作Cache，特编译了一个不带NEOGEO驱动的版本给PSP1000的朋友使用。<br />由于时间不多，因此只测试了几个PGM游戏，工作正常。<br /><br />080919: DEMO_3.x版放出<br />Work around PGM花屏问题<br /><br />网友反映PSP2000上投币司机，在PSP1000上没有发现。麻烦2000的朋友再帮忙测试一下3.1和3.2<br />3.1 版去除调试信息<br />3.2 版保留调试信息（修正Free Mem显示)，限制可用内存为32M<br />出门在外，实在没时间写太多。放个版本给喜欢的朋友尝尝鲜，等回去以后再合并起来<br />如果发现什么新问题请告知。谢谢。<br /><br /><br />080914: V9版放出<br />首先，祝大家中秋快乐！<br />1. 主要是修改Cache部分的算法，使用预分配方式，尽量避免动态分配内存，提升程序健壮性。不会支持更多游戏。(已经支持malloc和free功能，但是没有启用,没时间测试了)<br />2. 加入蓝屏功能，以后会支持更多调试信息。<br /><br />Demo_with_bug版本 (一般用户请不要使用)<br />性能演示版本，PGM提升明显。不过还不能正常游戏<br />1. PGM精灵部分Cache算法优化。有明显性能提高，但是算法里有Bug，在V9里面已经注释掉了。有兴趣的朋友可以帮忙修正一下。<br /><br />-----------------------------------------------------------------------------------------------------<br />080909: V8p5版放出<br />1. 又增加4种旋转模式，解决那些画面倒过来的游戏。<br />2. 继续修正guwange, 没怎么测试,请大家反馈一下情况。别忘记删除原同名Cache再运行<br />-----------------------------------------------------------------------------------------------------<br />080909: V8p4版放出<br />1. 增加多种屏显模式，提供旋转功能。大家可以横着打了.<br /><br />-----------------------------------------------------------------------------------------------------<br />080906: V8p2版放出 (小修正，用V8没问题的朋友不用更新了)<br />1. 打开PGM声音模拟，支持西游记，三国战记。性能下降很明显，只能做到勉强能用，用不用这个版本各位自行斟酌吧。看来只有利用起媒体引擎才能完全解决这个问题了。需要比较长时间来解决，呵呵。<br />2. 游戏guwange可玩，请删除原同名Cache文件再运行。<br />已知问题引用:<br /><br />    大侠 v8p1和v8p2有一个共同的问题！<br />    那就是按L键返回再进另一个游戏有时进不去！(按O键无反应，只是记忆棒红灯闪一下)<br />    希望大侠解决下！<br />    ……<br /><br /><br />前面的问题是因为系统函数malloc/free会丢失内存引发的。暂时没有好的解决方案。建议换游戏时退出模拟器重新进入。<br />V9版的重构可能会带来一定好处<br /><br />-----------------------------------------------------------------------------------------------------<br />080902: V8p1版放出 (小修正，用V8没问题的朋友不用更新了)<br />1. 修补几处小问题, 希望能更稳定一点。<br />2. 修正guwange的内存映射。有PSP2000的朋友试试，如果正常，做个Cache出来给Psp1000的朋友用。<br />3. 移除了CPS3和NEOGEO的驱动，节省了几百KB内存<br />-----------------------------------------------------------------------------------------------------<br />080831: V8版放出<br />1. 新增Cave基板支持。已知问题：<br />         plegend精灵显示不全(可能是Rom问题，PC上也是如此)<br />         sailormn花屏+死机<br />         guwange PSP1000做不出Cache. 麻烦有PSP2000的朋友帮忙测试一下<br />其它Cave游戏没有完全测试，有不能用的请跟贴回。谢谢。<br />2. 剩余内存限制在256KB以上。部分游戏性能可能会受影响。<br /><br />这两天Cave改得很辛苦，不像PGM是通用的，Cave是每个游戏一个文件的修改，真的是体力活啊....<br />打算先休息几天，源代码发给OopsWare大大做整合。下一个目标是提升FBA的性能。<br /><br />-----------------------------------------------------------------------------------------------------<br />080830: preV8_Demo<br />请注意这个版本只是技术Demo版本，Bug很多，一般用户请不要下载使用<br />V8主要针对Cave基板进行优化, 同时对内存使用进行了一定的限制，期望可以提高稳定性，但是多少会影响一些性能．<br />目前已知问题：绝大部分Cave游戏不能正常运行，可以进游戏，但是会出现贴图错误。个别游戏不能进入(Driver部分没有修改完成)<br />原因：目前为Demo版本，一方面精灵绘制不够严格，另一方面Rom缓存的制作存在Bug.<br />放这个版本只是为了给大家吃个定心丸，正式版本之后很快就会放出(最快要明天了)。<br />-----------------------------------------------------------------------------------------------------<br />080829: 各位,非常抱歉,没能如约放出V8版本。<br />变身忍者可以进入游戏，但是没有人物，与原版在PSP2000上碰到的问题一样。<br />目前发现RamSpr里的数值有问题(为0？)，导致pdwgfx函数所需参数无效，画不出精灵来。问题比较诡异，还要向OopsWare大大请教一下。<br /><br />-----------------------------------------------------------------------------------------------------<br />080827: V7p1版以及V7B版放出:<br />1. 修正seta2模拟的几个小bug，增加支持两个游戏pzlbowl和mj4simai(暂时没有键盘支持)<br />2. 调整PGM内存部分(好像效果不明显)<br />3. 加入几个DIP配置文件，三国和西游记支持中文了<br /><br />-----------------------------------------------------------------------------------------------------<br /><br />080826: V7版放出:<br />1. Cache算法优化。有朋友反映V6版不如V5版速度稳定。这个是重写代码引起的。代码总是要经过不断优化的。就好像V5用的代码是延续自V3的。V3的代码是基于V1的。V1的速度大家都印象深刻吧？程序要不断重构，优化，性能提升还是很可观的。<br />2. 支持Seta2基板。可以跑电精2了。没有测seta2其他游戏，可能存在Bug, 不能用大家请反馈<br />3. R键=A+B+C<br />-----------------------------------------------------------------------------------------------------<br />080823: V6版放出<br />1. 增加内存Cache索引，可以正常玩V119Plus的三国战记了。至此，能玩的PGM游戏应该与PSP2000完全一致了(不包括其他基板)。<br />凡是以前出现不断读盘1fps的PGM/IGS游戏现在应该都可以正常运行了，麻烦大家测试一下。<br />2. 增加游戏速度选项,2档可调。<br />3. 增加摇杆支持。<br />-----------------------------------------------------------------------------------------------------<br />080823: V5版放出 (V5B是应版友要求，增加了画面旋转的版本，不打算继续支持和更新)<br />1. 关闭FPS显示。(不要去关心那个数字，你可能会玩得更愉快)<br />2. 跳帧算法优化。<br />3. 修正少数场景出现画屏的Bug。当然，如果Rom本身有问题就无能为力了。<br />4. 增加缓存文件大小检查。<br />-----------------------------------------------------------------------------------------------------<br />080822: V4版放出<br />1. 打开跳帧，游戏更流畅了。<br />2. 代码继续优化。<br />-----------------------------------------------------------------------------------------------------<br />080821: V3版放出<br />改进如下:<br />基本上可玩了，如果没有明显Bug短时间内就不升级了。优化的余地已经不大了。<br />1. 摒弃Libc,直接调用sceIoRead()；效果出乎想象~~~~~<br />没想到Libc效率这么低....<br />-----------------------------------------------------------------------------------------------------<br />080820: V2版放出<br />改进如下:<br />1. 修正缓存方案, 大幅提升性能。<br />2. 改进预读取方案, 减少三国选人后的等待时间(效果不太明显)。<br />3. 画图和Cache部分大量使用inline函数和共享变量, 有少许性能提升。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post245_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

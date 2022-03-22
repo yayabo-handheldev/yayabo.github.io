@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>用 lua 调用 Windows 的 API</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">用 lua 调用 Windows 的 API</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-15 08:37:14</p>
+</div>
+<div class="col-10">
+<p>摘自：云风的 BLOG<br /><br />昨天同事谈起能否给一个从 lua 中调用 Windows API 的简单方案。一开始觉得，如果是一个通用方案，那么至少需要先给出一个类似 windows.h 的原型声明，然后从 lua 来解析这些原型。大约写了几十行程序就实现了。后来又想了一下，似乎可以用一个更简单的方式，绕过原型，更简洁（但不保证安全）的方法来做到。<br /><br />其间的问题就只有一个，每个 api 的参数都不一样，如何自动生成 C 中匹配的函数指针。似乎 C++ 的 template 是一个正统的解决方案。不过思考过几分钟以后，就被我否决了。实际用到的解决方案比较诡异：<br /><br />先用 alloca 分配出正确的参数空间，再立刻填充这些参数，接下来以无参数的形式调用 api 。这样做，对于 __stdcall 的函数是没有问题的。好在 api 大多也是这样。<br /><br />我写了这样一段程序来验证我的想法：<br /><br />#include <stdio.h><br />#include <malloc.h><br />#include <assert.h><br /><br />typedef void (__stdcall *func_call)();<br /><br />void __stdcall foo(int a,int b)<br />{<br />    printf("%d,%d<br />",a,b);<br />}<br /><br />void check(void *arg)<br />{<br />    assert((void**)arg-&arg==1);<br />}<br /><br />void test()<br />{<br />    int *arg=(int*)_alloca(2*sizeof(int));<br />    arg[0]=1;<br />    arg[1]=2;<br />    check(arg);<br />    ((func_call)foo)();<br />}<br /><br /><br />void main()<br />{<br />    test();<br />}<br /><br />这个方法唯一的漏洞，可能存在于 _alloca 并不能正确的分配出需要的空间。因为由于某些（对齐？）因素，我们不能保证分配出来的空间正好符合后面的函数调用需要的位置。个人感觉，这个问题在大多数编译器上不会出现。不过安全起见，我写了个 check 函数运行时检查。<br /><br />用这个程序验证无误后，就写了个简单的 lua 扩展。使用起来大约是这样的：<br /><br />opendll = require("api.opendll")<br /><br />getprocaddress =require("api.procaddress")<br /><br />user32=opendll("user32.dll")<br /><br />MessageBox=getprocaddress(user32,"MessageBoxA")<br /><br />MessageBox(nil,"hello","test",0)<br /><br />有点意思 :) 另外我还测试了 FindWindow ， ShowWindow 等，都工作的很正常。<br /><br />这个方案初步解决了 dll 中 api 的调用问题，但还并不实用。比如我们需要写一套 dll 管理模块（直接用 lua 完成即可）。更重要的是需要解决 api 调用中无处不在的 C struct 的传递问题。这个问题又分两类，一类是作为输入参数的 struct ，一类是作为输出参数的 struct 如 (GetWindowRect) 。我们可以用 lua 的 table 去模拟 struct 。作为输入参数做 lua table 到 c struct 的转换；而作为输出参数则做 c struct 到 lua table 的回转。或者干脆用 userdata 直接映射 struct ，再用 metable 去读写之。<br /><br />另一个需要解决的问题是，有些 api 为了返回多个参数，以传入指针的形式接收返回值。lua 里是没有指针的概念的。简单的解决方法是统一用 struct 的方式解决，把单一指针看成是一个只有一个成员的 struct 指针。<br /><br />因为做这个东西纯属娱乐，目前项目中并不会用到，所以我也就没有继续深入下去了。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1060_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

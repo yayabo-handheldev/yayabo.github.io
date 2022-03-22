@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>zognc-完全免费的NDS计算器(2010.6.8更新到0.18）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">zognc-完全免费的NDS计算器(2010.6.8更新到0.18）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gbayp</b><br/>
+2009-09-11 17:57:40</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 gbayp 于 2010-6-8 13:55 编辑 [/i]<br /><br />作者zogna<br />此版本为：2010.06.08日发布0.18版<br />[size=5][b]支持表达式计算 位运算 分形生成 曲线几何[/b][/size]<br />[color=red]zognc项目地址以及最新版本更新地址：[/color]<br />[url=http://code.google.com/p/zognc/][color=red]http://code.google.com/p/zognc/[/color][/url]<br /><br />如果您对此软件有任何建议，或BUG，欢迎邮箱联系。邮箱见软件的初始化界面。<br />此软件永久免费。<br />======================================<br /><br />[size=7][url=http://code.google.com/p/zognc/downloads/list]点我下载[/url][/size]<br />[img]http://i45.tinypic.com/icr4eo.jpg[/img]<br />[img]http://i36.tinypic.com/2qjk8wm.png[/img]<br />[img]http://i35.tinypic.com/2ibdonn.png[/img]<br />[img]http://i37.tinypic.com/29gkis0.png[/img]<br /><br />++++++++++++++++++++++++++++++++++++++++++++++<br />7-(8+3)/(4-9)-2=7.2[通用写法]<br />n!3-3.2+f5.4*(sin60-cos45)-(4.5/(pi-e)+1/x3*log7+ln3))=-10.06898[ZOGNC写法]<br />sin(10+10+(10+10)+(10+10))=0.866025404 [ZOGNC写法]<br />1/xn!3+sin((asinsin30+acoscos10)+(atantan10+log(10^10)))+lnpi=2.177422[ZOGNC写法]<br />lnpi*(sqrt8+sin(10.3+10.5+9.2)+2)+3=9.099610<br />++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ <br /><br />[color=darkgreen]1.支持+ - * / ^ % ( )优先级[/color]<br /><br />[color=darkgreen]2.支持sin cos tan :  写法为 sin60（ 60为角度，输入为角度）[/color]<br /><br />[color=darkgreen]3.支持asin acos atan 写法为 asin0.5 [/color]<br /><br />[color=darkgreen]4.支持exp sqrt log ln 写法为ln2[/color]<br /><br />[color=darkgreen]5.支持负数， 标志为f， 写法为 f5.0， 即为 -5.0[/color]<br /><br />[color=darkgreen]6.支持直接输入字符代替数字pi,e .（pi=3.14159  e=2.7182..）写法为 pi+6.0[/color]<br /><br />[color=darkgreen]7.支持 a^b  A的B次方和a%b 取模 ， ^和%的优先级与*/同级，从左到右计算 [/color]<br /><br />[color=darkgreen]8. 最多输入760个符号(满屏)[/color]<br /><br />[color=darkgreen]9.最多输入120个数值，一个数值最大为10的120次方的值 [/color]<br />[color=darkgreen]10.最多支持小数点后面6位数。小数点前250位数字，即10的250次方的值。[/color]<br /><br />[color=darkgreen]11.BACKSPACE键只能退格当前行。之前（上一行）的输入无法修改。若强制点击退格后输入。输入的数据无法正常显示，不过结果正确。[/color]<br /><br />[color=darkgreen]12.支持位运算[/color]<br />[color=red]=============操作清单============[/color]<br />上：加<br />下：减<br />左：乘<br />右：除<br />Y：（<br />A：）<br />B：删除一个字符<br />X：确定，等于<br />===================<br /><br />[color=red]触摸屏[/color]<br />[color=red]========函数列表===[/color]<br />函数使用为 fun NUM <br />即先按函数键再按数字键<br />比如 sin60 输入方法为 按下SIN键，再按60<br />比如 6! 输入方法为 按下n!键，再按6<br /><br />以下的N为数字<br /><br />EXP:以e为底的N次方<br />根号：开平方根<br />n!:N的阶乘 （例n!5.4=5.4!）<br />ln：log以e为底<br />1/x：X的倒数（例|/x5.4=1/5.4）<br />log：log以10为底<br />sin：输入为角度 <br />asin：输出为角度<br />cos：输入为角度 <br />acos：输出为角度<br />tan：输入为角度 <br />atan：输出为角度<br /><br />+/-：代表跟随其后的数字为负数（在显示中用fNUM表示f5.4=-5.4）<br />（不可以用减号代表负数！！）<br /><br />[color=red]=====================[/color]<br />[color=red]=====运算键==========[/color]<br />输入方法应该为 NUM 运算符 NUM<br />比如 1+2 输入方法为 按下1键，再按+,再按2键<br /><br />X^Y:X的Y次方<br />mod: A%B,A取B的余数<br />+-*/：加减乘除 <br />.：小数点<br />[color=red]=====================[/color]<br />[color=red]=====替换键==========[/color]<br />pi：代表数字3.141592<br />e：代表自然对数2.718281<br />[color=red]=====其他功能键=====[/color]<br />=：确定，等于号<br />C：清屏<br />backspace：退格<br /><br />（注意退格键仅限删除当前输入行的符号，上一行的若强制删除，会出现显示错误，不过运算结果依然正确）<br />[color=red]=====================[/color]<br />[color=Red]=此为 位运算 手册=[/color]<br />[color=Red]==支持与限制==[/color]<br />1.最多输入760个符号(满屏) <br />2.最多输入120个数值<br />3.每个数值，十六进制最多输入8位（xFFFFFFFF）,二进制最多输入32位，超过的会被当做8位或32位从最后几位截取！<br />4.计算时注意语法优先级，如果不清楚优先级最好用括号区别开。<br />5.默认无进制标志的数字为十进制<br />6.计算的最大位数均为32位二进制数来计算的。<br /><br />[color=Red]==优先级提示==[/color]<br />~  取反      最优先<br />< > 左右位移 第2优先<br />& 与         第3优先<br />^ 异或       第4优先<br />| 或         第5优先<br /><br />[color=Red]==操作清单==[/color]<br />上：与 AND &<br />下：或 OR  |<br />左：非 反 NOT ~<br />右：异或 XOR  ^<br />Y：（<br />A：）<br />B：删除一个字符<br />X：确定，等于<br /><br />[color=Red]==一般操作解析==[/color]<br />bin 为二进制标志符。 使用时为 b1010101代表一个二进制数<br />Hex 为十六进制标志符。 使用时为 xABFA代表一个十六进制数<br />十进制可以不加标志符。<br /><br /><<为左移 以0填充。使用时为 xf>3=1<br />>>为右移 以0填充。使用时为 b1<3=8<br /><br />And为 与。使用时为 b101&xE=4<br />Or为  或。使用时为 b101&xE=xF<br />Not为 反。使用时为 ~b10101011=xFFFFFF54<br />Xor为 异或。使用时为 b101^xE=xb<br /><br />[color=Red]==输出==[/color]<br />Dec=有符号的十进制 or 无符号的十进制<br />Bin=32位的二进制<br />Hex=8位的十六进制<br />[color=Red]<br />==举例==[/color]<br />x1F|b101^10&x3E>~xFFFFFFEE=x1F  <br />39|((b100|xb1)>((xeb^23)&4))<~xFFFFFFFB=xb7<br /><br />[color=red]===============================[/color]<br />[color=red]测试通过：R4，DSTT，AK2，AK2i，M3DSR，Hyper-R4i，EZ5 DSONE<br />其他测试通过：DSTT 1.17A02和娇娘，R4和DSTT的DSISION版内核！[/color]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-09-11 20:29:41</p>
+</div>
+<div class="col-10">
+<p>不错，继续更新，做nds上最好的计算器。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yuuhimesama</b><br/>
+2009-09-16 13:25:39</p>
+</div>
+<div class="col-10">
+<p>好复杂的计算器</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gbayp</b><br/>
+2009-09-25 13:55:01</p>
+</div>
+<div class="col-10">
+<p>0.13增加点击特效和对EZ5的兼容</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-09-25 13:59:07</p>
+</div>
+<div class="col-10">
+<p>又更新了，不错！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gbayp</b><br/>
+2009-09-28 15:30:09</p>
+</div>
+<div class="col-10">
+<p>0.14 增加位运算</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gbayp</b><br/>
+2009-10-15 19:25:55</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 gbayp 于 2009-10-15 19:42 编辑 [/i]<br /><br />0.15版发布咯。。加了分形计算能力。<br />坑是越挖越大了。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2009-10-15 22:15:01</p>
+</div>
+<div class="col-10">
+<p>分形美```</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-10-18 23:45:28</p>
+</div>
+<div class="col-10">
+<p>好强的计算器，好漂亮的图！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gbayp</b><br/>
+2009-10-24 16:07:41</p>
+</div>
+<div class="col-10">
+<p>又更新了。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lumengbnb2009</b><br/>
+2009-11-01 11:37:07</p>
+</div>
+<div class="col-10">
+<p>支持！。。。。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gbayp</b><br/>
+2009-11-06 08:13:48</p>
+</div>
+<div class="col-10">
+<p>非常小的更新。加了软关机。<br />修正了从0.11版就有的BUG。。方向键 左右按键输入颠倒了。疏忽啊。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gbayp</b><br/>
+2010-06-08 13:55:23</p>
+</div>
+<div class="col-10">
+<p>更新到0.18 换新皮肤</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-06-08 17:58:04</p>
+</div>
+<div class="col-10">
+<p>活活活~~~这玩意太牛逼了~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-06-08 18:20:07</p>
+</div>
+<div class="col-10">
+<p>好东西</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>轼暖1992</b><br/>
+2010-06-17 11:50:25</p>
+</div>
+<div class="col-10">
+<p>支持谢谢了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>dcwstar</b><br/>
+2010-06-24 18:29:01</p>
+</div>
+<div class="col-10">
+<p>好东西好东西，谢谢，虽然我用不上，呵呵。虽然高中时候是数学牛人，但高中毕业就再也用不上数学了。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mnm3344</b><br/>
+2010-07-12 00:54:48</p>
+</div>
+<div class="col-10">
+<p>这个不免费就没意义了</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post637_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

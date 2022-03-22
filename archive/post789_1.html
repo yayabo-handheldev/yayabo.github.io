@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>R4月光内核补丁p091117 r4 only</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">R4月光内核补丁p091117 r4 only</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fw211</b><br/>
+2009-11-17 21:48:24</p>
+</div>
+<div class="col-10">
+<p>p091117 for r4 only<br />这一版主要调整了游戏的加载方式，首先内核会在moonshl2目录下搜索ldinfo.dat，如果文件存在，并且存在与要加载的游戏匹配的补丁信息，则直接使用该补丁信息进行补丁，这样的加载速度是最快的。其次，如果不存在ldinfo.dat或不存在匹配的补丁信息，内核会进行指令特征匹配进行搜索，这样的速度比较慢。最后，如果上面的搜索不成功，内核会进行指令特征＋语意匹配搜索，这样的速度是最慢的。如果搜索失败，则说明该游戏目前还不能被内核支持，需要单独破解。<br /><br />ldinfo.dat由本压缩包中的ndsinfo.exe生成，生成后请放入moonshl2目录下。<br /><br />ndsinfo.exe的使用方法：<br />将你所有的*.nds文件(ids的后缀名请改为nds)放入同一个目录，然后将ndsinfo.exe也放入该目录，运行ndsinfo.exe，这时屏幕上每打印一个.则说明处理完一个nds文件，程序完成后会生成ldinfo.dat和info.txt。info.txt中打印PASS的，说明该游戏的补丁信息已经写入ldinfo.dat中，打印NOPASS的，说明没有写入该游戏的补丁信息，需要内核自己来进行判断(一般情况下内核也会失败)。<br /><br />如果有全部或者大部分的cleanrom的玩家，请将您生成的ldinfo.dat和info.txt发送给我，我会放到网站上与更多玩家共享以及根据info.txt改进内核的兼容性，谢了。<br /><br />email:fw211@126.com<br /><br />下载地址：[url]http://www.fw211.com/attachments/month_0911/o20091117214027.rar[/url]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>5826659</b><br/>
+2009-11-18 19:10:19</p>
+</div>
+<div class="col-10">
+<p>不知道DSTT版本会不会更新呢？</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post789_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

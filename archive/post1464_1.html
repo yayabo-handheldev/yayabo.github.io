@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>rpg maker xp制作教程（三）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">rpg maker xp制作教程（三）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-02-15 11:54:02</p>
+</div>
+<div class="col-10">
+<p>素材规格   <br /><br />RPGXP 可以使用其本身初始的图片和声音素材文件。<br /><br />在主菜单「工具」菜单中选择「媒体库」，会出现媒体库对话框，可以进行各种素材的导入与导出。向游戏文件夹里直接复制文件也可以，媒体库中还有图片预览功能，对素材不熟悉的话可以使用。<br /><br />图片素材<br /><br />可以使用 PNG 文件和 JPG 文件。如果是 PNG 文件则必须为 32 位元色彩（Alpha Channel）。<br /><br />角色（Graphics/Characters）<br /><br />收录地图上显示的角色图片的文件夹。<br /><br />一个角色使用一个文件。尺寸任意，以 4 个方向（下、左、右、上）×4 个步行样式合计 16 个样式的规定顺序排列。位图宽高的各 1/4 就作为该角色的尺寸。<br /><br />战斗者（Graphics/Battlers）<br /><br />收录战斗画面中显示的角色图片的文件夹。<br /><br />尺寸任意，但注意最好不要超过 640×320 的战斗画面。而且使用高 40 以下的图片会损害显示出来的清晰度。<br /><br />动画（Graphics/Animations）<br /><br />收录主要在战斗画面中显示效果的动画图片的文件夹。<br /><br />一个个固定大小 192×192 的图片 5 张横向排列为一组，如有必要还可以纵向延长,即成为一整个动画文件。文件的尺寸大小无限制，但因为显示动画速度的关系，最好不要用太大的图片。<br /><br />图块（Graphics/Tilesets）<br /><br />收录构成地图的地图元件的文件夹。<br /><br />一个个固定大小 32×32 的元件图片 8 张横向排列为一组，如有必要还可以纵向延长，即成为一整个图块文件。文件的尺寸大小无限制，但因为显示地图速度的关系，最好不要用太大的图片。<br /><br />自动地图元件（Graphics/Autotiles）<br /><br />收录边界自动生成的特殊地图元件的文件夹。 具体请参照自动地图元件说明。<br /><br />远景（Graphics/Panoramas）<br /><br />收录地图远处显示的图片（远景）的文件夹。<br /><br />战斗计算式   <br /><br />RPGXP 默认的战斗系统，采用以下的计算式。<br /><br />攻击方角色表示为 A，被攻击方角色以 B 表示。<br /><br />第一命中率判定<br /><br />普通攻击<br /><br />第一命中率 = A 当前状态下的命中率 %<br /><br />技能攻击<br /><br />攻击力 F 为 1 以上（物理攻击）<br /><br />第一命中率 = 技能的命中率 × A 当前状态下的命中率 % ÷ 100<br /><br />攻击力 F 为 0（物理攻击以外）<br /><br />第一命中率 = 技能的命中率<br /><br />使用物品<br /><br />第一命中率 = 物品的命中率<br /><br />A 在正常状态下的命中率为 100。<br /><br />必杀机率判定<br /><br />普通攻击<br /><br />必杀率 = 4 × A 的灵巧 ÷ B 的速度<br /><br />技能攻击<br /><br />必杀率 = 0<br /><br />使用物品<br /><br />必杀率 = 0<br /><br />必杀率即奋力一击（通常会使敌方常受到较大的损伤）发生的机率，如果必杀率为 4 则表示每 4 个回合就出现一次奋力一击。<br /><br />伤害计算<br /><br />普通攻击<br /><br />威力 = A 的攻击力 - （B 的物理防御 ÷ 2）<br /><br />放大率 = 20 + A 的力量<br /><br />分散度 = 15<br /><br />威力的最小值：0<br /><br />技能攻击<br /><br />技能的威力值为正数<br /><br />威力 = 技能的威力<br /><br />+ （A 的攻击力 × 技能的攻击力 F ÷ 100）<br /><br />- （B 的物理防御 × 技能的物理防御 F ÷ 200）<br /><br />- （B 的魔法防御 × 技能的魔法防御 F ÷ 200）<br /><br />威力的最小值：0<br /><br />技能的威力值为负数<br /><br />威力 = 技能的威力<br /><br />放大率 = 20<br /><br />+ （A 的力量 × 技能的力量 F ÷ 100）<br /><br />+ （A 的灵巧 × 技能的灵巧 F ÷ 100）<br /><br />+ （A 的速度 × 技能的速度 F ÷ 100）<br /><br />+ （A 的魔力 × 技能的魔力 F ÷ 100）<br /><br />分散度 = 技能的分散度<br /><br />使用物品<br /><br />HP 回复量为负数<br /><br />威力 = - HP 回复量<br /><br />- （B 的物理防御 × 物品的物理防御 F ÷ 20）<br /><br />- （B 的魔法防御 × 物品的魔法防御 F ÷ 20）<br /><br />威力的最小值：0<br /><br />HP 回复量为正数<br /><br />威力 = - HP 回复量<br /><br />放大率 = 20<br /><br />分散度 = 物品的分散度<br /><br />伤害 = 威力 × 放大率 ÷ 20 × 属性修正 × 必杀修正 × 防御修正 ( ± 分散度 %)<br /><br />属性修正：有攻击属性时，在 B 的属性有效度中选择最弱的进行修正，修正值如下。<br /><br />A：200%，B：150%，C：100%，D：50%，E：0%，F：-100%<br /><br />另外，攻击属性符合 B 防具的防御属性的，伤害减半，修正值为 1/2。<br /><br />有多个相同防御属性的，减半效果要叠加。<br /><br />必杀修正：伤害值为正数，奋力一击发动时修正值为 2。<br /><br />防御修正：伤害值为正数，B 防御时修正值为 1/2。<br /><br />第二命中率判定<br /><br />伤害值为正数<br /><br />B 为正常状态<br /><br />回避力 = 8 × B 的速度 ÷ A 的灵巧 + B 的回避修正<br /><br />普通攻击<br /><br />第二命中率 = 100 - 回避力<br /><br />技能攻击<br /><br />第二命中率 = 100 -（回避力 × 技能的回避 F ÷ 100）<br /><br />使用物品<br /><br />第二命中率 = 100<br /><br />B 附加有「不能回避攻击」状态<br /><br />第二命中率 = 100<br /><br />伤害值为负数（回复）<br /><br />第二命中率 = 100<br /><br />逃跑成功率<br /><br />逃跑成功率 =50 × 角色的速度平均值 ÷ 敌人的速度平均值<br /><br />脚本入门   <br /><br />在主菜单「工具」菜单中选择「脚本编辑器」，出现的那些英文字排列就是脚本。这个是 RPGXP 的关键部分，是掌管游戏实际运行的程序语言。虽然是简单的程序语言，但初学者要学习的话却是得花费大量的时间。首先得了解脚本是如何运作的，推荐先从基础学起。<br /><br />这个「脚本入门」，是为已经学习 RGPXP 基本使用方法的人编写的。可以不具备计算机程序语言基础知识，但最低要对 RPGXP 的功能有一定程度的了解。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1464_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

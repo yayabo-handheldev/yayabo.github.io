@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[HSP][引擎][教程]告别pc!psp上制作RPG游戏引擎(HSP2.0)惊现!(纯手工,made by 灵潭 in China)</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[HSP][引擎][教程]告别pc!psp上制作RPG游戏引擎(HSP2.0)惊现!(纯手工,made by 灵潭 in China)</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>灵潭</b><br/>
+2010-03-25 11:50:49</p>
+</div>
+<div class="col-10">
+<p>[HSP][引擎][教程]告别pc!psp上制作RPG游戏引擎(HSP2.0)惊现!(纯手工,made by 灵潭 in China) <br /><br />-----------------------------------------------------------------------------------------------<br /><br />抱歉,由于上午要上学,所以只好下午发布.但幸好作天就把软件上传完了.<br /><br /><br />三天前发布过hack spy portable engine 1.0(HSP1.0)现已完成5个小时的大翻修,再次发布较完美版的HSP2.0+教程+其他几个软件+完全在PSP上做游戏的平台搭建方法<br /><br />-----------------------------------------------------------------------------------------------<br /><br />在此感谢: <br /><br />首先我要感谢掌家给我这个展示的机会,鞠躬.<br /><br />其次我要在此向lua player 引擎开发组致敬.<br /><br />然后我要向支持HSP的朋友敬礼.<br /><br />接着我要感谢我的PSP对我的关怀和支持.<br /><br />最后我要对大家说:"我还会努力的!"<br /><br />-----------------------------------------------------------------------------------------------<br /><br />link:<br />[url]http://www.rayfile.com/files/3333a39e-371f-11df-ad7c-0015c55db73d/[/url]<br /><br />(PS:希望点击下载的朋友能告诉我一声,以便我能知道此引擎的销量.谢谢)<br /><br />-----------------------------------------------------------------------------------------------<br />关于完全脱离PC的PSP开发平台搭建:<br /><br />   将下载得到的压缩包解压.之后按照下面的教程组装H.S.p. 2.0,然后提取Notepad,psppda,Filer,xreader7.把它们和<br />H.S.p. 2.0一起放到 psp/game 文件夹下.<br /><br /><br />(1)各软件作用:<br /><br />Notepad      -- 写程序(我常用)<br />psppda       -- 重命名(我常用)<br />xreader7     -- 移文件(我常用)<br />Filer        -- 移文件、重命名(我不常用)<br />H.S.p. 2.0   -- 处理游戏素材,调试制作游戏(核心)<br /><br /><br />(2)辅助工具:<br /><br />CMF插件      -- screenshoot(屏幕截图)<br /><br /><br /><br />-----------------------------------------------------------------------------------------------<br />                    hack cpy portable engine(HSP) 使用教程<br /><br />简介:<br />   本引擎采用最新lua player引擎 Lua player Euphoria v8编写<br />   本引擎与Notepad,psppda,xreader,Filer连用可以完全脱离pc做游戏<br />   本引擎暂时界面很差,功能很少,见谅.<br />   本引擎由本人在psp上完成,且在前天晚从22:00下晚自习后更新到凌晨4:00,第二天早上6:00起床,很累.<br />其他:<br />   本教程也是由灵潭本人在psp用Notepad写的,并在碟片店用pc发布到网上的.<br />   <br /><br />   使用教程(初次尝试请一定要按顺序,最好在使用之前先备份一份)<br /><br />---1.<br />   找地图资源放入psp内,并在观看时用CMF 或 freecheat 插件的screenchoot功能截图成png格式并用psppda或Filer依次改名为"1.png",<br />"2.png","3.png","4.png"......然后把它们放到H.S.p. 2.0/mapmaker 5.0/image/文件夹下.若没时间准备就将解压包里image文件夹下的图片放进去.<br /><br />---2.<br />   将 H.S.P. 2.0文件夹放到psp/game文件夹下,运行HSP,选择mapmaker 5.0一项,按start键初次进入后按上下键调整要编辑的图片张数,按○键进入下一步.<br />   <br />---3.<br />   开始制造地图!下面来看看这个分软件:(总原理:截--贴--框--导)(不要胡乱按键,尤其是select键.<br />   <br />   截<br />   (1)按L或R键会发生图片变换,图片会有一个红框,红框可以调整(□键+上下键为调宽,△键+左右键为调宽)方向键和摇杆都可以移动红框位置(方向键微调,摇杆粗调).<br />也许你在按L,R键时会发现有块区域全为黑色!这就对了!黑色区域为"粘贴区",非黑色区域为"截取区"(在"粘贴区"时红框不动,背景<br />动,"截取区"时背景不动,红框动).在"截取区"调整红框大小并将其移动到想要截取的地方,按○键截取.<br /><br />   贴<br />   (2)截图后按L,R键进入"粘贴区"(L,R键一起按为快捷键),按方向键和摇杆调整位置后按×键,贴贴贴贴贴......贴过头了按select键为撤消一步<br /><br />   框<br />   (3)当地图制得足够大的时候,在"粘贴区"将红点(很小很小的,仔细看.)移到已制地图的左上角,之后按□键后斜拖摇杆,框呀框呀框呀框......,直到所有的地图都被框入,<br />之后再按□键结束框图(千万不要第三次按□键,第三次按□键为重新框图).屏幕左上角的两个参数是你框框的大小!框完后可继续截贴以求完美.<br /><br />   导<br />   (4)贴完,框完,补完后按start键吧!!!决定命运的start键啊!!!之后便是等待,等待过程中会看到屏幕中的图片不停变化--那就是将地图切割到mygame/map/文件夹下.(至于为何要切割,下次再告诉你)<br /><br />   (5)mapmaker5.0支持存读档功能,当地图做一半时,按start键保存进度,下次进入mapmaker5.0时屏幕会出现"load?"对话框(很逊的对话框)之后你有两个选择--A.按○键读取进度.B.按×键从新开始.(很方便吧)<br /><br />   (6)ps:mapmaker 折磨了我很久,在3月17日升到5.0.(HSP是在3月11日构想,3月12日制作的)<br /><br />----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<br /><br />---4.<br />   步骤[ ---3.]导出的图片名字依次为 "1.png","2.png","3.png","4.png"......   若按如下方式排列能拼成原地图:<br />1    2    3    4    5<br /><br />6    6    8    9   10<br /><br />11  12   13   14   15<br /><br />16  17   18   19   20<br /><br />21  22   23   24   25<br /><br />好,进入下一个主题:在mapmaker 5.0中按home键1下,○键1下进入HSP主菜单.选择get position3.0一项,按start键进入<br /><br />---5.<br /><br />   开始编辑墙区域!下面来看看这个分软件：(总原理：画框→排序→定初点→找墙)<br /><br />    画框:<br />   (1)初次进入后会出现2个数字，上面一个为行多少张图片，下面一个为列多少张图片，分别由左右键和上下键调整。<br /><br />    排序:<br />   (2)调整好后按○键，下一步会出现许多小框，且小框左上角有一个“1”字，按方向键，“1”会跳到其它方框内，“1”代<br />表mygame/map/文件夹下的第1张子地图图片，找一个位置按○键后，红“1”变白，又多出了个“2”再到其它方框内按○键便<br />出现了“3”!之后走到有“1”的方框内按○键，“1”不见了，“3”变色后，又出现了“4”!啊!还我"1"!!!别怕,别怕(我有"奇强"呢)<br />若想找回“1”，可以按×键试试吧!<br /><br />   (3)上面哆嗦了许多!其实第(2)步就是将在mapmaker下制好的地图在宏观下准确地拼接起来!(按照[ ---4.]的顺序)，当然,如果你玩<br />过《绵羊村》并用里面的截图功能“偷”一个牧场后，也可以省略[ ---1.2.3. ]步,直接用这许多小框排序 !但前提是你一定要搞清:长有几张图，<br />宽有几张图，做好[ ---5.--(1) ]步骤)!<br /><br />    定初点:<br />   (4)排版完成后，按start键!等待片刻后，你千辛万苦制成的地图一下子出现在你的面前(幸福来得太突然了)。别乱动!之后的任务是<br />找你的游戏开始的地方(起点)--具体做法：按方向键找到那个位置后再次按start(小红灯一闪一闪的，发生了什么？--不告诉你!).<br /><br />    找墙:<br />   (5)初始位置定完后去寻找墙吧!(路人甲出现,问:"墙是什么?"佛说:"墙就是堵住主角前进的东西--在2D游戏里就是主角无法进入的矩行区域.").<br />屏幕中会出现一个小人(若看此人不舒服，等我出教程吧!)将小人的左上角的小红点移到你认为可以用矩形框住的墙区域(如房屋)的左上角，按○键<br />(只按一次)，之后按方向键拖动会出现变大缩小的红框，当红框将墙区域框完后再按圈○结束(只按一次)，之后便可以按方向键去寻找下一个墙区域，重复上面<br />方进行“圈地运动”.<br /> <br />   (6)哦哦!地图上有好多红框，该结束了。之后按start键!(小红灯又一闪一闪的，发生了什么？--无可奉告!)此模块ok!<br /><br />   (7)本子软件支持存读档功能，再次运行后可以继续工作(“lood？” A.按○键读取进度.B.按×键从新开始)非常方便。<br /><br />   (8)ps:getposition3.0是从getposition2.0中独立出来的，一次也没有更新(暂时的功能只支持找墙区域，其它功能待拓展)，完成日期：2009年12月10日。<br /><br />----------------------------------------------------------------------------------------------------------------------------------<br /><br />---5.<br />   完成墙后按Home键一下，○键一下，退到HSP2.O主菜单!<br /><br />---6.<br />   玩过ACT(动作)类型游戏的人都见过人物动作吧(路人乙说:"玩过,玩过,<<牧场物语>>里我常耕地,-_-|||),下面就来为主角做几套动作吧!<br />总先是找动作素材，以压缩包内的“ACT1.jpg”，“ACT2.jpg”，“ACT3.jpg”为标准，(若没找到的话就用它们吧).找到后把它们制成480×272的JPG格式的图片<br />(推荐用psp的screenshoot插件).将你所选择的动作图片重命名为“1.jpg”、“2.jpg”……并把它们放在mygame/Action/image/文件夹下，并打mygame/Action/文件夹<br />下的actpicn.lua将内面的actpicn=0改为actpicn=n，“n”为你在文件夹下放入的图片张数。<br /><br />---7.<br />   进入HSP2.0选择editsction2.0一项按start键进入。<br /><br />---8.<br />    开始制作主人公动作!下面看看这个分软件：(总原理：载图--截图---贴图---演示---导出)。<br /><br />    载图:<br />   (1)进入后会出现两行白字!并有一张熟悉的图片，按左右键图片会变化。选择你想制作的动作图片，按○键进入下一步。<br /><br />   (2)此软件也像mapmaper一样有黑色区域(按L.R键看看吧)它的组成：一个为“编辑区”(有图的)，4个为“演示区”(无图黑屏的)，4个“演示区”又分为“up区”、<br />“down区”、“left区”、right区“、分别对应着主角的4个方向!(请一定要对应)。<br /><br />    截图:贴图:演示:<br />   (3)首先按L.R键移到“编辑区”，调整方框大小(□+左右调长，□+上下调整宽)，摇杆粗移，方向键微移。用方框框住人物动作毓的第一个动作，按○键截取，看清人物<br />脸朝的方向，按L.R键进入相应的“演示区”(脸朝左—left区，脸朝左—“right区”，脸朝前—“down区”脸朝后—“up区”)进入对应的演示区后再次按○键<br />只按一次，贴图，之后再按L.R键移到“编辑区”，截取该方向动作的第二张图，之后按L.R键回到原演示区，将第二张图片盖到第一张上面.(如果为斜跳动作可以随意偏移，<br />不一定要完全覆盖)如此反复，好像搬运工一样.截贴完该方向系列所有的动作可以按×键进入"演示模式"，再按×键(只按一次)会发现人物动<br />起来且动作很连贯，但速度有些慢，之后按△和□键调整速度，(屏幕上的数字会变)直到认为合适的时候为止(推荐：250)，按select键撤消一张动作图片(只有在“编辑模式”下有效)。<br /><br />   (4)当演示时发现某子动作的位置不合适时，可以按×键暂停全显，之后将红叉移到需要调整位置的子图片上时，按○键，会发现红叉变绿化之后按○键不放，并按方向键，便会移动。<br />(由于个人能力有限，会发生一起拖动的现象，因此小红叉位置要认真调整)。之后再按×键退出暂停。<br /><br />    导出:<br />   (5)按select退出演示模式(只按一次否则会变为消除贴图功能!)。之后同理搬运其它方各个方向的动作图到演示区。四个方向动作都完成后，分别进入各个“演示区”，<br />在"演示模式"下(出现红“叉”若不出现，就按一次×键)按start键保存(在每个区域内只按一次)。现在可以进入gametest模式进行测试了 <br /><br />   (6)PS:editaction2.0也是最近才完成的，时间是3月10日，是我比较满意的一作。<br />   <br />------------------------------------------------------------------------------------------------------------------------<br /><br />---9.<br />  上面editaction2.0制作出的动作虽很好，但图片很差，有些地方不想要，人以外的部分要是透明才好呢？那就看看下面一个软件吧。<br />(大雄:"怎么办呢,哆啦A梦?"   哆啦A梦:"看我的---图---片---透---明---处---理---机~~~" -_-|||) 那就用Thranspanent make2.0吧.<br /><br />---10.<br />   进入HSP2.0选择Thranspanent make2.0按start键进入。<br /><br />---11.<br />   开始透明处理动作图片，下面看看这个分软件：(总原理：载图--框框—点点—处理—导出)<br /><br />    载图:<br />   (1)和editaction2.0一样的图片载入系统。<br /><br />    框框:点点:<br />   (2)首先变化方框大小(□+左右调长，□+上下调整宽)，之后将框移到想要保留的动作人物，按○键框!之后再寻找其它目标，框框框框框，所有人物框完后，<br />按start键改成画笔(框变成了小点)按△放大，□缩小调整画笔粗细，之后在各个方框内将不想要的部分都点点(一定要仔细；本软件无撤消功能).过了很长很长……一段时间后，会部点完了。<br /><br />    处理:<br />   (3)一切就绪后按select键让系统自动处理!(此时会发现屏幕变白，之后一列列地出现东西)<br /><br />    导出:<br />   (4)等到背景由白变黑时,代表处理完毕，此时按start键保存处理后图片!透明处理完成。<br /><br />   (5)再次运行editaction2.0重制动作，你会发现效果更好。<br /><br />   (6)PS：Thranspartnt make2.0在制作过程中很头痛!在1.0版本中无框框系统。虽已升到2.0，但仍很慢很累人，但个人认为----为了达到效<br />果，一个字，“值”!完成时间:3月8日(存在问题:不能处理透明图片!)。<br /><br />   <br />--------------------------------------------------------------------------------</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-03-25 12:31:32</p>
+</div>
+<div class="col-10">
+<p>只能对你说“支持！”</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>asxzl5945</b><br/>
+2010-03-25 12:38:40</p>
+</div>
+<div class="col-10">
+<p>只能口头上对你说“支持!”</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>S.L.T</b><br/>
+2010-03-25 12:57:32</p>
+</div>
+<div class="col-10">
+<p>重发了吗?..........</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>pwlsysg</b><br/>
+2010-03-25 17:24:23</p>
+</div>
+<div class="col-10">
+<p>好厉害</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-03-25 18:38:28</p>
+</div>
+<div class="col-10">
+<p>楼主很牛逼啊~~~赶白超雷~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2010-03-25 21:57:07</p>
+</div>
+<div class="col-10">
+<p>有相应的作品吗？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>灵潭</b><br/>
+2010-03-25 22:19:16</p>
+</div>
+<div class="col-10">
+<p>以前在做牧场物语的.现在正在做npcmaker</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>灵潭</b><br/>
+2010-03-25 22:23:13</p>
+</div>
+<div class="col-10">
+<p>感谢大家支持(此时我正在大街上用psp发帖)</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-03-25 22:48:47</p>
+</div>
+<div class="col-10">
+<p>看来不能火速围观了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>灵潭</b><br/>
+2010-03-27 12:54:16</p>
+</div>
+<div class="col-10">
+<p>人呢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>灵潭</b><br/>
+2010-03-27 12:57:06</p>
+</div>
+<div class="col-10">
+<p>npc模块已完成80%</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>灵潭</b><br/>
+2010-03-27 14:54:20</p>
+</div>
+<div class="col-10">
+<p>人呢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>weiqi</b><br/>
+2010-03-27 15:06:02</p>
+</div>
+<div class="col-10">
+<p>那个楼主确实很厉害，但楼主能做一些实例成品放上来大家会更有兴趣的！！！！！！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>灵潭</b><br/>
+2010-04-02 19:29:32</p>
+</div>
+<div class="col-10">
+<p>HSP3.0 即将出现</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yang0yi</b><br/>
+2010-04-02 20:25:48</p>
+</div>
+<div class="col-10">
+<p>这个够强大~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>GnNu</b><br/>
+2010-04-03 10:34:32</p>
+</div>
+<div class="col-10">
+<p>- -围观。。。。。。支持</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>灵潭</b><br/>
+2010-04-03 12:58:37</p>
+</div>
+<div class="col-10">
+<p>谢谢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kiyhvk</b><br/>
+2010-04-03 15:28:43</p>
+</div>
+<div class="col-10">
+<p>强力党啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>iujk</b><br/>
+2010-04-04 12:44:18</p>
+</div>
+<div class="col-10">
+<p>PSP要是真能取代 PC游戏 ...............................疯了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-04-04 21:57:49</p>
+</div>
+<div class="col-10">
+<p>潭叔，3.0那个人物制作会死机，期待解决，新教程啥时候出啊，俺地图搞了一张做试验，期待有ui版本，</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>magpte</b><br/>
+2010-04-17 20:42:06</p>
+</div>
+<div class="col-10">
+<p>改名好了，总以为是hack psp游戏的软件</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>1239985932</b><br/>
+2010-04-19 21:43:00</p>
+</div>
+<div class="col-10">
+<p>小弟我也下一个试试</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1797_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>［PSP教程０2］中文显示freetype</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">［PSP教程０2］中文显示freetype</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-05 16:57:20</p>
+</div>
+<div class="col-10">
+<p>摘自：TOPOC　studio<br />作者：newcreat<br />采用nge显示中文非常方便，可以采用美观的freetype，可以勾画轮廓阴影，效果可以媲美商业的游戏．以下是本节的效果截图：<br />[attach]12[/attach]<br />纯粹剧情需要．．．<br />[attach]13[/attach]<br />代码说明：用的是第一课的代码，增加的部分见说明<br /><br />// bigproject.cpp : Defines the entry point for the console application.<br />//<br />#include "libnge.h"<br />#include "text_auto_line.h"<br /><br />SDL_Joystick* joystick;<br />SDL_Event event;<br />IVideoDriver* sys ;<br /><br />CTexture* bg;                  //游戏背景图片<br />CTexture* msgbox;               //对话框<br />CTexture* character;//人物资源<br />int done = 0;                  //程序是否结束<br />float scale = 1.0;             //放大缩小比率1.0就是原大小，2.0就是２倍 0.5 就是缩小一倍<br />float angel = 0.0; //旋转角度<br />CTextAutoLine textout("simkai.ttf");//简单的文字处理类,注意要有ttf字库可以在windows的fonts下获得<br /><br />//第一课的代码，没有动他的<br />void ButtonPressedProc(SDL_JoyButtonEvent * jbutton)<br />{<br />switch(jbutton -> button)<br />{<br />case 8:<br />             angel=90;<br />             break;<br />case 6:<br />             angel =180;<br />             break;<br />case 7:<br />             angel = 270;<br />             break;<br />case 9:<br />             angel = 360;<br />             break;<br />case 0:<br />             scale-=0.05;<br />             if(scale<=0)<br />              scale = 0.05;  <br />             break;<br />case 1:<br />             scale+=0.05;<br />             break;<br />case 2:<br />             angel-=1.0;<br />             break;<br />case 3:<br />             angel+=1.0;<br />             break;<br />case 11:<br />             break;<br />  <br />}<br /><br />}                   <br /><br />void KeyPressedProc(SDL_keysym * keysym)<br />{<br />    <br />switch(keysym -> sym)<br />{<br />case SDLK_UP:<br />             angel=90;<br />             break;<br />case SDLK_DOWN:<br />             angel =180;<br />             break;<br />case SDLK_LEFT:<br />             angel =270;<br />             break;<br />case SDLK_RIGHT:<br />             angel =360;<br />             break;<br />case SDLK_w:<br />             scale-=0.05;<br />             if(scale<=0)<br />              scale = 0.05;<br />             break;<br />case SDLK_d:<br />             scale+=0.05;<br />             break;<br />case SDLK_s:<br />             angel-=1.0;<br />             break;<br />case SDLK_a:<br />             angel+=1.0;<br />             break;<br />case SDLK_m:<br />             break;<br />}<br />}<br /><br />void InputProc()<br />{<br />while( SDL_PollEvent( &event ) )<br />               {<br />             switch(event.type)<br />             {<br />             case SDL_QUIT:<br />              done = 1;<br />              break;<br />             case SDL_KEYDOWN:<br />              KeyPressedProc(&event.key.keysym);<br />              break;<br />             case SDL_JOYBUTTONDOWN:<br />              ButtonPressedProc(&event.jbutton);<br />              break;<br />             }<br />}<br />}<br /><br /><br />int DrawScene()<br />{<br />             sys->BeginScene();<br />             sys->RenderQuad(bg,0,0,0,0,0,0,scale,scale,angel,0xffffffff);<br /><br />　//显示人物，默认摄象机的的范围是(0,0)->(480,272)<br />            //所以可以调整坐标位置使他位于合适的位置<br /><br />             sys->RenderQuad(character,0,0,0,0,120,-20,0.8,0.8,0,0xffffffff);<br /><br />             sys->RenderQuad(msgbox,0,0,0,0,0,160,1,1,0,0xafffffff);//画一个70%透明的对话框<br />             for(int i=0;i<textout.m_texs.size();i++){<br />              sys->RenderQuad(textout.m_texs[i],0,0, 0,0,40+1.5,180+i*25+1.5,1,1,0,0x9f000000);//字阴影<br />              sys->RenderQuad(textout.m_texs[i],0,0, 0,0,40,180+i*25,1,1,0,0xffffffff);//字<br />   <br />             }<br />             sys->EndScene();<br />               return( TRUE );<br />}<br /><br />extern "C"<br />int main(int argc, char* argv[])<br />{<br />NGE_InitSDL(SDL_INIT_VIDEO|SDL_INIT_JOYSTICK);<br /><br />if(SDL_NumJoysticks()) {<br />             joystick = SDL_JoystickOpen(0);<br />}<br />if ( TTF_Init() < 0 ) {<br />             return 0;<br />}<br /><br />sys = NGE_GetVideoDriver();<br />bg = LoadTexture("gamebg.png");<br />msgbox = LoadTexture("msgbox.png");<br />character = LoadTexture("char.png");<br />textout.LoadString("             教程第二课，简单的对话显示。动态显示人物的对话，是每个游戏的基本元素。最后我要说的是：请爱护萝莉。");//加载要说的话，也可以从文件里读取．<br />textout.CreateTextLine(19,21,TTF_STYLE_NORMAL);<br /><br />sys->FpsInit();<br />while ( !done )<br />{<br />             InputProc();<br />             DrawScene();<br />             sys->ShowFps();<br />}<br />FreeTexture(bg);<br />FreeTexture(msgbox);<br />FreeTexture(character);<br />TTF_Quit();<br />NGE_QuitSDL();<br /><br />return 0;<br />}<br /><br />本节代码下载：lesson２，不包含字体文件，请将字体文件加入[url]http://topoc.googlecode.com/files/lesson2.rar[/url]<br /><br />注意main函数上边掉了下面语句　<br /><br />#pragma comment (lib,"SDL_ttf.lib")<br /><br />不加会出现text_auto_line.obj : error LNK2001: unresolved external symbol _TTF_CloseFont．．．<br /><br />如果vc下编译时还有linkerror请看[教程00]，解决办法写在那个里面了．</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>冰蓝雪山</b><br/>
+2009-03-17 18:23:48</p>
+</div>
+<div class="col-10">
+<p>中文任意显示，哦耶，太好啦！<br /><br /><br />字的颜色，是什么语句呢？<br /><br />[[i] 本帖最后由 冰蓝雪山 于 2009-3-17 18:24 编辑 [/i]]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>newcreat</b><br/>
+2009-03-19 21:14:08</p>
+</div>
+<div class="col-10">
+<p>这个是上一代的。。让它沉了吧。。。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post30_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

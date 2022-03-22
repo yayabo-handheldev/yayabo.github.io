@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>lua表达式</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">lua表达式</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-18 20:49:52</p>
+</div>
+<div class="col-10">
+<p>Lua中的表达式包括数字常量、字符串常量、变量、一元和二元运算符、函数调用。还可以是非传统的函数定义和表构造。<br />3.1 算术运算符<br />二元运算符：+ - * / ^ (加减乘除幂)<br />一元运算符：- (负值)<br />这些运算符的操作数都是实数。<br />3.2 关系运算符<br /><      >      <=    >=    ==    ~=<br />这些操作符返回结果为false或者true；==和~=比较两个值，如果两个值类型不同，Lua认为两者不同；nil只和自己相等。Lua通过引用比较tables、userdata、functions。也就是说当且仅当两者表示同一个对象时相等。<br />a = {}; a.x = 1; a.y = 0<br />b = {}; b.x = 1; b.y = 0<br />c = a<br />a==c but a~=b<br />Lua比较数字按传统的数字大小进行，比较字符串按字母的顺序进行，但是字母顺序依赖于本地环境。<br />当比较不同类型的值的时候要特别注意：<br />"0" == 0      -- false<br />2 < 15        -- true<br />"2" < "15"    -- false (alphabetical order!)<br />为了避免不一致的结果，混合比较数字和字符串，Lua会报错，比如：2 < "15"<br />3.3 逻辑运算符<br />and    or    not<br />逻辑运算符认为false和nil是假（false），其他为真，0也是true.<br />and和or的运算结果不是true和false，而是和它的两个操作数相关。<br />a and b      -- 如果a为false，则返回a，否则返回b<br />a or b        -- 如果a为true，则返回a，否则返回b<br />例如：<br />print(4 and 5)          --> 5<br />print(nil and 13)        --> nil<br />print(false and 13)      --> false<br />print(4 or 5)            --> 4<br />print(false or 5)        --> 5<br />一个很实用的技巧：如果x为false或者nil则给x赋初始值v<br />x = x or v<br />等价于<br />if not x then<br />    x = v<br />end<br />and的优先级比or高。<br /><br />C语言中的三元运算符<br />a ? b : c<br />在Lua中可以这样实现：<br />(a and b) or c<br /><br />not的结果只返回false或者true<br />print(not nil)          --> true<br />print(not false)        --> true<br />print(not 0)            --> false<br />print(not not nil)      --> false<br />3.4 连接运算符<br />..        --两个点<br />字符串连接，如果操作数为数字，Lua将数字转成字符串。<br />print("Hello " .. "World")      --> Hello World<br />print(0 .. 1)                  --> 01<br />3.5 优先级<br />从高到低的顺序：<br />^<br />not    - (unary)<br />*      /<br />+      -<br />..<br /><      >      <=    >=    ~=    ==<br />and<br />or<br />除了^和..外所有的二元运算符都是左连接的。<br />a+i < b/2+1          <-->      (a+i) < ((b/2)+1)<br />5+x^2*8              <-->      5+((x^2)*8)<br />a < y and y <= z    <-->      (a < y) and (y <= z)<br />-x^2                <-->      -(x^2)<br />x^y^z                <-->      x^(y^z)<br />3.6表的构造<br />构造器是创建和初始化表的表达式。表是Lua特有的功能强大的东西。最简单的构造函数是{}，用来创建一个空表。可以直接初始化数组:<br />days = {"Sunday", "Monday", "Tuesday", "Wednesday",<br />              "Thursday", "Friday", "Saturday"}<br />Lua将"Sunday"初始化days[1]（第一个元素索引为1），用"Monday"初始化days[2]...<br />print(days[4])      --> Wednesday<br />构造函数可以使用任何表达式初始化：<br />tab = {sin(1), sin(2), sin(3), sin(4),<br />          sin(5),sin(6), sin(7), sin(8)}<br />如果想初始化一个表作为record使用可以这样：<br />a = {x=0, y=0}      <-->      a = {}; a.x=0; a.y=0<br />不管用何种方式创建table，我们都可以向表中添加或者删除任何类型的域，构造函数仅仅影响表的初始化。<br />w = {x=0, y=0, label="console"}<br />x = {sin(0), sin(1), sin(2)}<br />w[1] = "another field"<br />x.f = w<br />print(w["x"])    --> 0<br />print(w[1])      --> another field<br />print(x.f[1])    --> another field<br />w.x = nil        -- remove field "x"<br />每次调用构造函数，Lua都会创建一个新的table，可以使用table构造一个list：<br />list = nil<br />for line in io.lines() do<br />    list = {next=list, value=line}<br />end<br />这段代码从标准输入读进每行，然后反序形成链表。下面的代码打印链表的内容：<br />l = list<br />while l do<br />    print(l.value)<br />    l = l.next<br />end<br />在同一个构造函数中可以混合列表风格和record风格进行初始化，如：<br />polyline = {color="blue", thickness=2, npoints=4,<br />              {x=0,  y=0},<br />              {x=-10, y=0},<br />              {x=-10, y=1},<br />              {x=0,  y=1}<br />}<br />这个例子也表明我们可以嵌套构造函数来表示复杂的数据结构.<br />print(polyline[2].x)    --> -10<br />上面两种构造函数的初始化方式还有限制，比如你不能使用负索引初始化一个表中元素，字符串索引也不能被恰当的表示。下面介绍一种更一般的初始化方式，我们用[expression]显示的表示将被初始化的索引：<br />opnames = {["+"] = "add", ["-"] = "sub",<br />              ["*"] = "mul", ["/"] = "div"}<br /><br />i = 20; s = "-"<br />a = {[i+0] = s, [i+1] = s..s, [i+2] = s..s..s}<br /><br />print(opnames[s])    --> sub<br />print(a[22])        --> ---<br />list风格初始化和record风格初始化是这种一般初始化的特例:<br />{x=0, y=0}        <-->      {["x"]=0, ["y"]=0}<br />{"red", "green", "blue"}        <--><br />                  {[1]="red", [2]="green", [3]="blue"}<br />如果真的想要数组下标从0开始：<br />days = {[0]="Sunday", "Monday", "Tuesday", "Wednesday",<br />              "Thursday", "Friday", "Saturday"}<br />注意：不推荐数组下标从0开始，否则很多标准库不能使用。<br />在构造函数的最后的","是可选的，可以方便以后的扩展。<br />a = {[1]="red", [2]="green", [3]="blue",}<br />在构造函数中域分隔符逗号（","）可以用分号（";"）替代，通常我们使用分号用来分割不同类型的表元素。<br />{x=10, y=45; "one", "two", "three"}</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>fanhuai</b><br/>
+2010-05-30 16:06:43</p>
+</div>
+<div class="col-10">
+<p>俺看傻掉了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>andrew601</b><br/>
+2010-07-22 22:42:19</p>
+</div>
+<div class="col-10">
+<p>请问版主你计算机考到几级？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>轨迹叔</b><br/>
+2010-07-23 21:13:08</p>
+</div>
+<div class="col-10">
+<p>计算机是啥？</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1119_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

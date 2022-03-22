@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>[PSP][移植]《片羽（カタハネ）》</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">[PSP][移植]《片羽（カタハネ）》</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_14.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2014-02-22 23:33:06</p>
+</div>
+<div class="col-10">
+<p>[attach]99[/attach]<br /><br />声明：<br />[color=#ff0000]原作版权归原制作所有，汉化文本版权归汉化者所有。[/color]<br />[color=#ff0000]本移植作仅供学习之用，禁止用于任何商业用途与不正当用途。[/color]<br /><br />游戏名称：片羽（カタハネ）<br />游戏类型：视觉小说<br />游戏版本：v1.10<br />移植引擎：PocketGameMaker v0.83<br />游戏平台：PSP限定<br />移植者：折翼の红莲<br />汉化方：百合会X指尖奶茶应援会<br />特别感谢：白枫、任天之浪、参与汉化的各位，以及所有告诉过我做移植的理由的童鞋。<br />（制作方信息）<br />制作方：Tarte<br />企划/原案/原画：笛<br />剧本/构成：J-MENT<br />背景音乐：M.U.T.S. music studio/Blueberry & Yogurt<br /><br />【作品介绍】<br />Tarte社的第9部作品，也是最后一部。内容由现代篇「白羽（シロハネ）」以及过去篇「黑羽（クロハネ）」两部所组成、并分别描写「天使的指引」、「天使的展翅」两出舞台剧、以及少女与人偶两人之间的故事。<br />本作品不同于一般恋爱游戏中玩家＝主角的游戏方式。游戏进行时，视点会随着场面切换至其他角色身上，采用所谓“群像剧”的演出手法，并且游戏接口也与近年“对话框叠置于CG上”的游戏不同，CG画面采用PC-98初期游戏常见的16：9宽度，并将对话框置于下方。<br /><br /><br />【一些想说的话】<br />  这是自己至今见过最顺眼的galgame。<br />  以前有混过掌机开发者之家的人应该会知道的——这是在还没接触移植之前自己极力提出移植请愿的游戏（虽然当时汉化补丁才出了0.65版）。而且很理所当然地吓跑了不少巨巨- -b之所以移植这个游戏是因为一年前某月某日某个黑风高之夜被浪叔怂恿跳进这泥潭的orz在向土豆猫要到游戏素材后被吓缩了，以及某些消极因素坑了半年。在这半年里悄悄地期待其他人能完坑，渐渐的才意识到“果然还是得自己来”……<br />  游戏是花了大半年边推游戏边码脚本死出来的，所有游戏效果高质量还原，以及这将是自己的移植里为数不多的超·大作，虽然没有像Bloodpie那样使用正规的文字引擎，但各位可放心享用。<br />  最后，感谢汉化组们的辛勤努力，感谢土豆猫授权汉化文本。<br />  [u]游戏总共有三个周目，不同周目均有不同的剧情，而真相藏在第三周目，加把劲吧。祝君游戏愉快～以上[/u]<br /><br /><br />【Ｑ&Ａ】<br />  Q：“这真的是用PocketGameMaker引擎做出来的游戏吗？”<br />  A：是的，泥没看错。<br />  <br />  Q：“这次不在游戏里制作内置攻略了吗？”<br />  A：游戏的选项是无意义的，1.10版的每个周目的结局都是规定的，三个周目内能收集齐所有CG的，所以没这个必要。（网上愚者的那个攻略是对应1.0版的）<br /><br />  Q：“在游戏整个iso里不注明移植者的理由？”<br />  A：自己并不是没要到汉化文本授权想要逃避责任甚的，仅仅是因为想要做出接近“官方”游戏的程度，纯粹的自我满足而已。（至于游戏logo是因为抠不出来改用了原版的）<br /><br />  Q：“什么是ACV视点切换？”<br />  A：ACV(Anthor.Character.View)视点切换系统是这个游戏的特色之一，能供玩家以另一个人物视点来进行游戏。在左上角弹出切换提示的时候，能按Ｌ键切换下一个剧本使用的人物视点，不选择则按默认视点进行。<br />[attach]91[/attach]<br /><br />【游戏说明】<br />1、将游戏解包放到psp记忆棒ms0:\iso目录下即可。<br />2、由于系统版本问题而运行不了游戏的，可以试试把iso文件里的SYSDIR文件夹解压到ms0:\PSP\GAME目录里。<br /><br />【操作方式】<br />□键：快进<br />△键：查阅历史回想<br />(历史记录中)<br />    方向键上下：上下滚动文本<br />    Ｌ、Ｒ键：翻到最前、后页<br />    ○键：语音回放<br />    Ｘ键：退出历史回想<br />○键：剧情推进/项目确认<br />Ｘ键：隐藏对话框/乱七八糟功能的取消<br />Ｌ键：（ACV视点切换时）切换角色视点<br />Ｒ键：呼叫快捷菜单<br />SELECT键：显示地图<br />START键：跳过动画/呼叫菜单<br /><br />如遇到bug请反馈至百度空间：<br />[url=http://hi.baidu.com/new/1047601302]http://hi.baidu.com/new/1047601302[/url]<br /><br />【截图】<br />[attach]96[/attach]<br />[attach]95[/attach]<br />[attach]93[/attach]<br />[attach]94[/attach]<br />[attach]97[/attach]<br />[attach]98[/attach]<br />[attach]92[/attach]<br /><br />【下载】<br />[hide][url=http://pan.baidu.com/share/link?shareid=1911279815&uk=889898859]http://pan.baidu.com/share/link?shareid=1911279815&uk=889898859[/url][/hide]<br /><br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2014-02-22 23:34:22</p>
+</div>
+<div class="col-10">
+<p>据说评分系统修好了……米那快来向我砸掌币吧~~{:13:}<br /><br />好吧，我是来骗掌币的。。<br /><br />（我要赚热度上首页！！<br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>静止系</b><br/>
+2014-02-22 23:53:36</p>
+</div>
+<div class="col-10">
+<p>空聚聚你太调皮了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>智代</b><br/>
+2014-02-23 00:28:23</p>
+</div>
+<div class="col-10">
+<p>我在想，为啥同样是回复可见，我的帖纸犯坏叔就能直接看到，而kong菌的。<br />这果然是光环么！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>邮寄葵</b><br/>
+2014-02-23 12:33:13</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 邮寄葵 于 2014-2-23 12:35 编辑 [/i]<br /><br />居然需要回复  kong聚聚 下一个目标是昏天暗地的HG吗？<br />-----工资在何处，，，看见有工资机会点进来了，我要投树<br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-23 14:59:25</p>
+</div>
+<div class="col-10">
+<p>为什么我直接就能看到了。。。。话说我终于找到原帖了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-23 14:59:43</p>
+</div>
+<div class="col-10">
+<p>空叔怎么不把安卓版的发上去</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>syjsxxjy</b><br/>
+2014-02-24 00:23:07</p>
+</div>
+<div class="col-10">
+<p>好吧......</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cfzy19911024</b><br/>
+2014-02-26 19:57:14</p>
+</div>
+<div class="col-10">
+<p>哇  支持   感谢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>edwardfan</b><br/>
+2014-02-26 22:23:21</p>
+</div>
+<div class="col-10">
+<p>传说中的新游戏？=-=用PSV试试，支持移植，从我做起</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>枫落雪夜</b><br/>
+2014-03-01 23:31:18</p>
+</div>
+<div class="col-10">
+<p>新的PSP移植作么，恩，KONG聚聚，收下了，给你评分0.0</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>枫落雪夜</b><br/>
+2014-03-01 23:32:50</p>
+</div>
+<div class="col-10">
+<p>卧槽，掌币呢，我的掌币呢0.0</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>937514609</b><br/>
+2014-03-26 21:21:42</p>
+</div>
+<div class="col-10">
+<p>新人 特来膜拜 {:12:}</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>不想起名字了</b><br/>
+2014-04-09 20:47:13</p>
+</div>
+<div class="col-10">
+<p>移植辛苦</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>冰之幻_夏娜</b><br/>
+2014-04-20 03:30:05</p>
+</div>
+<div class="col-10">
+<p>还是要来顶一下的，谢谢LZ…</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>2126875</b><br/>
+2014-05-21 13:10:58</p>
+</div>
+<div class="col-10">
+<p>好久没回来了……居然还有新移植……而且还是PGM?！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>372405452</b><br/>
+2014-07-09 14:41:34</p>
+</div>
+<div class="col-10">
+<p>支持移植，感谢发布</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>moments221</b><br/>
+2014-07-26 18:04:02</p>
+</div>
+<div class="col-10">
+<p>原来还有这个游戏吗 </p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>736368217</b><br/>
+2014-10-03 22:19:54</p>
+</div>
+<div class="col-10">
+<p>{:11:}{:12:}{:12:}{:12:}{:12:}{:12:}{:12:}</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>15976849112</b><br/>
+2014-10-22 17:10:34</p>
+</div>
+<div class="col-10">
+<p>吃药吃药</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>m501175591</b><br/>
+2014-11-14 08:33:58</p>
+</div>
+<div class="col-10">
+<p>下载来看看吧</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>殇之DIAN</b><br/>
+2015-01-31 17:14:10</p>
+</div>
+<div class="col-10">
+<p>好东西 拿下了 谢谢</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post13188_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

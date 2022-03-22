@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PC及PSP端AVG游戏引擎 琳芙斯ⅡV1.91</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">PC及PSP端AVG游戏引擎 琳芙斯ⅡV1.91</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_11.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>sola</b><br/>
+2011-01-14 22:37:27</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 sola 于 2011-1-15 03:51 编辑 [/i]<br /><br />[img]http://www.yayabo.cn/attachments/month_1009/100918124630db21d252506441.png[/img]<br /><br />无话可说也不想说什么....<br />[hide]<br /><br />rf:<br />[url=http://www.rayfile.com/zh-cn/files/018208b3-1feb-11e0-96fc-0015c55db73d/]http://www.rayfile.com/zh-cn/files/018208b3-1feb-11e0-96fc-0015c55db73d/[/url]<br />115:<br />[url=http://u.115.com/file/f73b198cfa]http://u.115.com/file/f73b198cfa[/url]<br /><br />更新什么的么什么好说的..........因为说了也是没有什么用的.<br />---------------------------------------------------------------------------------------------------------------------------<br />2011.01.14<br />v1.91版本发布<br />{<br /><br />1.标题菜单:<br />1.1.新游戏<br />1.2.读档游戏<br />1.3.CG模式<br />1.4.CG回想模式<br />1.5.退出游戏<br /><br /><br />2.游戏菜单<br />2.1.返回菜单<br />2.2.存档<br />2.2.读档<br />2.3.自定义模式<br />2.4.文本对话回想<br />2.5.退出游戏<br /><br />3.音频支持:<br />背景音乐:wav,ogg,mp3<br />人物音频:wav,ogg,mp3<br /><br />4.图片支持<br />背景:jpg,png,bmp<br />人物立绘:bmp(需设置透明色),png<br /><br />5.视频支持<br />视频:pmp<br /><br />6.工具支持:<br />rfz_make_pack.exe:打包rfz工具<br />rfz_release_pack.exe:解包rfz工具<br />rfz_index_info.exe:rfz索引导出工具<br />rfz_code_patch.exe:某些bug修正工具<br />rfz_make_index_script.exe:索引模式脚本转换工具<br />rfz_make_index_text.exe:索引文本转换工具<br />rfz_debugV1.0:打包测试工具<br /><br />7.引擎<br />PSP:EBOOT.PBP<br />PC:ReinforceZwei.exe<br /><br />8.资源读取方式<br />背景包:遍历模式,索引方式<br />音频:遍历模式,索引方式<br />背景音乐:遍历模式或路径读取(需设置 背景音乐文件夹路径)<br />人物立绘:遍历模式,索引方式<br />系统包:遍历模式,索引方式<br />log包:遍历模式,索引方式<br />CG:有<br />CG回想:有<br /><br />9.教程支持<br />RFZ引擎教程<br />{<br />0.初始化ReinforceZwei引擎<br />0.更改窗口大小和全屏<br />1.显示背景及播放背景音乐及播放人物音频<br />2.背景特效<br />3.初始化对话框及立绘名对话框<br />4.显示人物立绘<br />5.选择分支结构<br />6.标题菜单及游戏菜单<br />7.使用自定义背景及背景音乐模式<br />8.索引模式-如何使用索引模式-【推荐使用这个模式】<br />9.索引模式-显示背景及播放人物音频<br />10.索引模式-背景特效<br />11.索引模式-显示人物立绘<br />12.CG模式<br />13.索引模式-记录CG<br />14.索引文本的实现与遍历模式文本的区别<br />15.CG模式改善版<br />16.CG回想模式<br />17.索引模式-记录CG回想<br />18.PSP打包ISO<br />19.人物实现眨眼<br />20.游戏loading动画<br />21.播放图片动画<br />}<br /><br />10.LUA语言支持<br />RFZ LUA语言教程<br />{<br />0.RFZ里初始化LUA语言<br />1.路径加载图片并显示<br />2.RFZ文件加载图片并显示<br />3.路径加载音频并播放<br />4.RFZ文件加载音频并播放<br />5.字体显示<br />6.按键响应<br />7.效果器<br />8.GIF图像显示<br />9.时间器<br />10.对RFZ的变量操作<br />11.script.rfz脚本的标签跳转<br />12.使用打包LUA<br />13.直接对RFZ内部资源操作<br />14.使用多套按键系统<br />15.用户扩展模式<br />16.RFZLUA实现RFZ引擎各菜单再绘扩展<br />{<br />1.实现标题菜单下雪<br />2.实现游戏中下雪并对下雪的变量进行存档<br />}<br />17.人物实现眨眼<br />18.创建自由架构菜单系统例子<br />}<br /><br />11.文档支持<br />提供 函数帮助文档:SDK1.81.4版本<br />}<br /><br /><br />[/hide]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>uyukm79</b><br/>
+2011-01-14 22:56:04</p>
+</div>
+<div class="col-10">
+<p>sola酱，最近很有时间搞RFZ啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>boy545003571</b><br/>
+2011-01-14 23:04:06</p>
+</div>
+<div class="col-10">
+<p>咱过来支持下，顺便收引擎资源</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>vwcp4119</b><br/>
+2011-01-14 23:04:08</p>
+</div>
+<div class="col-10">
+<p>来支持的说</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>exceed100</b><br/>
+2011-01-14 23:06:18</p>
+</div>
+<div class="col-10">
+<p>前排支持。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>cshfelix</b><br/>
+2011-01-14 23:09:43</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 cshfelix 于 2011-1-14 23:10 编辑 [/i]<br /><br />前来支持的说</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kale0025</b><br/>
+2011-01-14 23:13:23</p>
+</div>
+<div class="col-10">
+<p>同前来支持</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>609321569</b><br/>
+2011-01-14 23:15:55</p>
+</div>
+<div class="col-10">
+<p>看起来很好的说</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Reafves</b><br/>
+2011-01-14 23:34:09</p>
+</div>
+<div class="col-10">
+<p>终于等到新引擎了！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>阿神</b><br/>
+2011-01-14 23:39:49</p>
+</div>
+<div class="col-10">
+<p>來收引擎资源的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>aa1144772233</b><br/>
+2011-01-14 23:48:41</p>
+</div>
+<div class="col-10">
+<p>鄙人离着神物还有点远</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>nh1015088</b><br/>
+2011-01-14 23:48:56</p>
+</div>
+<div class="col-10">
+<p>前排支持。。。恩恩！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zaizei00</b><br/>
+2011-01-15 11:00:33</p>
+</div>
+<div class="col-10">
+<p>谢谢。。。。。。。。。。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>darkland</b><br/>
+2011-01-15 16:23:54</p>
+</div>
+<div class="col-10">
+<p>支持lz！！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>甲虫飞</b><br/>
+2011-01-15 20:18:52</p>
+</div>
+<div class="col-10">
+<p>伸手党的前来了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>XiaoCC</b><br/>
+2011-01-16 07:49:01</p>
+</div>
+<div class="col-10">
+<p>又有新引擎？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kidark2010</b><br/>
+2011-01-16 18:32:12</p>
+</div>
+<div class="col-10">
+<p>初学来收引擎</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>785590</b><br/>
+2011-01-20 15:39:28</p>
+</div>
+<div class="col-10">
+<p>回复浏览剩下的内容</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ndsxiao</b><br/>
+2011-01-27 22:21:10</p>
+</div>
+<div class="col-10">
+<p>果断顶起啊 不解释啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zgm1234azq</b><br/>
+2011-01-28 00:07:42</p>
+</div>
+<div class="col-10">
+<p>果断收资源~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>谭小培</b><br/>
+2011-01-28 13:01:40</p>
+</div>
+<div class="col-10">
+<p>这是什么？？？、</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>GnNu</b><br/>
+2011-01-31 20:51:15</p>
+</div>
+<div class="col-10">
+<p>- -这么久没来这里了。。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post10066_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

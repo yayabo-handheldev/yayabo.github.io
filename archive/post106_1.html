@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS自制软件教程2</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS自制软件教程2</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-15 09:29:43</p>
+</div>
+<div class="col-10">
+<p>摘自：ndsbbs<br />作者：nashi1987<br /><br />这一部分包括如何利用NDS的“帧缓冲”（framebuffer）模式在NDS的一个显示屏上绘图。NDS的每一个显示屏都可以被设置成很多种模式。每一种模式有其优缺点，但我们这里只使用“帧缓冲”模式来实现一个最简单的绘图功能。<br /><br />“帧缓冲”（framebuffer）：<br />“帧缓冲”是一种显示屏映射到一部分内存的模式。向内存中写数据会导致数据显示在显示屏上。在这个模式中，显示屏上的一个象素由2字节数据表示。这相当于C语言中的16位无符号整型数据类型（16 bit unsigned integer）。我们写入这部分内存的数据是以555格式显现的象素颜色。<br /><br />所以我们不需要人为转换555格式，这有一个方便的宏'RGB15'让我们确定每一个象素的红、绿、蓝色的数量。每一个红、绿、蓝元素是一个从0-31的值。0表示无颜色，31表示最大色。（通过不同组合来显现不同颜色）。这是一个例子：<br /><br />RGB15       Color<br />RGB15(31,0,0)   Red<br />RGB15(0,31,0)   Green<br />RGB15(0,0,31)   Blue<br />RGB15(0,0,0)   Black<br />RGB15(31,31,31) White<br /><br />下面的代码片是示范如何通过给定一个指向“帧缓冲”区内存开始部分的指针来用蓝色填充屏幕的：<br /><br />  uint16* framebuffer = ...;<br />for(int i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)<br />  *framebuffer++ = RGB15(0,0,31);<br /><br />向“帧缓冲”写的数据会立刻被画在相应象素上。“帧缓冲”模式的好处是你可以在屏幕任意地方画任何你想画的东西，它直接使用NDS的2D硬件加速。<br />“帧缓冲”的缺点是你必须自己做所有事。没有“精灵”（'sprites'）、贴图、卷动等等，除非你自己写代码实现。NDS的其他模式也许会适合做这些事，它们会在以后的教程中介绍。同时，“帧缓冲”模式有很多灵活性，并让我们更加接近硬件。<br /><br />屏幕：<br />从硬件角度来看NDS上有两个屏幕。一个在上一个在下。下屏是唯一的触摸屏。<br /><br />从编程角度来看这也有两个屏。一个主屏和一个副屏。每一个程序设计中的屏是和硬件对应的。在这个例子中我们只使用一个屏，主屏，它所对应的是硬件的上屏幕。<br />我们用一个叫'videoSetMode'的函数来设置屏的模式。有很多“帧缓冲”内存可以被映射到一个屏幕。这就允许我们实现双缓冲、特殊页之类的功能。我们现在只使用一个“帧缓冲”，所以我们使用“MODE_FB0”；<br /><br />videoSetMode(MODE_FB0);<br /><br />“帧缓冲”的内存区域是一部分带有一个字母“A”的名叫'VRAM'的内存。对每一部分，我们需要告诉显示系统那一部分'VRAM' 内存我们用来做 “帧缓冲”。我们可以像这样使用第一个，VRAM_A:<br /><br />vramSetBankA(VRAM_A_LCD);<br /><br />画一个图形：<br />我们要在显示屏上画的是一个单色矩形。我们写了一个函数来实现它，函数参数包括矩形在屏幕上的位置的X、Y坐标、颜色、以及一个指向“帧缓冲”区的指针：<br /><br />[code="c"]void draw_shape(int x, int y, uint16* buffer, uint16 color)<br />{<br />buffer += y * SCREEN_WIDTH + x;<br />for(int i = 0; i < shape_height; ++i) {<br />  uint16* line = buffer + (SCREEN_WIDTH * i);<br />  for(int j = 0; j < shape_width; ++j) {<br />    *line++ = color;<br />  }<br />}<br />}[/code]<br /><br /><br />“帧缓冲”在内存中以行排列，所以如果屏幕有200象素宽，那麽“帧缓冲”开始的200个uint16（一个象素由一个uint16数据表示）数据单元就代表显示屏的第一行。第二个200个uint16数据单元就表示第二行，等等。<br />“draw_shape”函数首先通过对X、Y坐标的计算来确定第一个象素在“帧缓冲”中的位置。注意SCREEN_WIDTH 和 SCREEN_HEIGHT 是“LIBNDS”提供的返回屏幕宽、高的宏。<br /><br />函数接下来通过向“帧缓冲”中的正确位置写入颜色数据来绘制图形的每一行。<br /><br />shape_height 和 shape_width 是静态变量，做测试时可改变其值：<br /><br />static int shape_width = 10;<br />static int shape_height = 10;<br /><br />移动图形：<br />让图形能在屏幕上移动我们需要擦除现在位置的图形并在新位置重画。这可以通过保存运动前后X、Y坐标的轨迹坐标来实现：<br /><br />static int old_x = 0;<br />static int old_y = 0;<br />static int shape_x = 0;<br />static int shape_y = 0;<br /><br />接下来绘图变的简单了，我们只需通过调用'draw_shape' 函数和old_x、old_y坐标将其变为背景色来擦除它，再调用一次用新 'x'、'y'坐标来绘制新位置的图形：<br /><br />draw_shape(old_x, old_y, VRAM_A, RGB15(0, 0, 0));<br />draw_shape(shape_x, shape_y, VRAM_A, RGB15(31, 0, 0));<br /><br />注意在'draw_shape'函数中的“帧缓冲”参数位置是'VRAM_A'，这是我们之前映射到主屏的“帧缓冲”。<br /><br />并不太正确：<br /><br />一个简单的画图和计算位置的 'main' 函数可以是这样：<br /><br />int main(void)<br />{<br />powerON(POWER_ALL);<br />videoSetMode(MODE_FB0);<br />vramSetBankA(VRAM_A_LCD);<br /><br />while(1) {<br />  old_x = shape_x;<br />  old_y = shape_y;<br />  shape_x++;<br />  if(shape_x + shape_width >= SCREEN_WIDTH) {<br />    shape_x = 0;<br />    shape_y += shape_height;<br />    if(shape_y + shape_height >= SCREEN_HEIGHT) {<br />    shape_y = 0;<br />    }<br />  }    <br />  draw_shape(old_x, old_y, VRAM_A, RGB15(0, 0, 0));<br />  draw_shape(shape_x, shape_y, VRAM_A, RGB15(31, 0, 0));<br />}<br /><br /><br />如果你运行的话你会看见一个“倾斜”的图形在屏幕上运动。（不是矩形）。<br /><br />“垂直扫描中断”（Vertical Blank Interrupt）：<br /><br />出现一个倾斜矩形的原因是屏幕显示的工作方法。硬件设备刷新屏幕的频率是1/60秒。它通过访问每一个象素来实现，一行接一行，复制“帧缓冲”的内容到显示屏。<br /><br />同时，在 main函数中，我们在改变帧缓冲中的内容。所以如果硬件在我们擦除之前绘制图形，它不会被马上擦除。如果我们在硬件绘制之前改变数据，它会绘制一部分新数据和一部分旧数据。<br /><br />幸好硬件有一种方法告诉我们它绘制完成。这就叫“垂直扫描中断”（'Vertical Blank Interrupt'）我们可以注册一个函数让它在这种情况发生时被调用。<br /><br />中断是一个硬件机制，它中断我们当前正在做的事并调用一些函数做一些其他的事。当中断函数返回时，之前的活动就像没有中断一样继续。<br /><br />为了防止我们之前看到的画图问题，我们希望在向帧缓冲写入数据时硬件不要刷新屏幕。做这的最好时候就是在垂直扫描中断时。<br /><br />设置中断：<br /><br />首先我们要告诉NDS在中断时我们要调用什麽函数：<br /><br />void InitInterruptHandler()<br />{<br />REG_IME = 0;<br />IRQ_HANDLER = on_irq;<br />REG_IE = IRQ_VBLANK;<br />REG_IF = ~0;<br />DISP_SR = DISP_VBLANK_IRQ;<br />REG_IME = 1;<br />}<br /><br />在这个代码片中我们只是让垂直扫描中断发生并在发生的同时调用'on_irq' 函数。<br /><br />'on_irq' 函数会像我们之前在 'main'函数中做的一样向帧缓冲中写入数据：<br /><br />void on_irq()<br />{    <br />if(REG_IF & IRQ_VBLANK) {<br />  draw_shape(old_x, old_y, VRAM_A, RGB15(0, 0, 0));<br />  draw_shape(shape_x, shape_y, VRAM_A, RGB15(31, 0, 0));<br /><br />  // Tell the DS we handled the VBLANK interrupt<br />  VBLANK_INTR_WAIT_FLAGS |= IRQ_VBLANK;<br />  REG_IF |= IRQ_VBLANK;<br />}<br />else {<br />  // Ignore all other interrupts<br />  REG_IF = REG_IF;<br />}<br />}<br /><br />这个函数主要是向缓冲中写入数据，其余部分是做一些中断操作。<br /><br />我们也需要告诉NDS我们处理了垂直扫描中断。这是我们以后要调用的 'swiWaitForVBlank' 需要的，我会在那时解释。代码是这样的：<br /><br />// Tell the DS we handled the VBLANK interrupt<br />  VBLANK_INTR_WAIT_FLAGS |= IRQ_VBLANK;<br />  REG_IF |= IRQ_VBLANK;<br /><br />依然不太对：<br /><br />我们可以将写入代码从'main' 函数中移出：<br />int main(void)<br />{<br />powerON(POWER_ALL);<br />videoSetMode(MODE_FB0);<br />vramSetBankA(VRAM_A_LCD);<br />InitInterruptHandler();<br />while(1) {<br />  old_x = shape_x;<br />  old_y = shape_y;<br />  shape_x++;<br />  if(shape_x + shape_width >= SCREEN_WIDTH) {<br />    shape_x = 0;<br />    shape_y += shape_height;<br />    if(shape_y + shape_height >= SCREEN_HEIGHT) {<br />    shape_y = 0;<br />    }<br />  }    <br />}<br /><br /><br />不幸的是运行结果依然有问题。矩形在屏幕上多次出现并最终形成一个棋盘样子。<br /><br />幸亏问题很清楚，当垂直扫描中断发生时硬件每1/60秒调用一次on_irq 函数，这时图形正在被擦除和重画。<br /><br />不幸的是 'main' 函数中的'while'循环和帧率并不同步。它快速的运行使得图形的坐标不断增加，这可能在'on_irq' 程序调用时运行了50次。结果绘图程序擦除了已经被更新了50次的图形坐标。所以错误的区域被擦除了。<br /><br />纠正：<br /><br />我们可以通过让'while'循环等待直到中断发生。这可以通过让循环慢下来的侧面效果来实现。ARM9处理器可以有效的减慢直到中断发生。它也可以使我们的帧率维持在60帧每秒。实现这个功能的函数是'swiWaitForVBlank'。<br /><br />你可能记得之前在'on_irq' 函数中我们设置了一些寄存器，说是用来处理垂直扫描中断的。这是'swiWaitForVBlank'工作所必须的。如果不设置的话'swiWaitForVBlank'会挂起硬件并等待一个永不会发生的中断消息。<br /><br />加入这些行使得我们的程序正确运行：<br /><br />int main(void)<br />{<br />powerON(POWER_ALL);<br />videoSetMode(MODE_FB0);<br />vramSetBankA(VRAM_A_LCD);<br />InitInterruptHandler();<br />while(1) {<br />  old_x = shape_x;<br />  old_y = shape_y;<br />  shape_x++;<br />  if(shape_x + shape_width >= SCREEN_WIDTH) {<br />    shape_x = 0;<br />    shape_y += shape_height;<br />    if(shape_y + shape_height >= SCREEN_HEIGHT) {<br />    shape_y = 0;<br />    }<br />  }    <br />  swiWaitForVBlank();<br />}<br /><br />return 0;<br />}<br /><br />交换屏幕：<br /><br />我之前提到主屏是可以映射到硬件的上屏或下屏的。当前程序的主屏是映射到上屏的。我们可以通过使用'lcdSwap'函数来改变它。它可以在任何时候调用来交换屏幕。下面的函数会使得程序运行在触摸屏上：<br /><br />int main(void)<br />{<br />powerON(POWER_ALL);<br />videoSetMode(MODE_FB0);<br />vramSetBankA(VRAM_A_LCD);<br />InitInterruptHandler();<br />lcdSwap();<br />while(1) {<br />  old_x = shape_x;<br />  old_y = shape_y;<br />  shape_x++;<br />  if(shape_x + shape_width >= SCREEN_WIDTH) {<br />    shape_x = 0;<br />    shape_y += shape_height;<br />    if(shape_y + shape_height >= SCREEN_HEIGHT) {<br />    shape_y = 0;<br />    }<br />  }    <br />  swiWaitForVBlank();<br />}<br /><br />return 0;<br />}</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post106_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

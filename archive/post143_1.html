@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS自制软件教程-垂直扫描中断</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS自制软件教程-垂直扫描中断</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-17 09:51:16</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]www.nashsu.com[/url]<br /><br />在之前的教程中我们遇见过垂直空白中断，但没仔细讲，这里我就专门分析一下。NDS编程虽然使用C/C++高级语言，但仍须接触底层硬件。掌握NDS的中断对NDS编程有很大帮助。<br /><br />之前是在教程2中用到的这个中断，没有看过的请先看之前教程。这里我们就来详细讲解一下垂直空白中断。<br /><br />垂直扫描中断：<br />当NDS的图形硬件刷新显示屏时，将显存中的数据重绘到显示屏上。它从上左开始到下右结束，一行一行的。但如果你在刷新时向显存中写入数据时就会在显示屏出现奇怪的图形。这是因为各硬件的功能没有一个执行的顺序，以至于各功能之间相互干扰。举例来说：假设功能A负责更新资源1，而功能B须从资源1中读取一个完整的数据，如果在功能A更新资源1的同时功能B读取数据，就有可能出现功能B得到的数据一部分旧数据一部分新数据，出现错误。我们就应该让功能A更新数据时功能B等待直到更新完成。而垂直空白中断就可以实现这样的功能。在之前的教程2的示例程序中，我们需要在显示屏上绘制一个运动图形，这就需要一直更新显存的数据，我们遇到的问题就是硬件在更新现存时刷新程序也在运行，这就出现了显存还没更新完刷新程序就刷新完一遍屏幕了，从而刷新程序得到的是一部分新数据和一部分就数据，出现变形的图象。解决方法就是在硬件刷新完一遍屏幕时刷新暂停，这时更新显存，完成后再继续刷新。这样循环下去，就不会出现错误了。<br />NDS为我们提供了解决方法，这就是中断，中断产生时，其他功能停止，中断处理函数运行。在刷新完一次屏幕时调用中断，其他功能暂停运行，这时在中断处理程序中进行显存更新就可以了。在硬件刷新屏幕时，每一行结束时会产生一个行扫描中断（horizontal blank interrupt ），这时我们有很少的一些时间来做一些事情。在最后一行刷新完，产生一个行空白中断时，垂直空白中断产生，这时，刷新暂停，在垂直空白中断的处理函数中（这个函数由我们写），我们刷新显存。之后，告诉系统中断处理完成，退出中断，刷新继续。这样，问题就解决了。<br /><br />实现方法：<br /><br />这里讲垂直空白中断是如何实现的。NDS的中断很多，大部分可以控制。屏蔽或实现是通过NDS的寄存器来控制的。有3个很重要的控制中断的寄存器，它们是：<br /><br />  名称          地址        大小       功能 <br />REG_IME   0×04000208   16 bits   中断主控寄存器<br />REG_IE     0×04000210   32 bits   中断控制寄存器<br />REG_IF     0×04000214    32 bits   中断标志寄存器<br /><br />不用记地址，在编程中只须用名称，DEVKIT的NDSLIB中以定义好了。<br />REG_IME 控制所有中断处理，当0位清除时所有中断停止，当0位置位时所有中断可运行。<br />// 中断关闭<br />REG_IME=0;<br /><br />[...do some code...]<br /><br />// 中断开启<br />REG_IME=1<br /><br />REG_IE则是控制每一种中断的寄存器。NDS有好多种中断，REG_IE中的每一位控制一种中断。以下是一些位对应的中断：<br /><br />Bit libnds define Description <br />0 IRQ_VBLANK in vertical blank period <br />1 IRQ_HBLANK in horizontal blank period <br />2 IRQ_YTRIGGER REG_VCOUNT scanline reached <br />3 IRQ_TIMER0 Timer 0 triggered <br />4 IRQ_TIMER1 Timer 1 triggered <br />5 IRQ_TIMER2 Timer 2 triggered <br />6 IRQ_TIMER3 Timer 3 triggered <br />7 IRQ_NETWORK Unknown <br />8 IRQ_DMA0 DMA 0 <br />9 IRQ_DMA1 DMA 1 <br />10 IRQ_DMA2 DMA 2 <br />11 IRQ_DMA3 DMA 3 <br />12 IRQ_KEYS Key pressed <br />13 IRQ_CART GBA Flashcard is being pulled out <br />16 ARM7 triggered an IPC interrupt <br />17 Receive FIFO is not empty <br />18 Send FIFO is not empty <br />19 IRQ_CARD DS card data completed <br />20 IRQ_CARD_LINE DS card interrupt <br />21 GFX FIFO interrupt <br />控制每一种中断只须设置相应的位就行了，我们这里用到0位，它控制垂直空白中断。REG_IF 功能主要是用来存储中断运行状态，它由NDS管理，与 REG_IE相似，它的每一位表示一种中断的状态，所以，当我们处理完一个中断时，须设置REG_IF中相应的位，来告诉系统我们处理完了。<br /><br />下面我们就来看如何设置垂直空白中断，这是实现代码：<br />REG_IME = 0; //关闭中断<br />IRQ_HANDLER = on_irq; //设置中断处理函数，在中断产生时运行<br /><br />on_irq（）函数<br />REG_IE = IRQ_VBLANK; //设置开启所须中断<br />REG_IF = ~0; //设置状态位<br />DISP_SR = DISP_VBLANK_IRQ;<br />REG_IME = 1; //开启中断<br />*on_irq（）函数由我们编写。<br /><br />其中 DISP_SR = DISP_VBLANK_IRQ这一行是必须的，但目前我不清楚DISP_SR这一寄存器的功能。以后找到了会补上。中断处理结束后应告诉系统，这里通过设置状态寄存器实现，示例代码如下：<br /><br />// Tell the DS we handled the VBLANK interrupt<br />VBLANK_INTR_WAIT_FLAGS |= IRQ_VBLANK;<br />REG_IF |= IRQ_VBLANK; //设置中断状态寄存器<br /><br />这样，一个中断操作完成。其余功能继续运行。<br /><br />以上就是垂直同步中断及其实现方法，有错误不足之处还望大家多多指正。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>伤风</b><br/>
+2008-06-29 21:03:19</p>
+</div>
+<div class="col-10">
+<p>精华文章，学习学习。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zlzgl001</b><br/>
+2008-06-30 10:12:17</p>
+</div>
+<div class="col-10">
+<p>好深奥的东西，是C还是汇编啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>willreno_mj</b><br/>
+2008-06-30 15:41:04</p>
+</div>
+<div class="col-10">
+<p>[quote]原帖由 [i]zlzgl001[/i] 于 2008-6-30 10:12 发表 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=255&ptid=183][img]http://www.yayabo.cn/images/common/back.gif[/img][/url]<br />好深奥的东西，是C还是汇编啊 [/quote]<br />REG_IF |= IRQ_VBLANK; //清楚标识位，嵌入式里很常见的写法。<br />都是C语言的。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post143_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

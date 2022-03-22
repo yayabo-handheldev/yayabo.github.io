@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>关于AMP新版、旧版，以及现状的一些说明。</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">关于AMP新版、旧版，以及现状的一些说明。</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-12-01 16:38:15</p>
+</div>
+<div class="col-10">
+<p>[b]AMP简介[/b]<br />AMP全称Avg Maker Portable是PSP平台的Avg游戏开发引擎，它的作者是“白枫”，在掌机开发圈内大家都喜欢亲切地称呼他为“白叔”，amp采取和lua结合的方式，以lua脚本来控制游戏的进行，如果你会lua的语法或者不会lua的语法都可以瞬间上手，不管是像<星之梦>那样的电子小说类型，还是<逆转裁判>那样带逻辑的Avg游戏，对这个引擎来说都是可能的。<br /><br /><br />[b]amp的诞生（旧版）[/b]<br />2009年7月份左右白叔发布了第一版amp，虽然是第一版但那个时候的amp已经能制作相对完善的avg游戏了，它支持图像、音乐、脚本跳转等等avg游戏必备的功能。就在那个时期kazzak123同学开始制作School Days 电子小说（也就是本大家称为日在校园的）作品，虽然只做了一章，但却体现出了amp的强大和简单易用。要知道那时候amp刚刚推出还没有配套的教程供人们学习，仅有的资料就是引擎自带的一份api手册（囧）。<br /><br />为了验证amp的可靠性，白叔开始对它进行了惨无人道的压力测试，H妹（HOSTA）在这次测试中帮了很大的忙。但是测试的结果似乎并不理想，在运行中不断出现死机黑屏的现象，要知道死机对于一款游戏引擎来说可是最致命的。好在白叔很神奇的（其实是很辛苦的）找到了死机的原因，并且很潇洒的将之摆平。<br /><br />至此amp便正式进入同人创作的世界，开始被PSP同人游戏创作人士所熟知……<br />旧版amp地址：[url]http://www.yayabo.cn/thread-809-1-1.html[/url]<br /><br /><br />[b]砍掉重练是为了让引擎更华丽（新版）[/b]<br />理论上amp已经算是一款比较完整的游戏引擎了，但是白叔似乎并不满意。义无反顾将旧版amp推到，开始踏上了新的征程！<br />8月份左右新版amp开始在掌机开发者之家同人群内部内测。新版本很强大，真的很强大，我引用一下白叔对新版的介绍吧。<br />[quote]脚本预处理   100.0%   (完成)<br />脚本打包     100.0%   (完成)<br />资源打包     100.0%   (完成)<br />游戏数据     100.0%   (完成)<br />场景数据     100.0%   (完成)<br />脚本播放机   100.0%   (完成)<br />对话播放机   90.0%   (对话快进实现,效果让人满意,欠缺历史对话查看)<br />PMP播放     100.0%   (完成)<br />粒子系统       0.0%<br />天气特效       0.0%<br />-------------------------------------------------------------------------------<br />事件模块     100.0%   (完成)<br />调查模块      60.0%    (基本库完成,接下来是lua的封装部分)<br />指证模块       0.0%<br />分支模块     100.0%   (实现,未达成最终效果)<br />存档模块      --.0%   (对各种数据保存到文件的封装)<br />历史对话       0.0%<br />菜单模块      --.0%   (文字显示速度,声音大小,基本设置...)<br />-------------------------------------------------------------------------------<br />图形接口     90.0%   (底层接口完成,提供BG-背景,FG-立绘,ANI-精灵控制接口)<br />声音接口     80.0%   (同时播放1个mp3文件,4个ogg文件,4个wav文件)<br /><br />持续更新...先不管历史对话和存档部分,向调查模块迈进...[/quote]<br /><br />可以看到新版amp增加很多令人激动的新特性，从而使得用amp造出的游戏能够更华丽更好玩，只要你有实力有耐心，完全可以做出媲美官方的游戏。白叔使用新版amp对日在校园进行了重构（[url]http://www.yayabo.cn/thread-1357-1-1.html[/url]）。但是由于新版本是将旧版彻底推到从头开始设计的，并且增加了N多的新特性，从而使得新旧版本互不兼容，这也直接导致很多新同学分不清amp新旧版本的区别，或者根本不晓得amp其实有两个版本。<br />新版amp地址：[url]http://www.yayabo.cn/thread-1079-1-1.html[/url]<br /><br /><br />[b]现状[/b]<br />目前amp仍在内测阶段，什么时候公测我会及时通知大家的。希望大家一如既往的支持白叔，支持他的AMP！<br />欢迎加入内测行列，掌家同人群：26410463</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>封魔夜君</b><br/>
+2009-12-01 17:56:03</p>
+</div>
+<div class="col-10">
+<p>嗯,就等着它了~~期待期待~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2009-12-01 18:05:44</p>
+</div>
+<div class="col-10">
+<p>为了psp，拼了~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ast</b><br/>
+2009-12-01 19:24:07</p>
+</div>
+<div class="col-10">
+<p>前排支持<br /><br />作为一个什么都不知道的小白, 偶还是等完整版好了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2009-12-17 21:08:46</p>
+</div>
+<div class="col-10">
+<p>旧版的解包工具在新版里不能用了啊，还是我RP了……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2009-12-17 23:30:21</p>
+</div>
+<div class="col-10">
+<p>不能解包才是最好的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2009-12-18 10:57:31</p>
+</div>
+<div class="col-10">
+<p>额……完整版发布的时候会附带解包工具么……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2009-12-18 20:00:21</p>
+</div>
+<div class="col-10">
+<p>恭喜你答对了,不会...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2009-12-18 20:57:20</p>
+</div>
+<div class="col-10">
+<p>这是何等的杯具啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2009-12-19 10:35:56</p>
+</div>
+<div class="col-10">
+<p>再问白叔一句，对于零lua基础的人来说也可以把这个引擎运用自如吗？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2009-12-19 11:43:06</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 白枫 于 2009-12-19 11:47 编辑 [/i]<br /><br />只是写些带分支的galgame(音响小说)的话,零编程基础也是可以驾驭amp的<br />如果要运用自如的话,一些程序的知识是必须的,毕竟易用性和自由度是成反比的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>任天之浪</b><br/>
+2009-12-19 12:28:41</p>
+</div>
+<div class="col-10">
+<p>期待到时候白叔和掌家的教程啊呜～</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post825_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

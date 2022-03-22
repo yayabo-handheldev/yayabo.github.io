@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS自制软件教程3</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS自制软件教程3</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-15 09:30:35</p>
+</div>
+<div class="col-10">
+<p>摘自：ndsbbs<br />作者：nashi1987<br /><br />这一节，我们介绍如何处理用户的按键操作。<br /><br />REG_KEYINPUT 寄存器：<br /><br />NDS有一个硬件寄存器，当按键被按下时，寄存器的值会改变。寄存器REG_KEYINPUT 位于内存地址的0x4000130处。它是只读寄存器。当按键时，值会改变：<br /><br />KEYS Bit   Key             'ndslib' define       Down if   Up if<br />  0         A                   KEY_A             Cleared   Set<br />  1         B                   KEY_B             Cleared   Set<br />  2     Select                 KEY_SELECT     Cleared   Set<br />  3     Start                 KEY_START       Cleared   Set<br />  4   Directional Right         KEY_RIGHT       Cleared   Set<br />  5   Directional Left           KEY_LEFT         Cleared   Set<br />  6   Directional Up           KEY_UP           Cleared   Set<br />  7   Directional Down         KEY_DOWN       Cleared   Set<br />  8   Right Alternate Button   KEY_R             Cleared   Set<br />  9   Left Alternate Button   KEY_L             Cleared   Set<br /><br />REG_KEYXY 寄存器：<br />你会注意到这里漏掉了两个键， 'X' 和 'Y'。<br />这两个键是从不同的寄存器读取的，REG_KEYXY寄存器，在内存地址0x04000136处。不幸的是这个寄存器只能被ARM7读取。<br /><br />为了让它能被ARM9读取，在LIBNDS的ARM7样板代码中，ARM7在垂直间隔中断时读取寄存器值并储存在IPC数据结构中，IPC可被ARM9读取。这是相关代码片：<br /><br />void InterruptHandler(void) {<br />  [...]<br /><br />  but = REG_KEYXY;<br /><br />  [...]<br /><br />  IPC->heartbeat = heartbeat;<br />  IPC->buttons   = but;<br />  IPC->touchX   = x;<br /><br />  [...]<br />}<br /><br />REG_KEYXY 寄存器不仅包含X、Y键状态位，它还包括触控笔和NDS屏幕和上或打开的状态位：<br /><br />XKEYS Bit Key     'ndslib' define   Down if...   Up if ...<br />  0     X             (1 << 0)     Cleared   Set<br />  1     Y             (1 << 1)     Cleared   Set<br />  2   Pen Down     (1 << 6)     Cleared   Set<br />  3   Hinge         (1 << 7)     Set       Cleared<br /><br /><br />读键：<br /><br />使读取 REG_KEYINPUT 寄存器变的简单一点，我取它值的补码。这允许使用'&' 操作符来判断键是否被按下。我们可以这样写代码：<br /><br />  uint16 keysPressed = ~(REG_KEYINPUT);<br />  if(keys_pressed & KEY_UP)<br />    --shape_y;<br />来取代这个不直观的<br />  if(!(REG_KEYINPUT & KEY_UP))<br />    --shape_y;<br /><br />同样的事ARM7可以这样做：<br />uint16 specialKeysPressed = ~IPC->buttons;<br /><br />  // Y Key<br />  if(specialKeysPressed & (1 << 1))<br />    shape_color = RGB15(7, 7, 7);<br /><br />  // X Key<br />  if(specialKeysPressed & (1 << 0))<br />    shape_color = RGB15(0, 15, 15);<br /><br />  // Pen Down<br />  if(specialKeysPressed & (1 << 6))<br />    shape_color = RGB15(0, 31, 31);<br /><br />  // Hinge closed<br />  if(!(specialKeysPressed & (1 << 7)))<br />    shape_color = RGB15(0, 0, 0);<br /><br /><br />通过键来控制图形移动：<br />我们对上一篇教程中的示例做一下轻微改动，以通过键来控制。<br /><br />我们用方向键控制来代替图形的自动移动。其他的键控制图形的颜色。合上屏幕会使它消失，打开再按一个键又会让它重现。<br /><br />我们使用一个公共变量来储存颜色值：<br /><br />static uint16 shape_color = RGB15(31, 0, 0);<br /><br />绘图代码也须改变：<br />void on_irq()<br />{      <br />if(REG_IF & IRQ_VBLANK) {<br />  draw_shape(old_x, old_y, VRAM_A, RGB15(0, 0, 0));<br />  draw_shape(shape_x, shape_y, VRAM_A, shape_color);<br /><br />  // Tell the DS we handled the VBLANK interrupt<br />  VBLANK_INTR_WAIT_FLAGS |= IRQ_VBLANK;<br />  REG_IF |= IRQ_VBLANK;<br />}<br />else {<br />  // Ignore all other interrupts<br />  REG_IF = REG_IF;<br />}<br />}<br /><br />图形通过方向键移动：<br /><br />  uint16 keysPressed = ~(REG_KEYINPUT);<br /><br />  // Based on the key pressed, move the shape.<br />  if(keysPressed & KEY_UP)<br />    --shape_y;<br />  if(keysPressed & KEY_DOWN)<br />    ++shape_y;<br />  if(keysPressed & KEY_LEFT)<br />    --shape_x;<br />  if(keysPressed & KEY_RIGHT)<br />    ++shape_x;<br /><br />颜色通过测试IPC->buttons的值来改变，但首先取它的补码使其更加直观：<br /><br />  uint16 specialKeysPressed = ~IPC->buttons;<br /><br />  // Change the color of the shape if the relevant key was pressed.<br />  if(keysPressed & KEY_A)<br />    shape_color = RGB15(31, 0, 0);<br /><br />  if(keysPressed & KEY_B)<br />    shape_color = RGB15(0, 31, 0);<br /><br />  if(keysPressed & KEY_SELECT)<br />    shape_color = RGB15(0, 0, 31);<br /><br />  if(keysPressed & KEY_START)<br />    shape_color = RGB15(31, 31, 31);<br /><br />  if(keysPressed & KEY_R)<br />    shape_color = RGB15(15, 0, 15);<br /><br />  if(keysPressed & KEY_L)<br />    shape_color = RGB15(7, 15, 7);<br /><br />  // Y Key<br />  if(specialKeysPressed & (1 << 1))<br />    shape_color = RGB15(7, 7, 7);<br /><br />  // X Key<br />  if(specialKeysPressed & (1 << 0))<br />    shape_color = RGB15(0, 15, 15);<br /><br />  // Pen Down<br />  if(specialKeysPressed & (1 << 6))<br />    shape_color = RGB15(0, 31, 31);<br /><br />  // Hinge closed<br />  if(!(specialKeysPressed & (1 << 7)))<br />    shape_color = RGB15(0, 0, 0);</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>小猫</b><br/>
+2011-09-18 12:53:58</p>
+</div>
+<div class="col-10">
+<p>good</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post107_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

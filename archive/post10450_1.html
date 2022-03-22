@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>新人求教几个问题(已解决)</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">新人求教几个问题(已解决)</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_11.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-18 00:14:15</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 kong 于 2010-12-23 11:23 编辑 [/i]<br /><br />[s]如下图，<br />[/s][attach]17626[/attach]<br />[s]想将上面的改成用摇杆模拟一个光标(不知道专用名词咋说=  =||)进行选择<br />而且当光标划过选项是就会将选项的图片换另一张的效果<br />(也就是光标划过时[attach]17627[/attach]换成[attach]17628[/attach])<br />[/s]<br />[s]还有，想请教一下bg移动的问题。。。<br />(也就是“把一张大于屏幕的图片渐渐地往某一个方向移动”的那种效果)<br /><br />最后还想请教一下各位大大移植的前期处理都用什么工具<br />不过偶目前还是最苦恼脚本问题，有提不出的，还有提了出来乱码的。。。<br />还有字符集去哪找怎么装之类的 <br />偶表示没有脚本上面那个手工做得很蛋疼的说~<br /><br />嘛嘛~名词不知咋说了<br />最近QQ经常掉线，都不太想用了。。。[/s]<br /><br /><br />[s][b]2010.12.21更新的问题：<br />[/b]fgmove();是fg移动的指令没错吧？但是AMP执行指令的时候是从上到下执行<br />但是如果偶想要N个fg[color=red]同时移动[/color]或者是[color=red]前面的[/color][color=red]未移动完下一个就接着移动[/color]的话，那应该怎样做？[/s]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>悸樱奏</b><br/>
+2010-12-18 00:25:56</p>
+</div>
+<div class="col-10">
+<p>空君乃在做啥好物啊偶这个渣渣目前只能来围观了话说乃为啥不去超级群里问问R叔还在呢~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-18 00:41:17</p>
+</div>
+<div class="col-10">
+<p>    偶现在在牧场群里接受总叔的调教中。。。(主要是脚本问题 )</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>flamesmile</b><br/>
+2010-12-18 00:42:23</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 flamesmile 于 2010-12-18 00:49 编辑 [/i]<br /><br />[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=164403&ptid=14272]1#[/url] [i]kong[/i] [/b]<br /><br />空君。。。。。。。。。要做出摇杆模拟鼠标效果么。。。。。。那个要切换游戏模式的。。。。。。。很容易混乱的。。。。。。。。。。<br /><br /><br />具体可以去参考下AMP自带的解谜游戏实例的脚本。。。。。。。。。。。。。。。。不过还是推荐用全按键的。。。。。。感觉特地弄个鼠标来把操作折腾的更复杂没什么意义的。。。。。。。。。。。。。。。。。。。。。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-18 00:50:40</p>
+</div>
+<div class="col-10">
+<p>    那么按键选择的话，光标指到哪里就换选项图标的话要怎么做？？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>flamesmile</b><br/>
+2010-12-18 01:00:30</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 flamesmile 于 2010-12-18 04:25 编辑 [/i]<br /><br />[b]回复 [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=164415&ptid=14272]5#[/url] [i]kong[/i] [/b][code]function titleselectA(selectA1,selectA2,selectA3，selectB1,selectB2,selectB3，dx，dy，stepx，stepy)<br />	if _discolortitle==nil then<br />		_discolortitle = {}<br />		_discolortitle.blue = {}<br />		_discolortitle.pink = {}<br />		_discolortitle.icondx = dx-2<br />		_discolortitle.icondy = dy-2<br />		_discolortitle.mode = 1<br />		_discolortitle.chose = 1<br />		_discolortitle.blue[1] = LoadImage(selectA1,8888)<br />		_discolortitle.blue[2] = LoadImage(selectA2,8888)<br />		_discolortitle.blue[3] = LoadImage(selectA3,8888)<br />		_discolortitle.pink[1] = LoadImage(selectB1,8888)<br />		_discolortitle.pink[2] = LoadImage(selectB2,8888)<br />		_discolortitle.pink[3] = LoadImage(selectB3,8888)<br /><br />	elseif _discolortitle.mode==1 then<br /><br />		if KeyDown(KEY_UP)==1 then<br />			_discolortitle.chose = _discolortitle.chose - 1<br />			if _discolortitle.chose < 1 then<br />				_discolortitle.chose = 3<br />			end<br />		end<br />		if KeyDown(KEY_DOWN)==1 then<br /><br />			_discolortitle.chose = _discolortitle.chose + 1<br />			if _discolortitle.chose > 3 then<br />				_discolortitle.chose = 1<br /><br />			end<br />		end<br /><br />		if KeyDown(KEY_CIRCLE)==1 then<br />			--CURR_EV = 1;<br />			_discolortitle.mode = 2<br />		end<br /><br />		if KeyUp(KEY_CIRCLE)==1 then<br />			--if CURR_EV == 1 then<br />				--_discolortitle.mode = 2<br />			--end<br />		end<br /><br />		local _dx = dx<br />		local _dy = dy<br /><br />		for i=1,3 do<br />			if _discolortitle.chose==i then<br />				--if CURR_EV == 1 then<br />					--DrawImage(_discolortitle.blue[i],_dx,_dy)<br />				--elseif CURR_EV == 2 then<br />					ImageToScene(_discolortitle.pink[i],_dx,_dy)<br />				--end<br />			else<br />				ImageToScene(_discolortitle.blue[i],_dx,_dy)<br />			end<br />			_dx = _dx + stepx<br />			_dy = _dy + stepy<br /><br />		end<br /><br /><br />	elseif _discolortitle.mode==2 then<br />		FreeImage(_discolortitle.blue[1])<br />		FreeImage(_discolortitle.blue[2])<br />		FreeImage(_discolortitle.blue[3])<br />		FreeImage(_discolortitle.pink[1])<br />		FreeImage(_discolortitle.pink[2])<br />		FreeImage(_discolortitle.pink[3])<br />		_discolortitle = nil<br />		return chose<br />	end<br /><br />	loop()<br />end[/code]以上~~~~~~~~~~~~~~~~把这个定义进新函数~~~~~~~~~~<br /><br />selectA的是默认按钮<br />selectB是选中后的按钮<br />其他和普通一样<br /><br /><br /><br />用的时候就像这样：<br />chose = titleselectA("背景按钮1","背景按钮2","背景按钮3","选中按钮1","选中按钮2","选中按钮3",x坐标,y坐标,x增加步长,y增加步长)<br />if chose == 1 then XXXXXXXXXXXX;end<br />if chose == 2 then XXXXXXXXXXXX;end<br />if chose == 3 then XXXXXXXXXXXX;end</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-18 01:07:17</p>
+</div>
+<div class="col-10">
+<p>[quote]回复  kong <br />chose = titleselectA("背景按钮1","背景按钮2","背景按钮3","选中按钮1","选中按钮2","选中按钮3",x坐标,y坐标,x增加步长,y增加步长)<br />if chose == 1 then XXXXXXXXXXXX;end<br />if chose == 2 then XXXXXXXXXXXX;end<br />if chose == 3 then XXXXXXXXXXXX;end<br /><br />[size=2][color=#999999]flamesmile 发表于 2010-12-18 01:00[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=164416&ptid=14272][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />    偶用这段好了。。。现在暂时不想学函数之类的东西<br />还是学会简单点的东西再说~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>悸樱奏</b><br/>
+2010-12-18 01:07:43</p>
+</div>
+<div class="col-10">
+<p>    HV5偶果然是个渣渣</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>flamesmile</b><br/>
+2010-12-18 01:09:29</p>
+</div>
+<div class="col-10">
+<p>[quote]偶用这段好了。。。现在暂时不想学函数之类的东西<br />还是学会简单点的东西再说~ ...<br />[size=2][color=#999999]kong 发表于 2010-12-18 01:07[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=164417&ptid=14272][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />    oh no..........上边那个咱已经帮你写好了，直接用就行了。。。。。。。。。。。<br />而且如果不把那些复制进自定义函数里的话下面那个语句是无效的。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-18 01:10:10</p>
+</div>
+<div class="col-10">
+<p>    偶虽然是看明白了上面那函数。。。但是写还是不会。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-18 01:11:09</p>
+</div>
+<div class="col-10">
+<p>    复制到哪？？？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>flamesmile</b><br/>
+2010-12-18 01:14:37</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 flamesmile 于 2010-12-18 01:21 编辑 [/i]<br /><br />好吧。。。。。。具体操作。。。。。。。。<br />[attach]17629[/attach]<br />这个扔进脚本堆里<br />然后在“am_init.lua”这个脚本里<br />有一堆这样的东西[code]Include("ball_ex.lua");<br />Include("feather_ex.lua");<br />Include("rain_ex.lua");<br />Include("hikari_yellow_ex.lua");<br />Include("snow_ex.lua");<br />Include("bloudsakura_ex.lua");<br />Include("sakura_ex.lua");<br />Include("behindmove.lua");<br />Include("end_ex.lua");<br /><br />Include("module_switch.lua");<br />Include("module_select.lua");<br />Include("select_plus.lua");<br />Include("module_find.lua");<br />Include("module_menu.lua");<br />Include("module_title.lua");<br />Include("module_sav.lua");<br />Include("module_memory.lua");[/code]在其中插一行写上：<br />Include("titleselectA.lua");<br /><br /><br /><br /><br />之后再在自己的脚本里用[code]chose = titleselectA("背景按钮1","背景按钮2","背景按钮3","选中按钮1","选中按钮2","选中按钮3",x坐标,y坐标,x增加步长,y增加步长)<br />if chose == 1 then XXXXXXXXXXXX;end<br />if chose == 2 then XXXXXXXXXXXX;end<br />if chose == 3 then XXXXXXXXXXXX;end[/code]这样的代码就能用了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>flamesmile</b><br/>
+2010-12-18 01:19:57</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 flamesmile 于 2010-12-18 02:49 编辑 [/i]<br /><br />oh  no。。。。。。。。。刚才用论坛模式手打的代码。。。。有几个地方用了全角标点，。，。。。。读取不能的说。。。。<br />[attach]17631[/attach]<br />更正了下。。。。。。。。。<br /><br />刚试过能读取了。。。。。。。。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>『兔寳貝』</b><br/>
+2010-12-18 03:14:14</p>
+</div>
+<div class="col-10">
+<p><br />那个……HDV5.<br />另向未来技术帝请安……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yyeg</b><br/>
+2010-12-18 12:22:06</p>
+</div>
+<div class="col-10">
+<p>夏色的纸飞机么全年龄没语音？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gyyfifafans</b><br/>
+2010-12-18 13:45:30</p>
+</div>
+<div class="col-10">
+<p>围观hd调教kong君……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gyyfifafans</b><br/>
+2010-12-18 14:02:00</p>
+</div>
+<div class="col-10">
+<p>    hd，乃居然扔下俺，来找kong君……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-18 15:15:48</p>
+</div>
+<div class="col-10">
+<p>    不可以莫~ <br /><br />话说这里不是版聊的地方。。。偶不想说内容相关以外的话<br />(这句之后你就别回帖了=  =)</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>沁ぅ純の寳貝</b><br/>
+2010-12-18 16:30:08</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 沁ぅ純の寳貝 于 2010-12-18 16:35 编辑 [/i]<br /><br />顺便一提摇杆是相当简单的 切换模式自动 加个函数进去就行了<br />function discolortitle()<br />if findtest() == 1 then<br />fgon(1);<br />elseif findtest() == 2 then<br />fgon(2);<br />elseif findtest() == 3 then<br />fgon(3);<br />else<br />local i;<br />for i = 1,3 do<br />fgoff(i);<br />end<br />end<br />end<br /><br />然后把这个函数贴到am_init.lua里面去 然后在find模式之前调用进来即可：setfindfunc(discolortitle);<br /><br />find模式其实不麻烦 跳转脚本的时候加上一句sysMode(EVENT_MOUDLE);即可<br /><br />以及前提脚本的操作：像俺这种已经化为尘埃的家伙么就能看得懂一些简单的脚本 而一些自己写引擎的而不是通用引擎（KRKR，NS啥的）俺则必须找人帮忙了。。。<br />建议找的人：威廉叔，浪叔，掌叔 如果白叔实在是没事干的话白叔也回来帮乃的 前提是白叔正在兴头上……</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>flamesmile</b><br/>
+2010-12-20 00:17:57</p>
+</div>
+<div class="col-10">
+<p>[quote]顺便一提摇杆是相当简单的 切换模式自动 加个函数进去就行了<br />function discolortitle()<br />if findte ...<br />[size=2][color=#999999]沁ぅ純の寳貝 发表于 2010-12-18 16:30[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=164632&ptid=14272][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />    [img]http://www.yayabo.cn/images/smilies/cat/2.gif[/img]<br />宝贝师父再次用0.3秒做了咱30天才能做到的事，膜拜宝贝师父，宝贝师父威武</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2010-12-20 21:32:12</p>
+</div>
+<div class="col-10">
+<p>新手来膜拜并学习19L</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-21 02:50:53</p>
+</div>
+<div class="col-10">
+<p>小白继续求调教！！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>悸樱奏</b><br/>
+2010-12-21 17:40:24</p>
+</div>
+<div class="col-10">
+<p>    OH NO偶也想被调教</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kong</b><br/>
+2010-12-21 18:32:01</p>
+</div>
+<div class="col-10">
+<p>    乃个受的~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>悸樱奏</b><br/>
+2010-12-21 18:34:13</p>
+</div>
+<div class="col-10">
+<p>    OH NO果断滴被空君乃给坑了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>諾亞</b><br/>
+2010-12-21 18:36:26</p>
+</div>
+<div class="col-10">
+<p>围观KONG君被调教。 一人一</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>沁ぅ純の寳貝</b><br/>
+2010-12-21 18:53:14</p>
+</div>
+<div class="col-10">
+<p>俺看看有啥好办法。。。<br /><br />_imagemovedx = {};<br />_imagemovedy = {}<br />_imagemovevx = {};<br />_imagemovevy = {};<br />_imagemovemode = {};<br />_imagemovecount = {};<br />_imagemovetime = {};<br />_imagemoveif = {};<br />_imagemoveend = 1;<br /><br />function imagexy(index,dx,dy)<br />	_imagemovedx[index] = dx;<br />	_imagemovedy[index] = dy;<br />	fgxy(index,dx,dy);<br />end<br /><br />function imagemove(index,vx,vy,time)<br />	_imagemovevx[index] = vx;<br />	_imagemovevy[index] = vy;<br />	_imagemovetime[index] = time/1000*60;<br />	_imagemoveif[index] = 1;<br />	_imagemovemode[index] = 0;<br />	_imagemovecount[index] = 0;<br />end<br /><br />function imagemovebegin()<br />if true then<br />	for index=1,16 do<br />		if _imagemoveif[index]==1 then<br />			_imagemovemode[index] = 1;<br />		end<br />	end<br />	for index=1,16 do<br />		if _imagemoveif[index]==1 then<br />			if _imagemovemode[index]==1 then<br />				_imagemovecount[index] = _imagemovecount[index] + 1;<br />				if _imagemovecount[index] == 0 then<br />					_imagemovedx[index] = _imagemovedx[index] + _imagemovevx[index]/20;<br />					_imagemovedy[index] = _imagemovedy[index] + _imagemovevy[index]/20;<br />				end<br />				fgxy(index,_imagemovedx[index],_imagemovedy[index]);<br />				if _imagemovecount[index] >= _imagemovetime[index] then<br />					_imagemovemode[index] = 2;<br />				end<br />			end<br />		end<br />	end<br />	_imagemoveend = 1;<br />	for index=1,16 do<br />		if _imagemoveif[index]==1 then<br />			if _imagemovemode[index]==2 then<br />				_imagemovemode[index] = 0;<br />				_imagemovecount[index] = 0;<br />				_imagemoveif[index] = 0;<br />			elseif _imagemovemode[index]==1 then <br />				_imagemoveend = 0;<br />			end<br />		end<br />	end<br />	if _imagemoveend == 1 then return;end<br />end<br />loop();<br />end<br /><br />上述的函数新开一个lua脚本然后粘贴进去 Include一下 用的时候这样子：<br /><br />fg(1,"demopic1.png",0,0);--载入fg1<br />fg(2,"demopic2.png",0,0);--载入fg2<br />imagexy(1,0,0); --fg1号初始坐标设定<br />imagexy(2,0,0); --fg2号初始坐标设定<br />imagemove(1,80,80,1000); --fg1号移动距离设定<br />imagemove(2,80,80,1000); --fg2号移动距离设定<br />imagemovebegin(); --开始移动fg<br /><br />移动的fg限定为1~16号 理应是足够的<br />这是前台移动 想要后台移动的话可以把loop去掉然后自己适当做一些修改 加入到switch里面即可<br />顺便一提俺只是搬运而已 想来说些啥的同学们可以回家喝茶去了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>悸樱奏</b><br/>
+2010-12-21 19:17:53</p>
+</div>
+<div class="col-10">
+<p>    偶只是来学习兼被调教滴</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>q0989588968</b><br/>
+2010-12-24 13:51:58</p>
+</div>
+<div class="col-10">
+<p>問 寶貝叔巴XD<br /><br /><br />俺當年也是 寶貝叔 幫俺搞定的XD</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post10450_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

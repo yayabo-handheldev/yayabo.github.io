@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>【小生教室】AMDS 有透明背景立绘处理方法</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">【小生教室】AMDS 有透明背景立绘处理方法</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_5.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>dbcliu</b><br/>
+2010-07-16 21:57:18</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 dbcliu 于 2010-7-16 22:01 编辑 [/i]<br /><br />AMDS 有透明背景立绘处理方法<br />      -by 雨里小生<br />1.	首先确认每张立绘的大小是否相等。<br />发现不相等的情况，则请按照不同人物的立绘分成不同文件夹，依次进行下面的批处理。<br />如果全部相等就不需要分了。<br />2.	打开PS。并打开一个人物一张比较代表性的立绘（最好取高度在所有同一个人物立绘中比较适中的。）<br /> <br />3.	打开图像-图像大小，查看具体数值。按照4：3比例比较高和宽，关闭。<br /> <br />点窗口-动作打开动作面板，点击垃圾桶左侧的创建新动作，创建一个立绘处理动作。<br />然后开始录制（未自动开始就点一下新建的动作，按一下圆形按钮即录制键）。开始录制后请不要有多余的操作。<br />然后再次打开图像-图像大小，取适当的一个数值作为基准重设大小，调整基准数值成标准值【基准为宽则设宽为256，基准为高则设高位192】，保持原图像比例。（这里这张图是900*600，但是初音的头已经被削过了，所以不继续削头，取高为基准。）如图：<br /> <br />然后打开图像-画布大小，重设画布大小为256*192。位置选择贴下边。如图：<br /> <br />这时提示会进行裁剪，点确认。<br />此时停止录制（方形按钮）。<br />再打开几张不同的立绘，点执行键（绿色三角形按钮），确认前面设置的操作是否适用于全部的立绘（没让你所有的试一遍，是抽样着试。），并确认视觉效果。<br />最后关掉所有用来试的图片（不要保存），仅保留最先处理的这张。<br />4.	上面已经完成了大小处理，接下来进行填充背景和关键的描边。如图勾选油漆桶功能：<br /> <br />并如图设置前景色彩：<br /> <br />点击刚刚创建的立绘处理动作，点录制键继续录制。<br />对着刚刚缩好的立绘的透明背景的一个角落（推荐左上角）点击一下，用油漆桶填充背景。<br /> <br />仔细看，是不是有突兀的白边？这是因为，原本的立绘为了使我们看上去边缘柔和光滑，在边缘处使用了alpha通道（透明度）来消除锯齿。但是填充时alpha通道的那些位置不会被填充到，于是就露出白边来了。<br />由于amds或者说nds不支持边缘的alpha通道，只能想办法去掉这些突兀的白边。那么怎么解决呢？<br />一句话：只要不是白色就不是白边了。简单说就是我们进行再次描边，把透明度去掉。在PS中有着很简单的处理方式。（注意，这时动作录制并没有停止，请不要多余操作。要进行别的操作就点停止键停止录制，在恢复录制时点录制键。）点击文件-存储为WEB和设备所用格式，如图对右上角的自定义选项进行勾选：<br /> <br />注意，图示的杂边这个选项就是描边功能，请选择一种使得图像边缘看上去比较柔和、贴近人物边缘的颜色。推荐在色彩设置时选择靠近浅肉色的灰色。<br />最后点存储，选择一个合适的目录（注意不要改文件名，不然伟大的ps会连改文件名都录下来。），保存即可。这时，你的立绘已经处理成了amds标准的立绘原文件。用image converter转换就可以用了。<br /><br />本教程网页版无图，可能你无法看懂，那就请下载下来读，相信对你有帮助。<br />下载地址：[url]http://www.vdisk.cn/down/index/4641257A1381[/url]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-07-16 22:02:05</p>
+</div>
+<div class="col-10">
+<p>小生终于也成为牛人了~~~膜拜~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>dbcliu</b><br/>
+2010-07-16 22:03:48</p>
+</div>
+<div class="col-10">
+<p>    青蛙君，俺只是战斗力5的残渣。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2010-07-16 22:04:54</p>
+</div>
+<div class="col-10">
+<p>小生叔V5~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-07-16 22:05:08</p>
+</div>
+<div class="col-10">
+<p>[quote]回复  明日青蛙 <br /><br /><br />    青蛙君，俺只是战斗力5的残渣。<br />[size=2][color=#999999]dbcliu 发表于 2010-7-16 22:03[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=69478&ptid=6809][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />    没关系~~~俺这个战斗力-5的残渣~~~还是必须仰视你的~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-07-16 22:06:49</p>
+</div>
+<div class="col-10">
+<p>纳尼，终于发了么</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wz20084596</b><br/>
+2010-07-16 22:11:06</p>
+</div>
+<div class="col-10">
+<p>看一看~~学习一下~~额 对我来说还是有难度......</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>False_Kuku.</b><br/>
+2010-07-16 22:13:18</p>
+</div>
+<div class="col-10">
+<p>好牛X啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zhy_6666</b><br/>
+2010-07-16 23:54:05</p>
+</div>
+<div class="col-10">
+<p>    我表示我的战斗力为虚数。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zhy_6666</b><br/>
+2010-07-17 00:28:07</p>
+</div>
+<div class="col-10">
+<p>谁能把这个录成可以批处理的动作？发一份给我谢谢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zhy_6666</b><br/>
+2010-07-17 00:28:46</p>
+</div>
+<div class="col-10">
+<p>谁能把这个录成可以批处理的动作？发一份给我谢谢</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zhy_6666</b><br/>
+2010-07-17 15:30:36</p>
+</div>
+<div class="col-10">
+<p>    手机还真是刷帖利器。。。一次就能发两贴。。。而且论坛的15秒放灌水对他都米用。。。 还可以说是手机渣了。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ljner</b><br/>
+2010-08-01 20:52:10</p>
+</div>
+<div class="col-10">
+<p>小生叔v5，俺在退休前再来学习一下</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post4962_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

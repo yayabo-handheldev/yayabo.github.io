@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PSP开发指南第3课</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">PSP开发指南第3课</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-07 16:13:55</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.donews.com/pspdoc[/url]<br /><br />    在读过第一课和第二课之后，你现在应该可以安装开发环境。并且可以完成基本的PSP编程。现在应该做更深一步的的学习。做一个"hello world"应用程序是很不错的。但是它并不是万能的，所以这个指南就是教你如何去做这些"hello world"所做不了的事情。<br />    你所要了解的是这个指南的作用并不是从头至尾的教你如何编写PSP开发程序，与其说他是教你    现在我们继续探讨函数代码。此后，所有的列出的代码都应该加入你们的main函数代码。来代替从第二课以来的"printf"命令。我们首要做的是来定义我们程序里应用的变量。比如对以下变量的定    定义为"pad",它充满了垃圾数据(因为我们没有初始化它),这些在我们写程序的时候要紧记.如果你定义一个变量而没有初始化它(就像我们的pad变量)，它将不是被清空的，它将包含了以前的大块存储信息。定义一个变量就是分配某一个大的存储空间来让变量去存储。初始化就是清理一个空间来允许我们应用。而那些在我们不能定义它的同时初始化的"pad"的原因是因为在这时初始化是没有意义的。因为它控制了输入按钮，你是不能仅仅靠输入一个数值来初始化它。我们将在真正应用它的时候再来初始化它。<br />    现在，我们将给使用者一些使用说明。我们用"printf"输出一个语句的方式，是要把定义变量的位置放在"printf"语句之后。<br /><br />printf("Press [X] To Start the Timer");<br />    看起来很熟悉？很好，因为是在第二课我们输出"Hello World"时用过的一些函数。所以，如果你的程序运行到这一步，它看起来就像在运行"hello world"的应用程序。但它打印出的是"Press [X] To Start the Timer"而不是"Hello World."。<br />    现在，我们需要程序在作别的事情之前一直等待直到用户按下[X] 按钮，而现在这看起来几乎是不可能的。幸运的是，我们可以应用循环来处理它。循环，从根本上讲，就是让程序重复通过一段代码。有很多种类的循环（比如 for 循环，while 循环，do while 循环等）我们这个指南只介绍众多循环中的两种--While循环和for循环。循环如何工作取决于你给他什么样的参数。如果你给他的参数是正确的，它将会执行一段代码。例如，你有一段代码是增加的变量（循环每次运行都从零开始）你给这个循环的参数是"i<10"，它将会执行你的代码十次。因为第十一次，它将会检查变量的数值，如果它是十，是不比十小的数值，那么这个语句就是false（这是一个我们曾见过得连续语句），另一个非常重要的概念就是你要紧记"true"和 "false"非常接近于"1" 和 "0"的关系。<br />    我们的循环不是一流的，它是非常简单的，但是我曾经仔细看过一个psp 方案的一段代码，他们总是这么应用。所以，我想我以你们一般常见的方式把它介绍给你们是合适的。总之，我们所将要做的就是在我们的每句话之前加一个 "infinite loop"尽管它并不真实无限的。因为（我之前没有提到）有一种不同于控制参数返回false的另外一个方式可以结束循环。这就是"break"参数，只要你的循环遇到这个参数，它都将结束你目前的循环。而你的程序将在这个循环的末端继续执行。以下，就是我们的循环的开始：<br /><br />while(1) {<br />    就像你所知道的，这个控制语句总是评估参数是否是"true,"，因为"1"同"true."一样，所以下面的代码（再开始括号和结尾括号之间的数据行）将会重复执行，直到它遭遇一个"break"参数。<br />    下一个数据行就是我们事前规定数值"pad." 的地方。他用到了一个我们早先包含在"pspctrl.h"文档内的作了详细说明了的函数。这就是函数调用，就像你在第二课看见的那样。但是在这里有一点改变。首先，我们传两个数值给他，不需要更多的处理，你只需要将这两个数值用一个逗号分开即可。其次，有一点不同就是我们将要传入一个变量。也不需要更多的处理，只需要插入这个变量名来代替一个数字或者一个字符串，或者其他什么的。再次，有一点不同就是我们需要在"pad."之前代用"&"操作符，这实际上就是"address of"操作符，当你对编程掌握得更深的话，你将会对他运用得得心应手，基本上，目前它所要做的不是代用数值或者变量，它要代用的是存储地址。现在你知道函数调用拥有一个可以转变你代给它变量数值的功能。你需要应用"&"操作符。这就是为什么我们设置"pad"来容纳关于psp管理的当前情况。<br /><br />          sceCtrlReadBufferPositive(&pad, 1);<br />    如果你对于"1"的作用有些疑惑，不要担心，它设立了数字缓存块去读取，但我仅仅在这里看到"1"的应用。其实，我并不知道为什么你在这里想要知道一些别的东西（如果可以构成一个理由，那么受到你的启发，我将会在这里加入一些说明）。<br />    下一个程序行是关于"if" 语句，它可以让你的应用程序编辑的更加有逻辑性。它所要做的就是通过执行一段代码，"if"一个参数判断它是否true.所以我们想要做的就是如果使用者按下[X]健,它将用"break"语句结束循环, 同时,我们的程序将有效的、持续的进行下一个片断处理.如果参数被判断为false,它将会跳过这段代码,如果这有一个"else"语句,程序将执行这段 "else"语句代码,或者只是继续运行下去。而我们没有"else"语句,所以它将一次又一次的通过这个循环.不断的监测按钮的状态,并且检查是否 [X]按钮被按下.现在我们对于它,用一个结尾括号来结束我们的循环.<br /><br />if(pad.Buttons & PSP_CTRL_CROSS) {<br />                    break;<br />          }<br />}<br />    这里"if()"语句用英语解释就是”如果[x]按钮被按下”的意思。所以，如果按下按钮，循环将被打破。否则，他将持续运行这个循环。现在我们看看与它相反的另一方面。<br />    我们按下[X]按钮之后，我们想要开始一个一直运行下去、直到使用者按下[O]按钮的计数。那么我们该怎么做呢，就像你猜到的那样，用另外一个循环，现在我们运行这个循环，并且在其中增加退出代码。（用"PSP_CTRL_CIRCLE"置换"PSP_CTRL_CROSS"）<br /><br />while(1) {<br />          sceCtrlReadBufferPositive(&pad, 1);<br />          if(pad.Buttons & PSP_CTRL_CIRCLE) {<br />                    break;<br />          }<br />    现在，我们需要用到一个新的函数。它的作用就是清理屏幕，因为我们的屏幕上仍然有"Press [X] To Start the Timer"，我们需要清除它，此外，当循环下一次运行到这里时，他将会执行这段语句，就是我们打印在屏幕上的正文，我们需要清除它，如下：<br /><br />          pspDebugScreenClear();<br /><br />    现在，清除了屏幕，我们可以试着打印出我们的计数器。（可以告诉用户，如何停止计数并且退出程序）<br />    以下两行代码，第一个语句看起来比较熟悉，它仅仅是一个简单得"printf" 语句。唯一看起来有点奇怪的地方就是在字符串的末尾有一个"<br />"。"<br />"是一个特殊符号，他代表了一个新的数据行。这个数据行的作用等同于你按下你键盘上的"ENTER"。第二个"printf"语句有一点难。我们需要它打印出变量"counter"，为了做到这个，我们将用到"%"操作。它的主要意思就是：你想要显示一个变量，而后面的字符将会告诉我们你所要显示的变量是那种类型的程序。因为是一个整形，我们用"i"（integer;，明白？）。第二个语句，我们想要代入的是我们想要它去打印的一个参数。在我们这个案例里，我们想要打印"counter"变量，所以我们把以下两行加入我们的程序<br /><br />          printf("Press [O] To Stop the Timer<br />");<br />          printf("Counter: %i", counter);<br /><br />    现在我们需要用加一的方式增加一个计数，所以下一次循环通过的时候，显示数值会更大一些，如果我们不这样做的话它将不是一个真正的计数器，我们可以用两种方法达到我们要的效果，第一，用"counter = counter+1;"。想要的结果就可以完美的显示出来，但是，用加一的方式增加一个变量，这有一个更加简单的方法就是应用"++"计数：<br /><br />          counter++;<br /><br />它的作用等用于"counter = counter +1;"但是它却更加讲究，你说呢？<br />    我们需要增加一个简短的暂停命令来安排"HOME" 按钮的工作，这里我们将会运用一个"for"循环，这个循环仅仅与"while"循环有一点不同，它有三个参数。第一个就是初始化，他将为启动循环设立一个变量。第二个就是控制语句，他跟在"while"循环中的控制语句起到相同的作用。第三个就是在每一个循环你所希望限制你的变量范围。<br /><br /> for(i=0; i<5; i++) {<br />                    sceDisplayWaitVblankStart();<br />          }<br /><br />这将会执行我们的命令行五次（当i = 0, 1, 2, 3, 和 4）。<br /><br />最后，我们需要循环通过一个简单的结尾括号来结束一段代码：<br /><br />}<br />    最后一点，在"break"语句执行后，这段代码将会运行，我们希望显示一个简单的讯息，和我们计算器的最后计数，所以我们清除屏幕并且如同我们在循环里运用得那样再运用两行"printf"语句，但以不同的文本，增加：<br /><br />pspDebugScreenClear();<br />printf("Counter Finished.");<br />printf("Final Count: %i", counter);<br />    我们完成了我们的编码，现在为几个与第二课不同的改变进行一下讲述。<br />    为了我们的新程序，所以Make file需要做一些改变。打开它，并且把它的标题更换为跟你的新程序配套的标题。我把我的程序命名为"Counter Program." 同样改变你的"count."目标。现在编写你的程序，并且测试它。你应该拥有了编写你自己程序的基础技巧。（至少本文就编写了一个）你可以搜寻一些别的 c语言指南寻找一些关于你如何应用更多复杂的逻辑性组织的信息。(if/if else/else)，循环，函数，指示器，等等。这有一点与psp编程不同。但是这些基础都是c,祝你好运，并找到乐趣。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post68_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>把你的NDS变成一台PDA！NDS超强软件DSOrganize使用指南（2.9版）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">把你的NDS变成一台PDA！NDS超强软件DSOrganize使用指南（2.9版）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-30 09:18:12</p>
+</div>
+<div class="col-10">
+<p>一、简介<br />DSOrganize（以下简称DSO）是由Dragonminded开发的一款NDS用多功能PDA软件，目前最新版本为2.9版。它可以让你的NDS实现日程管理、便笺记录、文本修改、手绘涂鸦、图书阅读、文件管理、音乐播放、IRC聊天、网络浏览、软件下载等诸多功能，使用作者提供的插件还可以实现MD和WS游戏的模拟。这个软件是开源的，也就是说，你甚至还可以通过自己编写插件来让你的DSO实现更多的功能。在我看来，除了视频播放，DSO的表现甚至是超越Moonshell的。但是对于中国用户来说，DSO与MS相比，最大的劣势不在于视频播放，而在于它目前还不支持中文。但是鉴于软件的开源性，我希望能有高手修改出一款支持中文的DSO，让更多中国用户可以用上这样一款优秀的软件。<br /><br />二、如何让DSO在你的NDS上运行<br />首先你要下载这个软件……（众人云：废话！ =。=）<br />下载地址：[url]http://www.ndsbbs.com/read.php?tid=65546[/url]<br />解压后出现这些文件：<br /><br />其中 DSOrganize这个文件夹请复制到你储存卡的根目录。三个程序文件你可以根据自己的烧录卡选择合适的一个打上相应的DLDI补丁，之后复制到你的储存卡任意位置即可。一般说来，Slot1烧录卡使用.nds文件，Slot2烧录卡使用.sc.nds或者.ds.gba文件。<br />打补丁的方法请看这里：[url]http://www.ndsbbs.com/read.php?tid=116161[/url]<br />之后打开你的NDS，运行程序即可进入DSO的界面了。<br /><br />三、DSO功能介绍<br />运行程序后出现如下界面：<br /><br /><br />上屏显示日期、时间、当日备忘、当日行程安排、便笺等信息，下屏则是程序的主要功能图标。友情提示：以下提到的几乎所有按键操作也可以通过点击触摸屏的相应图标来完成。另外在每个界面按select键都会出现帮助提示哦~<br /><br />下面我们一个一个图标来看~<br /><br />首先是 。点击这个图标进入日历界面。LR键调整月份，方向键调整日期，start键返回主菜单。选择一个日期之后，按B键可以浏览当日的行程安排（即第二个图标进入的界面），按A键可以编辑当日的备忘录（比如你可以写上某日是某某的生日啊，编辑好后按A键保存），这样上屏便会显示这个提醒，十分方便。<br /><br /><br /><br />点击 这个图标可以编辑当日行程安排。LR键切换日期，start键返回主界面，B键进入日历界面。按A键进入编辑模式，在编辑模式下再按A键则是保存。编辑了当日行程安排之后同样在上屏会有显示。<br /><br /><br />第三个图标 是编辑名片簿。进入后按B键即可新建名片，在这里你可以编辑朋友的姓名、电话、地址、E-mail等等。全部编辑完成后按A键保存，名片文件会保存在DSOrganizeVCARD里面。选定名片按A键即可再次编辑，按X键再按A键即可删除。<br /><br /><br />第四个 Todo我就翻译成便笺了，当然有英文达人知道这个单词的准确翻译的还往指出哦~顾名思义就是记录下一些要做的事情当作备忘录啊，你要当成日志来写似乎也可以，呵呵。按B键是新建一个文档，保存之后按A键可以编辑。<br /><br /><br />接下来就是绘图板 了。进入后按B键可以新建一个图片，输入文件名后就可以涂鸦了。虽然这个画图板在专业性上比不上colors，不过应付一般的画图还是没有问题的啦。十字键用来选择绘画工具，直线、矩形、圆形工具都有哦，还可以插入文字。ABXY用来选择颜色，第三排的颜色是用来自定义的，选择之后按start键就可以选取自己喜欢的颜色了。感觉这个画图板算是一个小小简化的windows自带画板吧。图片的保存格式有png和bmp两种，可以在 configuration里面设定，这个我们后面会具体讲到。<br /><br /><br />之后就是DSO的文件管理器 了。在这里面，你可以编辑文档，新建文件，删除文件，剪贴粘贴，播放音乐，浏览图片，运行软件（仅限于部分烧录卡）等等，算是DSO的核心部分之一了。按 LR键可以切换功能。下面我们就来看看这些功能。<br /><br /><br />Open 打开文件或文件夹<br />Up 返回上一级菜单<br />New File 新建文件（记得输入扩展名哦）<br />Delete 删除文件<br />Rename 重命名（请不要对过大的文件进行操作，以免出错）<br />Copy 粘贴<br />New Dir 新建文件夹<br />Cut 剪切<br />View 浏览文本<br />Play 播放音乐<br /><br />下面来讲一些文件管理器的小秘密（其实也不算啦，算是tips吧，呵呵）<br />浏览文本时使用LR 键可以快速翻页。<br />按Y键可以编辑文本。<br />按X键可以隐藏文件。<br />新建一个.wav文件，按Y键可以录音哦~<br />软件不仅支持 mp3,ogg,wav等常见格式的播放，还支持flac,aac等格式哦，甚至还支持pls,m3u列表播放。<br />Config.ini这类设置文件浏览时不同的部分会用不同颜色显示哦。<br />修改DSOrganize目录下的favorites.txt文档可以添加自己喜欢的网页到收藏夹。添加格式是：第一行网站名称，第二行网址。如此循环。<br />修改DSOrganize目录下的IRC.INI可以修改IRC的设置。<br />修改 DSOrganize目录下的searchprefs.txt文档可以更改网页浏览及搜索的一些快捷键。比如默认的g就是google搜索。<br />修改 DSOrganize目录下的specialkeys.txt文档可以更改网址输入的快捷键。默认的有http://,www.,.com/..net /等等，输入网址时方便了不少。很人性化的设定哦。<br />修改DSOrganize目录下的STARTUP.WAV可以更改开机音乐。<br />播放音乐时，按X键可以改变播放模式（顺序播放，随机播放等），按start键可以进行Hold操作（即锁定按键），再按一次取消Hold。方向键上下可以调节音量大小。<br />你可以使用DSO来备份你的存档，从而实现某些游戏的S/L大法。<br />你可以使用DSO来删除你储存卡里面的病毒，因为DSO可以显示并删除隐藏文件，而这些病毒（一般是autorun类）不会在你的NDS上运行。<br />暂时想到这么多，以后有想到的再补充吧。<br />将NB添加到了收藏夹。<br /><br />之后我们点击翻页图标来看看第二页都有些什么吧。<br /><br />这个是科学计算器，个人评价是相当好用，不仅有必备的加减乘除，还有三角函数，指数运算，对数运算等等。按R键可以在角度和弧度之间切换，按L键你会发现甚至还有反三角函数的运算。总之，这个计算器满足一般大学生的考试需求是没有问题的。总算是有个把NDS带进考场的正当理由了（笑）。<br /><br /><br />IRC聊天功能，国人应该用的不多吧。进入之后软件会自动寻找热点并且连接到服务器（应该是使用游戏里面WiFi的设置）。偶尔用用这个跟老外聊聊天也是不错的选择，聊天时还可以设定自己文字的颜色哦。<br /><br /><br />下一个图标 就是浏览器了。2.9版的浏览器比起之前的版本可以说是进化了很多，支持基本的CSS，在网页中输入文字，大多数html tag，甚至还支持显示较小的图片！要知道这可是在没有扩充卡没有电脑端预处理的前提下实现的啊，可以说是非常了不起了。虽然说还有一些小bug，但是我们相信作者会在以后的版本中不断完善的。唯一的遗憾还是不支持中文，这个我们多少也有些无奈吧。<br />用google搜索ndsbbs。<br />作者的主页。显示得相当完美。<br /><br />最后一个图标 是连接到作者的主页下载一些小文件，有自制软件，自制游戏，演示DEMO，DSO的插件等等，内容很丰富。缺点是下载速度太慢，一般在1-5K之间，不过还好文件都不大，大家耐心一点就可以了（笑）。<br />下载列表。<br />下载好的MD模拟器插件。<br /><br />DSO的基本功能到这里算是简单介绍完了。但是这千篇一律的界面是不是有点乏味呢？那我们就赶快进入下一节吧。<br /><br />四、Show出自我！打造属于你自己的DSO！<br />大家可能注意到了，在下屏的最下方有个Configuration。 在这里你可以更改你的DSO的设置，让你的DSO与众不同，让我们一起来看看都可以更改些什么吧。按start翻页。<br /><br /><br />第一页<br />Language可以更该系统的语言。有英语、西班牙语、法语、意大利语等17种语言，就是没有中文……汗……<br />Startup Screen选择开机后进入的画面。默认是Home，即主界面，当然你也可以选择日历、文件管理器等等。<br />Time Format更改时间显示。12时制或者24时制。<br />Name Format更改姓名显示，姓在前或者名在前。<br />Date Format更改日期显示方式<br />Icon Set更改皮肤。皮肤的具体设置我会在后面专门讲到。<br /><br />第二页<br />Action on Second Click设置是否双击打开。<br />Swap A/B Buttons设置是否切换A/B键。<br />Hand Position设置惯用手。很人性化的一个设定。<br /><br />第三页<br />拖动图标，更改图标在主界面的显示顺序。就好像在windows下可以自己排列图标一样。<br /><br />第四页<br />Scribble Save Format更改绘图板的图片存储格式。可以选择png或者bmp。<br /><br />第五页<br />Auto Bullets in Todo设定在写Todo时，换行后是否自动在行首添加短横线。默认是否。<br /><br />第六页<br />Edit Font设置修改文档时的字体。共有两种字体可供选择。<br /><br />第七页<br />Show Hidden Files是否显示隐藏文件<br />Default Homebrew Directory连接到主页时的默认文件夹<br />Default Boot Method默认启动<br />Alternate Boot Method备用启动（？）<br /><br />第八页<br />Autoconnect to IRC Server是否自动连接到IRC服务器<br />IRC Server服务器地址<br />IRC Nickname昵称<br />IRC Alternate Nickname备用昵称<br />IRC Font更改聊天时使用的字体。共有两种字体可以选择。<br />更改完毕后按A键保存并退出。B键则是不保存直接退出。<br /><br />下面我们来看看皮肤的制作和使用方法。<br />皮肤的制作很简单，使用windows自带的画图板就可以搞定。如果你想制作一套完整皮肤的话，需要制作50*50的图标 11个，40*20的图标两个，32*32的图标21个，19*18的图标6个，10*10的图标15个。是不是觉得很多呢？其实如果你只是想修改主页界面的话只需要制作我前面提到的前两类图标就可以了^ ^<br /><br />图标的命名方式请参看DSOrganizeICONS文件夹里面的 readme.txt，文件名称与它的作用是一一对应的，都是很简单的英文，如果实在不明白的就翻翻字典吧，这个我就偷一下懒咯~<br />下面这个皮肤是我现在用的皮肤（by风小子）<br /><br /><br /><br />怎么样，很漂亮是吧？如果你因为朴素的界面而放弃了 DSO，那么现在你对它是不是有一种刮目相看的感觉呢？<br /><br />另外，作者也提供了一些皮肤下载，下载请看这里：[url]http://www.ndsbbs.com/read.php?tid=65546[/url]<br /><br />最后我们来说说插件的制作和使用。插件制作工具可以到作者的主页进行下载，下载地址是[url]http://www.dragonminded.com/ndsdev/Default.zip[/url]，解压后按照说明进行制作就可以了。当然，想要制作一款优秀的插件需要很强的编程能力哦，编好之后也希望可以拿出来给大家分享啦。作者的主页也提供了三个插件的下载，分别是MD模拟器插件，WS/WSC模拟器插件和圣经阅读插件。MD模拟器插件是由NDS著名的MD模拟器PicoDrive修改而来，支持.smd格式，模拟效果自然不必多说，可惜不支持2M以上的ROM（限于DS的内存）。WS模拟器插件则是由dualSwan这个模拟器修改而来的，支持.ws/.wsc 格式。圣经阅读插件对于大多数国人来说可能用处不大，可是对于老外来说就意义非凡了。这个插件支持.bib格式的文件。插件的使用也很简单，放到 DSOrganizePLUGINS目录下就可以了，程序启动时会自动加载的。如果你可以WiFi，那就更简单了，直接使用Homebrew Database进行下载，下载完成后软件会自动保存到DSOrganizePLUGINS，是不是很方便呢？<br />插件下载地址：[url]http://www.ndsbbs.com/read.php?tid=65546[/url]<br /><br />五、DSO未来的惊喜<br />写了这么多，终于到最后一部分了（好累的说……）。DSO的作者在每次更新的时候，都会修正很多东西，所以DSO也在不断成长不断完善。作者也希望大家可以积极测试，将软件的bug或者自己希望增加的功能告诉他。在DSO的Wiki页面上，我看到了作者列出的大家最希望增加的功能，比如支持Unicode编码，支持Java，支持RSS，支持WMA播放等等，虽然这些功能不一定都会实现，但它们无疑是DSO下一步发展的目标。总之，让我们期待DSO3.0问世的时候可以给我们更大的惊喜，也期待DSO能够早一天支持中文吧。<br />最后附上作者的主页及论坛地址，希望大家可以多多支持这个软件。<br />主页地址：[url]http://www.dragonminded.com/?loc=ndsdev/DSOrganize[/url]<br />论坛地址：[url]http://www.youngmx.com/forums/[/url]<br /><br />                                                          Produced by Tales<br />                                                                  2007.8.24</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>明日青蛙</b><br/>
+2010-01-30 10:06:32</p>
+</div>
+<div class="col-10">
+<p>好长~~~终于看完了~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kelove</b><br/>
+2010-01-30 11:58:28</p>
+</div>
+<div class="col-10">
+<p>谢谢~~~好东西收了~~~~~~~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kelove</b><br/>
+2010-01-30 11:58:35</p>
+</div>
+<div class="col-10">
+<p>谢谢~~~好东西收了~~~~~~~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>sigior</b><br/>
+2010-04-18 14:17:51</p>
+</div>
+<div class="col-10">
+<p>表示强烈支持！表示感谢！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Miu</b><br/>
+2010-06-14 18:52:32</p>
+</div>
+<div class="col-10">
+<p>真长呀，不过好强大！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>kelove</b><br/>
+2010-06-14 19:07:53</p>
+</div>
+<div class="col-10">
+<p>好强大！强烈支持更新中文版~~~~~~~~~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>jf000</b><br/>
+2010-06-14 19:34:50</p>
+</div>
+<div class="col-10">
+<p>查个书签   改日来学习  希望中文版速度出</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>godcjy</b><br/>
+2010-06-17 09:07:37</p>
+</div>
+<div class="col-10">
+<p>很好很强大<br />果然最可惜是没中文</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>jk541089702</b><br/>
+2010-06-19 17:02:18</p>
+</div>
+<div class="col-10">
+<p>咋不能下啊！！！！！！！！！！！！！！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>qxshark</b><br/>
+2010-06-19 19:10:14</p>
+</div>
+<div class="col-10">
+<p>[quote]咋不能下啊！！！！！！！！！！！！！！<br />[size=2][color=#999999]jk541089702 发表于 2010-6-19 17:02[/color] [url=http://www.yayabo.cn/redirect.php?goto=findpost&pid=42868&ptid=1924][img]http://www.yayabo.cn/images/common/back.gif[/img][/url][/size][/quote]<br /><br /><br />    [url=http://www.yayabo.cn/viewthread.php?tid=2267&extra=page%3D1%26amp;filter%3Dtype%26amp;typeid%3D8]看这里[/url]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>dcwstar</b><br/>
+2010-06-24 18:31:00</p>
+</div>
+<div class="col-10">
+<p>确实比moonshell好，有中文的就完美了。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>destiny</b><br/>
+2010-06-24 21:20:50</p>
+</div>
+<div class="col-10">
+<p>谢谢~~~好东西收了~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>时代之影</b><br/>
+2010-08-20 15:47:22</p>
+</div>
+<div class="col-10">
+<p>好长啊~~~~期待中文</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Lee</b><br/>
+2010-08-20 18:35:29</p>
+</div>
+<div class="col-10">
+<p>新软件吗？比MS好吗？有中文版吗？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>125855023</b><br/>
+2010-09-06 09:32:52</p>
+</div>
+<div class="col-10">
+<p>支持出中文版！！！！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>强悍的葱头</b><br/>
+2010-09-06 09:38:13</p>
+</div>
+<div class="col-10">
+<p>好長好長...居然沒有中文..外文盲失敗ing...</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>xz122992770</b><br/>
+2011-02-18 12:06:34</p>
+</div>
+<div class="col-10">
+<p>头顿时大了很多.............代码什么的完全不会.............我好悲剧~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>花盈皂语</b><br/>
+2011-02-20 01:34:35</p>
+</div>
+<div class="col-10">
+<p>哇~好强大噢~~支持支持~~虽然偶不会弄~但是期待NS更加强大~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>slaizmx</b><br/>
+2011-02-24 12:59:19</p>
+</div>
+<div class="col-10">
+<p>LZ，说明的时候能不能放点图啊，纯文字看的好郁闷的说~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>785590</b><br/>
+2011-02-25 09:44:02</p>
+</div>
+<div class="col-10">
+<p>谢啦 每次都要在电脑弄 现在方便了</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1235_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

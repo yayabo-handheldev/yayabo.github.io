@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>编译环境的建立</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">编译环境的建立</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-16 11:29:20</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.sina.com.cn/niuboDS[/url]<br />作者：niubo<br /><br />呵呵，开始写教程了，虽然每个字都是我打的，但也不敢说是原创，因为参考了太多东西了。首先是编译环境的安装。习惯了一路Next的软件安装，这个编译环境安装起来可以说是相当复杂，不过不用怕，我会尽量通俗易懂地进行讲解。<br />    这部分内容可以参考原版的PAlib指南：[url]http://www.palib.info/wiki/doku.php[/url]<br />    或者从NB上看hulihutu 的翻译：[url]http://www.ndsbbs.com/read.php?tid=28453[/url]<br />    不过由于年代久远，很多地方略有变化，而且我补上了一些文章没提到，但是我当时遇到的问题。<br />    首先，要安装devkitPro，这个要到这个此处下载：[url]http://sourceforge.net/project/showfiles.php?group_id=114505[/url]  。开始不大明白的话就选择第一个表里的Automated Installer，下载后运行开始自动选择最新的组件开始下载……如果顺利，下载完成后就开始安装吧，开始不太明白的话就全装上，装少了它就不干活了，建议保留下载文件。新版的devkitpro不用手动配置环境变量，安装程序已经代劳了。装完之后就可以开始Develop了——如果不需要借助 PAlib的话。<br />    不过多数人还是需要PAlib的，毕竟用PAlib更方便的弄出个像样的小游戏出来。要装PAlib需要装.net 框架，真是够麻烦，这里应该还能下载到：[url]http://www.microsoft.com/downloads/details.aspx?displaylang=zh-cn&FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5[/url]  。然后从这里下载PAlib：[url]http://palib.info/forum/modules/PDdownloads/singlefile.php?cid=3&lid=41[/url]  。这里需要注意的一个问题是PAlib和devkitpro不是一家人，每一个更新版本的devkitARM都可能导致原先的PAlib不兼容。目前最新的devkitARM是r21，070717的那版PAlib不能用，所以要从上面下载最新的PAlib 080203。目前还是测试版，没有安装包，自己把压缩包里的东西解压后放到devkitpro的安装目录下就可以了。顺手把下面小字里的三个库 Mikmod library，Liblobby svn和EFS lib 1.2 and Patcher下载回来，根据包内的提示放到相应目录。这回PAlib的环境变量就要设置了，方法是在“我的电脑”上右键，选择“属性”－“高级”－“环境变量”，在上半块“用户变量”部分选新建，变量明“PAPAPH”，变量值“f:/devkitPro/PAlib/”（没错，是正斜线“/”）。这样就可以使用了。PAlib编辑器（或者是IDE？）在devkitProPAlibvham目录下，打开它可新建自己的工程。不过大家都会像我一样迫不及待地冲进PAlibExample编译一两个例子试试吧。双击其中的Bulid.bat，一切正常的话可以编译出.nds文件来，如果有什么问题请参考前面提到的文章，应该可以解决。还有一个问题，双击project.vhw用vham打开工程文件，按F5就可以编译了，但是在我这里最新版本的 PAlib会出错，暂时还不知道怎么回事。<br />    接下来根据官方教程（希望你英语足够强可以顺利阅读原版，否则中文译文那可是不够全滴～）就可以正式学习DS开发了（C++不是必要的，会C就行。什么？你连C也不会？那最好还是先找本谭浩强的《C语言程序设计》来看吧。），预祝学习一切顺利。<br />   <br />    下面是几个开始时困扰我许久的问题，放在这里供扫盲之用。由于是我自己的理解，如有错误还望指正。<br />    1、Devkitpro，DevkitARM和PAlib是什么关系？<br />    Devkitpro是一套开发工具，包含很多组件，其中DevkitARM是针对使用ARM CPU设备的编译器，其自带了一套标准库。libnds是另外一个组件，使程序可以使用DS特有功能（双屏，触摸，麦克风等等）的一个库。PAlib是基于libnds的一套高级库，从而可以很方便地编出个像模像样的游戏来。<br />    2、为什么路径中用“/”?<br />    因为devkitARM是用GNU系统下的gcc来编译源码，而GNU系统下的路径和Windows下路径表示方法不同。（什么是GNU？百度百科是个好地方啊，不如……）<br />    3、为什么要设置环境变量？<br />    要运行一个程序，要通知Windows完整的路径（可以打开“开始”－“运行”试验一下），但是设置了环境变量之后，在指定目录下的程序就可以直接输入文件名来运行了。编译过程中要用到的很多程序都是直接给出文件名，所以要让Windows知道它们在哪。<br />   <br />   <br />    再来比较一下devkitARM和palib。这里又开始唠叨了，不喜欢看可以直接无视……<br />    palib作为一个高级库，很轻松就能搭建出一个不错的程序，尤其是图形界面的程序，而且自带文档资料，网上还有官方指南支持。不过它隐藏了很多内幕，这点让我很不爽。而libnds是开源的，后来我的很多困惑都是从源代码里找到答案。不过作为PAlib IDE的VHAM很好用，新建一个工程时已经事先完成了很多工作，而devkitARM使用组件之一的Programmers Notepad作为代码编辑器，用惯了集成编译环境，写完代码一个编译命令直接生成可执行文件，只用代码编辑器是很痛苦滴～编译工作基本由那个天书般的 Makefile文件控制，功能很强大，但不够易用。不过了解一点Makefile的语法结构之后从例子里Copy一个稍作修改也就可以用了。 Programmers Notepad可以使用代码自动完成功能，但没有函数提示（代码编辑器还是不如IDE强大呀）。平时习惯用UltraEdit，不过也是只有自动完成没有函数提示，配置一下也能拿来用。计划做一个libnds函数的自动完成列表，稍稍让它好用一点。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zlzgl001</b><br/>
+2008-06-30 10:07:41</p>
+</div>
+<div class="col-10">
+<p>首先，楼主辛苦了，支持一下。<br />    我从上个月开始就一直想学DS软件的开发，也参考了NDSBBS上的一些贴子，但是开发环境始终没有建立起来，反复找原因也没有找到。这下好了，有详细的教程了。“不会了就找你的说！！！”哈哈！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>aaacom</b><br/>
+2008-07-19 00:14:47</p>
+</div>
+<div class="col-10">
+<p>楼主辛苦，十分感谢！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>gengyanda</b><br/>
+2009-02-09 14:27:38</p>
+</div>
+<div class="col-10">
+<p>不会C<br />会VB成吗</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-02-13 08:55:12</p>
+</div>
+<div class="col-10">
+<p>呵呵，没想到我的文章也会被楼主收录进来啊。不过隔了这么久情况又有些变化了。<br /><br />不过现在能下载的到的devkitpro updater1.4.9安装后很多地方都变了……首先就是PAlib不能用了。最新的Palib只支持到devARM r21 + libnds-20071023的组合。然后可能在网上找的教程附带的例程都不能成功编译了。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-13 09:01:39</p>
+</div>
+<div class="col-10">
+<p>好的教程文章我都会收录进来的。<br /><br />另外你有其它联系方式吗？比如qq什么的。<br /><br />再另外希望你能加入掌家的qq群。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-02-13 11:11:45</p>
+</div>
+<div class="col-10">
+<p>我的QQ是312291022。<br />很高兴能多认识一些DS开发爱好者。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post127_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

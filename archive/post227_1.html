@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>M8 SDK蹒跚学步（3）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">M8 SDK蹒跚学步（3）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-01-14 15:47:29</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://www.meizu.com/[/url]<br />作者：looyea<br /><br />#include <mzfc_inc.h><br /><br />/// 本项目演示了使用MZFC中的：<br />/// 应用程序的启动，窗口的创建，<br />/// 及Ui按钮控件、命令消息的处理，<br />/// 文字按钮工具条，及弹出菜单，提示信息对话框<br />/// 及UiList列表控件的使用，MZ_WM_MOUSE_NOTIFY消息的处理<br /><br />[attach]622[/attach]<br /><br />/* 前面一样的内容我就直接掠过，可以直接看前两个 */<br />#define MZ_IDC_LIST        101<br />#define MZ_IDC_TOOLBAR1    102<br /><br />#define IDC_PPM_OK        103<br />#define IDC_PPM_CANCEL    104<br /><br />// 从CMzWnd派生主窗口类<br />class CSample1MainWnd: public CMzWndEx<br />{<br />   MZ_DECLARE_DYNAMIC(CSample1MainWnd);<br />public:<br />   UiToolbar_Text m_Toolbar;<br />/* 列表类， 创建了一个类型为UiList名字为m_List的变量 */<br />   UiList m_List;<br /><br />protected:<br />   // 重载窗口初始化函数<br />   virtual BOOL OnInitDialog()<br />   {<br />       // 先调用基类的初始化函数<br />       if (!CMzWndEx::OnInitDialog())<br />       {<br />           return FALSE;<br />       }<br /><br />       // 初始化主窗口中的控件<br /><br />      /*<br />           首先初始化的是列表控件<br />           注意一下最后绘制的结尾，就是高度那块，<br />           因为不能够遮挡住下面的文本按钮菜单栏<br />           所以要刨除那一块的高度。结果就是：<br />           GetHeight()-MZM_HEIGHT_TEXT_TOOLBAR<br />           这个语句的执行结果就是，把这个控件绘制在<br />           屏幕下方文本菜单栏以上的所有可用空间<br />       */<br />       m_List.SetPos(0,0,GetWidth(),GetHeight()-MZM_HEIGHT_TEXT_TOOLBAR);<br />       m_List.SetID(MZ_IDC_LIST);<br />       /*<br />           顾名思义了，这一段是设置垂直滑块的<br />           设置为真，则允许，假则不允许使用垂直滑块<br />       */<br />       m_List.EnableScrollBarV(true);<br />      /*<br />           Document上的解释是：设置是否把控件收到的鼠标消息(MZ_WM_MOUSE_NOTIFY)发送给主窗口<br />           当前的主窗口就是我们的这个窗口类了<br />           如果是，那么当这个列表控件产生任何事件的时候，就会发送到我们的这个窗口类<br />           而我们这个窗口类，因为事件处理函数<br />           所以就能响应了。<br />       */<br />       m_List.EnableNotifyMessage(true);<br />      /* 添加到主窗口类了 */<br />       AddUiWin(&m_List);<br /><br />       //add items to list<br />      /* 下面开始给我们的列表添加列表项 */<br />       CMzString str(128);<br /><br />      /*<br />           终于见到指针了！！！这才有点C和C++的意思么。<br />           这个是列表项的常量，后面%d同C中的一样，<br />           表示这里要用一个十进制整数代替%d<br />       */<br />       wchar_t *buf = L"列表项目 - %d";<br />      /*<br />           列表项类，生成一个实例<br />       */<br />       ListItem li;<br />       /*  循环50次，生成50个列表项  */<br />       for (int i=0;i<50;i++)<br />       {<br />           wsprintf(str.C_Str(), buf, i);<br />          /* 把列表项的文本设置成为我们刚才的那个 */<br />           li.Text = str;<br /><br />[attach]623[/attach]<br /><br />          /* 在列表里面添加一个列表项 */<br />           m_List.AddItem(li);<br />       }<br /><br />       m_Toolbar.SetPos(0,GetHeight()-MZM_HEIGHT_TEXT_TOOLBAR,GetWidth(),MZM_HEIGHT_TEXT_TOOLBAR);<br />       m_Toolbar.SetButton(0, true, true, L"退出");<br />       m_Toolbar.SetButton(1, true, true, L"删除");<br />       m_Toolbar.SetButton(2, true, true, L"设置");<br />       m_Toolbar.SetID(MZ_IDC_TOOLBAR1);<br />       AddUiWin(&m_Toolbar);<br /><br /><br />       return TRUE;<br />   }<br /><br />  /* 窗口消息处理函数，第一个参数用一个无符号整形代表消息类型，后面的就都跟前两个例子一样了 */<br />   LRESULT MzDefWndProc(UINT message, WPARAM wParam, LPARAM lParam)<br />   {<br />       switch(message)<br />       {<br />          /*<br />               “MZFC库中Ui控件发出的鼠标通知消息”，这里所谓的通知是什么恩？<br />               “控件上发生的鼠标按下、移动、放开操作都会通过此消息通知它所在的窗口”<br />               而我们刚才设定了所在的窗口是我们这个窗口类的实例，<br />               所以消息才会被传送到这里。<br />               WParam低16位控件ID，高16位通知类型<br />               lParam：消息发生时鼠标的坐标（相对于控件的左上角）x = LOWORD(lParam), y = HIWORD(lParam)<br />           */<br />       case MZ_WM_MOUSE_NOTIFY:<br />           {<br />              /*取控件ID，取得通知类型*/<br />               int nID = LOWORD(wParam);<br />               int nNotify = HIWORD(wParam);<br />              /*取鼠标坐标*/<br />               int x = LOWORD(lParam);<br />               int y = HIWORD(lParam);<br />              /* 如果是那个列表发出的消息，并且通知类型是鼠标左键按下 */<br />               if (nID==MZ_IDC_LIST && nNotify==MZ_MN_LBUTTONDOWN)<br />               {<br />                  /* 如果鼠标左键不实在滚动列表的时候被按下 并且列表没有在鼠标按下后移动过 */<br />                   /* 这么写的目的是防止你在滚动列表的时候选中列表中的项目 */<br />                   if (!m_List.IsMouseDownAtScrolling() && !m_List.IsMouseMoved())<br />                   {<br />                      /* 计算鼠标坐标，得到列表按下的是那个项目 */<br />                       int nIndex = m_List.CalcIndexOfPos(x, y);<br />                      /* 设定那个按下的项目为选中， 这里实际上有个排他性在里面，因为仅仅允许一个列表项被选中，一定会有多选的情况。以后研究明白了再说*/<br />                       m_List.SetSelectedIndex(nIndex);<br />                      /* 重绘那个被选中的项目，高亮了，呵呵 */<br />                       m_List.Invalidate();<br />                       m_List.Update();<br /><br />[attach]624[/attach]<br /><br />                   }<br />                   return 0;<br />               }<br />             /* 如果是列表控件发出的消息，并且消息类型是鼠标移动 */<br />               if (nID==MZ_IDC_LIST && nNotify==MZ_MN_MOUSEMOVE)<br />               {<br />                   /* 取消选择的列表项，并且重绘整个列表 */<br />                   m_List.SetSelectedIndex(-1);<br />                   m_List.Invalidate();<br />                   m_List.Update();<br />                   return 0;<br />               }<br />             /* 下面的代码原本就是被注释掉了的，我这里看了一下，也不难，根据上面的内容，读者完全可以理解 所以掠过*/<br />               //if (nID==MZ_IDC_LIST && nNotify==MZ_MN_LBUTTONDOWN)<br />               //{<br />               //    if (!m_List.IsMouseDownAtScrolling() && !m_List.IsMouseMoved())<br />               //    {<br />               //        m_List.SetSelectedIndex(-1);<br />               //        m_List.Invalidate();<br />               //        m_List.Update();<br />               //    }<br />               //    return 0;<br />               //}<br />           }<br />           return 0;<br />       }<br />      /*<br />           若消息类型不是MZ_WM_MOUSE_NOTIFY，<br />           那么交给父类的这个函数进行处理，并且返回父类的值，<br />           否则列表不会对其他消息做出反应呵呵<br />       */<br />       return CMzWndEx::MzDefWndProc(message,wParam,lParam);<br />   }<br /><br />   // 重载MZFC的命令消息处理函数<br />   /* 命令处理函数就是专门针对按钮和菜单的 */<br />   virtual void OnMzCommand(WPARAM wParam, LPARAM lParam)<br />   {<br />       UINT_PTR id = LOWORD(wParam);<br />       switch(id)<br />       {<br />       case MZ_IDC_TOOLBAR1:<br />           {<br />         <br />               int nIndex = lParam;<br />              /* 如果选中了 退出 按钮 */<br />               if (nIndex==0)<br />               {<br />                   CMzString str(128);<br />                   wsprintf(str.C_Str(), L"您按了"%s"按钮！", m_Toolbar.GetButtonText(0).C_Str());<br />                   MzMessageBoxEx(m_hWnd, str.C_Str(), L"Test", MB_OK);<br />                   PostQuitMessage(0);<br />                   return;<br />               }<br />             /* 如果选中了 删除 按钮 */<br />               if (nIndex==1)<br />               {<br />                   // pop out a PopupMenu:<br />                   CPopupMenu ppm;<br />                   struct PopupMenuItemProp pmip;         <br /><br />                   pmip.itemCr = MZC_BUTTON_PELLUCID;<br />                   pmip.itemRetID = IDC_PPM_CANCEL;<br />                   pmip.str = L"取消";<br />                   ppm.AddItem(pmip);<br /><br />                   pmip.itemCr = MZC_BUTTON_ORANGE;<br />                   pmip.itemRetID = IDC_PPM_OK;<br />                   pmip.str = L"确定";<br />                   ppm.AddItem(pmip);  <br /><br />                   RECT rc = MzGetWorkArea();         <br />                   rc.top = rc.bottom - ppm.GetHeight();<br />                   ppm.Create(rc.left,rc.top,RECT_WIDTH(rc),RECT_HEIGHT(rc),m_hWnd,0,WS_POPUP);         <br />                   int nID = ppm.DoModal();<br />                   if (nID==IDC_PPM_OK)<br />                   {<br />                       // do what you want...<br />                      /*<br />                           并且点击了确定这个弹出菜单的按钮<br />                           那么获取列表中被选择的那一项的索引<br />                           让列表移除这个索引，<br />                       */<br />                       int nSel = m_List.GetSelectedIndex();<br />                       m_List.RemoveItem(nSel);<br />                      /* 让列表处于未被选中的状态，就是列表中没有任何一个列表项被选中，画成高亮 */<br />                       m_List.SetSelectedIndex(-1);<br />                      /* 跟前面一样，重绘列表 */<br />                       m_List.Invalidate();<br />                       m_List.Update();<br />                      /* 这里我自己加一个messagebox */<br />                       CMzString str(128);<br />                       wchar_t *buf = L"您删除了列表项%d！";<br />                       wsprintf(str.C_Str(), buf, nSel);<br />                       MzMessageBoxEx(m_hWnd, str.C_Str(), L"Test", MB_OK);<br /><br />[attach]625[/attach]<br /><br />                   }<br />                   if (nID==IDC_PPM_CANCEL)<br />                   {<br />                       // do what you want...<br />                      /* 如果cancel了，那么什么也不做 */<br />                   }<br />                   return;<br />               }<br />               if (nIndex==2)<br />               {<br />                   CMzString str(128);<br />                   wsprintf(str.C_Str(), L"您按了"%s"按钮！", (LPWSTR)m_Toolbar.GetButtonText(2));<br />                   MzMessageBoxEx(m_hWnd, str.C_Str(), L"Test", MB_OK);<br />                   return;<br />               }<br />           }<br />           break;<br />       }<br />   }<br />};<br /><br />/* 省下的跟前面的一样了 */<br />MZ_IMPLEMENT_DYNAMIC(CSample1MainWnd)<br /><br /><br />// 从CMzApp派生主应用程序类<br />class CSample1App: public CMzApp<br />{<br />public:<br />   // 主窗口变量<br />   CSample1MainWnd m_MainWnd;<br /><br />   // 重载Init函数<br />   virtual BOOL Init()<br />   {<br />       CoInitializeEx(0, COINIT_MULTITHREADED);<br />       //创建主窗口<br />       RECT rcWork = MzGetWorkArea();<br />       m_MainWnd.Create(rcWork.left,rcWork.top,RECT_WIDTH(rcWork),RECT_HEIGHT(rcWork), 0, 0, 0);<br />       m_MainWnd.SetBgColor(MzGetThemeColor(TCI_WINDOW_BG));<br />       m_MainWnd.Show();<br /><br />       return TRUE;<br />   }<br />};<br /><br /><br />// 应用程序全局变量<br />CSample1App theApp;</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post227_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>学习PSP游戏制作实况记录（四）透明色的处理</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">学习PSP游戏制作实况记录（四）透明色的处理</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-02-10 09:36:43</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://bbs.khors.com[/url]<br />作者：Dr.Watson<br /><br />先看看本篇截图: <br /><br />[attach]754[/attach]<br /><br />我们在上一篇画图时, 并没有理会有没有透明色, 所以这一篇和大家讨论一下关于透明色的处理.<br /><br />我们一直用的, 是32bit, 8888(ABGR)的像素格式, A本是代表透明度, 当值是0, 即代表全透明, 255是代表完全不透明, 而其他值侧代表不同的透明度. 但我们因为是直接把像素放进VRAM, 这个值对我们没有什麽意义, 但我们可以利用它, 作为透明色的代表: 0 代表透明, 255 代表不透明.<br /><br />下面就是对DrawImage()的改动: <br /><br />[code=c]for (i=0;i<height;i++)<br />{<br />pSrc = pImage;<br />pDest = pFrameBuffer;<br /><br />for (j=0;j<width;j++)<br />{<br />if (*pSrc & 0xFF000000) // 不是透明色才画<br />*pDest = *pSrc;<br /><br />pDest++;<br />pSrc++;<br />}<br /><br />pImage += image->mWidth;<br />pFrameBuffer += FRAME_BUFFER_WIDTH;<br />}[/code]<br /><br />DrawImageRect()也做了相同的改动.<br /><br />LoadImage()也加入透明色的设定:<br /><br />[code=c]...<br />int a = (color32 >> 24) & 0xff;<br />...<br />case PSP_DISPLAY_PIXEL_FORMAT_8888:<br />color32 = r | (g << 8) | (b << 16) | (a<<24);<br />*(p32+x) = color32;<br />break;[/code]<br /><br />附带的执行包是1.50的 :) 自行编译, 要把m.png, bg.png和 cursor.png 放在记忆棒game03的目录内!<br /><br />要是大家把本篇程式放到PSP上试, 会发现画面显示有点奇怪, 这是因为我们直接写入VRAM, 而PSP在同一时间更新萤幕所产生的后果. 要解决这个问题, 我们要用double buffering 和 page flipping. 我会在以后和大家讨论一下有关应用 :)</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>TW241</b><br/>
+2009-08-07 21:51:21</p>
+</div>
+<div class="col-10">
+<p>我支持你</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post258_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

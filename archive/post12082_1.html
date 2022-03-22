@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>使用LUA读取图片在PC上运行可以,但PSP上无法运行,怎么回事?</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">使用LUA读取图片在PC上运行可以,但PSP上无法运行,怎么回事?</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_13.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>o70078</b><br/>
+2011-02-24 07:42:07</p>
+</div>
+<div class="col-10">
+<p>使用LUA读取图片在PC上运行可以,但PSP上无法运行,怎么回事?<br /><br /><br />以下是我的源码:<br />http://u.115.com/file/t814ddfabb</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2011-02-24 08:13:03</p>
+</div>
+<div class="col-10">
+<p>screen.flip()这个是换页？把这个去掉试试，另外screen.waitVblankStart()太多了，一个就行了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>轨迹叔</b><br/>
+2011-02-24 10:14:32</p>
+</div>
+<div class="col-10">
+<p>图片大小超过512*512在psp上也是不可的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>o70078</b><br/>
+2011-02-24 17:58:52</p>
+</div>
+<div class="col-10">
+<p>    我是用32*32的</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>o70078</b><br/>
+2011-02-24 18:00:13</p>
+</div>
+<div class="col-10">
+<p>    换页?有什么用?能否解释下?那个延时是必须的,不然移动太快了..</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>轨迹叔</b><br/>
+2011-02-25 11:50:56</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 轨迹叔 于 2011-2-25 11:53 编辑 [/i]<br /><br />    YanSe=Color.new(0,255,0)<br />     DiTu = Image.load("MAP.png") <br /><br /><br />while true do<br />	screen.flip() <br />	screen:clear(YanSe)<br />	<br />	screen:blit(0,0,DiTu,0,0,384,256,true)<br />	<br />	screen.waitVblankStart()<br />end</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>轨迹叔</b><br/>
+2011-02-26 12:05:29</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 轨迹叔 于 2011-2-26 12:10 编辑 [/i]<br /><br />    YanSe=Color.new(0,255,0)<br />DiTu= Image.load("MAP.png")<br />MAPX=0<br />MAPY=0<br />while true do<br />	screen.flip()<br />	screen:clear()<br />	<br />	pad = Controls.read() --取得按下的按钮键值<br />	XWanChen="NO"<br />	if pad:up()and (MAPY)>(0) then<br />		MAPY=(MAPY)-(32)<br />		--screen:clear()<br />		--screen:blit(MAPX, MAPY, DiTu)<br />	end<br />	if pad:down()and (MAPY)<(256)  then<br />		MAPY=(MAPY)+(32)<br />		--screen:clear()<br />		--screen:blit(MAPX, MAPY, DiTu)<br />	end<br />	if pad:left() and (MAPX)>(0)then<br />		MAPX=(MAPX)-(32)<br />		--screen:clear()<br />		--screen:blit(MAPX, MAPY, DiTu)<br />	end<br />	if pad:right() and (MAPX)<(448)then<br />		MAPX=(MAPX)+(32)<br />		--screen:clear()<br />		--screen:blit(MAPX, MAPY, DiTu)<br />	end<br />	System.draw() <br />		screen:blit(MAPX,MAPY,DiTu)<br />	System.endDraw() <br />		--screen:blit(0,0,DiTu,0,0,384,256,true)<br />	screen:print(0, 0, "QQ172259743" , YanSe) <br /><br />	screen.waitVblankStart()--延时<br />	screen.waitVblankStart()--延时<br />	screen.waitVblankStart()--延时<br />	screen.waitVblankStart()--延时<br />	screen.waitVblankStart()--延时<br />	screen.waitVblankStart()--延时<br />	screen.waitVblankStart()--延时<br />	screen.waitVblankStart()--延时<br />	screen.waitVblankStart()--延时<br />	screen.waitVblankStart()--延时<br /><br />end</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>o70078</b><br/>
+2011-02-26 18:25:08</p>
+</div>
+<div class="col-10">
+<p>    发代码时,解释下你修改了代码的哪部分嘛~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>o70078</b><br/>
+2011-02-26 18:31:09</p>
+</div>
+<div class="col-10">
+<p>    刚才测试了下,你的代码确实有效.但是图片移动的轨迹不清除,并且在闪动,怎么回事?</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>轨迹叔</b><br/>
+2011-02-27 01:05:57</p>
+</div>
+<div class="col-10">
+<p>    每天11：00到14：00我基本都会在线</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>o70078</b><br/>
+2011-02-27 02:28:29</p>
+</div>
+<div class="col-10">
+<p>    我每天上线时间不确定,但18:00-18:45有60%在线,(有30%可能在玩PSP,10%发生停电或加班之类的意外),建议你有事发留言或邮件给我~~</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post12082_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>【教程21】使用图片打包工具</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">【教程21】使用图片打包工具</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-07-21 10:25:09</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]www.iacger.com[/url]<br />作者：[url=http://www.yayabo.cn/sns/space.php?uid=129]newcreat[/url]<br /><br />需求：为了不然别人看到游戏图片内容，减少文件数量，会用到图片打包工具。<br />本节讲述[url=http://www.yayabo.cn/sns/space.php?uid=419]白枫[/url]制作的[url=http://www.yayabo.cn/forum-8-1.html]NGE2[/url]图片打包工具的使用。<br /><br />使用很简单：<br />1 加载资源包，会加载资源信息<br />[code=c]<br />packInit("DATA.BIN");// 把资源包信息加载到内存 <br />[/code]<br />2 打开资源包与得到该资源里某个图片的大小：<br />[code=c]<br />//这里开一个独立的fd,需要自己释放，本例用<br />//设置image_load_fp的第三个参数为1来释放这个fd<br />int fd = packOpenAsync("demo0.jpg");       // 得到资源包里图片的文件指针<br />int size = packSize("demo0.jpg");       // 得到资源包里图片的大小<br />[/code]<br />3调用图片load的fp的函数（字体文件也可以）<br />注意用packOpenAsync打开的需要自己释放，这里给<br />设置image_load_fp的第三个参数autoclose为1来释放这个fd<br />[code=c]<br />if(fd>0 && size>0)<br />              bg = image_load_fp(fd,size,1,DISPLAY_PIXEL_FORMAT_8888,1);<br />[/code]<br />4 资源包不用后就可以释放了<br />[code=c]<br />//清除<br />packFini();<br />[/code]<br />[code=c]<br />#include "libnge2.h"<br />#include "package.h"<br /><br />image_p bg = NULL;<br /><br />void DrawScene();<br />void btn_down(int keycode);<br />void btn_up(int keycode);<br /><br />extern "C"<br />int main(int argc,char* argv[])<br />{<br />       NGE_Init(INIT_ALL);<br />       InitInput(btn_down,btn_up,1);<br /><br />       packInit("DATA.BIN");       // 把资源包加载到内存<br />       //这里开一个独立的fd,需要自己释放，本例用<br />       //设置image_load_fp的第三个参数为1来释放这个fd<br />       int fd = packOpenAsync("demo0.jpg");       // 得到资源包里图片的文件指针<br />       int size = packSize("demo0.jpg");       // 得到资源包里图片的大小<br /><br />       // 从文件读取图片<br />       if(fd>0 && size>0)<br />              bg = image_load_fp(fd,size,1,DISPLAY_PIXEL_FORMAT_8888,1);<br /><br />       while(1) {<br />              InputProc();<br />              DrawScene();<br />              LimitFps(60);<br />       }<br /><br />       image_free(bg);<br />       bg = NULL;<br />       //清除<br />       packFini();<br />       NGE_Quit();<br />       return 0;<br />}<br /><br />void DrawScene()<br />{<br />       BeginScene(1);<br />       if(bg) ImageToScreen(bg,0,0);<br />       EndScene();<br />}<br /><br />void btn_down(int keycode)<br />{<br />       switch(keycode)<br />    {<br />       case PSP_BUTTON_UP:<br />              break;<br />       case PSP_BUTTON_DOWN:<br />              break;<br />       case PSP_BUTTON_LEFT:<br />              break;<br />       case PSP_BUTTON_RIGHT: <br />              break;<br />       case PSP_BUTTON_TRIANGLE:<br />              break;<br />       case PSP_BUTTON_CIRCLE:<br />              break;<br />       case PSP_BUTTON_CROSS:<br />              break;<br />    case PSP_BUTTON_SQUARE:<br />              break;<br />       case PSP_BUTTON_SELECT:<br />              break;<br />       case PSP_BUTTON_START:<br />              break;<br />    }<br />}<br /><br />void btn_up(int keycode)<br />{<br />       switch(keycode)<br />    {<br />       case PSP_BUTTON_UP:<br />              break;<br />       case PSP_BUTTON_DOWN:<br />              break;<br />       case PSP_BUTTON_LEFT:<br />              break;<br />       case PSP_BUTTON_RIGHT: <br />              break;<br />       case PSP_BUTTON_TRIANGLE:<br />              break;<br />       case PSP_BUTTON_CIRCLE:<br />              break;<br />       case PSP_BUTTON_CROSS:<br />              break;<br />    case PSP_BUTTON_SQUARE:<br />              break;<br />       case PSP_BUTTON_SELECT:<br />              break;<br />       case PSP_BUTTON_START:<br />              break;<br />    }<br />}<br />[/code]<br />剩下的部分请看源代码<br /><br />最后说下包制作工具：<br />在最新的libnge2的tool目录下有，本例下面的包里也有请先看说明，比较简单<br />[attach]1485[/attach]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post531_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>像素画Pattern法教程</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">像素画Pattern法教程</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-07-08 08:47:19</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://hi.baidu.com/%C4%A7%B7%A8%E8%D6%D7%D3/blog/item/a61271cba262d816bf09e662.html[/url]<br /><br />本教程转自插画中国论坛<br /><br />我根据自己方便命名为pattern法，更专业的应该叫dithering。<br /><br />Part One<br /><br />首先让我们来探索一下pattern法本身。<br /><br />假设我们现在只有纯黑色和纯白色，我们要用它们来调出灰色来：<br />（红框里的是基本的pattern形，小黑块乃是1像素*1像素，这里只是放大了而已）<br /><br />[attach]1379[/attach] [attach]1380[/attach] [attach]1381[/attach]<br /><br /><br />以上三种很简单的pattern就可以组成三种不同灰度的灰色（分别是25%，50%，和75%），来看看成果：<br /><br />[attach]1382[/attach] [attach]1383[/attach] <br /><br />25%<br /><br />[attach]1384[/attach] [attach]1385[/attach]<br /><br />50%<br /><br />[attach]1386[/attach] [attach]1387[/attach] <br /><br />75%<br /><br />现在我们从100%（黑）->75%->50%->25%->0%（白）来排列，可以得到一个从深到浅的色阶，而其实我们只是用了2种颜色（看起来很象漫画的网点）。<br /><br />[attach]1388[/attach] [attach]1389[/attach]<br /><br />运用这个方法，可以让颜色过渡看起来比整个色块的过渡自然一些。我个人爱好50%的pattern，因为这种格子是我的最爱（vans！vans！），所以我用这个用得最多，其余的pattern大家也可以尝试着去画，找到自己最喜欢的。<br />分析一下实例：<br /><br />[attach]1390[/attach] [attach]1391[/attach]<br /><br />我的过渡只用了50%，如果有精力和有耐心，可以做上25%和75%的，一个建议就是过渡越多，画面越光滑，同时像素特殊的鲜明感也会减弱，也就是我们常说的画面开始糊起来了，所以过渡需要适可而止，不要过而不及。<br />回到刚才那个灰色过渡图，我们发现颜色过渡其实还很生硬，那是因为颜色过渡时取的都是直线，我们想点办法，把过渡线弄成折线，那么或许效果更自然些。<br /><br />[attach]1392[/attach] [attach]1393[/attach] <br /><br />大家可能已经发现了，pattern就是说一个图案在重复运用，所以它本身并没有既定的模式，大家完全可以自创出一套属于自己的pattern。<br /><br />Part Two<br /><br />Pattern法可以有效的节省用色数量，而仍保持一定的画面质素。<br /><br />有人问为什么要节省用色呢，本来像素所属的GIF就已经限定了有限的256色，还要节省啊？原因有2：<br /><br />1是真的为了节省。最大量运用像素图的应该是游戏业，或者手机，在这些行业画面并不是说要想多精细就搞多精细，更多时候要兼顾到性能和硬件的表现能力。出于这个考虑，游戏的画面严格控制用色数量，节省下资源为游戏的其他部分所用。<br /><br />2是为了整体的画面风格。仔细想想就可以知道，你用1个1个像素描画出来的主体人物，因为用色精练而风格鲜明，背景却用了几十到上百种颜色营造了写实的风格，当两种风格合起来的时候一定会有些不和谐的感觉。<br /><br />所以就算我们画像素不是为了做游戏，如果我们有意训练自己减少颜色的用量，也会对自己的绘画风格有帮助的，毕竟像素较提倡鲜明、高度概括、比较卡通化的风格。<br /><br />我们刚才说到背景的制作，这回就以这个为例子吧。我们现在来做一个蓝天的背景。<br />新开一个文件，50*50。选定渐变工具，前景色挑一个深点的蓝色，后景色挑一个浅一点的，在画布上从上到下铺上。<br /><br />[attach]1394[/attach]<br /><br />[attach]1395[/attach] [attach]1396[/attach]<br /><br />然后我们点选菜单中“存储为web所用格式”，进入下面的界面。<br /><br />请留意红色框住的内容：<br /><br />[attach]1397[/attach]<br /><br />因为是像素图，记得存为GIF格式，下面的那个框选定为“图案”，待会的渐进变化就会用有规律的图案变化来过渡，如果选了“扩散”，过渡则会是从规律到无规律，选了“杂色”，过渡就会是完全无序，你的选择完全取决于你要达到的效果。我是pattern拥护者，所以选了“图案”（pattern）。然后到最后一个红框，来玩我们的戏法吧：<br /><br />1．一狠心从256色调成2色，看看效果：<br /><br />[attach]1398[/attach] [attach]1399[/attach]<br /><br />2．仁慈点给个4色：<br /><br />[attach]1400[/attach] [attach]1401[/attach]<br /><br />3．再试试8色：<br /><br />[attach]1402[/attach] [attach]1403[/attach]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>lzm2000</b><br/>
+2009-07-23 15:07:56</p>
+</div>
+<div class="col-10">
+<p>不错的教程.</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>weihai1394</b><br/>
+2009-07-24 18:51:37</p>
+</div>
+<div class="col-10">
+<p>= = 根本没看懂... 专业的不用教 不专业的教了也不懂- -</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post291_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

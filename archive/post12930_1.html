@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>How to debug your NDS rom using the Visual Studio Debugger</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">How to debug your NDS rom using the Visual Studio Debugger</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_13.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2011-05-09 10:36:38</p>
+</div>
+<div class="col-10">
+<p>纯转，渣排版，日后研究：http://groups.google.com/group/vgcoding/browse_thread/thread/e311260aa3b37c12<br /><br />发件人：Antonio Maiorano <amaior...@gmail.com><br />日期：Mon, 17 Jan 2011 22:26:22 -0800 (PST)<br />当地时间：2011年1月18日(星期二) 上午1时26分<br />[Video Game Coding] How to debug your NDS rom using the Visual Studio Debugger<br /><br />I have been working on Zelda DS for over a year now, and have loved the<br />experience of using the homebrew tools provided by devkitPro. However,<br />as the project grew, I quickly started to miss using a source-level<br />debugger to help me debug and fix problems in the code. There is a<br />debugger that you can download as part of devkitPro named Insight; but<br />it's a fairly finicky application, and is a far cry from the powerful<br />debugger I'm used to using on a daily basis: the Microsoft Visual<br />Studio debugger.<br /><br />Well, the good news is, after much research and playing around, I found<br />a way to use the Visual Studio debugger to debug homebrew NDS roms!<br />I've decided to share these steps with you in this tutorial:<br /><br />Requirements<br /><br />You must have the following software installed:<br /><br />- Visual Studio: A full copy of Visual Studio, not an Express edition,<br />I use version 2008, but 2005 and 2010 should work fine. The reason it<br />can't be the Express version of Visual Studio is that it does not<br />support plugins, and the next requirement is a plugin...<br />- WinGDB: This excellent plugin allows you to debug gcc compiled<br />programs with gdb within Visual Studio. It's not free, however before<br />you decide whether to purchase it, you can download a fully functional<br />30-day trial.<br />- DeSmuME: The best DS emulator available, and the only one that<br />implements a gdb stub that allows you to use gdb to debug an NDS rom.<br />Thankfully, this piece of software is not only free, but open source as<br />well!<br />Setup<br />Visual Studio Makefile Project<br />The first step is creating a Visual Studio Makefile project that simply<br />invokes the makefile for your homebrew NDS application, and often<br />includes the source files if you wish to use Visual Studio as an editor<br />as well. There is an excellent tutorial on how to do exactly this right<br />here:http://www.console-dev.de/2009/09/03/create-nintendo-ds-applications-...<br />The only difference in my setup is that I don't use no as my<br />emulator, but DeSmuME instead, which I discuss later. In any case, if<br />you can at least build your rom from a Visual Studio project, you're<br />good to go for the next step.<br /><br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2011-05-09 10:37:37</p>
+</div>
+<div class="col-10">
+<p>Compiling with Optimizations Disabled<br /><br />In order to easily debug your NDS rom, you must disable compiler<br />optimizations, otherwise you'll find that stepping through code will<br />jump all over the place, and setting breakpoints won't always stay on<br />the lines you set them. This is normal since the order of generated<br />optimized code will often not match the order you specified in the<br />source code.<br /><br />The devkitPro templates for NDS applications enable optimizations by<br />default. To disable them, open the Makefile, and find the line similar<br />to:<br /><br />CFLAGS := -g -Wall -O2<br />-fomit-frame-pointer<br />-ffast-math <br />$(ARCH)<br /><br />To disable optimizations, you must minimally remove the -O2.<br />Personally, I also remove the -fomit-frame-pointer and the -ffast-math<br />to make sure I don't get wonky behaviour when stepping through code,<br />but that may be overkill.<br />Once you've modified the Makefile, make sure to rebuild your rom. An<br />incremental build will not work since no dependencies have changed.<br />As a side note, you'll probably want to reenable optimizations for your<br />final NDS rom, especially if you notice a performance hit from having<br />disabled them. Having to do this by manually editing the Makefile every<br />time can be tedious. Personally, I made many modifications to the<br />Makefiles that allow me to pass in a configuration (DEBUG or RELEASE),<br />which modifies not only the compiler flags, but also the output folder<br />for object files, and the name of the rom itself. I may post a tutorial<br />on how to do this someday.<br /><br />WinGDB Setup<br />Assuming you've installed Visual Studio and WinGDB correctly, you<br />should see an menu entry for WinGDB in Visual Studio:<br /><br />Select WinGDB → Preferences, General tab, the only option you'll need<br />to set is the Default debugger path to the arm-eabi-gdb.exe in your<br />devkitPro installation, which in my case<br />is "C:devkitProdevkitARMinarm-eabi-gdb.exe":<br /><br />Click OK to close the dialog. Now we need to set the project-specific<br />properties for WinGDB. To do this, in the Solution Explorer,<br />right-click on your project and select WinGDB → Properties:<br /><br />Now set the following fields in the dialog that opens:<br /><br />General tab, Target type: Embedded Linux system (gdbserver)<br /><br />Debug tab:<br /><br />Executable path: here you must set the path to the arm9 elf file that<br />gets built for your application. The arm9 elf file contains the code,<br />data, and debug information for the arm9 processor, and is usually what<br />you're interested in debugging. Note that if you used the arm9 template<br />from devkitPro (i.e. c:devkitProexamples<br />ds	emplatesarm9), there<br />should be only one elf file that gets built next to your nds file.<br />However, if you used the combined template (i.e.<br />c:devkitProexamples<br />ds	emplatescombined), you'll find the elf file<br />within the arm9 subfolder with extension .arm9.elf.<br /><br />Stop in main(): yes (I find it useful, but it's really up to you)<br />Byte order: little endian<br /><br />And finally, on the Target tab, set Target specification to: remote<br />localhost:20000<br />What this value means is that we want gdb to connect to a remote gdb<br />stub that is listening on the local machine's port 20000, which is what<br />we'll set up DeSmuME to do.<br /><br />Now click OK to save your settings. For the curious, these settings are<br />saved in your project's .suo (user options) file.<br /><br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2011-05-09 10:37:45</p>
+</div>
+<div class="col-10">
+<p>Debugging<br /><br />Launch DeSmuME<br /><br />Now it's time to debug your rom! The first step is to launch the<br />development version of DeSmuME with a specific argument telling it to<br />enable the gdb stub code and to listen on localhost:20000. For example,<br />I run the following command:<br /><br />c:emusdesmumeDeSmuME_dev.exe --arm9gdb=20000<br />C:codingeldaDSeldaDS_d.nds<br /><br />A few things to note:<br /><br />- You must use the "_dev" executable<br />- We specify that we want to debug the arm9 processor. You can instead<br />specify arm7gdb as well if you wish (and set WinGDB to debug the arm7<br />elf file instead).<br />- The port number, 20000, must match the one set in WinGDB. You can<br />change this value as long as the two match. This will launch DeSmuME<br />with a console window, and if all went well, the console should report<br />that your nds was loaded succesfully, Emulation unpaused, and the main<br />DeSmuME window should not yet be running your game. DeSmuME is<br />effectively waiting for gdb to connect to it.<br /><br />Note: since you'll be doing this often, it's a good idea to create a<br />batch file that runs the above command line. What I did was add a an<br />External Tool to the Tools menu in Visual Studio so that I can easily<br />launch DeSmuME within the IDE.<br /><br />Launch Visual Studio Debugger via WinGDB<br />With your project loaded in Visual Studio, from the menu select WinGDB<br />→ Start Debugging and if all goes well, Visual Studio should switch<br />into debugging mode, and you should eventually break on the first line<br />of main()!<br />From here, you can do pretty much anything you can normally do in the<br />Visual Studio Debugger, which includes, but is not limited to:<br />- Setting breakpoints (conditional, tracepoints, etc.)<br />- Hovering over variables to see their values<br />- Using the autos, locals, watch, memory and threads windows<br />- Using the disassembly view to see your source code mixed with the<br />assembly code that was generated<br />- Setting a breakpoint at arbitrary locations while your application is<br />running (this has never worked for me with other debuggers like Insight<br />or Eclipse).<br />Conclusion<br />Phew, that was a little longer than I thought it would be, but<br />hopefully this tutorial will help some of you debug your NDS<br />applications more easily! If you have any problems, or if you feel<br />certain parts of this tutorial could be more clear, don't hesitate to<br />let me know.<br /><br />-- <br />Posted By Antonio Maiorano to Video Game Coding at 1/18/2011 01:26:00 AM </p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2011-05-09 10:39:19</p>
+</div>
+<div class="col-10">
+<p>你确定你看得懂？</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>710895609</b><br/>
+2011-05-09 10:40:18</p>
+</div>
+<div class="col-10">
+<p>＊＊看不懂</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>苹果君</b><br/>
+2011-05-09 11:13:10</p>
+</div>
+<div class="col-10">
+<p>第一次发现自己英语原来那么烂…</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>雷精灵</b><br/>
+2011-05-09 11:19:42</p>
+</div>
+<div class="col-10">
+<p>抽空本少爷翻译一下。虽然对于拥有官方开发设备的本少爷来说，这文章用处不大，但对于其他自制软件开发者来说，这篇教程或许还真是好东西。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2011-05-09 11:25:45</p>
+</div>
+<div class="col-10">
+<p>惊现雷叔。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>菠菜很无奈</b><br/>
+2011-05-09 11:33:44</p>
+</div>
+<div class="col-10">
+<p>从来对我的英语不报信心…</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>huxiaowansui</b><br/>
+2011-05-09 11:37:09</p>
+</div>
+<div class="col-10">
+<p>天书啊啥也看不懂</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>yht19921212</b><br/>
+2011-05-09 11:49:45</p>
+</div>
+<div class="col-10">
+<p>作为国民自豪的宣布：英语啥的不擅长</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>幻の上帝</b><br/>
+2011-05-09 12:28:33</p>
+</div>
+<div class="col-10">
+<p>（排版坑爹应该只是在线代理的关系……）<br /><br /><br />VS2010基本试验成功。<br />其实有单步/断点/监视堆栈就够用了……= =<br /><br />话说DeSmuME的dev没x64的么……<br /></p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>boy545003571</b><br/>
+2011-05-09 14:05:28</p>
+</div>
+<div class="col-10">
+<p>@_@ 求翻译。。。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post12930_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

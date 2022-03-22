@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>再谈libnds的开发环境搭建（win）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">再谈libnds的开发环境搭建（win）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2009-03-08 17:50:28</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.chinaunix.net/u/4774/[/url]<br />作者：u0u0<br /><br />最简只需要<br />devkitARM_r21-win32.exe<br />msys-1.0.11-RC2.exe<br />libnds-20071023.tar.bz2<br />nds-examples-20071023.tar.bz2<br /><br />解压，目录结构<br />C:devkitPro<br />devkitARM<br />msys<br />libnds<br />nds-examples<br /><br />然后设置环境变量<br />DEVKITARM /c/devkitPro/devkitARM<br />DEVKITPRO /c/devkitPro<br /><br />启动msys，找个example make一下，应该就可以编译了。<br /><br />==========================<br />再来看看都是些啥。<br />devkitARM是用GCC针对arm处理器的交叉开发环境，理论上可以DIY出来的。<br />devkitARM有提供linux下的开发包，所有在linux上建环境应该是水到渠成。(FreeBSD?可能需要开启linux模拟)<br />devkitARM有部分非GCC的工具，比如ndstool.exe等，这个很重要，后面再将。<br /><br />注：devkitARM_r21-win32.exe的GCC是4.1.2，devkitARM_r22-win32.exe是GCC 4.3<br />该死的GPLv3，不是很喜欢，后面不建议跟进工具链。<br /><br /><br />msys是个在windows下提供shell环境的一个工具，少不了它。<br /><br />libnds，针对NDS硬件的都在这里面了，有源码，要了解工作原理，一定要把它的源码下来看看。<br />后面逐步分析。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>niubo_</b><br/>
+2009-03-08 21:40:23</p>
+</div>
+<div class="col-10">
+<p>哇，还有“后面逐步分析”。很期待……</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post334_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

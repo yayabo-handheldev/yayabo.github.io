@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>lua 的 操作系统库</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">lua 的 操作系统库</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-18 20:37:00</p>
+</div>
+<div class="col-10">
+<p>操作系统库包含了文件管理，系统时钟等等与操作系统相关信息。这些函数定义在表（table）os中。定义该库时考虑到Lua的可移植性，因为Lua是以ANSI C写成的，所以只能使用ANSI定义的一些标准函数。许多的系统属性并不包含在ANSI定义中，例如目录管理，套接字等等。所以在系统库里并没有提供这些功能。另外有一些没有包含在主体发行版中的Lua库提供了操作系统扩展属性的访问。例如posix库，提供了对POSIX 1标准的完全支持；在比如luasocket库，提供了网络支持。<br />在文件管理方面操作系统库就提供了os.rename函数（修改文件名）和os.remove函数（删除文件）。<br />22.1 Date和Time<br />time和date两个函数在Lua中实现所有的时钟查询功能。函数time在没有参数时返回当前时钟的数值。（在许多系统中该数值是当前距离某个特定时间的秒数。）当为函数调用附加一个特殊的时间表时，该函数就是返回距该表描述的时间的数值。这样的时间表有如下的区间：<br />year<br />   <br />a full year<br />month<br />   <br />01-12<br />day<br />   <br />01-31<br />hour<br />   <br />01-31<br />min<br />   <br />00-59<br />sec<br />   <br />00-59<br />isdst<br />   <br />a boolean, true if daylight saving<br />前三项是必需的，如果未定义后几项，默认时间为正午（12:00:00）。如果是在里约热内卢（格林威治向西三个时区）的一台Unix计算机上（相对时间为1970年1月1日，00:00:00）执行如下代码，其结果将如下。<br />-- obs: 10800 = 3*60*60 (3 hours)<br />print(os.time{year=1970, month=1, day=1, hour=0})<br />    --> 10800<br />print(os.time{year=1970, month=1, day=1, hour=0, sec=1})<br />    --> 10801<br />print(os.time{year=1970, month=1, day=1})<br />    --> 54000  (obs: 54000 = 10800 + 12*60*60)<br />函数data，不管它的名字是什么，其实是time函数的一种“反函数”。它将一个表示日期和时间的数值，转换成更高级的表现形式。其第一个参数是一个格式化字符串，描述了要返回的时间形式。第二个参数就是时间的数字表示，默认为当前的时间。使用格式字符 "*t"，创建一个时间表。例如下面这段代码：<br />temp = os.date("*t", 906000490)<br />则会产生表<br />{year = 1998, month = 9, day = 16, yday = 259, wday = 4,<br />hour = 23, min = 48, sec = 10, isdst = false}<br />不难发现该表中除了使用到了在上述时间表中的区域以外，这个表还提供了星期（wday，星期天为1）和一年中的第几天（yday，一月一日为1）除了使用 "*t" 格式字符串外，如果使用带标记（见下表）的特殊字符串，os.data函数会将相应的标记位以时间信息进行填充，得到一个包含时间的字符串。（这些特殊标记都是以 "%" 和一个字母的形式出现）如下：<br />print(os.date("today is %A, in %B"))<br />    --> today is Tuesday, in May<br />print(os.date("%x", 906000490))<br />    --> 09/16/1998<br />这些时间输出的字符串表示是经过本地化的。所以如果是在巴西（葡萄牙语系），"%B" 得到的就是 "setembro"（译者按：大概是葡萄牙语九月？），"%x" 得到的就是 "16/09/98"（月日次序不同）。标记的意义和显示实例总结如下表。实例的时间是在1998年九月16日，星期三，23:48:10。返回值为数字形式的还列出了它们的范围。（都是按照英语系的显示描述的，也比较简单，就不烦了）<br />%a<br />   <br />abbreviated weekday name (e.g., Wed)<br />%A<br />   <br />full weekday name (e.g., Wednesday)<br />%b<br />   <br />abbreviated month name (e.g., Sep)<br />%B<br />   <br />full month name (e.g., September)<br />%c<br />   <br />date and time (e.g., 09/16/98 23:48:10)<br />%d<br />   <br />day of the month (16) [01-31]<br />%H<br />   <br />hour, using a 24-hour clock (23) [00-23]<br />%I<br />   <br />hour, using a 12-hour clock (11) [01-12]<br />%M<br />   <br />minute (48) [00-59]<br />%m<br />   <br />month (09) [01-12]<br />%p<br />   <br />either "am" or "pm" (pm)<br />%S<br />   <br />second (10) [00-61]<br />%w<br />   <br />weekday (3) [0-6 = Sunday-Saturday]<br />%x<br />   <br />date (e.g., 09/16/98)<br />%X<br />   <br />time (e.g., 23:48:10)<br />%Y<br />   <br />full year (1998)<br />%y<br />   <br />two-digit year (98) [00-99]<br />%%<br />   <br />the character '%'<br />事实上如果不使用任何参数就调用date，就是以%c的形式输出。这样就是得到经过格式化的完整时间信息。还要注意%x、%X和%c由所在地区和计算机系统的改变会发生变化。如果该字符串要确定下来（例如确定为mm/dd/yyyy），可以使用明确的字符串格式方式（例如"%m/%d/%Y"）。<br />函数os.clock返回执行该程序CPU花去的时钟秒数。该函数常用来测试一段代码。<br />local x = os.clock()<br />local s = 0<br />for i=1,100000 do s = s + i end<br />print(string.format("elapsed time: %.2f<br />", os.clock() - x))<br />22.2 其它的系统调用<br />函数os.exit终止一个程序的执行。函数os.getenv得到“环境变量”的值。以“变量名”作为参数，返回该变量值的字符串：<br />print(os.getenv("HOME"))    --> /home/lua<br />如果没有该环境变量则返回nil。函数os.execute执行一个系统命令（和C中的system函数等价）。该函数获取一个命令字符串，返回一个错误代码。例如在Unix和DOS-Windows系统里都可以执行如下代码创建一个新目录：<br />function createDir (dirname)<br />    os.execute("mkdir " .. dirname)<br />end<br />os.execute 函数较为强大，同时也更加倚赖于计算机系统。函数os.setlocale设定Lua程序所使用的区域（locale）。区域定义的变化对于文化和语言是相当敏感的。setlocale有两个字符串参数：区域名和特性（category，用来表示区域的各项特性）。在区域中包含六项特性：“collate”（排序）控制字符的排列顺序；"ctype" controls the types of individual characters (e.g., what is a letter) and the conversion between lower and upper cases; "monetary"（货币）对Lua程序没有影响；"numeric"（数字）控制数字的格式；"time"控制时间的格式（也就是os.date函数）；和“all”包含以上所以特性。函数默认的特性就是“all”，所以如果你只包含地域名就调用函数setlocale那么所有的特性都会被改变为新的区域特性。如果运行成功函数返回地域名，否则返回nil（通常因为系统不支持给定的区域）。<br />print(os.setlocale("ISO-8859-1", "collate")) --> ISO-8859-1<br />关于“numeric”特性有一点难处理的地方。尽管葡萄牙语和其它的一些拉丁文语言使用逗号代替点号来表示十进制数，但是区域设置并不会改变Lua划分数字的方式。（除了其它一些原因之外，由于print（3,4）还有其它的函数意义。）因此设置之后得到的系统也许既不能识别带逗号的数值，又不能理解带点号的数值[7]：<br />-- 设置区域为葡萄牙语系巴西<br />print(os.setlocale('pt_BR'))    --> pt_BR<br />print(3,4)        --> 3    4<br />print(3.4)        --> stdin:1: malformed number near `3.4'<br />The category "numeric" is a little tricky. Although Portuguese and other Latin languages use a comma instead of a point to represent decimal numbers, the locale does not change the way that Lua parses numbers (among other reasons because expressions like print(3,4) already have a meaning in Lua). Therefore, you may end with a system that cannot recognize numbers with commas, but cannot understand numbers with points either:<br />-- set locale for Portuguese-Brazil<br />print(os.setlocale('pt_BR'))    --> pt_BR<br />print(3,4)        --> 3    4<br />print(3.4)        --> stdin:1: malformed number near '3.4'</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1104_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

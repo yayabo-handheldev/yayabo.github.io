@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>结构体学习笔记</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">结构体学习笔记</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-16 08:56:29</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.chinaunix.net/u1/52089/showart_467535.html[/url]<br /><br />以前学习结构体的时候写下来的，hoho怀念一下<br /> <br />一般的程序编写步骤。<br />1，定义一个结构体<br />2，实体化一个结构体变量，全局的，用在各个模块上面。<br />3，子程序用结构体指针来做。<br />4，主程序传递结构体指针的地址。<br />#include <stdio.h><br />#include <stdlib.h><br />#include <string.h><br />typedef struct student{<br /> int  age;<br />}STU;                       // 定义结构体<br />STU student1;               // 实体化一个结构体变量<br />// 传址引用和 传值引用的区别，传址的话，是实实在在的修改传进来的数组或指针对应的数据<br />void Creat(STU *p)          // 子程序，用结构体指针来做<br />{<br /> p->age=23;<br />}<br />int main(void)<br />{ <br /> Creat(&student1);                     // 传递结构体变量的地址。<br /> printf("AGE is %d<br />",student1.age);<br /> return 0;<br />}<br /> <br />(2) 结构体里面的成员是指针变量的时候的访问办法<br />*student1.age，也就是说看成这样：*（student1.age）结构体成员代替了原来的变量<br />#include <stdio.h><br />#include <stdlib.h><br />#include <string.h><br />struct scor{<br /> float math;<br /> float english;<br />};<br />typedef struct student{<br /> char *name;<br /> int  *age;<br />}STU;<br />STU student1;<br /><br />void CreatStu(STU *p)<br />{<br /> p->name="Etual no";<br />}<br />int main(void)<br />{<br /> int age=23;<br /> student1.age=&age;<br /> CreatStu(&student1);<br /> printf("AGE is %d<br />",*student1.age);<br /> return 0;<br />}<br />下面尝试，结构体里面包含结构体指针，然后访问指针指向的内容<br />#include <stdio.h><br />#include <stdlib.h><br />#include <string.h><br />struct scor{<br /> float math;<br /> float english;<br />};<br />typedef struct student{<br /> char *name;<br /> int  *age;<br /> struct student *next;<br />}STU;<br />STU student1;<br />STU student2;<br />void CreatStu(STU *p)<br />{<br /> p->name="Etual no";<br />}<br />int main(void)<br />{<br /> int age=23;<br /> int age2=22;<br /> STU *p=&student2;<br /> <br /> p->next=&student1;<br /> p->name="hikari";<br /> p->age=&age2;<br /> student1.age=&age;<br /> CreatStu(&student1);<br /> printf("AGE is %d<br />",*p->next->age);<br /> return 0;<br />}<br />下面尝试，普通指针变量，指向结构体内部的成员变量<br />#include <stdio.h><br />#include <stdlib.h><br />typedef struct student{<br /> char *name;<br /> int  age;<br />}STU;<br />STU student1;<br />void CreatStu(STU *p)<br />{<br /> p->name="Etual";<br /> p->age=23;<br />}<br />int main(void)<br />{<br /> int *age;<br /> CreatStu(&student1);<br /> age=&student1.age;<br /> printf("AGE is %d<br />",*age);<br /> return 0;<br />}</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post116_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>LUA学习笔记1-Functions</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">LUA学习笔记1-Functions</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-24 19:42:12</p>
+</div>
+<div class="col-10">
+<p>Function Description<br /><br />在LUA中, Function和Number, String一样属于基本类型. 凡是基本类型可以出现的地方Function一样可以出现. 这意味着Function可以存储在变量中,可以作为另一个Function的参数传递,也可以作为某个Function的返回值. 可以把Function德名字视为一种变量,它指向具体的Function实现. 这样的机制给程序设计带来了极大的弹性. 一个程序可以重写某个Function以便给他增加功能, 或者删除某个函数创建安全运行环境(SandBox).<br /><br />    a = {p = print}<br />    a.p("Hello World") --> Hello World<br />    print = math.sin  -- `print' now refers to the sine function<br />    a.p(print(1))    --> 0.841470<br />    sin = a.p        -- `sin' now refers to the print function<br />    sin(10, 20)      --> 10      20<br /><br />    function foo (x) return 2*x end 等价于 foo = function (x) return 2*x end<br /><br /><br /><br />在调用LUA的Function时,所有的参数应该包围在'('和')'之间, 即使函数没有参数, '('和')'也不应该被省略.<br />    print(8*9, 9/8)<br />    a = math.sin(3) + math.cos(10)<br />    print(os.date())<br /><br />这儿有一种例外情况, 如果Function只有一个参数且这个参数是literal string或者table constructor, 这时大括号keyi省略.<br />    print "Hello World"    <-->    print("Hello World")<br />    dofile 'a.lua'          <-->    dofile ('a.lua')<br />    print [[a multi-line    <-->    print([[a multi-line<br />    message]]                        message]])<br />    f{x=10, y=20}          <-->    f({x=10, y=20})<br />    type{}                  <-->    type({})<br /><br />对于面向对象程序设计, LUA支持一种特殊的语法支持, 这里的冒号称作冒号运算符. 例如 o:foo(x) 的意义是调用 o.foo 且把 o 作为额外的参数放到第一个参数的位置.<br /><br />Function Definition<br /><br />LUA中的函数定义和许多程序设计语言一样, 需要有一个函数名, 一系列的参数和函数体.<br />    -- add all elements of array `a'<br />    function add (a)<br />      local sum = 0<br />      for i,v in ipairs(a) do<br />        sum = sum + v<br />      end<br />      return sum<br />    end<br /><br />函数的参数是局部变量, LUA中比较特殊的是调用函数时参数的个数可以和定义时不一样. LUA会调整参数的个数, 这一点很像多重赋值, 调用函数时所给的多余参数会被丢掉,  调用函数时如果参数不够后边的会被赋为nil.<br />例如函数定义为:<br />function f(a, b) return a or b end<br />如下调用:<br />    f(3)            a=3, b=nil<br />    f(3, 4)          a=3, b=4<br />    f(3, 4, 5)      a=3, b=4  (5被抛弃)<br /><br />这种机制和大多数强类型编成语言(C,C++,Java)不同, 不过这种做法带来了一些好处:<br />    function incCount (n)<br />      n = n or 1<br />      count = count + n<br />    end<br /><br />这里1 作为函数的默认参数, 如果调用时不给参数, 那么n的值就是nil, 否则就是用用户调用时给的值.<br /><br /><br />Multiple Results<br />多重返回值是LUA提供的一种并不符合传统, 但是十分方便的机制. 一些LUA预定义的函数也使用了多重返回值的机制, 例如 string.find 函数, 他的两个返回值分别表示查找到的字符串的起始和结束位置. 如果没找到返回值为nil.<br />    s, e = string.find("hello Lua users", "Lua") <br />    print(s, e)  -->  7      9<br /><br />使用多重返回值的方法很简单, 你只需要将返回的变量列举出来就可以了. 以下的例子函数返回一个数组中的最大值和最大值元素的索引.<br />  function maximum (a)<br />      local mi = 1          -- maximum index<br />      local m = a[mi]      -- maximum value<br />      for i,val in ipairs(a) do<br />        if val > m then<br />          mi = i<br />          m = val<br />        end<br />      end<br />      return m, mi<br />    end<br /> <br />    print(maximum({8,10,23,12,5}))    --> 23  3<br /><br /><br />Variable Number of Arguments<br />在LUA中Function支持不定个数的参数, 用 ... 表示. 这和LUA中普通函数的调用是有所区别的. 调用函数时所给参数可以和定义时不同, 但这里其实是LUA编译器对参数作了自动补足, 调用时参数不够的话多余的置为nil, 调用时参数过多则将多余的抛弃. 并不是真正的参数个数不定.<br />    printResult = ""<br /> <br />    function print (...)<br />      for i,v in ipairs(arg) do<br />        printResult = printResult .. tostring(v) .. "	"<br />      end<br />      printResult = printResult .. "<br />"<br />    end<br />这里...表示参数个数不确定, 当print调用时, 所有的参数都被存储在一个table内, 这个隐藏变量的名字叫arg, 除了函数的参数外, arg还含有一个额外的元素n, 用来表示参数的个数.<br /><br />一个Function可以有多个返回值, 有时我们想指定使用返回值中的某一个而忽略其他的, 这时可以用 _ 表示忽略.<br />    local _, x = string.find(s, p)<br />    -- now use `x'<br />    ...<br /><br />另一种方法是使用select 函数,<br />    print(string.find("hello hello", " hel"))        --> 6  9<br />    print(select(1, string.find("hello hello", " hel"))) --> 6<br />    print(select(2, string.find("hello hello", " hel"))) --> 9<br /><br />对于以下情况:<br />function g (a, b, ...) end<br /><br />调用结果如下:<br />    g(3)            a=3, b=nil, arg={n=0}<br />    g(3, 4)          a=3, b=4, arg={n=0}<br />    g(3, 4, 5, 8)    a=3, b=4, arg={5, 8; n=2}<br /><br />Named Arguments<br />在 LUA中, 如果一个函数有许多参数而且大多数参数都是可选的话, 将参数定义为table会带来一些额外的方便性, 你不需要记住参数的位置, 只需要记住参数的名字即可.<br /><br />例如一个产生窗口的函数可能有许多参数,<br />    function Window (options)<br />      -- check mandatory options<br />      if type(options.title) ~= "string" then<br />        error("no title")<br />      elseif type(options.width) ~= "number" then<br />        error("no width")<br />      elseif type(options.height) ~= "number" then<br />        error("no height")<br />      end<br /> <br />      -- everything else is optional<br />      _Window(options.title,<br />              options.x or 0,    -- default value<br />              options.y or 0,    -- default value<br />              options.width, options.height,<br />              options.background or "white",  -- default<br />              options.border      -- default is false (nil)<br />            )<br />    end<br /><br /><br /><br />调用时很简单, 你只需要给出参数的名字和值, 顺序无关紧要.<br />    w = Window{ x=0, y=0 }<br /><br />Closure<br />    Function属于基本类型, 所以一个Function可以返回另一个Function.<br />  function foo()<br />          return function() return end<br />  end<br /> <br />  c1 = foo()  --> 每次调用返回一个匿名的function对象.<br />  c2 = foo()<br /> <br />  print(c1)  --> function: 0x87dd470<br />  print(c2)  --> function: 0x87dd490<br />    c1和c2是不同的对象.<br /><br />    同样, 如果一个作为返回值的函数对象内使用了上层的局部变量, 每一个返回的函数对象内使用的这个局部变量都是不同的. 这种情况称作closure.<br /> <br />  function foo()<br />      local x=10<br />      return function()<br />          x=x+1<br />          return x end<br />  end<br /> <br />  c1 = foo()  --> 每次调用返回一个匿名的function对象.<br />  c2 = foo()<br /><br />  print(c1)              --> function: 0x87dd470<br />  print(c2)              --> function: 0x87dd490<br /> <br />  print(c1())  --> 11<br />  print(c1())  --> 12<br />  print(c2())  --> 11<br />  print(c1())  --> 13<br />  print(c2())  --> 12<br /><br /> <br />Proper Tail Calls<br />Proper Tail Calls是LUA的另一个有趣的特性, 在一个LUA函数中, 如果最后一个操作是返回一个函数调用, 例如 return g(...), 那么LUA不会把它当作一个函数调用而建立调用堆栈而只简单的跳转到另一个函数中.<br />function foo (n)<br />      if n > 0 then return foo(n - 1) end<br />end<br />这个函数无论n是多大都不会发生堆栈溢出, 这里return foo(...)的功能相当于goto.<br />以下调用并不是Tail Calls, 因为函数调用返回后还作了其他的操作:<br />    return g(x) + 1    -- must do the addition<br />    return x or g(x)    -- must adjust to 1 result<br />    return (g(x))      -- must adjust to 1 result<br /><br />在LUA中, 只有形如return g(...)是tail call. 然而g和他的参数可以是复杂的调用形式, 因为LUA会先计算表达式的值然后调用函数, 所以下面是一个tail call.<br />      return x.foo(x[j] + a*b, i + j)<br />文章来源于[url]http://www.luaer.cn[/url]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-01-24 23:11:52</p>
+</div>
+<div class="col-10">
+<p>掌叔从哪偷到这么多关于lua的文章,不错的说</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1170_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

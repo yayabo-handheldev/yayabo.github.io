@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS开发Wiki翻译：第四天：精灵（6）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS开发Wiki翻译：第四天：精灵（6）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-06 15:43:57</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://chenyi1976.spaces.live.com[/url]<br />翻译：陈轶<br /><br />扩展动画<br /><br />最后一个PAlib动画系统的内容：扩展动画！这是什么东西？它让你可以在播放动画的时候可以很容易地控制它。如果你使用AnimEx 函数装载精灵而不是使用上面的那些，你就有2个额外的选项可用：<br /><br />    * 动画类型，ANIM_LOOP（0）为通常的循环播放，ANIM_UPDOWN (1)为一种先正常播放再倒退的播放。<br />    * 循环次数，就是你希望动画播放的次数。如果设置为－1，那么动画将会无限播放下去。。。如果动画类型选了ANIM_UPDOWN，那么一次完整的前进倒退需要将循环次数设置为2。。。 <br /><br />就像你猜到的那样，普通的动画实际上就等于使用缺省参数的扩展动画。<br /><br />下面是关于爆炸的动画，只改变了开始的时候使用的函数。<br /><br />[code=c]// First animation will be normal<br />PA_StartSpriteAnim(0, // screen<br />0, // sprite number<br />0, // first frame is 0<br />6, // last frame is 3, since we have 4 frames...<br />5); // Speed, set to 5 frames per second<br /><br />// Extended animations for the rest<br />PA_StartSpriteAnimEx(0, 1, 0, 6, 5, ANIM_ONESHOT); // just play it once...<br />PA_StartSpriteAnimEx(0, 2, 0, 6, 5, ANIM_UPDOWN, -1); // back and forth, infinite number of times<br />PA_StartSpriteAnimEx(0, 3, 0, 6, 5, ANIM_LOOP, 5); // Play it 5 times[/code]<br /><br />ANIM_ONESHOT这是个宏，它让你的动画只演示一次。当动画结束的时候，动画返回到第0帧显示。。。如果你想让动画留在最后一帧上，你可以使用ANIM_UPDOWN类型和1个循环周期。。。<br /><br />深度<br /><br />在3D游戏中，你经常需要精灵重叠起来。比如某人要挡在其他东西前面。为了做到这个，我们需要设置显示的优先级。在DS上有2种优先级：<br /><br />    * 精灵优先级：一个低值优先级的精灵将挡住高值优先级的精灵<br />    * 背景优先级：背景优先级具有比精灵优先级更大的权力。缺省情况下，所有精灵都是在0号背景上的，你也可以把精灵设置到背景1，2，3上去。一个位于2号背景上的精灵将被显示在所有0/1号背景上精灵的后面，但它可以遮住所有3号背景上的精灵。。。 <br /><br />我不再贴代码了，就一个函数PA_SetSpritePrio(screen, sprite, priority (0-3)); 。。。<br /><br />双精灵<br /><br />下面是双精灵的创建。我必须承认我不喜欢这个，但既然有人想要我还是加了这个功能。。。花了蛮多的时间而且并不令人愉快，因为我主要是再拷贝粘贴其他精灵函数并稍做修改。<br /><br />废话太多了，我们说正事。。。什么是双精灵？好的，它是精灵的变体，它能把上下屏幕组合起来显示，好像他们就是一个屏幕一样！不过并不是说同时在上下屏幕显示一个精灵。现在你可以认为纵轴上的范围不再是0－191，而是0－383，双屏合而为一。这样一个精灵就可以在上下屏幕之间飞来飞去。这在类似乒乓，撞球等等游戏里面还是很有用的。。。<br /><br />y＝0的点是上屏幕的左上点。前面我们已经用过很多精灵的函数。如果你想使用双精灵，只要在哪些函数前面加一个前缀Dual就可以了：PA_DualCreateSprite(...), PA_DualSetSpriteXY(sprite, x, y), 等等。。。除了Dual前缀以外，还有一个变化就是你不用再设置屏幕的编号了。。。因为现在已经把上下屏幕看成一体了。<br /><br />我发现我还没有给PAlib加上一个例子，也许以后我会加上。。。实际上我只需要在现有的精灵例子代码中进行一下拷贝粘贴并稍做修改就可以了。这很简单，我怀疑你是不是真的需要这些例子。<br /><br /><br />最后一件事情，很重要：你可能注意到DS的上下屏幕并不紧靠在一起。。。他们之间留着老大一块自留地，所以我在考虑如何处理这块地。。。。我最后的决定是做一个最灵活的方案，所以我加了最后一个函数：PA_SetScreenSpace(space in pixels). 缺省情况下，这个值是48象素点，我自己感觉设置这个值比较舒服。。。这意味着将一个精灵从一个屏幕移到另一个屏幕的时候，看起来中间就隔了48象素点，如果精灵的大小小于48象素，那么移动的时候有那么一瞬你压根看不到精灵，因为它跑到自留地里面去了。。。实际情况，你应该根据自己的需要调整这个值。写撞球的游戏的时候，你可以把这个值设置为48甚至64。如果是射击的游戏，这个值应该设置为0或16。。。<br /><br />优化内存和速度<br /><br />我觉得这是一个非常重要的篇章，但它确实是针对高级用户的。。。如果你是初学者，以后再来看吧。。。（译：这一部分作者还未完成）<br /><br />FAQ－精灵<br /><br />Q1：我的精灵显示不出来！！！<br /><br />A：好的，检查一下下面的东西。。。<br /><br />    * 你装载调色板了吗？<br />    * 调色板和你的精灵在同一屏幕上吗？<br />    * 精灵和调色板使用了同一调色板编号了吗？ <br /><br />（译：终于结束了。。。。收获不小。。。如果不翻译，我想我自己快一倍的速度看完，但是我肯定会漏掉不少精彩的东西。因为我一看长篇大论我就想跳过。发现这些东西对于一个英文过了4级的人并稍有经验的程序员来说，压根不是问题，不管怎么说，也许能够帮助一些有志于游戏开发的。。。。小孩子？我真的不知道该说什么了。。。。汗。。。。）</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post47_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

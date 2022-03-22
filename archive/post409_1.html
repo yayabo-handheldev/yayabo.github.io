@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>常用脚本用例（附脚本）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">常用脚本用例（附脚本）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>hewenxie</b><br/>
+2009-05-07 17:37:00</p>
+</div>
+<div class="col-10">
+<p>[i=s] 本帖最后由 hewenxie 于 2010-1-23 13:03 编辑 [/i]<br /><br />[b][color=red]1. 利用变量选择指令进行按钮选择[/color][/b][code=amds]@set_var(choice, -1);  //我们先设置一个变量choice用于记录按钮选择后的值<br />@var_select(choice, 2, 按钮一|按钮二);  //这里我们先设置出现只有两个选项的问题(切记中英文字符问题)<br />@boxText(1,20,20,200,150,0,"choice = $(choice)"); //选择后我们将choice的值用框体文字输出。结果是你按按钮一，choice的值是0；按钮二，choice的值将是1<br />@boxText(1,20,20,200,150,0,"开始三个按钮的演示"); <br />@var_select(choice, 3, 按钮一|按钮二|按钮三);  //我们再设置成出现有三个选项的问题<br />@boxText(1,20,20,200,150,0,"choice = $(choice)"); //将choice的值输出。结果是按按钮一，choice的值是0；按钮二，choice的值将是1；按钮三，choice的值将是2。<br />@if($(choice) == 0); //这里我们开始根据choice的不同值进行分支操作<br />@boxText(1,20,20,200,150,0,"您按的是按钮一"); //上一句if判定的是choice值是不是0，是的话将会输出"您按的是按钮一"<br />@endif(); //用到了if，就一定要记住用endif显示结尾喔<br />@if($(choice) == 1); //同理，我们就可以根据choice的值判断按的是哪个按钮<br />@boxText(1,20,20,200,150,0,"您按的是按钮一"); //上一句if判定的是choice值是不是1，是的话将会输出"您按的是按钮二"<br />@endif(); <br />@if($(choice) == 2); <br />@boxText(1,20,20,200,150,0,"您按的是按钮三");<br />@endif();<br />@unset_var(choice); //choice变量以后不用的话一定要记住把它注销掉，因为系统最高只支持128个变量，不要浪费嘛^_^[/code][b][color=red]2. 脚本间返回与不返回跳转及脚本间的死循环[/color][/b]<br />脚本一 (script1.spt)[code=amds]@boxText(1,20,20,200,150,0,"这里是脚本一，即将召唤脚本二");<br />@call(avgFiles/data/script2.spt);  //用call带返回跳转指令跳到脚本二执行，系统回记住该位置，待脚本二执行完毕后会回到这里接着执行下面的内容<br />@boxText(1,20,20,200,150,0,"脚本二已经被封印，回到脚本一啦"); <br />@boxText(1,20,20,200,150,0,"脚本一要离开了，以后的工作都交给脚本三了");<br />@changeText(avgFiles/data/script3.spt);  //不带返回跳转，系统不再自动回到这里执行下面内容，直接跳到脚本三执行。所以一般用于脚本尾部。 [/code]脚本二 (script2.spt)[code=amds]@boxText(1,20,20,200,150,0,"脚本二开始执行了");<br />@boxText(1,20,20,200,150,0,"露个面就可以了，马上返回去");<br />=;  //注意这个=号很重要，凡是在带返回的跳转到的脚本，结尾都应该用此结束符结尾，不然就返不回去啦！ [/code]脚本三 (script3.spt)[code=amds]@boxText(1,20,20,200,150,0,"脚本三开始执行了");<br />@boxText(1,20,20,200,150,0,"现在以后的工作交给我了");<br />@boxText(1,20,20,200,150,0,"结成死循环链吧");<br />@changeText(avgFiles/data/script1.spt);  //这里演示了一个多脚本的死循环，即脚本一最后跳到脚本三，脚本三又再跳到脚本一......如此循环执行，不会有终点。 [/code][b][color=red]3. 变量的算术操作[/color][/b][code=amds]@set_var(sd,135689);  //设置变量sd 并赋初始值为135689<br />@set_value($(sd)-135686);  //将sd的值减135686 此时sd的值变成3了(算术应该没有问题，汗水)<br />@boxText(1,20,20,200,150,0,"变量值为$(sd)"); //输出sd值<br />@set_value($(sd)=8);  //这里我们让sd的值直接等于8<br />@boxText(1,20,20,200,150,0,"变量值为$(sd)");<br />@set_value($(sd)*8);  //将sd值乘以8，sd值变成64<br />@boxText(1,20,20,200,150,0,"变量值为$(sd)");<br />@set_value($(sd)/4);  //sd除以4，值当然是16。但如果除以10呢，由于本系统并没有加入浮点运算功能，所以结果只保留整数部分6(学过编程的朋友应该早就知道了)<br />@boxText(1,20,20,200,150,0,"变量值为$(sd)");[/code][b][color=red]4. 脚本的行跳转[/color][/b][code=amds]@boxText(1,20,20,200,150,0,"1"); <br />@boxText(1,20,20,200,150,0,"2"); <br />@jump(1); //跳到下面一行，其实这样的语句没用，不加效果一样要执行下一句<br />@boxText(1,20,20,200,150,0,"3"); <br />@boxText(1,20,20,200,150,0,"4"); <br />@jump(2); //跳到下面第二行，即跳过输出5这行<br />@boxText(1,20,20,200,150,0,"5"); <br />@boxText(1,20,20,200,150,0,"6"); <br />@jump(-8); //跳到上面第八行，即到最开始那一句，这样就又变成个死循环了(想解除死循环么，用分支吧)[/code][b][color=red]5. 字体颜色[/color][/b]<br />指令说明书有作说明，这里再搬过来<br />字体颜色默认为白色，如要对字体颜色操作，请使用%cX，X为0～9任意数字，对应颜色如下：<br />1-白色(white)，2-红色(red)，3-绿色(green)，4-蓝色(blue)，5-紫色(purple)，<br />6-青色(cyan)，7-黄色(yellow)，8-淡灰色(light grey)，9-深灰色(dark grey)，0-黑色(black)<br />需说明的是用%cX以后字体的颜色都会改变，直到遇到翻页或结束或新的%cX 字体颜色才会变回默认白色或新指定的色。<br />例子[code=amds]@say(0,0,我是文字,"%c2红%c3绿%4蓝%5紫%6青%7黄%8浅灰%9深灰%0黑%1白");<br />@boxText(1,20,20,200,150,0,"%c2红%c3绿%4蓝%5紫%6青%7黄%8浅灰%9深灰%0黑%1白");[/code]<br /><br /><br />[color=red][b]附件为120日元之冬完整游戏脚本。。参考用[/b][/color]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>longzusjl</b><br/>
+2009-06-06 15:51:28</p>
+</div>
+<div class="col-10">
+<p>支持啊，话说遇到一个问题，加载头像一直失败<br /><br />@bg(avgFiles/bg/bg2,1);<br />@head(avgFiles/chara/rw2);<br />@say(0,0,,"这是哪里？");<br />@say(0,0,,"该不会是迷路了吧......");<br />@head(avgFiles/chara/rw1);<br />@say(0,0,,"哎呀");<br />@head(avgFiles/chara/rw2);<br />@say(0,0,,"啊！");<br /><br />头像名称：rw1.bin  rw2.bin<br /><br />请教哪里出现的问题</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wcg12315</b><br/>
+2010-02-08 22:55:33</p>
+</div>
+<div class="col-10">
+<p>看看，不是很懂，第一次看到。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>火树银花</b><br/>
+2010-11-29 16:58:52</p>
+</div>
+<div class="col-10">
+<p>好有爱，，，，，，，，，，，，</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>quot</b><br/>
+2010-12-05 16:09:22</p>
+</div>
+<div class="col-10">
+<p>话说查查图形格式先, 大小和色深</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>wbn1883</b><br/>
+2011-01-23 19:06:56</p>
+</div>
+<div class="col-10">
+<p>谢谢诶。。。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>swordfishx</b><br/>
+2011-04-21 20:38:56</p>
+</div>
+<div class="col-10">
+<p>谢谢啊</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2011-04-21 21:58:08</p>
+</div>
+<div class="col-10">
+<p>怎么被挖坟了…</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>牧濑红莉栖</b><br/>
+2011-04-21 21:58:12</p>
+</div>
+<div class="col-10">
+<p>我去二连了…编辑下。顺便来学习下算了。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post409_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

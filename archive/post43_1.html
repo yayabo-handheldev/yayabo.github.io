@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS开发Wiki翻译：第四天：精灵（2）</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS开发Wiki翻译：第四天：精灵（2）</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-06 15:27:02</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://chenyi1976.spaces.live.com[/url]<br />翻译：陈轶<br /><br />使用PAGfx转化<br /><br />想知道Cool一点的消息吗？如果精灵能被直接使用到DS上，而不用任何修改。。。抱歉让你失望了，停止白日梦吧。这就是我要介绍的，你将看到如何转化一个精灵到DS的格式，并不是很复杂。。。<br /><br /><br />我们将要使用的使用的是PAGfx，由Mollusk和Kleevah创建的转换工具，用起来再简单不过了。有2种方法使用它，一种给初学者通过GUI界面使用，另一种给高级用户的，只有一个PAGfx.ini文件。两种用法的结果是一样的，不用担心。<br /><br />    PAGfx的GUI界面<br /><br />    第一件事情，进入PAlib/Tools目录，可以看到PAGfx目录。里面有4个文件。<br /><br />        * PAGfx.txt，一个使用说明和更新日志，既然你在看我的指南，因此你压根用不上这个。<br />        * PAGfx.ini，转化用的ini文件，我将在第二部分进行分析。<br />        * PAGfx.exe，根据ini文件转化你的精灵，你稍后将看到如何操作。<br />        * PAGC Frontend.exe，工具的GUI界面，请马上打开它。<br /><br />    如果出现了出错提示，那是因为你没有安装.net框架，请下载<br />    现在，打开GUI工具，看到界面如下:<br /><br />    [attach]26[/attach]<br /><br />    下面就是设置背景色，添加精灵文件，然后转化。（译：使用过程中可能出现异常，我换几个bmp文件试试，结果又好了）<br /><br />    你可以看到转化后产生如下文件：<br /><br />        * SpriteName.c是包含全部精灵信息的文件，将被用于将精灵调入内存。<br />        * SpriteName.pal.c包含着调色板，有它你就能使用正确的颜色将精灵调入内存。<br />        * all_gfx.c是个很酷的文件。它实际上是链接了所有的精灵，背景，调色板。<br />        * all_gfx.h包含了精灵的数据，后面会提到<br /><br />    PAGfx.ini<br /><br />    对那些好奇的人们，你现在可以检查一下由GUI工具创建的PAGfx.ini。。。如果你只想用GUI工具，那么请跳过此节<br /><br />    （译：因为我只想用GUI工具，因此我跳过，见谅。）<br /><br />PAlib精灵<br /><br />我们深入浅出地学习，先试试把基本的精灵显示到屏幕上来看看。后面的教程会继续教你如何旋转和放大精灵，设置透明度和动画。保持耐心。<br /><br />    显示<br /><br /><br />    我们最终真正使用DS硬件的时机来啦！嘎嘎嘎！我好邪恶！下面欢迎显示精灵教程登场。。。<br /><br />    下面的例子是重PAlib 0.72a版本中提取，因为我在这个版本中更新了精灵。。。请在开始之前确保安装了这个或更高的版本，否则就玩不转了。<br /><br />    打开PAlibExamples/Sprites/Sprite目录，并看一下main.c的代码：<br /><br />[code=c]#include <PA9.h><br /><br />// PAGfxConverter Include<br />#include "gfx/all_gfx.c"<br />#include "gfx/all_gfx.h"<br /><br />int main(void){<br /><br />  PA_Init(); //PAlib inits<br />  PA_InitVBL();<br /><br />  PA_LoadSpritePal(0, // Screen<br />      0, // Palette number<br />      (void*)sprite0_Pal);  // Palette name<br /><br />  PA_CreateSprite(0, // Screen<br />      0, // Sprite number<br />      (void*)vaisseau_Sprite, // Sprite name<br />      OBJ_SIZE_32X32, // Sprite size<br />      1, // 256 color mode<br />      0, // Sprite palette number<br />      50, 50); // X and Y position on the screen<br /><br />  while(1) // Infinite loops<br />  {<br />    PA_WaitForVBL(); <br />  }<br />return 0;<br />}[/code]<br /><br />    入你所见，看看注释就明白了！我也不想重新介绍第一天已经介绍的东西（请复习模板编码的部分），因此假设你已经明白了。<br /><br />[code=c]// PAGfxConverter Include<br />#include "gfx/all_gfx.c"<br />#include "gfx/all_gfx.h"[/code]<br /><br />    这一部分include你已经转化完成的图像，没什么可说的了（你可以看看这个gfx/目录里面都有些什么）<br /><br />[code=c]PA_LoadSpritePal(0, // Screen<br />                 0, // Palette number<br />                (void*)sprite0_Pal); // Palette name[/code]<br /><br />    这部分很重要：它装载了精灵！它把精灵调色板加载到0号屏幕（下屏幕）的0号调色板上。。。不要管在调色板名称前的(void*)字样，它仅仅用于指定调色板的位置。。。如果你的精灵显示不出来，那么首先就要看看是不是忘了调色板！而且，请注意调色板号不要搞错了（要知道一共有16个调色板呢）<br /><br />[code=c]PA_CreateSprite(0, // Screen<br />                0, // Sprite number<br />                (void*)vaisseau_Sprite, // Sprite name<br />                OBJ_SIZE_32X32, // Sprite size<br />                1, // 256 color mode<br />                0, // Sprite palette number<br />                50, 50); // X and Y position on the screen[/code]<br /><br /><br />    这个例子真是非常简单，让我一项一项解释一下。<br /><br />        * 第一个参数是0号屏幕（下屏幕）。。。如果你试图在上屏幕装载精灵，它不会被显示出来，为什么呢？因为调色板是装载在下屏幕的！<br />        * 第二个参数是精灵编号，就象前文所说，DS在一个屏幕上可以显示128个精灵，编号从0到127。每个你创造的精灵，你都可以制定它的编号，有了编号，我们就能找到对应的精灵从而对它进行各种处理。编号的作用不止如此，它还决定了精灵之间的前后关系（0号精灵将遮住其他所有精灵，1号精灵能遮住0号以外的其他所有精灵，依次类推），越小的编号越在前。<br />        * 下面是对象大小，它由长和宽组成，用起来有点复杂，因此PALib定义了一些宏来方便使用（以OBJ_SIZE开头）。。。如果不清楚有哪些尺寸可用，请翻到这个教程的开头。。。<br />        * 下面是颜色模式。只有2个值可选：0为16色，1为256色。实际上只用256色。<br />        * 下面是调色板编号。例子里面是0。。。如果你选择了错误的调色板编号，那么你会看到你的精灵的颜色是多么地漂亮（使用了其他的调色板）或者压根看不到精灵（选中了没有加载的调色板）。使用的时候请多注意。<br />        * 下面是X坐标，Y坐标。精灵的左上角的坐标。<br /><br /><br />    基本上所有的东西都已经理解了吧！那么让我们运行build.bat，并打开DS或DS模拟器。。。。因为你的死循环 (while(1)...) 里面没有任何代码（除了VBL以外），你的精灵将会呆在那里动也不动。<br /><br />    在进行下一步之前，你可以试试修改一下例子，让精灵出现在上屏幕，然后出现在上下双屏幕上。。。<br /><br />    （译：待续。。。）</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>t236846681</b><br/>
+2009-07-24 10:24:53</p>
+</div>
+<div class="col-10">
+<p>学习，精灵就是由N个像素构成的可移动的东西。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post43_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

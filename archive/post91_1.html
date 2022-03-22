@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>在PSP上画图</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">在PSP上画图</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-10 09:09:16</p>
+</div>
+<div class="col-10">
+<p>摘自：在PSP上画图<br />作者：vcbear<br /><br />  这几天把公司的事情忙的差不多了，于是继续我的PSP开发学习，呵呵。上次学会了PSP程序的运行框架以及简单的按键检测，下面就开始深入一点的学习了，这次是通过编程在PSP上画简单的图形，好了，不多说了，看下面的代码：<br /> [code=c]<br />-- psptest.c<br /><br />#include<br />#include<br />#include<br /> <br /><br />#define SCREEN_WIDTH   480      // PSP屏幕宽<br />#define SCREEN_HEIGHT   272     // PSP屏幕高<br /><br />#define SCAN_LINE_SIZE   512    // 最大屏幕宽有32个单位<br /><br />#define ARGB(a, r, g, b) (a<<24|b<<16|g<<8|r)   // 当屏幕设定为32bit一个像素时, 颜色的排列是ABGR, 即透明度, 蓝,绿, 红 设定该转换宏便于计算<br /><br /><br />// 程序名称和版本<br />PSP_MODULE_INFO("PSPGame", 0, 1, 1);<br /><br />// optional<br />PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER);<br /><br />#define printf pspDebugScreenPrintf<br /><br />int done = 0;<br /><br />u32* pVRAM = (u32*)(0x04000000+0x40000000);       // 初始化VRAM，一定要OR 0x40000000才可使用<br /><br /> <br /><br />//------------------以下为退出线程的功能------------------------//<br />int exit_callback(int arg1, int arg2, void *common)<br />{<br /> done = 1;<br /> return 0;<br />}<br /><br /><br />int CallbackThread(SceSize args, void *argp)<br />{<br /> int cbid;<br /><br /> cbid = sceKernelCreateCallback("Exit Callback", exit_callback, NULL);<br /> sceKernelRegisterExitCallback(cbid);<br /><br /> sceKernelSleepThreadCB();<br /><br /> return 0;<br />}<br /><br /><br />int SetupCallbacks(void)<br />{<br /> int thid = 0;<br /><br />    thid = sceKernelCreateThread("update_thread", CallbackThread, 0x11, 0xFA0, 0, 0);<br />    if(thid >= 0)<br /> {<br />  sceKernelStartThread(thid, 0, 0);<br />    }<br /><br />    return thid;<br />}<br /><br /><br />//------------------以下为主函数中用到的用户函数------------------------<br />// 在指定位置画指定颜色的单像素点<br />void Plot(int x, int y, u32 color)<br />{<br /> u32* p = pVRAM + y * SCAN_LINE_SIZE + x;<br /> *p = color;<br />}<br /><br /><br />// 用指定颜色填充指定大小的矩形<br />void FillRect(int x, int y, int width, int height, u32 color)<br />{<br /> // 取VRAM首地址<br /> u32* p = pVRAM + y * SCAN_LINE_SIZE + x;<br /> int i, j;<br /> for (j=0;j<br /> {<br />  for (i=0;i// 先画横线<br />  {<br />   *(p+i) = color;<br />  }<br />  p += SCAN_LINE_SIZE; // 纵向下移一行<br /> }<br />}<br /><br /> <br /><br />//加入一个截图功能，在按“home”键退出本程序时，自动在记忆卡根目录生成一个“screenshot.tga”的图片<br />void WriteByte(int fd, unsigned char data)<br />{<br /> sceIoWrite(fd, &data, 1);<br />}<br /><br /><br />void ScreenShot()<br />{<br /> const char tgaHeader[] = {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0};<br /> const int width = SCREEN_WIDTH;<br /> const int lineWidth = SCAN_LINE_SIZE;<br /> const int height = SCREEN_HEIGHT;<br /> unsigned char lineBuffer[width*4];<br /> u32* vram = pVRAM;<br /> int x, y;<br /> int fd = sceIoOpen("ms0:/screenshot.tga", PSP_O_CREAT | PSP_O_TRUNC | PSP_O_WRONLY, 0777);<br /> if (!fd) return;<br /> sceIoWrite(fd, tgaHeader, sizeof(tgaHeader));<br /> WriteByte(fd, width & 0xff);<br /> WriteByte(fd, width >> 8);<br /> WriteByte(fd, height & 0xff);<br /> WriteByte(fd, height >> 8);<br /> WriteByte(fd, 24);<br /> WriteByte(fd, 0);<br /> for (y = height - 1; y >= 0; y--) {<br />  for (x = 0; x < width; x++) {<br />   u32 color = vram[y * lineWidth + x];<br />   unsigned char red = color & 0xff;<br />   unsigned char green = (color >> 8) & 0xff;<br />   unsigned char blue = (color >> 16) & 0xff;<br />   lineBuffer[3*x] = blue;<br />   lineBuffer[3*x+1] = green;<br />   lineBuffer[3*x+2] = red;<br />  }<br />  sceIoWrite(fd, lineBuffer, width * 3);<br /> }<br /> sceIoClose(fd);<br />}<br /><br /><br />//------------------以下为主函数------------------------//<br />int main()<br />{<br /> pspDebugScreenInit(); // do this so that we can use pspDebugScreenPrintf<br /> SetupCallbacks();<br /> <br /> // mode 0, pixel format: ABGR<br /> sceDisplaySetMode(0, SCREEN_WIDTH, SCREEN_HEIGHT); <br /> <br /><br /> while (!done)<br /> {<br />  // plot some pixels<br />  Plot(50, 20, ARGB(255,255,0,0)); // a red pixel<br />  Plot(100, 20, ARGB(255,0,255,0)); // a green pixel<br />  Plot(300, 20, ARGB(255,0,0,255)); // a blue pixel<br />  <br />  // fill some color rectangles<br />  FillRect(50, 100, 20, 20, ARGB(0,255,0,0));  // a red rectangle<br />  FillRect(100, 150, 20, 20, ARGB(255,0,255,0)); // a green rectangle<br />  FillRect(300, 200, 20, 20, ARGB(255,0,0,255)); // a blue rectangle<br />  <br />  sceDisplayWaitVblankStart();<br /> }<br /> <br /> ScreenShot();<br /> <br /> sceKernelExitGame();<br /> return 0;<br />}<br /><br /> <br /><br />--makefile<br /><br /> <br /><br />TARGET = PSPTEST<br />OBJS = psptest.o<br /><br />CFLAGS = -O2 -G0 -Wall<br />CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti<br />ASFLAGS = $(CFLAGS)<br /><br />EXTRA_TARGETS = EBOOT.PBP<br />PSP_EBOOT_TITLE =  PSPTEST<br /><br />PSPSDK=$(shell psp-config --pspsdk-path)<br />include $(PSPSDK)/lib/build.mak<br />[/code]<br /> <br />好了！然后把PSP和电脑连接好，进入USB模式，用工具软件KXploit Tool 0.3 将生成的可执行文件拷入小P，以下是程序运行生成好的截图。<br />[attach]81[/attach]</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zl308424</b><br/>
+2009-01-05 00:08:50</p>
+</div>
+<div class="col-10">
+<p>太好了，找了很久关于画图的资料，谢谢了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ouou</b><br/>
+2010-05-02 13:06:38</p>
+</div>
+<div class="col-10">
+<p>大虾，我EMAIL:954059307@QQ.COM，能不能把完整的代码发给我。谢谢。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>ouou</b><br/>
+2010-05-02 13:26:26</p>
+</div>
+<div class="col-10">
+<p>恩。我试了下，您发的头文件和void FillRect(int x, int y, int width, int height, u32 color)<br />函数不完整。<br /><br />#include <pspkernel.h><br />#include <pspdisplay.h><br />#include <pspdebug.h><br />#include <stdlib.h><br />#include <stdio.h><br />#include <math.h><br />#include <string.h><br />#include <time.h><br />#include <pspgu.h><br />#include <pspctrl.h><br />#include <stdlib.h><br /><br />以上的是头文件。<br />下面是完整的void FillRect(int x, int y, int width, int height, u32 color)函数<br /><br />void FillRect(int x, int y, int width, int height, u32 color)<br />{<br />// 取VRAM首地址<br />u32* p = pVRAM + y * SCAN_LINE_SIZE + x;<br />int i, j;<br />for (j=0;j<height;++j)<br />{<br />  for (i=0;i<width;++i)      // 先画横线<br />  {<br />   *(p+i) = color;<br />  }<br />  p += SCAN_LINE_SIZE; // 纵向下移一行<br />}<br />}<br />再次向您表示感谢您发的代码。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>mxd179</b><br/>
+2010-07-28 15:47:00</p>
+</div>
+<div class="col-10">
+<p>受教了 <br /> 小P还能当画板</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post91_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

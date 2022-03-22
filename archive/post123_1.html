@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>文曲星LAVA编程</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">文曲星LAVA编程</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-16 11:16:07</p>
+</div>
+<div class="col-10">
+<p>摘自：wrsqwq123.blog.163.com<br /><br />一.什么是LAVA语言 <br />LAVA就是Lee(开发者的笔名)和JAVA的简称.<br />LAVA是一种伪编译的语言(这一点与JAVA相同,除此之外在语法上没有任何关系).<br />LAVA的语法极其类似c(但还是有一些不同).<br />LAVA程序在电脑端伪编译后,生成由一系列伪指令(伪指令长度一般为1~5字节)组成的lav文件.<br />lav文件通过文曲星端的LAVA解释器执行.<br /><br />优点:<br />1.跨平台<br />由源代码编译的lav文件不做任何修改即可直接在任何有LAVA解释器的文曲星上执行,无须再次编译.<br />这一点c做不到,gvbasic也做不到(由于大量gvbasic使用了peek,poke,call等机器相关的语句,造成各机型的basic程序都有不同程度的不兼容).<br />好处:由于文曲星机型众多,程序员没有时间为每一种机型编写软件,大量软件由用户自己编写.而用户编写的程序一般只适用其拥有的机型,越是新机型,软件越短缺,这也是网上用户抱怨较多的一种原因.而LAVA是跨平台的,新机型可直接使用老机型的lav软件,解决了软件短枪问题.<br />2.与其他语言的比较<br />速度：比gvbasic快多了。当然要比c慢，比汇编更慢。但是更快的速度已经不是必要，LAVA有其他特性来弥补这一点。<br />目标代码的大小：完成同样的任务，目标代码比gvbasic大一些，但要比汇编小，比c小许多。<br />支持的最大目标文件长度：16M。basic是64K以下，c有32k的限制（超过32k函数调用很麻烦）。<br />内部函数：basic的函数极其简陋，汇编需要自己写函数，c的函数较丰富，但仍有不足。LAVA的函数库将十分丰富，尤其具有强大高效的绘图函数。lava的绘图函数库，相当于windows的directx。<br />结构化：basic和汇编都不是结构化语言，c和lava是结构化语言。结构化编程能够减少错误出现的概率。<br />编程效率：汇编效率很低，basic，c，lava由于是高级语言，效率较高。<br />用户友好：汇编，c，basic都要求用户对硬件有一定程度的了解。lava通过解释器屏蔽了硬件相关性，用户不需要知道硬件底层（这些工作交给解释器就行了）。<br /><br /><br />二. LAVA语言语法<br /><br />(一).lava的数据类型<br /><br />基本类型:<br />char:单字节,范围0~255<br />int:双字节,范围-32768~32767<br />long:四字节,范围-2147483648~2147483647<br /><br />构造类型:<br />数组:包括char数组,int数组,long数组<br /><br />常量:<br />整型常量:例如 -1,100,0x4000,'a'<br />字符串常量:例如 "Lava"<br /><br />变量名命名规则同c.<br />变量名最大允许30个字符,超过此长度仍然有效,但超出部分被截去.<br /><br />lava不支持的c类型:<br />浮点型<br />枚举类型<br />结构体类型<br />共用体类型<br />指针类型<br /><br />本教程不打算写成一个详尽的入门教程.<br />读者最好有c语言基础.<br />本节课可参考<C程序设计>第二章相关内容.<br /><br />(二)运算符和优先级<br />1. () 圆括号<br />[] 下标运算符<br />2. ! 逻辑非运算符<br />~ 按位取反运算符<br />++ 自增运算符<br />-- 自减运算符<br />- 负号运算符<br />* 地址运算符(不同于c,后面有详细介绍)<br />3. * 乘法运算符<br />/ 除法运算符<br />% 求余运算符<br />4. + 加法运算符<br />- 减法运算符<br />5. << 左移运算符<br />>> 右移运算符<br />6. == != >= <= > < 关系运算符<br />7. & 按位与运算符<br />| 按位或运算符<br />^ 按位异或运算符<br />8. && 逻辑与运算符<br />|| 逻辑或运算符<br />9. = 赋值运算符<br /><br />所有2级运算符都是单目运算符.其余都是双目运算符.<br />除2级运算符外,所有运算的结合方向都是自左至右.<br />不在上面列表的c运算符都不被lava支持.<br />注意:不支持a=b=c这样的赋值形式.<br /><br />下面详细讲地址运算符*.<br />*如果出现在=号(赋值运算符)右边,表示取指定地址的一个字节数据.<br />例如: a=*8192 表示取内存地址2000处的一个字节数据赋给变量a.<br />对应的basic语句是:a=peek(8192);<br />*如果出现在=号(赋值运算符)左边,表示把=号右边的值存到指定地址.<br />例如: *8192=a 表示把变量a的值存到内存地址8192.<br />对应的basic语句是:poke 8192,a<br />地址运算符*的引入,赋予lava语言强大的硬件控制能力.但也带来一些问题.<br />由于wqx各机型的系统变量定义的地址各有不同,所以滥用*会造成lava无法跨平台执行.<br />请大家遵守以下约定:<br />尽量减少地址运算*.<br />使用地址运算*时请只对lava程序的变量区使用,不要用*对系统变量区读写.<br />必须用*对系统变量区读写时,在把该程序提交发表时请声明该程序是专门为某某机型写的,无法跨平台运行.<br />为了便于lava跨平台运行,lava提供了一些符号常量,使用该常量对系统区读写并不影响lava的跨平台运行.<br />_TEXT: 屏幕文本的缓冲区地址<br />_GRAPH: 屏幕图形的缓冲区地址<br />当必须对系统变量区读写时请尽量使用以上符号常量.<br /><br />与*相关的一些知识:<br />数组名表示数组的存储起始地址.例如:<br />char a[10];<br />int b;<br />b=a;<br />*b=5;<br />*(b+1)=6;<br /><br />b=a是把数组a的存储起始地址赋给变量b.<br />*b=5 执行结果相当于a[0]=5;<br />*(b+1)=6 执行结果相当于a[1]=6;<br />注意:由于wqx的地址为双字节地址,所以一个变量中要装入一个地址,则该变量至少需要是int.<br /><br />(三) lava语句<br />1.控制语句<br />if () ~else~<br />for () ~<br />whiel () ~<br />do ~ while ()<br />continue<br />break<br />goto<br />return<br />上面8种语句中的括号()表示其中是一个条件,~表示内嵌的语句.<br />注意:lava不支持switch语句,可以用if语句代替.<br />2.函数调用语句.例如:<br />printf("This is lava.");<br />3.表达式语句.例如:<br />a=3;<br />i++;<br />4.空语句.下面是一个空语句:<br />;<br />5.可以用{}把一些语句括起来成为复合语句.<br /><br />本节课可参考<C程序设计>第三,四,五,六章相关内容.<br /><br />(四) 函数,编译预处理<br />下面仅指出lava函数与c函数的不同之处.相同之处请参考<C程序设计>第七章内容.<br />被调用函数必须定义在主调函数之前(目前的编译器暂不支持函数说明).<br />函数定义必须有类型标识符.下面语句是错误的:<br />main() {语句}<br />应该写成:<br />void main() {语句}<br />有返回值的函数返回值统一为long型.例如:<br />int add(int x,int y)<br />{<br />return x+y;<br />}<br />尽管定义的返回值是int,但仍返回long值.如一定要返回int,请自行转换,如:return (x+y)&0xffff;<br /><br />编译预处理只支持下面格式:<br />#define 标识符 整型常量<br />例如:<br />#define DELAY_TIME 200<br />所有编译预处理必须出现在lava语句之前.<br />系统已经定义好了以下常量:<br />#define NULL 0<br />#define SEEK_SET 0<br />#define SEEK_CUR 1<br />#define SEEK_END 2<br />#define EOF -1<br />这些常量不需要在lava程序中定义了.<br /><br />附录(一):文本模式下的字符显示函数<br />void putchar(char c) 字符c输出到屏幕<br />void printf(addr format,args,...) 字符串输出到屏幕<br />void SetScreen(char mode) mode=0:大字体，mode=1:小字体。设置字体模式<br />void UpdateLcd(char mode) mode的每一个bit，从高到低控制屏幕的每一行，0表示该行更新，1表示该行不更新。<br />void Locate(int y,int x) 把字符显示的光标定位在y行x列(x,y均从0开始计算).<br />常量_TEXT表示屏幕文本缓冲区的地址。采用此常量是为了屏蔽各机种屏幕文本缓冲区的地址的差异（尽管目前各机种屏幕文本缓冲区的地址都相同，但不表示将来也相同）。<br /><br />putchar，printf会直接更新到屏幕，并不需要UpdateLcd（这一点与winide不同）。<br />那么什么时候要用到UpdateLcd呢？<br />看下面例子：<br />SetScreen(1);<br />strcpy(_TEXT+52,"I am Lee.");<br />UpdateLcd(0);<br />在屏幕的第三行显示出小字体的I am Lee.<br />学过c的人可能要问，strcpy的第一个参数应该是char *类型啊？<br />是的，那是c的规定。<br />在lava，只有char,int,long三种数据基本类型。没有指针的概念。所以，任何数值都可以传递给函数，至于要解释成数值还是地址，由函数的执行体自己决定。<br />前面printf(addr format,args,...) 出现的addr并不是一种新的数据类型，只是表示该数值会被printf函数当作内存地址处理。<br />下面出现的addr均表示内存地址.<br /><br />附录(二):字符函数和字符串函数<br />int isalnum(char ch)<br />int isalpha(char ch)<br />int iscntrl(char ch)<br />int isdigit(char ch)<br />int isgraph(char ch)<br />int islower(char ch)<br />int isprint(char ch)<br />int ispunct(char ch)<br />int isspace(char ch)<br />int isupper(char ch)<br />int isxdigit(char ch)<br />void strcat(addr str1,addr str2)<br />addr strchr(addr str,char ch)<br />int strcmp(addr str1,addr str2)<br />void strcpy(addr str1,addr str2)<br />int strlen(addr str)<br />addr strstr(addr str1,addr str2)<br />char tolower(char ch)<br />char toupper(char ch)<br /><br />附录(三):图形模式下的显示函数<br />void Point(int x,int y,int type) 画点.type=0:清点 type=1:画点<br />int GetPoint(int x,int y) 取x,y处点的状态.返回值 0:无点,非0:有点<br />void Line(int x0,int y0,int x1,int y1,int type) 画直线. type=0:清线 type=1:画线<br />void Box(int x0,int y0,int x1,int y1,int fill,int type) 画矩形 fill=1:填充,fill=0:不填充<br />type=0:清矩形 type=1:画矩形<br />void Circle(int x,int y,int r,int fill,int type) 画圆 fill=1:填充,fill=0:不填充<br />type=0:清圆 type=1:画圆<br />void Ellipse(int x,int y,int a,int b,int fill,int type) 画椭圆 fill=1:填充,fill=0:不填充<br />type=0:清椭圆 type=1:画椭圆<br /><br />附录(四):缓冲区绘图函数<br />void WriteBlock(int x,int y,int width,int height,int type,addr data)<br />在屏幕的(x,y)坐标处绘图,图的宽为width,高为height,图形的数据地址为data.<br />type=1:print<br />type=2:反相显示<br />type=3:或<br />type=4:与<br />void Block(int x0,int y0,int x1,int y1,int type) type=0:清实心矩形 type=1:画实心矩形<br />void Rectangle(int x0,int y0,int x1,int y1,int type) type=0:清空心矩形 type=1:画空心矩形(注意:<br />只画矩形外框,对矩形内部图象无影响)<br />void TextOut(int x,int y,addr string,int type)<br />在屏幕的(x,y)坐标处画字符串.<br />type=1:print<br />type=2:反相显示<br />type=3:或<br />type=4:与<br />注意:以上函数只在缓冲区内绘图,并不显示在屏幕上.<br />void Refresh() 把缓冲区内的图象刷新到屏幕上显示.<br />通过使用缓冲区绘图,可以实现无闪烁绘图.<br /><br />附录(五):输入函数<br />char getchar() 等待用户输入一个字符<br />char Inkey() 读取用户输入,不等待,如无键盘输入,返回0<br /><br />附录(六):文件操作函数<br />char fopen(addr filename,addr mode)<br />void fclose(char fp)<br />int fread(addr pt,int size,int n,char fp)<br />int fwrite(addr pt,int size,int n,char fp)<br />int putc(char ch,char fp)<br />int getc(char fp)<br />int fseek(char fp,long offset,char base)<br />long ftell(char fp)<br />int feof(char fp)<br />void rewind(char fp)<br />以上函数可以对wqx任意目录下的文件进行读写。<br />注意:fread和fwrite的参数size会被忽略,实际读写的字节数是参数n.之所以保留size是为了与c兼容.<br /><br />附录(七):其他函数<br />void Delay(int ms) 延时ms个毫秒,ms最大取值32767(即:32.7秒).<br />void exit(int exitcode) 退出lava程序.exitcode为退出码<br />long abs(long x) 取x的绝对值<br />long rand() 返回一个32位的随机数<br />void srand(long x) 用x初始化随机数发生器<br />void Beep() 发出"滴"的声音<br />void memset(addr data,char val,int size) 把内存地址data开始的size个字节改写为val<br />void memcpy(addr data1,addr data2,int size) 把内存地址data2开始的size个字节复制到内存地址data1处<br />void sprintf(addr str,addr format,args,...) 把一个格式字符串输出到str字符串.<br /><br />与c用法相同的函数不作解释。<br />用法可以参考《C程序设计》附录。<br /><br /> <br /><br />三.LAVA语言的几个相关工具的使用说明.<br />LAVA语言相关工具及文件的使用说明.<br />1. LAVA语言编译器.<br />文件名: lava.exe 马上下载<br />用途: LAVA语言编译器用于编译LAVA语言所编写的程序, 并生成最终的可执行文件*.lav文件.<br />用法: 要编译的文件请与lava.exe放在同一个目录下并命名为main.txt。编译出的文件为main.lav。如果main.txt有语法错误会显示出在哪行出错。 要编译的文件可以用WINDOWS自带的记事本或写字板程序进行编辑, 要编译的文件格式必须是纯文本的TXT文档.<br /><br />2. LAVA语言解译器<br />文件名: LAVA.bin 马上下载<br />用途: 编译好的*.lav文件需要有LAVA语言解译器才能执行. LAVA语言解译器是需要下载到文曲星中使用的，其作用相当于gvbasic助手. LAVA语言解译器在文曲星各个版本上是不能混用的， 目前只提供有NC2000a/c的LAVA语言解译器.<br /><br /><br />3. LAVA程序专用传输软件<br />文件名: ftplink.exe 马上下载<br />用途: 编译好的*.lav必须通过该软件才能上传至文曲星中. LAVA程序专用传输软件其实相当于hotlink软件，只不过它只能传输*.lav的文件到文曲星中.<br />用法: 执行ftplink.exe。填写必要的信息后，点击“下载”或“上传”后，然后在文曲星的“文件传输”上按“输入”。注意不要弄错先后顺序。上传大文件（300k以上）有可能出错，这时需要reset文曲星。<br />下载很稳定，上传大文件容易出错断线。所以在上传大文件时最好不要开太多窗口。不支持bin文件上传<br /><br />四,LAVA程序及源码<br />2. 博士失踪记 LAVA语言所编译的游戏，可以通过ftplink.exe软件下载到文曲星中执行. 立即下载<br />1. 博士失踪记源码 大家可以用它来了解和学习LAVA语言。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-04-03 21:44:21</p>
+</div>
+<div class="col-10">
+<p>可惜了俺的文曲星</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>zhy_6666</b><br/>
+2010-07-06 10:26:43</p>
+</div>
+<div class="col-10">
+<p>NC2000a<br />这。。。太NC了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>forgetmenot</b><br/>
+2010-09-01 11:34:47</p>
+</div>
+<div class="col-10">
+<p>就这么短么~，定义什么的有么~</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post123_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

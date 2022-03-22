@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>求自制达人指点1,2</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">求自制达人指点1,2</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_3.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>绝望的希望</b><br/>
+2010-05-06 20:50:51</p>
+</div>
+<div class="col-10">
+<p>最近在看[color=Red]初探Nintendo DS程式开发与设计系列[/color]，也下了里面的附件边看边研究，但发现用附件做模板后无法编译，之后发现要用[color=Red]devkitARM r21+libnds-20071023（直接用devkitpro updater1.4.4安装的开发环境）[/color]，但我是用devkitpro updater1.5.0的，又找不到旧版的，所以希望各位达人们能把那帖子附件里的东西重新编下，能用devkitpro updater1.5.0编译，谢谢了</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>Virtual_Lily</b><br/>
+2010-05-06 21:30:04</p>
+</div>
+<div class="col-10">
+<p>沙发。。。。虽然不知道，但是还是支持下</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>水無凝殇</b><br/>
+2010-05-06 22:55:46</p>
+</div>
+<div class="col-10">
+<p>我等小白围观…<br />坐等高人指点…</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>love_xiaolu</b><br/>
+2010-05-07 02:18:05</p>
+</div>
+<div class="col-10">
+<p>俺是新来的，表示围观楼主~~</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>绝望的希望</b><br/>
+2010-05-07 19:07:09</p>
+</div>
+<div class="col-10">
+<p>围观我也没用,什么也不会纯粹对自制有爱的小白,不过话说这区还真冷啊.......</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>绝望的希望</b><br/>
+2010-05-08 15:46:54</p>
+</div>
+<div class="col-10">
+<p>有无有人啊。。。。。。。 <br />以下是[color=Red]初探Nintendo DS程式开发与设计（二）[/color]中的代码，无修改过，有几个问题想问<br /><br />[color=Red]#include <nds.h><br />#include "image01.h"<br />#include "image02.h"<br />#include "blaster_raw.h"<br /><br />int main(void)<br />{<br />    irqInit();<br />    irqSet(IRQ_VBLANK, 0);<br /><br />    videoSetMode(MODE_5_2D | DISPLAY_BG3_ACTIVE);<br />    videoSetModeSub(MODE_5_2D | DISPLAY_BG3_ACTIVE);<br /><br />    vramSetMainBanks(<br />        VRAM_A_MAIN_BG_0x06000000,<br />        VRAM_B_LCD,<br />        VRAM_C_SUB_BG,<br />        VRAM_D_LCD);<br /><br />    BG3_CR = BG_BMP8_256x256;<br />    BG3_XDX = 1 << 8;<br />    BG3_XDY = 0;<br />    BG3_YDX = 0;<br />    BG3_YDY = 1 << 8;<br /><br />    SUB_BG3_CR = BG_BMP8_256x256;<br />    SUB_BG3_XDX = 1 << 8;<br />    SUB_BG3_XDY = 0;<br />    SUB_BG3_YDX = 0;<br />    SUB_BG3_YDY = 1 << 8;<br /><br />    dmaCopy(image01Bitmap, BG_GFX, image01BitmapLen);<br />    dmaCopy(image01Pal, BG_PALETTE, image01PalLen);<br />    <br />    dmaCopy(image02Bitmap, BG_GFX_SUB, image02BitmapLen);<br />    dmaCopy(image02Pal, BG_PALETTE_SUB, image02PalLen);<br /><br />	TransferSoundData blaster = <br />	{<br />		blaster_raw, blaster_raw_size,<br />		22050, 127, 64, 1<br />	};<br /><br />    while(1)<br />    {<br />        swiWaitForVBlank();<br />        <br />        scanKeys();<br /><br />        if((keysDown() & KEY_TOUCH))<br />        {<br />			playSound(&blaster);<br />            lcdSwap();<br />        }<br />    }<br />    return 0;<br />}[/color]<br /><br /><br />1：头文件应该是#include <X.h>，但为什么上面有#include “X.h"？，而且连#include<stdio.h>都没啊？<br />2：原帖中有段话是“[color=Red]为了使 NDS 能够读取图片资料，在启动专案编译程序时，devkitPro 会依照 Makefile 档案中的指令，将专案目录中的图片格式档案，编译转换成特殊的格式，然后产生出一个与档名相对应的表头档 (Header File)。例如一张名称为 image.png 的图片会产生出 image.h 表头档[/color]”<br />如果换其他图片要怎么转换？编个转换程序还是其他方法才能出现这个表头档？<br />3：   blaster_raw blaster_raw_size,<br />            22050, 127, 64, 1<br />这句是什么意思，数字有什么要求？<br /><br />谁来教教我呀</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-05-08 16:06:05</p>
+</div>
+<div class="col-10">
+<p>这位同学不妨来掌家程序群~</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post2638_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

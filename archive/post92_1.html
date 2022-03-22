@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>第一个sdl＋nge程序</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">第一个sdl＋nge程序</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-10 09:13:28</p>
+</div>
+<div class="col-10">
+<p>摘自：[url]http://blog.sina.com.cn/vcbear[/url]<br />作者：vcbear<br /><br />   很久之前，就在论坛上看到网友newcreat开发的NGE库，但苦与cygwin环境没有装好，就一直没有试，今天看到newcreat又发了新的开发整合包，拉下来试了下，果然是方便很多。NGE采用改进了图形系统的sdl．所有代码遵循GPL发布.<br />   NGE完全延续了sdl的所有东西，它替换了sdl的显示系统，在windows下采用opengl实现，在psp下直接采用gu实现，这样达到最大的显示效率．提供了一套一致的接口，这个确实是很方便，比提心吊胆的在PSP上用printf除虫好多了，有了它，这样一份代码可以在windows和psp 下都可以运行，不用做任何的修改．开发人员在windows下开发并且调试，最后只需在发布的时候编译一份psp版的发布就行了，可以完全抛弃psp．<br />   下面就是newcreat写的第一个例子程序，这个程序将显示一张图片，这张图片是任意大小的，这里用的４８０＊２７２，按不同的键可以使图片放大，缩小，旋转或者平移．<br /> <br />以下是源代码：<br />-------------------------------------------------------------------------<br /><br />#pragma warning(disable : 4786)<br />#include "libnge.h"<br />#include<br />SDL_Joystick* joystick;   //摇杆指针<br />SDL_Event event;          //用于消息队列<br />IVideoDriver* sys ;       //显示接口指针<br /><br />CTexture* bg[2];          //图片指针<br /><br /><br />int done = 0;<br />int id = 0;               //图片ID<br />float scale = 1.0;        //放大缩小比率<br />float angel = 1.0;        //旋转角度<br /><br /> <br /><br />void ButtonPressedProc(SDL_JoyButtonEvent * jbutton) //摇杆消息处理函数<br />{<br />    switch(jbutton -> button)<br />    {<br /> case 8:<br />  angel=180;<br />  break;<br /> case 6:<br />  angel =0;<br />  break;<br /> case 7:<br />  angel = 360;<br />  break;<br /> case 9:<br />  break;<br /> case 2: <br />  scale+=0.05;<br />  break;<br /> case 1:<br />  id++;<br />  id=id%2;<br />  break;<br /> case 3:<br />  angel+=1.0;<br />  break;<br />   case 11:<br />  <br />  break;<br /> case 0:<br />  <br />  break;<br />    }<br /> <br />}                  <br /><br />void KeyPressedProc(SDL_keysym * keysym)   //按键消息处理函数<br />{<br /> switch(keysym -> sym)<br /> {<br /> case SDLK_UP:<br />  angel=90;<br />  break;<br /> case SDLK_DOWN:<br />  angel =180;<br />  break;<br /> case SDLK_LEFT:<br />  angel =270;<br />  break;<br /> case SDLK_RIGHT:<br />  angel =360;<br />  break;<br /> case SDLK_w:<br />  scale-=0.05;<br />  if(scale<=0)<br />   scale = 0.05;<br />  break;<br /> case SDLK_d:<br />  scale+=0.05;<br />  break;<br /> case SDLK_s:<br />  angel-=1.0;<br />  break;<br /> case SDLK_a:<br />  angel+=1.0;<br />  break;<br /> case SDLK_m:<br />  id++;<br />  id=id%2;<br />  break;<br /> }<br />}<br /><br /> <br /><br /><br />void InputProc()   //sdl消息处理函数<br />{<br /> while( SDL_PollEvent( &event ) )<br />    {<br />  switch(event.type)<br />  {<br />  case SDL_QUIT:<br />   done = 1;<br />   break;<br />  case SDL_KEYDOWN:<br />   KeyPressedProc(&event.key.keysym);<br />   break;<br />  case SDL_JOYBUTTONDOWN:<br />   ButtonPressedProc(&event.jbutton);<br />   break;<br />  }<br /> }<br />}<br /><br /><br />int DrawScene()  //画图函数<br />{<br /> sys->BeginScene();<br /> sys->RenderQuad(bg[id],0,0,480,272,0,0,scale,scale,angel,0xffffffff);<br /> sys->EndScene();<br />    return( TRUE );<br />}<br /><br /> <br /><br />extern "C"<br />int main(int argc, char* argv[])  //主函数<br />{<br /> NGE_InitSDL(SDL_INIT_VIDEO|SDL_INIT_JOYSTICK);<br /> <br /> if(SDL_NumJoysticks()) {<br />  joystick = SDL_JoystickOpen(0);<br /> }<br /> sys = NGE_GetVideoDriver();<br /> bg[0] = LoadTexture("gamebg1.png");<br /> bg[1] = LoadTexture("gamebg2.png");<br /> sys->FpsInit();<br /> while ( !done )<br /> {<br />  InputProc();<br />  DrawScene();<br />  sys->ShowFps();<br /> }<br /> FreeTexture(bg[0]);<br /> FreeTexture(bg[1]);<br /> NGE_QuitSDL();<br /> <br /> return 0;<br />}<br /> <br />windows版的箭头对应psp的上下左右，w／d／s／a对应　△○×□，可以旋转缩放，可以看出由于是硬件加速所以旋转缩放不会有性能损耗.下面是windows版的程序运行截图。<br />[attach]82[/attach]</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post92_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

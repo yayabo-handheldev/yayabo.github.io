@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>在 Lua 中实现面向对象[摘自：云风的 BLOG]</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">在 Lua 中实现面向对象[摘自：云风的 BLOG]</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-13 12:50:32</p>
+</div>
+<div class="col-10">
+<p>在 pil 中，lua 的作者推荐了一种方案来实现 OO，比较简洁，但是我依然觉得有些繁琐。<br /><br />这里给出一种更漂亮一点的解决方案：为了贴代码和修改方便，我把它贴在了 wiki 上。<br /><br />Lua 中实现面向对象<br /><br />在这个方案中，只定义了一个函数 class(super) ，用这个函数，我们就可以方便的在 lua 中定义类：<br /><br />base_type=class()      -- 定义一个基类 base_type<br /><br />function base_type:ctor(x)  -- 定义 base_type 的构造函数<br />    print("base_type ctor")<br />    self.x=x<br />end<br /><br />function base_type:print_x()    -- 定义一个成员函数 base_type:print_x<br />    print(self.x)<br />end<br /><br />function base_type:hello()  -- 定义另一个成员函数 base_type:hello<br />    print("hello base_type")<br />end<br /><br />以上是基本的 class 定义的语法，完全兼容 lua 的编程习惯。我增加了一个叫做 ctor 的词，作为构造函数的名字。<br /><br />下面看看怎样继承： test=class(basetype) -- 定义一个类 test 继承于 basetype<br /><br />function test:ctor()    -- 定义 test 的构造函数<br />    print("test ctor")<br />end<br /><br />function test:hello()  -- 重载 base_type:hello 为 test:hello<br />    print("hello test")<br />end<br /><br />现在可以试一下了：<br /><br />a=test.new(1)  -- 输出两行，base_type ctor 和 test ctor 。这个对象被正确的构造了。<br />a:print_x() -- 输出 1 ，这个是基类 base_type 中的成员函数。<br />a:hello()  -- 输出 hello test ，这个函数被重载了。<br /><br />其实，实现多重继承也并不复杂，这里就不再展开了。更有意义的扩展可能是增加一个 dtor :)<br /><br />ps. 这里用了点小技巧，将 self 绑定到 closure 上，所以并不使用 a:hello 而是直接用 a.hello 调用成员函数。这个技巧并不非常有用，从效率角度上说，还是不用为好。</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>白枫</b><br/>
+2010-10-25 19:30:05</p>
+</div>
+<div class="col-10">
+<p>贴代码居然不贴全!</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1041_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

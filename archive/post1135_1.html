@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>初识小巧的脚本引擎----Lua</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">初识小巧的脚本引擎----Lua</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_2.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2010-01-19 15:03:03</p>
+</div>
+<div class="col-10">
+<p>作者是巴西人。该语言的设计目的是为了嵌入应用程序中，从而为应用程序提供灵活的扩展和定制功能。<br /><br /><br />Lua最著名的应用是在暴雪公司的网络游戏WOW中。<br /><br /><br /><br />Lua脚本可以很容易的被C/C++代码调用，也可以反过来调用C/C++的函数，这使得Lua在应用程序中可以被广泛应用。不仅仅作为扩展脚本，也可以作为普通的配置文件，代替XML,Ini等文件格式，并且更容易理解和维护。<br /><br /><br /><br />Lua由标准C编写而成，代码简洁优美，几乎在所有操作系统和平台上都可以编译，运行。<br /><br /><br />一个完整的Lua解释器不过200k，在目前所有脚本引擎中，Lua的速度是最快的。这一切都决定了Lua是作为嵌入式脚本的最佳选择。<br /><br /><br /><br />Lua 有一个同时进行的JIT项目，提供在特定平台上的即时编译功能，这将给Lua带来更加优秀的性能。<br /><br /><br /><br />和Python等脚本不同，Lua并没有提供强大的库，这是由它的定位决定的。所以Lua不适合作为开发独立应用程序的语言。不过Lua还是具备了比如数学运算和字符串处理等基本的功能。<br /><br /><br /><br />1 目标<br /><br />LUA的目标是成为一个很容易嵌入其它语言中使用的语言。大多数程序员也认为它的确做到了这一点。<br /><br />很多应用程序使用LUA作为自己的嵌入式脚本语言，以此来实现可配置性、可扩展性。这其中包括魔兽世界、博德之门等。<br /><br /><br />2 特性<br /><br />LUA有如下特性：<br /><br />轻量级 LUA语言的官方版本只包括一个精简的核心和最基本的库。这使得LUA体积小、启动速度快，从而适合嵌入在别的程序里。<br /><br />可扩展 LUA并不象其它许多"大而全"的语言那样，包括很多功能，比如网络通讯、图形界面等。但是LUA可以很容易地被扩展：由宿主语言(通常是C或C++)提供这些功能，LUA可以使用它们，就像是本来就内置的功能一样。<br /><br />其它特性 LUA还具有其它一些特性：同时支持面向过程编程和面向对象编程；自动内存管理；提供一系列数据结构，包括数组、链表、集合、字典、散列表等；语言内置正则表达式匹配；闭包(closure)；函数也可以看做一个值；提供多线程支持；等等。<br /><br /><br />3 示例代码<br /><br />是的，你猜对了：hello world...<br /><br />print "Hello, world!"<br /><br />一个比较复杂一点的例子，但是它展示了什么是闭包:<br /><br />function create_a_counter()<br />    local count = 0<br />    return function()<br />        count = count + 1<br />        return count<br />    end<br />end<br /><br />create_a_counter()返回一个记数器，每次调用这个记数器，都会得到一个比上次大1的值。</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post1135_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+

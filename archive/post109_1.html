@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NDS自制软件教程6-进程间通信IPC</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    </head>
+
+    <body style="margin-top:1.618%">
+        <div class="container">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1 class="display-5">NDS自制软件教程6-进程间通信IPC</h1>
+                </div>
+                <br />
+                <nav class="nav">
+                    <a class="nav-link active" aria-current="page" href="index_1.html">返回</a>
+                </nav>
+            </div>
+
+            <hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>掌叔</b><br/>
+2008-06-15 09:35:24</p>
+</div>
+<div class="col-10">
+<p>摘自：ndsbbs<br />作者：nashi1987<br /><br />本教程讲解DS的进程间通信的原理和实现方法，是从国外教程中截取的，我将暂时意义不大的部分删掉了。如有需要以后补上。教程中涉及之前教程的内容，请务必先读之前的教程。<br /><br />大家都知道DS有两块处理器，ARM7和ARM9。其中ARM9是主处理器，有时我们需要由ARM9通知ARM7作一些事情，因为DS的一部分硬件是只有ARM7可访问控制的。进程间通信IPC（以下简称IPC）就是完成这样功能的。<br /><br />在教程4中大家可能注意到了，只有ARM7可以访问控制声音硬件，但是我们有时需要使用ARM9告诉ARM7我们要做什麽，就要有一种处理器之间的指令传输方法。这不止在声音控制中用到，在无线网等其他功能时依然要用。<br /><br />指令：<br /><br />在我们使用的例子中的IPC系统使用一个'Command'结构来定义由ARM9送到ARM7的指令，定义如下：<br /><br /><br />/* The ARM9 fills out values in this structure to tell the ARM7 what<br />  to do. */<br />struct Command {<br />CommandType commandType;<br />union {<br />  void* data;<br />  PlaySampleSoundCommand playSample;  <br />};<br />};<br /><br /><br />在一个'Command'结构中有一个定义指令类型（play sound, connect via wireless等等）的'commandType'成员，和一个包含指令所需数据的联合成员。上面的例子中包含一个无类型的指针变量和一个'PlaySampleSoundCommand'的实例。<br />'CommandType' 是一个可被用来传输的枚举变量：<br /><br /><br />/* Enumeration of commands that the ARM9 can send to the ARM7 */<br />enum CommandType {<br />PLAY_ONE_SHOT_SAMPLE<br />};<br /><br /><br />'Command'结构可以通过添加指令类型到枚举变量，添加指令所需的数据到联合变量中来完成新指令的扩充。<br /><br />PlaySampleSoundCommand：<br /><br />本例中通过进程间通信实现ARM9控制ARM7完成一个声音播放功能。PlaySampleSoundCommand包含播放声音采样所需的数据。包含指向声音数据的指针、采样频率、音量等等：<br /><br /><br />/* Command parameters for playing a sound sample */<br />struct PlaySampleSoundCommand<br />{<br />int channel;<br />int frequency;<br />void* data;<br />int length;<br />int volume;<br />};<br /><br /><br /><br />一个播放声音的指令可用如下代码创建：<br /><br /><br /><br />Command command;<br />command.commandType = PLAY_ONE_SHOT_SAMPLE;<br />command.playSample.channel = 0;<br />command.playSample.frequency = 11127;<br />command.playSample.data = [...];<br />[......]<br /><br /><br /><br />指令控制：<br /><br />在一个ARM7和ARM9都可以访问的共享内存区域中有一个循环指令队列。在一个'currentCommand'成员中包含一个索引，用来指向新指令存放在队列中存放的位置：<br /><br /><br />/* Maximum number of commands */<br />#define MAX_COMMANDS 20<br /><br />/* A structure shared between the ARM7 and ARM9. The ARM9<br />  places commands here and the ARM7 reads and acts upon them.<br />*/<br />struct CommandControl {<br />Command command[MAX_COMMANDS];<br />int currentCommand;         //索引用的变量<br />};<br /><br />/* Address of the shared CommandControl structure */<br />#define commandControl ((CommandControl*)((uint32)(IPC) + sizeof(TransferRegion)))<br /><br /><br />指令和ARM9：<br /><br />从ARM9 向指令队列添加一个想要执行的指令，需要通过更新 'Command' 中的'currentCommand'来完成新指令的索引，之后'currentCommand'加一。你需要注意在指令数超过MAX_COMMANDS 规定的最大指令数时'currentCommand'应当清零。<br /><br /><br /><br />void CommandPlayOneShotSample(<br />int channel,<br />int frequency,<br />void* data,<br />int length,<br />int volume)<br />{<br />Command* command =<br />  &commandControl->command[commandControl->currentCommand];<br />PlaySampleSoundCommand* ps = &command->playSample;<br /><br />command->commandType = PLAY_ONE_SHOT_SAMPLE;<br />ps->channel = channel;<br />ps->frequency = frequency;<br />ps->data = data;<br />ps->length = length;<br />ps->volume = volume;<br /><br />commandControl->currentCommand++;<br />commandControl->currentCommand &= MAX_COMMANDS-1;<br />}<br /><br /><br /><br />在ARM9代码部分仍需要初始化一个函数来设置ComandControl共享变量为一个初始状态：<br /><br /><br />void CommandInit() {<br />memset(commandControl, 0, sizeof(CommandControl));<br />}<br /><br /><br /><br />ARM9指令代码部分在command9.cpp中。可以在这里添加新指令，就像之前提到的在command.h中添加Command union 部分一样。<br /><br />指令和ARM7：<br /><br />ARM7 指令相关代码在command7.cpp中。 'CommandProcessCommands' 函数必须被ARM7有规律的执行（检查是否有新指令加入），我们在垂直扫描中断中调用它。他反复扫描CommandControl结构中的指令看是否有未执行的，查出类型并执行：<br /><br /><br /><br />void CommandProcessCommands() {<br />static int currentCommand = -1;<br /><br />while(currentCommand != commandControl->currentCommand) {<br />  Command* command = &commandControl->command[currentCommand];<br />  switch(command->commandType) {<br />  case PLAY_ONE_SHOT_SAMPLE:<br />    CommandPlayOneShotSample(&command->playSample);<br />    break;    <br />  }<br />  currentCommand++;<br />  currentCommand &= MAX_COMMANDS-1;<br />}<br />}<br /><br /><br /><br />如果因指令需要需要扩展这个函数，我们需要改变函数的部分内容，添加新指令类型，以及从 Command union中获得所需数据。目前这个例子中我们只用到'CommandPlayOneShotSample'，和通常ARM7播放声音的代码一样，在教程 4中有讲解。函数如下：<br /><br /><br /><br />static void CommandPlayOneShotSample(PlaySampleSoundCommand* ps)<br />{<br />int channel = ps->channel;<br /><br />SCHANNEL_CR(channel) = 0;<br />SCHANNEL_TIMER(channel) = SOUND_FREQ(ps->frequency);<br />SCHANNEL_SOURCE(channel) = (uint32)ps->data;<br />SCHANNEL_LENGTH(channel) = ps->length >> 2;<br />SCHANNEL_CR(channel) =<br />  SCHANNEL_ENABLE |<br />  SOUND_ONE_SHOT |<br />  SOUND_8BIT |<br />  SOUND_VOL(ps->volume);<br />}<br /><br /><br /><br />用法：<br /><br />有了以上的代码，使用ARM9播放声音就简单多了，我们只需通过调用'CommandPlayOneShotSample' 函数就可以了：<br /><br /><br /><br />[...]<br />    CommandPlayOneShotSample(current_channel,<br />                current_file->frequency,<br />                sound_buffer,<br />                current_file->length,<br />                0x3F);<br /><br /><br /><br />以上就是DS的进程间通信的实现方法，今后会给出更多的例子，但一定先将这篇教程搞懂。IPC在DS中应用很广。<br /><br />如有疏漏错误之处，还望大家多多指正！</p>
+</div>
+</div>
+
+<hr class="my-4" />
+<div class="row">
+<div class="col-2">
+<p><b>小猫</b><br/>
+2011-09-18 12:54:30</p>
+</div>
+<div class="col-10">
+<p>万岁啊</p>
+</div>
+</div>
+
+
+            
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                    <!--<li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                        -->
+                        <li class="page-item active">
+<a class="page-link" href="post109_1.html">1</a>
+</li>
+
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    </body>
+</html>
+
